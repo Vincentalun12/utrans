@@ -1,7 +1,7 @@
 //import './bootstrap';
 import { createInertiaApp } from '@inertiajs/react'
 import { createRoot } from 'react-dom/client'
-import "../css/tailwind.css"
+import "./Assets/css/tailwind.css"
 
 createInertiaApp({
   resolve: name => {
