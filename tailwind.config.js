@@ -12,11 +12,18 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                transparent: 'transparent',
+                current: 'currentColor',
+               'ungukita': '#32174D',
+             }
+           },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                'poppins': ['Poppins'],
+                'nunito': ['Nunito'],
+                'quicksand': ['Quicksand'],
             },
         },
-    },
-
     plugins: [forms],
 };
