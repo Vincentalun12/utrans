@@ -9,7 +9,7 @@ import Linkactive from '@/Components/Linkactive';
 export default function Authenticated({ user, header, children }) {
    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
    return (
-      <div className="min-h-screen bg-red-100">
+      <div className="min-h-screen bg-stone-100">
          {/* <nav className="bg-ungukita w-full sticky top-0">
             <div className="mx-auto px-4 sm:px-6 lg:px-8 ml-10">
                <div className="flex justify-between h-16">
@@ -25,13 +25,13 @@ export default function Authenticated({ user, header, children }) {
          </nav> */}
          <div className="flex flex-col">
             <div className="flex">
-               <card className="sticky flex z-20 h-screen lg:flex flex-col w-64 bg-white top-0">
+               <card className="sticky flex z-20 h-screen lg:flex flex-col w-64 bg-ungukita top-0">
                   <div className="flex justify-center  py-6">
                      <Link href="/">
                         <ApplicationLogo />
                      </Link>
                   </div>
-                  <div className="border h-full border-gray-200">
+                  <div className="border h-full border-gray-200 bg-white">
                      <div className="flex flex-col pt-5 pb-4 overflow-y-auto px-3 divide-y space-y-1">
                         <ul className="space-y-2 pb-2">
                            <li>
@@ -73,7 +73,7 @@ export default function Authenticated({ user, header, children }) {
                <main className="w-full">
                   <nav className="bg-ungukita w-full sticky top-0">
                      <div className="mx-auto px-6 sm:px-6 lg:px-8 ml-10">
-                        <div className="flex justify-between h-16">
+                        <div className="flex justify-between h-20">
                            <div className="flex">
                               <div className="shrink-0 flex items-center">
                               </div>
