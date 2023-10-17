@@ -7,7 +7,7 @@ export default function Guest({ children }) {
     <div className="h-screen md:flex">
       <div className="relative overflow-hidden bg-ungukita md:flex w-1/2 justify-around items-center hidden">
         <div className="absolute inset-8">
-      <img src={Utranslogo} alt="Cashier Vector" className="lg:h-10 md:h-8"/>
+      <img src={Utranslogo} alt="Utrans logo" className="lg:h-10 md:h-8"/>
       </div>
         <img src={CashierVector} alt="Cashier Vector" className="w-1/2"/>
       </div>
