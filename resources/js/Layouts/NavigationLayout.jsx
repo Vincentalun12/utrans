@@ -5,6 +5,7 @@ import NavLink from '@/Components/Linkactive';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import Linkactive from '@/Components/Linkactive';
+import Button from '@mui/material/Button';
 
 export default function Authenticated({ user, header, children }) {
    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -26,7 +27,7 @@ export default function Authenticated({ user, header, children }) {
          <div className="flex flex-col">
             <div className="flex">
                <card className="sticky flex z-20 h-screen lg:flex flex-col w-64 bg-ungukita top-0">
-                  <div className="flex justify-center  py-6">
+                  <div className="flex justify-center py-6">
                      <Link href="/">
                         <ApplicationLogo />
                      </Link>
@@ -71,7 +72,7 @@ export default function Authenticated({ user, header, children }) {
                   </div>
                </card>
                <main className="w-full">
-                  <nav className="bg-ungukita w-full sticky top-0">
+                  <nav className="w-full sticky top-0 bg-white border-b">
                      <div className="mx-auto px-6 sm:px-6 lg:px-8 ml-10">
                         <div className="flex justify-between h-20">
                            <div className="flex">

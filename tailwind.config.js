@@ -16,6 +16,8 @@ export default {
                 transparent: 'transparent',
                 current: 'currentColor',
                'ungukita': '#32174D',
+               'biru1':'#3c4b64',
+               'biru2':'#303c54',
              }
            },
             fontFamily: {
