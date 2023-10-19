@@ -199,7 +199,7 @@ export default function Authenticated({ user, header, children }) {
                   </Breadcrumbs>
                   <Dropdown>
                     <Dropdown.Trigger>
-                      <span className="inline-flex rounded-md">
+                      <span className="inline-flex rounded-md ">
                         <Button
                           variant="filled"
                           className="lg:inline-flex items-center px-4 py-1.5 border border-transparent text-md font-medium rounded-2xl text-white bg-ungukita hidden"
