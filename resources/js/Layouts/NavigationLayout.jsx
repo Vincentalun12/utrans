@@ -238,7 +238,6 @@ export default function Authenticated({ user, header, children }) {
                     >
                     <Menu
                     placement="bottom-end"
-                    open={true}
                     animate={{mount: { y: 0 },unmount: { y: -5 },}}>
                       <MenuHandler>
                       <span className="inline-flex rounded-md">
