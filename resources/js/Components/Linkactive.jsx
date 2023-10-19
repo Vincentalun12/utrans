@@ -5,11 +5,10 @@ export default function Linkactive({ active = false, className = '', children, .
         <Link
             {...props}
             className={
-                'text-black font-normal rounded-lg flex items-center p-2 hover:bg-gray-200 group' +
+
                 (active
-                    ? ' bg-ungukita text-white'
-                    : '') +
-                className
+                    ? ' bg-ungukita text-white rounded-md'
+                : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900') 
             }
         >
             {children}
