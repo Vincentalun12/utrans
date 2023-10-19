@@ -31,6 +31,7 @@ import {
   PowerIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
+
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export default function Authenticated({ user, header, children }) {
@@ -47,7 +48,7 @@ export default function Authenticated({ user, header, children }) {
     <div className="min-h-screen bg-backgroundabu">
       <div className="flex flex-col">
         <div className="flex">
-          <Card className="h-screen sticky top-0 w-full max-w-[18rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-50">
+          <Card className="h-screen sticky top-0 w-full max-w-[18rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-50 lg:flex hidden">
             <div className="mb-2 p-2 w-full flex justify-center">
               <ApplicationLogo2 />
             </div>
@@ -184,7 +185,10 @@ export default function Authenticated({ user, header, children }) {
             <nav className="w-full bg-white sticky top-0 z-10">
               <div className="mx-auto px-6 sm:px-6 lg:px-8">
                 <div className="flex h-20 justify-between shrink-0 items-center">
-                  <Breadcrumbs>
+                <div className="mb-2 p-2 w-full flex justify-center lg:hidden">
+                    <ApplicationLogo2 />
+                </div>    
+                  <Breadcrumbs className="lg:flex hidden">
                     <a href="#" className="opacity-60">
                       Dashboard
                     </a>
@@ -198,7 +202,7 @@ export default function Authenticated({ user, header, children }) {
                       <span className="inline-flex rounded-md">
                         <Button
                           variant="filled"
-                          className="inline-flex items-center px-4 py-1.5 border border-transparent text-md font-medium rounded-2xl text-white bg-ungukita"
+                          className="lg:inline-flex items-center px-4 py-1.5 border border-transparent text-md font-medium rounded-2xl text-white bg-ungukita hidden"
                         >
                           <span>
                             <UserCircleIcon className="h-7 w-7 mr-2" />
