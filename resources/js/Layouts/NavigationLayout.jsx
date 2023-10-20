@@ -200,7 +200,7 @@ export default function Authenticated({ user, header, children }) {
                 <div className="mb-2 p-2 w-full flex justify-center lg:hidden">
                     <ApplicationLogo2 />
                 </div>    
-                  <Breadcrumbs className="lg:flex hidden">
+                  <Breadcrumbs className="lg:flex hidden bg-white">
                     <a href="#" className="opacity-60">
                       Dashboard
                     </a>

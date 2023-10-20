@@ -1,11 +1,26 @@
 import InventoryLayout from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
-import { Card, Typography } from "@material-tailwind/react";
+import { 
+  Card, 
+  Typography,
+  Input,
+  Button,
+} from "@material-tailwind/react";
+
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  EyeIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  MagnifyingGlassIcon,
+  EllipsisHorizontalIcon,
+} from "@heroicons/react/24/solid";
 
 const TABLE_HEAD = [
   "SKU",
   "Name",
-  "Categories",
+  "Merek",
   "Retail",
   "Wholesale",
   "Stock",
@@ -15,16 +30,16 @@ const TABLE_HEAD = [
 const TABLE_ROWS = [
   {
     SKU: "SKU001",
-    Name: "Baju",
-    Categories: "Pakaian",
+    Name: "Piston kit - Grand",
+    Merek: "Honda",
     Retail: "10000",
     Wholesale: "9000",
     Stock: "10",
   },
   {
     SKU: "SKU002",
-    Name: "Celana",
-    Categories: "Pakaian",
+    Name: "Piston kit - Supra",
+    Merek: "Honda",
     Retail: "15000",
     Wholesale: "14000",
     Stock: "15",
@@ -32,7 +47,7 @@ const TABLE_ROWS = [
   {
     SKU: "SKU003",
     Name: "Sepatu",
-    Categories: "Pakaian",
+    Merek: "Pakaian",
     Retail: "20000",
     Wholesale: "19000",
     Stock: "20",
@@ -40,7 +55,7 @@ const TABLE_ROWS = [
   {
     SKU: "SKU004",
     Name: "Tas",
-    Categories: "Pakaian",
+    Merek: "Pakaian",
     Retail: "25000",
     Wholesale: "24000",
     Stock: "25",
@@ -48,7 +63,7 @@ const TABLE_ROWS = [
   {
     SKU: "SKU004",
     Name: "Tas",
-    Categories: "Pakaian",
+    Merek: "Pakaian",
     Retail: "25000",
     Wholesale: "24000",
     Stock: "25",
@@ -56,7 +71,7 @@ const TABLE_ROWS = [
   {
     SKU: "SKU004",
     Name: "Tas",
-    Categories: "Pakaian",
+    Merek: "Pakaian",
     Retail: "25000",
     Wholesale: "24000",
     Stock: "25",
@@ -64,7 +79,7 @@ const TABLE_ROWS = [
   {
     SKU: "SKU004",
     Name: "Tas",
-    Categories: "Pakaian",
+    Merek: "Pakaian",
     Retail: "25000",
     Wholesale: "24000",
     Stock: "25",
@@ -72,7 +87,7 @@ const TABLE_ROWS = [
   {
     SKU: "SKU004",
     Name: "Tas",
-    Categories: "Pakaian",
+    Merek: "Pakaian",
     Retail: "25000",
     Wholesale: "24000",
     Stock: "25",
@@ -80,7 +95,7 @@ const TABLE_ROWS = [
   {
     SKU: "SKU004",
     Name: "Tas",
-    Categories: "Pakaian",
+    Merek: "Pakaian",
     Retail: "25000",
     Wholesale: "24000",
     Stock: "25",
@@ -88,7 +103,7 @@ const TABLE_ROWS = [
   {
     SKU: "SKU004",
     Name: "Tas",
-    Categories: "Pakaian",
+    Merek: "Pakaian",
     Retail: "25000",
     Wholesale: "24000",
     Stock: "25",
@@ -96,7 +111,7 @@ const TABLE_ROWS = [
   {
     SKU: "SKU004",
     Name: "Tas",
-    Categories: "Pakaian",
+    Merek: "Pakaian",
     Retail: "25000",
     Wholesale: "24000",
     Stock: "25",
@@ -109,14 +124,37 @@ export default function Inventory({ auth }) {
       <Head title="Inventory" />
       <div className="py-6">
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="h-full w-full lg:overflow-auto overflow-x-scroll overflow-y-hidden max-h-[470px] rounded-none">
+          <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
+          <div className="flex w-full gap-2 justify-between px-10 py-2">
+          <Button size="md" className="rounded-lg bg-ungukita">
+            Add Items
+          </Button>
+            <div className="inline-flex items-center">
+            <Input
+              type="search"
+              placeholder="Search"
+              containerProps={{
+                className: "min-w-[100  px]",
+              }}
+              className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+          <Button size="md" className="rounded-lg bg-ungukita mx-3">
+            <MagnifyingGlassIcon className="w-4 h-4" />
+          </Button>
+          </div>
+            </div>
+            </div>
+          <Card className="h-full w-full lg:overflow-auto overflow-x-scroll overflow-y-hidden max-h-[450px] rounded-none">
             <table className="w-full min-w-max table-auto text-left">
               <thead>
-                <tr>
+                <tr className="sticky top-0">
                   {TABLE_HEAD.map((head) => (
                     <th
                       key={head}
-                      className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                      className="border-b border-gray-200 bg-gray-100 p-4"
                     >
                       <Typography
                         variant="small"
@@ -132,13 +170,13 @@ export default function Inventory({ auth }) {
               <tbody>
                 {TABLE_ROWS.map(
                   (
-                    { SKU, Name, Categories, Retail, Wholesale, Stock }
+                    { SKU, Name, Merek, Retail, Wholesale, Stock }
                   ) => (
-                    <tr key={SKU} className="even:bg-blue-gray-50/50">
+                    <tr key={SKU} className="even:bg-blue-gray-50">
                       <td className="p-4">
                         <Typography
                           variant="small"
-                          color="blue-gray"
+                          color="black"
                           className="font-normal"
                         >
                           {SKU}
@@ -147,7 +185,7 @@ export default function Inventory({ auth }) {
                       <td className="p-4">
                         <Typography
                           variant="small"
-                          color="blue-gray"
+                          color="black"
                           className="font-normal"
                         >
                           {Name}
@@ -156,16 +194,16 @@ export default function Inventory({ auth }) {
                       <td className="p-4">
                         <Typography
                           variant="small"
-                          color="blue-gray"
+                          color="black"
                           className="font-normal"
                         >
-                          {Categories}
+                          {Merek}
                         </Typography>
                       </td>
                       <td className="p-4">
                         <Typography
                           variant="small"
-                          color="blue-gray"
+                          color="black"
                           className="font-normal"
                         >
                           {Retail}
@@ -174,7 +212,7 @@ export default function Inventory({ auth }) {
                       <td className="p-4">
                         <Typography
                           variant="small"
-                          color="blue-gray"
+                          color="black"
                           className="font-normal"
                         >
                           {Wholesale}
@@ -183,7 +221,7 @@ export default function Inventory({ auth }) {
                       <td className="p-4">
                         <Typography
                           variant="small"
-                          color="blue-gray"
+                          color="black"
                           className="font-normal"
                         >
                           {Stock}
@@ -194,10 +232,13 @@ export default function Inventory({ auth }) {
                           as="a"
                           href="#"
                           variant="small"
-                          color="blue-gray"
-                          className="font-medium"
+                          color="black"
+                          className="font-medium inline-flex space-x-1"
                         >
-                          Edit
+                          <EyeIcon className="w-5 h-5 text-gray-500"/>
+                          <PencilSquareIcon className="w-5 h-5 text-green-500"/>
+                          <TrashIcon className="w-5 h-5 text-red-500"/>
+                          
                         </Typography>
                       </td>
                     </tr>
@@ -206,8 +247,13 @@ export default function Inventory({ auth }) {
               </tbody>
             </table>
           </Card>
+          <div className="w-full h-10 sticky bottom-0 bg-gray-100 rounded-none border-t border-gray-200 shadow-md">
+            <div className="flex justify-end">
+            <span className="text-black inline-flex mt-2 justify-end"><ChevronLeftIcon className="w-6 h-6"/>1 of 500<ChevronRightIcon className="w-6 h-6"/></span>
+          </div>
         </div>
       </div>
+    </div>
     </InventoryLayout>
   );
 }
