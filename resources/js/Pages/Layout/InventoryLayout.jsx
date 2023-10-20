@@ -132,8 +132,7 @@ export default function Inventory({ auth }) {
               <tbody>
                 {TABLE_ROWS.map(
                   (
-                    { SKU, Name, Categories, Retail, Wholesale, Stock },
-                    index
+                    { SKU, Name, Categories, Retail, Wholesale, Stock }
                   ) => (
                     <tr key={SKU} className="even:bg-blue-gray-50/50">
                       <td className="p-4">
