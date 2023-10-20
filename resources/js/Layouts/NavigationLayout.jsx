@@ -111,7 +111,7 @@ export default function Authenticated({ user, header, children }) {
                             className="h-3 w-5"
                           />
                         </ListItemPrefix>
-                        Stock
+                        Products
                       </ListItem>
                     </Linkactive>
                     <ListItem>
@@ -168,7 +168,13 @@ export default function Authenticated({ user, header, children }) {
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
-                      Revenue
+                      Receivings
+                    </ListItem>
+                    <ListItem>
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      Report
                     </ListItem>
                   </List>
                 </AccordionBody>
@@ -284,9 +290,7 @@ export default function Authenticated({ user, header, children }) {
                       </MenuItem>
                       <hr className="my-2 border-blue-gray-50" />
                       <MenuItem 
-                        href={route("logout")}
-                        method="post"
-                        as="button" 
+
                         className="flex items-center gap-2 bg-red-500">
                         
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" className="w-6 h-6">
