@@ -68,7 +68,7 @@ export default function Authenticated({ user, header, children }) {
                 href={route("dashboard")}
                 active={route().current("dashboard")}
               >
-                <ListItem className="hover:bg-black">
+                <ListItem className={`${route().current("dashboard") ? 'hover:bg-ungukita' : ''}`}>
                   <ListItemPrefix>
                     <HomeIcon className="h-5 w-5" />
                   </ListItemPrefix>
