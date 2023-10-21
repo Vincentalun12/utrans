@@ -42,13 +42,13 @@ import {
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({ user, header, children}) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
     useState(false);
 
   const { url } = usePage();
 
-  const [open, setOpen] = React.useState(0);
+  const [open, setOpen] = React.useState(route().current("dashboard") ? 0 : 1);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -66,9 +66,8 @@ export default function Authenticated({ user, header, children }) {
             <List>
               <Linkactive
                 href={route("dashboard")}
-                active={route().current("dashboard")}
               >
-                <ListItem className={`${route().current("dashboard") ? 'hover:bg-ungukita' : ''}`}>
+                  <ListItem className={`${route().current("dashboard") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
                   <ListItemPrefix>
                     <HomeIcon className="h-5 w-5" />
                   </ListItemPrefix>
@@ -105,9 +104,8 @@ export default function Authenticated({ user, header, children }) {
                   <List className="p-0">
                     <Linkactive
                       href={route("inventory")}
-                      active={route().current("inventory")}
                     >
-                      <ListItem>
+                      <ListItem className={`${route().current("inventory") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
                         <ListItemPrefix>
                           <ChevronRightIcon
                             strokeWidth={3}
@@ -304,9 +302,15 @@ export default function Authenticated({ user, header, children }) {
                 </div>
               </div>
             </nav>
+            <div className="mb-5">
             {children}
+            </div>
           </main>
         </div>
+        <nav className="w-full bg-blue-gray-400 sticky bottom-0">
+              <div className="py-5 mx-5">baaaaaaaaaaaa
+              </div>
+        </nav>
       </div>
     </div>
   );
