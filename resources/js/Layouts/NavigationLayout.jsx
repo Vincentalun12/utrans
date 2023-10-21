@@ -195,7 +195,7 @@ export default function Authenticated({ user, header, children}) {
 
           </Card>
           <main className="w-full">
-            <nav className="w-full bg-white sticky top-0 z-10">
+            <nav className="w-full max-w-auto bg-white sticky top-0 z-10">
               <div className="mx-auto px-6 sm:px-6 lg:px-8">
                 <div className="flex h-20 justify-between shrink-0 items-center">
                   <div className="mb-2 p-2 w-full flex justify-center lg:hidden">
@@ -302,15 +302,10 @@ export default function Authenticated({ user, header, children}) {
                 </div>
               </div>
             </nav>
-            <div className="mb-5">
             {children}
-            </div>
           </main>
         </div>
-        <nav className="w-full bg-blue-gray-400 sticky bottom-0 lg:hidden flex">
-              <div className="py-5 mx-5">baaaaaaaaaaaa
-              </div>
-        </nav>
+
       </div>
     </div>
   );

@@ -146,7 +146,7 @@ export default function Inventory({ auth }) {
               type="search"
               placeholder="Search"
               containerProps={{
-                className: "min-w-[100  px]",
+                className: "w-20",
               }}
               className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
               labelProps={{
@@ -160,7 +160,7 @@ export default function Inventory({ auth }) {
             </div>
             </div>
           <Card className="h-full w-full lg:overflow-auto overflow-x-scroll overflow-y-hidden max-h-[450px] rounded-none">
-            <table className="w-full min-w-max table-auto text-left">
+            <table className="w-full min-w-max lg:min-w-full table-auto text-left">
               <thead>
                 <tr className="sticky top-0">
                   {TABLE_HEAD.map((head) => (
