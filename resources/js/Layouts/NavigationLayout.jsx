@@ -26,7 +26,8 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  MenuHandlerProps
+  MenuHandlerProps,
+  ThemeProvider
 } from "@material-tailwind/react";
 
 import {
@@ -50,7 +51,70 @@ export default function Authenticated({ user, header, children }) {
     setOpen(open === value ? 0 : value);
   };
 
+  const theme = {
+    list: {
+      defaultProps: {
+        ripple: true,
+        className: "",
+      },
+      styles: {
+        base: {
+          list: {
+            display: "flex",
+            flexDirection: "flex-col",
+            gap: "gap-1",
+            minWidth: "min-w-[240px]",
+            p: "p-2",
+            fontFamily: "font-sans",
+            fontSize: "text-base",
+            fontWeight: "font-normal",
+            color: "text-blue-gray-700",
+          },
+          item: {
+            initial: {
+              display: "flex",
+              alignItems: "items-center",
+              width: "w-full",
+              padding: "p-3",
+              borderRadius: "rounded-lg",
+              textAlign: "text-start",
+              lightHeight: "leading-tight",
+              transition: "transition-all",
+              bg: "",
+              color: "",
+              outline: "outline-none",
+            },
+            selected: {
+              bg: "bg-blue-gray-50/50",
+              color: "text-blue-gray-700",
+            },
+            disabled: {
+              opacity: "opacity-50",
+              cursor: "cursor-not-allowed",
+              pointerEvents: "pointer-events-none",
+              userSelect: "select-none",
+              bg: "hover:bg-transparent focus:bg-transparent active:bg-transparent",
+              color: "hover:text-blue-gray-500 focus:text-blue-gray-500 active:text-blue-gray-500",
+            },
+          },
+          itemPrefix: {
+            display: "grid",
+            placeItems: "place-items-center",
+            marginRight: "mr-4",
+          },
+          itemSuffix: {
+            display: "grid",
+            placeItems: "place-items-center",
+            marginRight: "ml-auto justify-self-end",
+          },
+        },
+      },
+    },
+  };
+
+
   return (
+    <ThemeProvider value={theme}>
     <div className="min-h-screen bg-backgroundabu">
       <div className="flex flex-col">
         <div className="flex">
@@ -192,6 +256,7 @@ export default function Authenticated({ user, header, children }) {
                 Log Out
               </ListItem>
             </List>
+            
           </Card>
           <main className="w-full">
             <nav className="w-full bg-white sticky top-0 z-10">
@@ -297,6 +362,7 @@ export default function Authenticated({ user, header, children }) {
                   </Menu>
                   </Tooltip>
                   </Dropdown>
+                  
                 </div>
               </div>
             </nav>
@@ -305,5 +371,6 @@ export default function Authenticated({ user, header, children }) {
         </div>
       </div>
     </div>
+    </ThemeProvider>
   );
 }

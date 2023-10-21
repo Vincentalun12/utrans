@@ -11,6 +11,7 @@ import {
   Accordion,
   AccordionHeader,
   AccordionBody,
+  ThemeProvider,
 } from "@material-tailwind/react";
 
 import {
@@ -47,7 +48,7 @@ export default function Dashboard() {
       />
       }
       >
-      <ListItem>
+      <ListItem className="">
          <ListItemPrefix>
             <HomeIcon className="h-5 w-5" />
          </ListItemPrefix>
