@@ -307,7 +307,7 @@ export default function Authenticated({ user, header, children}) {
             </div>
           </main>
         </div>
-        <nav className="w-full bg-blue-gray-400 sticky bottom-0">
+        <nav className="w-full bg-blue-gray-400 sticky bottom-0 lg:hidden flex">
               <div className="py-5 mx-5">baaaaaaaaaaaa
               </div>
         </nav>
