@@ -124,7 +124,7 @@ export default function Inventory({ auth }) {
     <InventoryLayout user={auth.user}>
       <Head title="Inventory" />
       <div className="lg:py-4 py-1">
-        <div className="mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto px-4 sm:px-6 lg:px-6">
         <div className="lg:hidden flex justify-between">                  
                   <Breadcrumbs>
                     <a href="#" className="opacity-60">
