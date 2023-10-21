@@ -4,7 +4,7 @@ import ApplicationLogo2 from "@/Components/ApplicationLogo2";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/Linkactive";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link } from "@inertiajs/react";
+import { Link,usePage } from "@inertiajs/react";
 import Linkactive from "@/Components/Linkactive";
 
 import React from "react";
@@ -36,6 +36,7 @@ import {
   Cog6ToothIcon,
   PowerIcon,
   UserCircleIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/solid";
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -43,6 +44,8 @@ import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 export default function Authenticated({ user, header, children }) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
     useState(false);
+
+  const { url } = usePage();
 
   const [open, setOpen] = React.useState(0);
 
@@ -56,15 +59,15 @@ export default function Authenticated({ user, header, children }) {
         <div className="flex">
           <Card className="h-screen sticky top-0 w-full max-w-[18rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-50 lg:flex hidden">
             <div className="mb-2 p-2 w-full flex justify-center">
-              <ApplicationLogo2 />
+              <ApplicationLogo2/>
             </div>
-            <hr className="my-2 border-gray-200" />
+            <hr className="my-2 border-gray-200"/>
             <List>
               <Linkactive
                 href={route("dashboard")}
                 active={route().current("dashboard")}
               >
-                <ListItem>
+                <ListItem> 
                   <ListItemPrefix>
                     <HomeIcon className="h-5 w-5" />
                   </ListItemPrefix>
@@ -181,15 +184,15 @@ export default function Authenticated({ user, header, children }) {
               </Accordion>
               <ListItem>
                 <ListItemPrefix>
-                  <Cog6ToothIcon className="h-5 w-5" />
+                  <UserGroupIcon className="h-5 w-5" />
                 </ListItemPrefix>
-                Settings
+                Customer
               </ListItem>
               <ListItem>
                 <ListItemPrefix>
-                  <PowerIcon className="h-5 w-5" />
+                  <Cog6ToothIcon className="h-5 w-5" />
                 </ListItemPrefix>
-                Log Out
+                Settings
               </ListItem>
             </List>
           </Card>
