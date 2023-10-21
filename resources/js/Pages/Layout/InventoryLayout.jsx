@@ -5,6 +5,7 @@ import {
   Typography,
   Input,
   Button,
+  Breadcrumbs
 } from "@material-tailwind/react";
 
 import {
@@ -122,11 +123,22 @@ export default function Inventory({ auth }) {
   return (
     <InventoryLayout user={auth.user}>
       <Head title="Inventory" />
-      <div className="py-6">
+      <div className="lg:py-4 py-1">
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="lg:hidden flex justify-between">                  
+                  <Breadcrumbs>
+                    <a href="#" className="opacity-60">
+                      Dashboard
+                    </a>
+                    <a href="#" className="Opacity-60">
+                      Stock
+                    </a>
+                    <a href="#">Edit</a>
+                  </Breadcrumbs>
+          </div>
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
-          <div className="flex w-full gap-2 justify-between px-10 py-2">
-          <Button size="md" className="rounded-lg bg-ungukita">
+          <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
+          <Button size="md" className="md:flex hidden rounded-lg bg-ungukita">
             Add Items
           </Button>
             <div className="inline-flex items-center">
