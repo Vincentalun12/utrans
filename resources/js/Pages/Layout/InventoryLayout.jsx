@@ -20,6 +20,8 @@ import {
 
 import { ButtonPrimary } from "@/Components";
 
+import { twMerge } from 'tailwind-merge'
+
 const TABLE_HEAD = [
   "SKU",
   "Name",
@@ -140,9 +142,9 @@ export default function Inventory({ auth }) {
           </div>
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
-              <ButtonPrimary>
+              <Button className={twMerge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]')}>
                 Add Items
-              </ButtonPrimary>
+              </Button>
               <div className="inline-flex items-center">
                 <Input
                   type="search"
