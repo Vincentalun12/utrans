@@ -75,7 +75,7 @@ export default function Login({ status, canResetPassword }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ml-2 text-sm text-black"></span>
+                        <span className="ml-2 text-sm text-black">Remember me</span>
                     </label>
                         {canResetPassword && (
                         <Link
