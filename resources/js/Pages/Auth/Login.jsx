@@ -7,6 +7,8 @@ import ButtonLogin from '@/Components/ButtonLogin';
 import TextInputLogin from '@/Components/TextInputLogin';
 import { Head, Link, useForm } from '@inertiajs/react';
 
+import Language from '@/Languages/LoginPage/Login';
+
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
@@ -73,7 +75,7 @@ export default function Login({ status, canResetPassword }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ml-2 text-sm text-black">Remember me</span>
+                        <span className="ml-2 text-sm text-black"></span>
                     </label>
                         {canResetPassword && (
                         <Link
