@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('product_variants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->string('internal_reference')->unique();
+            $table->string('default_code')->unique();
             $table->string('name');
             $table->text('description');
-            $table->decimal('standard_price', 10, 2);
+            $table->decimal('standard_price', 65, 2);
             $table->foreignId('color_id')->constrained()->cascadeOnDelete();
             $table->string('size')->nullable();
             $table->string('image')->nullable();
