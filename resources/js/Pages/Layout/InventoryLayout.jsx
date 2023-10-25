@@ -1,5 +1,6 @@
 import InventoryLayout from "@/Layouts/NavigationLayout";
-import { Head } from "@inertiajs/react";
+import Linkactive from "@/Components/Linkactive";
+import { Head, Link } from "@inertiajs/react";
 import {
   Card,
   Typography,
@@ -142,9 +143,13 @@ export default function Inventory({ auth }) {
           </div>
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
-              <Button className={twMerge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]')}>
+            <Linkactive
+                href={route("additem")}
+              >
+              <Button className={twMerge('px-2 py-1 bg-red hover:bg-dark-red md:flex hidden', 'p-3 bg-[#B91C1C]')}>
                 Add Items
               </Button>
+            </Linkactive>
               <div className="inline-flex items-center">
                 <Input
                   type="search"
