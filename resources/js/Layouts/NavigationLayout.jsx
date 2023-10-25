@@ -2,8 +2,6 @@ import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import ApplicationLogo2 from "@/Components/ApplicationLogo2";
 import Dropdown from "@/Components/Dropdown";
-import NavLink from "@/Components/Linkactive";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link, usePage } from "@inertiajs/react";
 import Linkactive from "@/Components/Linkactive";
 
@@ -39,6 +37,7 @@ import {
   UserCircleIcon,
   UserGroupIcon,
   Squares2X2Icon,
+  ComputerDesktopIcon,
 } from "@heroicons/react/24/solid";
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -75,6 +74,12 @@ export default function Authenticated({ user, header, children}) {
                   Dashboard
                 </ListItem>
               </Linkactive>
+              <ListItem>
+                  <ListItemPrefix>
+                    <ComputerDesktopIcon className="h-5 w-5"/>
+                  </ListItemPrefix>
+                  Point of Sale
+                </ListItem>
               <Accordion
                 open={open === 1}
                 icon={
@@ -120,13 +125,7 @@ export default function Authenticated({ user, header, children}) {
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
-                      Idk
-                    </ListItem>
-                    <ListItem>
-                      <ListItemPrefix>
-                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                      </ListItemPrefix>
-                      Idk
+                      Stock
                     </ListItem>
                   </List>
                 </AccordionBody>
@@ -158,13 +157,7 @@ export default function Authenticated({ user, header, children}) {
                   </AccordionHeader>
                 </ListItem>
                 <AccordionBody className="py-1">
-                  <List className="p-0">
-                    <ListItem>
-                      <ListItemPrefix>
-                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                      </ListItemPrefix>
-                      Point of sales
-                    </ListItem>
+                  <List className="p-0">  
                     <ListItem>
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -212,34 +205,6 @@ export default function Authenticated({ user, header, children}) {
                     <a href="#">Edit</a>
                   </Breadcrumbs>
                   <Dropdown>
-                    {/*<Dropdown.Trigger>
-                      <span className="inline-flex rounded-md">
-                        <Button
-                          variant="filled"
-                          className="lg:inline-flex items-center px-4 py-1.5 border border-transparent text-md font-medium rounded-2xl text-white bg-ungukita hidden"
-                        >
-                          <span>
-                            <UserCircleIcon className="h-7 w-7 mr-2" />
-                          </span>
-                          {user.name}
-                        </Button>
-                      </span>
-                    </Dropdown.Trigger>
-                    <Dropdown.Content>
-                      <Dropdown.Link href={route("profile.edit")}>
-                        Profile
-                      </Dropdown.Link>
-                      <Dropdown.Link
-                        href={route("logout")}
-                        method="post"
-                        as="button"
-                      >
-                        Log Out
-                      </Dropdown.Link>
-                      <Button variant="outlined" size="md" className="w-40 block p-3 m-3" color="red">
-                        Log Out
-                      </Button>
-                    </Dropdown.Content>*/}
                     <Tooltip
                       placement="left"
                       content={"Hello, " + user.name}
@@ -299,13 +264,17 @@ export default function Authenticated({ user, header, children}) {
                       </Menu>
                     </Tooltip>
                   </Dropdown>
-
                 </div>
               </div>
             </nav>
             <div className="lg:mb-auto mb-32">
             {children}
             </div>
+            <footer className="lg:flex hidden lg:text-left">
+              <p className="p-5 text-center text-gray-500">
+                &copy; 2023 QWER all rights reserved
+              </p>
+            </footer>
           </main>
         </div>
         <div className="fixed bottom-0 w-full lg:hidden inline-flex justify-between bg-white">
