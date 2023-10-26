@@ -266,11 +266,23 @@ export default function Inventory({ auth }) {
               </tbody>
             </table>
           </Card>
-          <div className="w-full h-10 sticky bottom-0 bg-gray-100 rounded-none border-t border-gray-200 shadow-md">
-            <div className="flex justify-end">
-              <span className="text-black inline-flex mt-2 justify-end"><ChevronLeftIcon className="w-6 h-6" />1 of 500<ChevronRightIcon className="w-6 h-6" /></span>
-            </div>
-          </div>
+          <Card className="flex border-t border-blue-gray-50 p-4 rounded-none">
+        <div className="flex justify-between">
+          <div className="pt-2">
+        <Typography variant="small" color="blue-gray" className="font-normal">
+          Page 1 of 10
+        </Typography>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outlined" size="sm">
+            Previous
+          </Button>
+          <Button variant="outlined" size="sm">
+            Next
+          </Button>
+        </div>
+        </div>
+      </Card>
         </div>
       </div>
     </InventoryLayout>
