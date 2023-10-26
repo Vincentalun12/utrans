@@ -292,7 +292,7 @@ export default function Balancesheet({ auth }) {
                   LIABILITIES + EQUITY
                 </Typography>
                 <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
-                  Rp 0
+                  Rp 266.912.454,00
                 </Typography>
                 </div>
               </div>
