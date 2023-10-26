@@ -46,16 +46,40 @@ import {
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
-export default function Authenticated({ user, header, children}) {
+export default function Authenticated({ user, header, children }) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
     useState(false);
 
   const { url } = usePage();
 
-  const [open, setOpen] = React.useState(route().current("dashboard") ? 0 : 1);
+  const [open, setOpen] = React.useState(
+    route().current("inventory")  ? 1 : 0
+  );
+
+  const [openReport, setOpenReport] = React.useState(
+    route().current("balancesheet")  ? 1 : 0
+  );
+
+  const [openOrder, setOpenOrder] = React.useState(
+    route().current("Sales")  ? 1 : 0
+  );
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
+    setOpenReport(0);
+    setOpenOrder(0);
+  };
+
+  const handleOpenReport = (value) => {
+    setOpenReport(openReport === value ? 0 : value);
+    setOpen(0);
+    setOpenOrder(0);
+  };
+
+  const handleOpenOrder = (value) => {
+    setOpenOrder(openOrder === value ? 0 : value);
+    setOpenReport(0);
+    setOpen(0);
   };
 
   return (
@@ -135,18 +159,18 @@ export default function Authenticated({ user, header, children}) {
                 </AccordionBody>
               </Accordion>
               <Accordion
-                open={open === 2}
+                open={openOrder === 1}
                 icon={
                   <ChevronDownIcon
                     strokeWidth={2.5}
-                    className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""
+                    className={`mx-auto h-4 w-4 transition-transform ${openOrder === 1 ? "rotate-180" : ""
                       }`}
                   />
                 }
               >
-                <ListItem className="p-0" selected={open === 2}>
+                <ListItem className="p-0" selected={openOrder === 1}>
                   <AccordionHeader
-                    onClick={() => handleOpen(2)}
+                    onClick={() => handleOpenOrder(1)}
                     className="border-b-0 p-3"
                   >
                     <ListItemPrefix>
@@ -178,18 +202,18 @@ export default function Authenticated({ user, header, children}) {
                 </AccordionBody>
               </Accordion>
               <Accordion
-                open={open === 3}
+                open={openReport === 1}
                 icon={
                   <ChevronDownIcon
                     strokeWidth={2.5}
-                    className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""
+                    className={`mx-auto h-4 w-4 transition-transform ${openReport === 1 ? "rotate-180" : ""
                       }`}
                   />
                 }
               >
-                <ListItem className="p-0" selected={open === 3}>
+                <ListItem className="p-0" selected={openReport === 1}>
                   <AccordionHeader
-                    onClick={() => handleOpen(3)}
+                    onClick={() => handleOpenReport(1)}
                     className="border-b-0 p-3"
                   >
                     <ListItemPrefix>

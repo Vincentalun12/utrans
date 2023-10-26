@@ -19,7 +19,8 @@ import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
   EllipsisHorizontalIcon,
-  PlusCircleIcon
+  PlusCircleIcon,
+  CalendarDaysIcon,
 } from "@heroicons/react/24/solid";
 
 export default function Balancesheet({ auth }) {
@@ -66,8 +67,12 @@ export default function Balancesheet({ auth }) {
               <a href="#">Edit</a>
             </Breadcrumbs>
           </div>
-          <Card className="h-full w-full overflow-hidden rounded-none mt-2">
-            <div className="p-4"></div>
+          <Card className="h-full w-full overflow-hidden rounded-none inline-flex">
+            <div className="p-4 pt-5 inline-flex">
+              <CalendarDaysIcon className="w-6 h-6 text-black" />
+              <span className="text-black font-bold mx-1">Date :</span>
+              <span className="">Thur Nov 2, 2020</span>
+            </div>
           </Card>
           <Card className="h-full w-full overflow-hidden rounded-none">
             <div className="p-4">
