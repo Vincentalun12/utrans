@@ -1,4 +1,4 @@
-import SalesLayout from "@/Layouts/NavigationLayout";
+import PurchasingLayout from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
 import {
     MagnifyingGlassIcon,
@@ -27,101 +27,87 @@ import {
     Breadcrumbs,
   } from "@material-tailwind/react";
    
-  const TABS = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "Monitored",
-      value: "monitored",
-    },
-    {
-      label: "Unmonitored",
-      value: "unmonitored",
-    },
-  ];
    
-  const TABLE_HEAD = ["Number", "Creation date", "Customer", "Reference", "Total","status",""];
+  const TABLE_HEAD = ["Reference", "Creation date", "Vendor", "Total item", "Total","status",""];
   const TABLE_ROWS = [
     {
-      number: "AA0001",
+      Reference: "P000123",
       creation: "10/27/2023",
-      customer: "PT. Aspero Mitra mandiri",
-      reference: "AD-001",
+      vendor: "PT. Aspero Mitra mandiri",
+      totalitem: "4.932 Units",
       total: "Rp. 174,000,000.00",
       status: true,
     },
     {
-      number: "AA0002",
+      Reference: "P000124",
       creation: "10/27/2023",
-      customer: "PT.Mustika anugrah sejati",
-      reference: "AD-002",
+      vendor: "PT.Mustika anugrah sejati",
+      totalitem: "2.132 Units",
       total: "Rp. 140,000,000.00",
       status: false,
     },
     {
-      number: "AA0003",
+      Reference: "P000125",
       creation: "10/27/2023",
-      customer: "PT. Prima jaya mandiri",
-      reference: "AD-003",
+      vendor: "PT. Prima jaya mandiri",
+      totalitem: "1.921 Units",
       total: "Rp. 18,000,000.00",
       status: false,
     },
     {
-      number: "AA0004",
+      Reference: "P000126",
       creation: "10/27/2023",
-      customer: "PT. mitra langgeng makmur",
-      reference: "AD-004",
+      vendor: "PT. mitra langgeng makmur",
+      totalitem: "412 Units",
       total: "Rp. 474,000,000.00",
       status: true,
     },
     {
-      number: "AA0005",
+      Reference: "P000127",
       creation: "10/27/2023",
-      customer: "PT. Usaha sukses mandiri",
-      reference: "AD-005",
+      vendor: "PT. Usaha sukses mandiri",
+      totalitem: "6.932 Units",
       total: "Rp. 514,000,000.00",
       status: false,
     },
     {
-        number: "AA0005",
+        Reference: "P000128",
         creation: "10/27/2023",
-        customer: "PT. Usaha sukses mandiri",
-        reference: "AD-005",
+        vendor: "PT. Usaha sukses mandiri",
+        totalitem: "8.932 Units",
         total: "Rp. 514,000,000.00",
-        status: false,
+        status: true,
       },
       {
-        number: "AA0005",
+        Reference: "P000129",
         creation: "10/27/2023",
-        customer: "PT. Usaha sukses mandiri",
-        reference: "AD-005",
+        vendor: "PT. Usaha sukses mandiri",
+        totalitem: "401 Units",
         total: "Rp. 514,000,000.00",
-        status: false,
+        status: true,
       },
       {
-        number: "AA0005",
+        Reference: "P000130",
         creation: "10/27/2023",
-        customer: "PT. Usaha sukses mandiri",
-        reference: "AD-005",
+        vendor: "PT. Usaha sukses mandiri",
+        totalitem: "50 Units",
         total: "Rp. 514,000,000.00",
-        status: false,
+        status: true,
       },
       {
-        number: "AA0005",
+        Reference: "P000131",
         creation: "10/27/2023",
-        customer: "PT. Usaha sukses mandiri",
-        reference: "AD-005",
+        vendor: "PT. Usaha sukses mandiri",
+        totalitem: "10 Units",
         total: "Rp. 514,000,000.00",
         status: false,
       },
   ];
 
-export default function Sales({ auth }) {
+export default function Purchasing({ auth }) {
 
   return (
-    <SalesLayout user={auth.user}>
+    <PurchasingLayout user={auth.user}>
       <Head title="Sales" />
       <div className="lg:py-4 py-1">
         <div className="mx-auto px-4 sm:px-6 lg:px-6">
@@ -192,14 +178,14 @@ export default function Sales({ auth }) {
             </thead>
             <tbody>
               {TABLE_ROWS.map(
-                ({ number, creation, customer, reference, status, total }, index) => {
+                ({ Reference, creation, vendor, totalitem, status, total }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
    
                   return (
-                    <tr key={number}>
+                    <tr key={Reference}>
                       <td className="p-2 border-b border-gray-200 pl-4">
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
@@ -208,7 +194,7 @@ export default function Sales({ auth }) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {number}
+                              {Reference}
                             </Typography>
 
                           </div>
@@ -232,7 +218,7 @@ export default function Sales({ auth }) {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {customer}
+                            {vendor}
                           </Typography>
                         </div>
                       </td>
@@ -242,7 +228,7 @@ export default function Sales({ auth }) {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {reference}
+                          {totalitem}
                         </Typography>
                       </td>
                       <td className="p-2 border-b border-gray-200 pl-4">
@@ -261,8 +247,8 @@ export default function Sales({ auth }) {
                             className="static"
                             variant="ghost"
                             size="sm"
-                            value={status ? "sucess" : "pending"}
-                            color={status ? "green" : "red"}
+                            value={status ? "Purchase" : "Cancelled"}
+                            color={status ? "green" : "gray"}
                           />
                         </div>
                         </div>
@@ -300,7 +286,7 @@ export default function Sales({ auth }) {
       </Card>
         </div>
       </div>
-    </SalesLayout>
+    </PurchasingLayout>
   );
 }
 

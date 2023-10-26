@@ -41,6 +41,14 @@ Route::get('/balancesheet', function () {
     return Inertia::render('Layout/BalancesheetLayout');
 })->middleware(['auth', 'verified'])->name('balancesheet');
 
+Route::get('/sales', function () {
+    return Inertia::render('Layout/SalesLayout');
+})->middleware(['auth', 'verified'])->name('sales');
+
+Route::get('/purchasing', function () {
+    return Inertia::render('Layout/PurchasingLayout');
+})->middleware(['auth', 'verified'])->name('purchasing');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

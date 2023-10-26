@@ -61,8 +61,9 @@ export default function Authenticated({ user, header, children }) {
   );
 
   const [openOrder, setOpenOrder] = React.useState(
-    route().current("Sales")  ? 1 : 0
+    route().current("sales")  ? 1 : 0 || route().current("purchasing")  ? 1 : 0
   );
+
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -186,18 +187,26 @@ export default function Authenticated({ user, header, children }) {
                 </ListItem>
                 <AccordionBody className="py-1">
                   <List className="p-0">  
-                    <ListItem>
+                  <Linkactive
+                      href={route("purchasing")}
+                    >
+                    <ListItem className={`${route().current("purchasing") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
                       Purchasing
                     </ListItem>
-                    <ListItem>
+                    </Linkactive>
+                    <Linkactive
+                      href={route("sales")}
+                    >
+                    <ListItem className={`${route().current("sales") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
                       Sales
                     </ListItem>
+                    </Linkactive>
                   </List>
                 </AccordionBody>
               </Accordion>
