@@ -266,14 +266,14 @@ export default function Inventory({ auth }) {
               </tbody>
             </table>
           </Card>
-          <Card className="flex border-t border-blue-gray-50 p-4 rounded-none">
+          <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
         <div className="flex justify-between">
           <div className="pt-2">
         <Typography variant="small" color="blue-gray" className="font-normal">
           Page 1 of 10
         </Typography>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <Button variant="outlined" size="sm">
             Previous
           </Button>
