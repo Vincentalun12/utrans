@@ -15,6 +15,7 @@ import {
   EyeIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronDownIcon,
   MagnifyingGlassIcon,
   EllipsisHorizontalIcon,
   PlusCircleIcon
@@ -55,7 +56,13 @@ export default function Balancesheet({ auth }) {
               <div className="flex-inline justify-between">
                   <p className="border-b w-full border-gray-400">Current Asssets</p>
                   <details className="w-full">
-                    <summary className="border-b w-full border-gray-400">Bank and Cash Accounts<span className="flex-1 text-right">hi</span></summary>
+                    <summary className="border-b w-full border-gray-400 block">
+                    <div className="flex">
+                      <ChevronDownIcon className="w-4 h-4 mt-1 mx-1"/>
+                      <span>Bank and Cash Accounts</span>
+                      <span className="flex-1 text-right text-sm text-black">Rp.3.000.000</span>
+                    </div>
+                    </summary>
                     <details className="pl-4">
                       <summary className="border-b w-full border-gray-400">Kas kecil</summary>
                     </details>
@@ -64,15 +71,53 @@ export default function Balancesheet({ auth }) {
                     </details>
 
                 </details>
-                  <details className="w-full">
-                    <summary className="border-b w-full border-gray-400">Receivables</summary>
-                  </details>
-                  <details className="w-full">
-                    <summary className="border-b w-full border-gray-400">Current Assets</summary>
-                  </details>
-                  <details className="w-full">
-                    <summary className="border-b w-full border-gray-400">Prepayments</summary>
-                  </details>
+                <details className="w-full">
+                    <summary className="border-b w-full border-gray-400 block">
+                    <div className="flex">
+                      <ChevronDownIcon className="w-4 h-4 mt-1 mx-1"/>
+                      <span>Receivables</span>
+                      <span className="flex-1 text-right text-sm text-black">Rp.3.000.000</span>
+                    </div>
+                    </summary>
+                    <details className="pl-4">
+                      <summary className="border-b w-full border-gray-400">Kas kecil</summary>
+                    </details>
+                    <details className="pl-4">
+                      <summary className="border-b w-full border-gray-400">Kas besar</summary>
+                    </details>
+
+                </details>
+                <details className="w-full">
+                    <summary className="border-b w-full border-gray-400 block">
+                    <div className="flex">
+                      <ChevronDownIcon className="w-4 h-4 mt-1 mx-1"/>
+                      <span>Current Assets</span>
+                      <span className="flex-1 text-right text-sm text-black">Rp.3.000.000</span>
+                    </div>
+                    </summary>
+                    <details className="pl-4">
+                      <summary className="border-b w-full border-gray-400">Kas kecil</summary>
+                    </details>
+                    <details className="pl-4">
+                      <summary className="border-b w-full border-gray-400">Kas besar</summary>
+                    </details>
+
+                </details>
+                <details className="w-full">
+                    <summary className="border-b w-full border-gray-400 block">
+                    <div className="flex">
+                      <ChevronDownIcon className="w-4 h-4 mt-1 mx-1"/>
+                      <span>Prepayments</span>
+                      <span className="flex-1 text-right text-sm text-black">Rp.3.000.000</span>
+                    </div>
+                    </summary>
+                    <details className="pl-4">
+                      <summary className="border-b w-full border-gray-400">Kas kecil</summary>
+                    </details>
+                    <details className="pl-4">
+                      <summary className="border-b w-full border-gray-400">Kas besar</summary>
+                    </details>
+                </details>
               </div>
 
               </div>
