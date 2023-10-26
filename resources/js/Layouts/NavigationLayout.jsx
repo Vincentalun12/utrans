@@ -38,6 +38,10 @@ import {
   UserGroupIcon,
   Squares2X2Icon,
   ComputerDesktopIcon,
+  BanknotesIcon,
+  ClipboardIcon,
+  ShoppingCartIcon,
+  CalculatorIcon,
 } from "@heroicons/react/24/solid";
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -58,7 +62,7 @@ export default function Authenticated({ user, header, children}) {
     <div className="min-h-screen bg-backgroundabu">
       <div className="flex flex-col">
         <div className="flex">
-          <Card className="h-screen sticky top-0 w-full max-w-[18rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-50 lg:flex hidden">
+          <Card className="h-screen sticky top-0 w-full max-w-[18rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-50 lg:flex hidden overflow-y-auto">
             <div className="mb-2 p-2 w-full flex justify-center">
               <ApplicationLogo2 />
             </div>
@@ -146,13 +150,13 @@ export default function Authenticated({ user, header, children}) {
                     className="border-b-0 p-3"
                   >
                     <ListItemPrefix>
-                      <ChartBarIcon className="h-5 w-5" />
+                      <ShoppingCartIcon className="h-5 w-5" />
                     </ListItemPrefix>
                     <Typography
                       color="blue-gray"
                       className="mr-auto font-normal"
                     >
-                      Sales
+                      Order
                     </Typography>
                   </AccordionHeader>
                 </ListItem>
@@ -162,13 +166,60 @@ export default function Authenticated({ user, header, children}) {
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
-                      Receivings
+                      Purchasing
                     </ListItem>
                     <ListItem>
                       <ListItemPrefix>
                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                       </ListItemPrefix>
-                      Report
+                      Sales
+                    </ListItem>
+                  </List>
+                </AccordionBody>
+              </Accordion>
+              <Accordion
+                open={open === 3}
+                icon={
+                  <ChevronDownIcon
+                    strokeWidth={2.5}
+                    className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""
+                      }`}
+                  />
+                }
+              >
+                <ListItem className="p-0" selected={open === 3}>
+                  <AccordionHeader
+                    onClick={() => handleOpen(3)}
+                    className="border-b-0 p-3"
+                  >
+                    <ListItemPrefix>
+                      <ClipboardIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    <Typography
+                      color="blue-gray"
+                      className="mr-auto font-normal"
+                    >
+                      Reports
+                    </Typography>
+                  </AccordionHeader>
+                </ListItem>
+                <AccordionBody className="py-1">
+                  <List className="p-0">  
+                  <Linkactive
+                href={route("balancesheet")}
+              >
+                  <ListItem className={`${route().current("balancesheet") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      Balance sheet
+                    </ListItem>
+                    </Linkactive>
+                    <ListItem>
+                      <ListItemPrefix>
+                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                      </ListItemPrefix>
+                      Profit and loss
                     </ListItem>
                   </List>
                 </AccordionBody>
@@ -179,6 +230,12 @@ export default function Authenticated({ user, header, children}) {
                 </ListItemPrefix>
                 Customer
               </ListItem>
+              <ListItem>
+                  <ListItemPrefix>
+                    <CalculatorIcon className="h-5 w-5"/>
+                  </ListItemPrefix>
+                  Accounting
+                </ListItem>
               <ListItem>
                 <ListItemPrefix>
                   <Cog6ToothIcon className="h-5 w-5" />
