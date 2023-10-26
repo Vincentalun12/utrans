@@ -69,7 +69,7 @@ export default function Balancesheet({ auth }) {
                 </Typography>
               </div>
               <div className="flex-inline justify-between">
-                <p className="border-b w-full border-gray-400">Current Asssets</p>
+                <p className="border-b w-full border-gray-400">Current Assets</p>
                 <details className="w-full">
                   <summary className="border-b w-full border-gray-400 block" onClick={toggleDetailsBank}>
                     <div className="flex">
