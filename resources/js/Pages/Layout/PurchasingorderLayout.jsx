@@ -84,7 +84,6 @@ export default function Purchasingorder({ auth }) {
             Purchase order
             </Typography>
             <div className="inline-flex mx-4">
-            <ArrowDownRightIcon className="w-5 h-5"/>
             <Typography
             variant="h4"
             color="black"
