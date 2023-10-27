@@ -6,7 +6,10 @@ import {
   Typography,
   Input,
   Button,
-  Breadcrumbs
+  Breadcrumbs,
+  IconButton,
+  Tooltip,
+  Chip,
 } from "@material-tailwind/react";
 
 import {
@@ -17,6 +20,11 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
   EllipsisHorizontalIcon,
+  ChevronUpDownIcon,
+  InformationCircleIcon,
+  PencilIcon,
+  UserPlusIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/solid";
 
 import { ButtonPrimary } from "@/Components";
@@ -27,100 +35,100 @@ const TABLE_HEAD = [
   "SKU",
   "Name",
   "Merek",
-  "Retail",
-  "Wholesale",
-  "Stock",
+  "retail",
+  "wholesale",
+  "stock",
   "Action",
 ];
 
 const TABLE_ROWS = [
   {
     SKU: "SKU001",
-    Name: "Piston kit - Grand",
-    Merek: "Honda",
-    Retail: "10000",
-    Wholesale: "9000",
-    Stock: "10",
+    name: "Piston kit - Grand",
+    brand: "Honda",
+    retail: "10000",
+    wholesale: "9000",
+    stock: "10",
   },
   {
     SKU: "SKU002",
-    Name: "Piston kit - Supra",
-    Merek: "Honda",
-    Retail: "15000",
-    Wholesale: "14000",
-    Stock: "15",
+    name: "Piston kit - Supra",
+    brand: "Honda",
+    retail: "15000",
+    wholesale: "14000",
+    stock: "15",
   },
   {
     SKU: "SKU003",
-    Name: "Sepatu",
-    Merek: "Pakaian",
-    Retail: "20000",
-    Wholesale: "19000",
-    Stock: "20",
+    name: "Sepatu",
+    brand: "Pakaian",
+    retail: "20000",
+    wholesale: "19000",
+    stock: "20",
   },
   {
     SKU: "SKU004",
-    Name: "Tas",
-    Merek: "Pakaian",
-    Retail: "25000",
-    Wholesale: "24000",
-    Stock: "25",
+    name: "Tas",
+    brand: "Pakaian",
+    retail: "25000",
+    wholesale: "24000",
+    stock: "25",
   },
   {
     SKU: "SKU004",
-    Name: "Tas",
-    Merek: "Pakaian",
-    Retail: "25000",
-    Wholesale: "24000",
-    Stock: "25",
+    name: "Tas",
+    brand: "Pakaian",
+    retail: "25000",
+    wholesale: "24000",
+    stock: "25",
   },
   {
     SKU: "SKU004",
-    Name: "Tas",
-    Merek: "Pakaian",
-    Retail: "25000",
-    Wholesale: "24000",
-    Stock: "25",
+    name: "Tas",
+    brand: "Pakaian",
+    retail: "25000",
+    wholesale: "24000",
+    stock: "25",
   },
   {
     SKU: "SKU004",
-    Name: "Tas",
-    Merek: "Pakaian",
-    Retail: "25000",
-    Wholesale: "24000",
-    Stock: "25",
+    name: "Tas",
+    brand: "Pakaian",
+    retail: "25000",
+    wholesale: "24000",
+    stock: "25",
   },
   {
     SKU: "SKU004",
-    Name: "Tas",
-    Merek: "Pakaian",
-    Retail: "25000",
-    Wholesale: "24000",
-    Stock: "25",
+    name: "Tas",
+    brand: "Pakaian",
+    retail: "25000",
+    wholesale: "24000",
+    stock: "25",
   },
   {
     SKU: "SKU004",
-    Name: "Tas",
-    Merek: "Pakaian",
-    Retail: "25000",
-    Wholesale: "24000",
-    Stock: "25",
+    name: "Tas",
+    brand: "Pakaian",
+    retail: "25000",
+    wholesale: "24000",
+    stock: "25",
   },
   {
     SKU: "SKU004",
-    Name: "Tas",
-    Merek: "Pakaian",
-    Retail: "25000",
-    Wholesale: "24000",
-    Stock: "25",
+    name: "Tas",
+    brand: "Pakaian",
+    retail: "25000",
+    wholesale: "24000",
+    stock: "25",
   },
   {
     SKU: "SKU004",
-    Name: "Tas",
-    Merek: "Pakaian",
-    Retail: "25000",
-    Wholesale: "24000",
-    Stock: "25",
+    name: "Tas",
+    brand: "Pakaian",
+    retail: "25000",
+    wholesale: "24000",
+    stock: "25",
   },
 ];
 
@@ -136,7 +144,7 @@ export default function Inventory({ auth }) {
                 Dashboard
               </a>
               <a href="#" className="Opacity-60">
-                Stock
+                stock
               </a>
               <a href="#">Edit</a>
             </Breadcrumbs>
@@ -166,86 +174,103 @@ export default function Inventory({ auth }) {
               </div>
             </div>
           </div>
-          <Card className="h-full w-full lg:overflow-auto overflow-x-scroll overflow-y-hidden max-h-[450px] rounded-none">
-            <table className="w-full min-w-max lg:min-w-full table-auto text-left">
-              <thead>
-                <tr className="sticky top-0">
-                  {TABLE_HEAD.map((head) => (
-                    <th
-                      key={head}
-                      className="border-b border-gray-200 bg-gray-100 p-4"
+          <Card className="lg:overflow-auto overflow-x-scroll overflow-y-hidden lg:max-h-[460px] max-h-[480px] px-0 rounded-none">
+          <table className="w-full min-w-max lg:min-w-full table-auto text-left">
+            <thead>
+              <tr className="sticky top-0">
+                {TABLE_HEAD.map((head, index) => (
+                  <th
+                    key={head}
+                    className="cursor-pointer border-b border-gray-300 bg-gray-100 p-4 transition-colors hover:bg-gray-400"
+                  >
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                     >
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal leading-none opacity-70"
-                      >
-                        {head}
-                      </Typography>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {TABLE_ROWS.map(
-                  (
-                    { SKU, Name, Merek, Retail, Wholesale, Stock }
-                  ) => (
-                    <tr key={SKU} className="even:bg-blue-gray-50">
-                      <td className="p-4">
+                      {head}{" "}
+                      {index !== TABLE_HEAD.length - 1 && (
+                        <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                      )}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {TABLE_ROWS.map(
+                ({ SKU, name, brand, retail, wholesale, stock }, index) => {
+                  const isLast = index === TABLE_ROWS.length - 1;
+                  const classes = isLast
+                    ? "p-4"
+                    : "p-4 border-b border-blue-gray-50";
+   
+                  return (
+                    <tr key={SKU}>
+                      <td className="p-2 border-b border-gray-200 pl-4">
+                        <div className="flex items-center gap-3">
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {SKU}
+                            </Typography>
+
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-2 border-b border-gray-200 pl-4">
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {name}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-2 border-b border-gray-200 pl-4">
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {brand}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className="p-2 border-b border-gray-200 pl-4">
                         <Typography
                           variant="small"
-                          color="black"
+                          color="blue-gray"
                           className="font-normal"
                         >
-                          {SKU}
+                          {retail}
                         </Typography>
                       </td>
-                      <td className="p-4">
+                      <td className="p-2 border-b border-gray-200 pl-4">
                         <Typography
                           variant="small"
-                          color="black"
+                          color="blue-gray"
                           className="font-normal"
                         >
-                          {Name}
+                          {wholesale}
                         </Typography>
                       </td>
-                      <td className="p-4">
+                      <td className="p-2 border-b border-gray-200 pl-4">
                         <Typography
                           variant="small"
-                          color="black"
+                          color="blue-gray"
                           className="font-normal"
                         >
-                          {Merek}
+                          {stock}
                         </Typography>
                       </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="black"
-                          className="font-normal"
-                        >
-                          {Retail}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="black"
-                          className="font-normal"
-                        >
-                          {Wholesale}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="black"
-                          className="font-normal"
-                        >
-                          {Stock}
-                        </Typography>
-                      </td>
+
                       <td className="p-4">
                         <Typography
                           as="a"
@@ -261,11 +286,12 @@ export default function Inventory({ auth }) {
                         </Typography>
                       </td>
                     </tr>
-                  )
-                )}
-              </tbody>
-            </table>
-          </Card>
+                  );
+                },
+              )}
+            </tbody>
+          </table>
+        </Card>
           <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
         <div className="flex justify-between">
           <div className="pt-2">
