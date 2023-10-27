@@ -176,9 +176,11 @@ export default function Inventory({ auth }) {
                     className: "before:content-none after:content-none",
                   }}
                 />
-                <Button size="md" className="rounded-lg bg-ungukita mx-3">
-                  <MagnifyingGlassIcon className="w-4 h-4" />
-                </Button>
+                <div>
+                <IconButton className=" bg-ungukita mx-3">
+                  <MagnifyingGlassIcon className="w-5 h-5" />
+                </IconButton>
+                </div>
               </div>
             </div>
           </div>
@@ -214,7 +216,7 @@ export default function Inventory({ auth }) {
                     : "p-4 border-b border-blue-gray-50";
    
                   return (
-                    <tr key={SKU}>
+                    <tr key={SKU} className="even:bg-gray-100">
                       <td className="p-2 border-b border-gray-200 pl-4">
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
