@@ -28,78 +28,78 @@ import {
   } from "@material-tailwind/react";
    
    
-  const TABLE_HEAD = ["Reference", "Creation date", "Vendor", "Total item", "Total","status",""];
+  const TABLE_HEAD = ["Reference", "Creation date", "Vendor", "Total item", "Total","Status",""];
   const TABLE_ROWS = [
     {
-      Reference: "P000123",
-      creation: "10/27/2023",
-      vendor: "PT. Aspero Mitra mandiri",
-      totalitem: "4.932 Units",
-      total: "Rp. 174,000,000.00",
+      Reference: "BW-PU-A-001",
+      creation: "03/13/2017",
+      vendor: "PANAXIA SDN. BHD",
+      totalitem: "146 Units",
+      total: "Rp. 34,573,000.00",
       status: true,
     },
     {
-      Reference: "P000124",
-      creation: "10/27/2023",
-      vendor: "PT.Mustika anugrah sejati",
-      totalitem: "2.132 Units",
-      total: "Rp. 140,000,000.00",
-      status: false,
-    },
-    {
-      Reference: "P000125",
-      creation: "10/27/2023",
-      vendor: "PT. Prima jaya mandiri",
-      totalitem: "1.921 Units",
-      total: "Rp. 18,000,000.00",
-      status: false,
-    },
-    {
-      Reference: "P000126",
-      creation: "10/27/2023",
-      vendor: "PT. mitra langgeng makmur",
-      totalitem: "412 Units",
-      total: "Rp. 474,000,000.00",
+      Reference: "BW-PU-A-002",
+      creation: "03/14/2017",
+      vendor: "CV. TIR",
+      totalitem: "1.511 Units",
+      total: "Rp. 643,351,000.00",
       status: true,
     },
     {
-      Reference: "P000127",
-      creation: "10/27/2023",
-      vendor: "PT. Usaha sukses mandiri",
-      totalitem: "6.932 Units",
-      total: "Rp. 514,000,000.00",
-      status: false,
+      Reference: "BW-PU-A-003",
+      creation: "03/14/2017",
+      vendor: "CV. MZU",
+      totalitem: "49 Units",
+      total: "Rp. 64,752,000.00",
+      status: true,
     },
     {
-        Reference: "P000128",
-        creation: "10/27/2023",
-        vendor: "PT. Usaha sukses mandiri",
-        totalitem: "8.932 Units",
-        total: "Rp. 514,000,000.00",
+      Reference: "BW-PU-A-004",
+      creation: "03/20/2017",
+      vendor: "CV. Global Plastik",
+      totalitem: "93 Units",
+      total: "Rp. 5.413.000,00",
+      status: true,
+    },
+    {
+      Reference: "BW-PU-A-005",
+      creation: "03/20/2017",
+      vendor: "PT. ALNCO",
+      totalitem: "491 Units",
+      total: "Rp. 195,752,000.00",
+      status: true,
+    },
+    {
+        Reference: "BW-PU-A-006",
+        creation: "03/29/2017",
+        vendor: "PT. TRI MITRA GALON",
+        totalitem: "1.401 Units",
+        total: "Rp. 903,414,000.00",
         status: true,
       },
       {
-        Reference: "P000129",
-        creation: "10/27/2023",
-        vendor: "PT. Usaha sukses mandiri",
+        Reference: "BW-PU-A-007",
+        creation: "03/29/2017",
+        vendor: "CV. JAYA ANLY",
         totalitem: "401 Units",
         total: "Rp. 514,000,000.00",
         status: true,
       },
       {
-        Reference: "P000130",
-        creation: "10/27/2023",
-        vendor: "PT. Usaha sukses mandiri",
-        totalitem: "50 Units",
-        total: "Rp. 514,000,000.00",
+        Reference: "BW-PU-A-008",
+        creation: "03/29/2017",
+        vendor: "CV. BUANA PLASTIK",
+        totalitem: "1.403 Units",
+        total: "Rp. 931,403,000.00",
         status: true,
       },
       {
-        Reference: "P000131",
-        creation: "10/27/2023",
-        vendor: "PT. Usaha sukses mandiri",
-        totalitem: "10 Units",
-        total: "Rp. 514,000,000.00",
+        Reference: "BW-PU-A-009",
+        creation: "03/30/2017",
+        vendor: "CV. ROFILL WATER",
+        totalitem: "2 Units",
+        total: "Rp. 2,166,000.00",
         status: false,
       },
   ];
@@ -247,7 +247,7 @@ export default function Purchasing({ auth }) {
                             className="static"
                             variant="ghost"
                             size="sm"
-                            value={status ? "Purchase" : "Cancelled"}
+                            value={status ? "Purchased" : "Cancelled"}
                             color={status ? "green" : "gray"}
                           />
                         </div>
