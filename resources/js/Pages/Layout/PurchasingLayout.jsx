@@ -7,6 +7,8 @@ import {
     PencilIcon,
     UserPlusIcon,
     DocumentTextIcon,
+    DocumentArrowDownIcon,
+    DocumentChartBarIcon
   } from "@heroicons/react/24/outline";
 
   import {
@@ -25,6 +27,10 @@ import {
     IconButton,
     Tooltip,
     Breadcrumbs,
+    Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem,
   } from "@material-tailwind/react";
    
    
@@ -128,9 +134,23 @@ export default function Purchasing({ auth }) {
               <Button className="bg-ungukita">
                 Create
               </Button>
+              <Menu placement="right-start">
+              <MenuHandler>
               <IconButton className="bg-ungukita">
                 <DocumentTextIcon className="w-5 h-5" />
-            </IconButton>
+              </IconButton>
+              </MenuHandler>
+              <MenuList>
+                <MenuItem className="flex items-center gap-2">
+                <DocumentArrowDownIcon className="w-5 h-5" stroke="red"/>
+                Export as PDF
+                </MenuItem>
+                <MenuItem className="flex items-center gap-2">
+                <DocumentChartBarIcon className="w-5 h-5" stroke="green" />
+                Export as CSV
+                </MenuItem>
+              </MenuList>
+              </Menu>
             </div>
 
               <div className="inline-flex items-center">
