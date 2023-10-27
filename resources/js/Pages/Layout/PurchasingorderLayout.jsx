@@ -24,28 +24,20 @@ const TABLE_HEAD = ["SKU", "Item", "Quantity", "Unit price", "Disc", "Total"];
  
 const TABLE_ROWS = [
   {
-    SKU: "BW-CB-001",
-    item : "Carbon Block CTO Kirei 10 inch",
-    quantity: "50",
-    unitprice: "25000",
+    SKU: "BW-CB-119",
+    item : "Resin Coconut BestCarb 20 kg",
+    quantity: "20",
+    unitprice: "Rp 950.000,00",
     disc: "0",
-    total: "1250000",
+    total: "Rp 19.000.000,00",
   },
   {
-    SKU: "BW-CB-002",
-    item : "Carbon Block CTO Kirei 20 inch",
-    quantity: "50",
-    unitprice: "25000",
+    SKU: "BW-CB-220",
+    item : "Resin Coconut NuCarb 20 kg",
+    quantity: "20",
+    unitprice: "Rp 800.000,00",
     disc: "0",
-    total: "1250000",
-  },
-  {
-    SKU: "BW-CF-003",
-    item : "Catridge Filter Kolon 10 inch 05 mikron",
-    quantity: "41",
-    unitprice: "25000",
-    disc: "0",
-    total: "1250000",
+    total: "Rp 16.000.000,00",
   },
 ];
 
@@ -215,7 +207,7 @@ export default function Purchasingorder({ auth }) {
             <tr>
             <td className="pl-4">Total</td>
             <td className="">:</td>
-            <td className="pl-4">Rp. 34,573,000.00</td>
+            <td className="pl-4">Rp. 35,000,000.00</td>
             </tr>
 
         </table>

@@ -102,8 +102,8 @@ export default function Salesorder({ auth }) {
             </Typography>
             <Typography className="ml-6">
                 Acuang pinang<br/>
-                Jln Hang nadim 3, blok 1<br/>
-                Jakarta Selatan, 12345<br/>
+                Tanjung Pinang KM 47<br/>
+                Kepulauan Riau, 35242<br/>
                 Indonesia
             </Typography>
             </div>

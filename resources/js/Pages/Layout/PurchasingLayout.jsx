@@ -42,7 +42,7 @@ import {
       creation: "03/13/2017",
       vendor: "PANAXIA SDN. BHD",
       totalitem: "146 Units",
-      total: "Rp. 34,573,000.00",
+      total: "Rp. 35,000,000.00",
       status: true,
     },
     {
