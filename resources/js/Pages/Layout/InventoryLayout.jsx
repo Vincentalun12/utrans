@@ -162,7 +162,7 @@ export default function Inventory({ auth }) {
             <Linkactive
                 href={route("additem")}
               >
-              <Button className={twMerge('px-2 py-1 bg-red hover:bg-dark-red md:flex hidden', 'p-3 bg-[#B91C1C]')}>
+              <Button className={twMerge('px-2 py-1 bg-red hover:bg-dark-red md:flex hidden', 'p-3 bg-ungukita')}>
                 Add Items
               </Button>
             </Linkactive>
