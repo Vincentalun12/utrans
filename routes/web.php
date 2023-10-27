@@ -49,6 +49,14 @@ Route::get('/purchasing', function () {
     return Inertia::render('Layout/PurchasingLayout');
 })->middleware(['auth', 'verified'])->name('purchasing');
 
+Route::get('/purchasingorder', function () {
+    return Inertia::render('Layout/PurchasingorderLayout');
+})->middleware(['auth', 'verified'])->name('purchasingorder');
+
+Route::get('/salesorder', function () {
+    return Inertia::render('Layout/SalesorderLayout');
+})->middleware(['auth', 'verified'])->name('salesorder');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

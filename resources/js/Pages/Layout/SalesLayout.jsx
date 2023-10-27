@@ -32,6 +32,7 @@ import {
     MenuList,
     MenuItem,
   } from "@material-tailwind/react";
+import Linkactive from "@/Components/Linkactive";
    
   const TABS = [
     {
@@ -289,9 +290,13 @@ export default function Sales({ auth }) {
                       </td>
                       <td className="p-2 border-b border-gray-200 pl-4">
                         <Tooltip content="Orders">
+                        <Linkactive
+                          href={route("salesorder")}
+                       >
                           <Button size="sm" variant="text" >
                             <InformationCircleIcon className="h-5 w-5" />
                           </Button>
+                          </Linkactive>
                         </Tooltip>
                       </td>
                     </tr>

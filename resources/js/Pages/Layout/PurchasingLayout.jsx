@@ -1,4 +1,5 @@
 import PurchasingLayout from "@/Layouts/NavigationLayout";
+import Linkactive from "@/Components/Linkactive";
 import { Head } from "@inertiajs/react";
 import {
     MagnifyingGlassIcon,
@@ -275,9 +276,13 @@ export default function Purchasing({ auth }) {
                       </td>
                       <td className="p-2 border-b border-gray-200 pl-4">
                         <Tooltip content="Orders">
+                        <Linkactive
+                          href={route("purchasingorder")}
+                       >
                           <Button size="sm" variant="text" >
                             <InformationCircleIcon className="h-5 w-5" />
                           </Button>
+                        </Linkactive>
                         </Tooltip>
                       </td>
                     </tr>
