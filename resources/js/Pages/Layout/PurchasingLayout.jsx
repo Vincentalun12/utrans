@@ -271,7 +271,7 @@ export default function Purchasing({ auth }) {
         <div className="flex justify-between">
           <div className="pt-2">
         <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
+          Page 1 of 39
         </Typography>
         </div>
         <div className="flex gap-3">

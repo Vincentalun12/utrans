@@ -42,79 +42,79 @@ import {
     },
   ];
    
-  const TABLE_HEAD = ["Number", "Creation date", "Customer", "Reference", "Total","status",""];
+  const TABLE_HEAD = ["Number", "Creation date", "Customer", "Reference", "Total","Status",""];
   const TABLE_ROWS = [
     {
-      number: "AA0001",
-      creation: "10/27/2023",
-      customer: "PT. Aspero Mitra mandiri",
-      reference: "AD-001",
-      total: "Rp. 174,000,000.00",
+      number: "BWSL4032",
+      creation: "10/30/2023",
+      customer: "Acuang Pinang",
+      reference: "BW-CS-001",
+      total: "Rp. 2,300,000.00",
+      status: false,
+    },
+    {
+      number: "BWSL4031",
+      creation: "10/30/2023",
+      customer: "Ahiong",
+      reference: "BW-CS-002",
+      total: "Rp. 2,900,000.00",
+      status: false,
+    },
+    {
+      number: "BWSL4030",
+      creation: "10/30/2023",
+      customer: "Depot Sembulang",
+      reference: "BW-CS-014",
+      total: "Rp. 18,300,000.00",
       status: true,
     },
     {
-      number: "AA0002",
-      creation: "10/27/2023",
-      customer: "PT.Mustika anugrah sejati",
-      reference: "AD-002",
-      total: "Rp. 140,000,000.00",
-      status: false,
-    },
-    {
-      number: "AA0003",
-      creation: "10/27/2023",
-      customer: "PT. Prima jaya mandiri",
-      reference: "AD-003",
-      total: "Rp. 18,000,000.00",
-      status: false,
-    },
-    {
-      number: "AA0004",
-      creation: "10/27/2023",
-      customer: "PT. mitra langgeng makmur",
-      reference: "AD-004",
-      total: "Rp. 474,000,000.00",
+      number: "BWSL4029",
+      creation: "10/30/2023",
+      customer: "EDI Bengkong",
+      reference: "BW-CS-024",
+      total: "Rp. 19,302,000.00",
       status: true,
     },
     {
-      number: "AA0005",
-      creation: "10/27/2023",
-      customer: "PT. Usaha sukses mandiri",
-      reference: "AD-005",
-      total: "Rp. 514,000,000.00",
-      status: false,
+      number: "BWSL4028",
+      creation: "10/30/2023",
+      customer: "Erwin",
+      reference: "BW-CS-029",
+      total: "Rp. 2,322,000.00",
+      status: true,
     },
     {
-        number: "AA0005",
-        creation: "10/27/2023",
-        customer: "PT. Usaha sukses mandiri",
-        reference: "AD-005",
-        total: "Rp. 514,000,000.00",
-        status: false,
+        number: "BWSL4027",
+        creation: "10/30/2023",
+        customer: "Febri Depot",
+        reference: "BW-CS-035",
+        total: "Rp. 426,000.00",
+        status: true,
       },
       {
-        number: "AA0005",
-        creation: "10/27/2023",
-        customer: "PT. Usaha sukses mandiri",
-        reference: "AD-005",
-        total: "Rp. 514,000,000.00",
-        status: false,
+        number: "BWSL4026",
+        creation: "10/30/2023",
+        customer: "Hadianto",
+        reference: "BW-CS-041",
+        total: "Rp. 4,400,000.00",
+        status: true,
       },
       {
-        number: "AA0005",
-        creation: "10/27/2023",
-        customer: "PT. Usaha sukses mandiri",
-        reference: "AD-005",
-        total: "Rp. 514,000,000.00",
-        status: false,
+        number: "BWSL4025",
+        creation: "10/30/2023",
+        customer: "Hotel Anugerah",
+        reference: "BW-CS-044",
+        total: "Rp. 640,000.00",
+        status: true,
       },
       {
-        number: "AA0005",
-        creation: "10/27/2023",
-        customer: "PT. Usaha sukses mandiri",
-        reference: "AD-005",
-        total: "Rp. 514,000,000.00",
-        status: false,
+        number: "BWSL4024",
+        creation: "10/30/2023",
+        customer: "PT. Multidaya Investama",
+        reference: "BW-CS-050",
+        total: "Rp. 5,000,000.00",
+        status: true,
       },
   ];
 
@@ -261,7 +261,7 @@ export default function Sales({ auth }) {
                             className="static"
                             variant="ghost"
                             size="sm"
-                            value={status ? "sucess" : "pending"}
+                            value={status ? "success" : "pending"}
                             color={status ? "green" : "red"}
                           />
                         </div>
@@ -285,7 +285,7 @@ export default function Sales({ auth }) {
         <div className="flex justify-between">
           <div className="pt-2">
         <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
+          Page 1 of 493
         </Typography>
         </div>
         <div className="flex gap-3">
