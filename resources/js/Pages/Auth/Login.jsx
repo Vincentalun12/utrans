@@ -87,10 +87,10 @@ export default function Login({ status, canResetPassword }) {
                     )}
                 </div>
 
-                <div className="flex items-center mt-6">
+                  <div className="flex items-center mt-6">
                     <ButtonLogin className="w-full h-10" disabled={processing}>
                       <span className="flex items-center justify-center">{Language.login_id}
-                 </span>  
+                        </span>  
                     </ButtonLogin>
                 </div>
             </form>

@@ -3,7 +3,9 @@ export default function ButtonLogin({ className = '', disabled, children, ...pro
         <button
             {...props}
             className={
-                `items-center px-4 py-2 bg-ungukita border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ${
+                `class="block w-full select-none rounded-lg bg-gradient-to-tr bg-purple-800 to-purple-400 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-purple-900/20 transition-all hover:shadow-lg hover:shadow-purple-900/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+                data-ripple-light="true" ${
                     disabled && 'opacity-25'
                 } ` + className
             }
