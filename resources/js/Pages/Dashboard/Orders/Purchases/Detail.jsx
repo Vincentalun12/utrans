@@ -1,4 +1,4 @@
-import SalesorderLayout from "@/Layouts/NavigationLayout";
+import PurchasingorderLayout from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
 import {
   Card,
@@ -49,9 +49,9 @@ const TABLE_ROWS = [
   },
 ];
 
-export default function Salesorder({ auth }) {
+export default function Purchasingorder({ auth }) {
   return (
-    <SalesorderLayout user={auth.user}>
+    <PurchasingorderLayout user={auth.user}>
       <Head title="Add item" />
       <div className="lg:py-4 py-1">
         <div className="mx-auto px-4 sm:px-6 lg:px-6">
@@ -72,7 +72,7 @@ export default function Salesorder({ auth }) {
             <Button variant="outlined" className="w-full h-10 rounded-none border-r-0">Add Product</Button>
             </div>
             <div>
-            <Button variant="outlined"  className="w-full h-10 rounded-none">Create Invoice</Button>
+            <Button variant="outlined"  className="w-full h-10 rounded-none">Create bill</Button>
             </div>
             </div>
           </Card>
@@ -81,73 +81,66 @@ export default function Salesorder({ auth }) {
             variant="h6"
             color="black"
             >
-            Sales order
+            Purchase order
             </Typography>
             <div className="inline-flex mx-4">
             <Typography
             variant="h4"
             color="black"
             >
-            BWSL4032
+            BW-PU-A-001
             </Typography>
             </div>
           </Card>
           <Card className="h-full w-full overflow-hidden rounded-none">
             <div className="grid lg:gap-8 grid-cols-1 lg:grid-cols-2 gap-4 p-6">
-            <div className="grid grid-cols-1">
-            <div className="inline-flex w-full order-1">
+            <div className="inline-flex w-full lg:order-1 order-1">
             <Typography>
-                Customer: 
+                Vendor: 
             </Typography>
-            <Typography className="ml-6">
-                Acuang pinang<br/>
-                Tanjung Pinang KM 47<br/>
-                Kepulauan Riau, 35242<br/>
-                Indonesia
+            <Typography className="ml-6" color="blue">
+                PT. PANAXIA SDN. BHD
             </Typography>
             </div>
-            <div className="inline-flex w-full order-2">
-            <Typography className="font-bold">
-                Order Date: 
+            <div className="inline-flex w-full lg:order-2 order-4">
+            <Typography>
+                Creation date: 
+            </Typography>
+            <Typography className="ml-6">
+                10/27/2023
+            </Typography>
+            </div>
+            <div className="inline-flex w-full lg:order-3 order-2">
+            <Typography color="black" className="font-bold">
+                Vendor reference: 
+            </Typography>
+            <Typography className="ml-6">
+                BW-PU-A-001
+            </Typography>
+            </div>
+            <div className="inline-flex w-full lg:order-4 order-5">
+            <Typography color="black" className="font-bold">
+                Expected Arrival: 
             </Typography>
             <Typography className="ml-6">
                 10/30/2023
             </Typography>
             </div>
-            </div>
-            <div className="grid grid-cols-1">
-            <div className="inline-flex w-full order-3">
-            <Typography color="black" className="font-bold">
-                Delivery Address: 
-            </Typography >
-            <Typography className="ml-4">
-                Acuang pinang
+            <div className="inline-flex w-full lg:order-5 order-3">
+            <Typography>
+                Currency: 
+            </Typography>
+            <Typography className="ml-6" color="blue">
+                IDR
             </Typography>
             </div>
-            <div className="inline-flex w-full order-4">
-            <Typography color="black" className="font-bold">
-                Invoice Address: 
-            </Typography>
-            <Typography className="ml-6">
-                Acuang pinang
-            </Typography>
-            </div>
-            <div className="inline-flex w-full order-5">
-            <Typography color="black">
-                Customer reference: 
-            </Typography >
-            <Typography className="ml-4">
-                BWSL4032
-            </Typography>
-            </div>
-            <div className="inline-flex w-full order-6">
+            <div className="inline-flex w-full lg:order-6 order-6">
             <Typography>
                 Total item: 
             </Typography>
             <Typography className="ml-6">
                 146 Units
             </Typography>
-            </div>
             </div>
         </div>
           </Card>
@@ -230,6 +223,6 @@ export default function Salesorder({ auth }) {
 
         </div>
       </div>
-    </SalesorderLayout>
+    </PurchasingorderLayout>
   );
 }

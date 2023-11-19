@@ -71,7 +71,7 @@ export default function Balancesheet({ auth }) {
             <div className="p-4 pt-5 inline-flex">
               <CalendarDaysIcon className="w-6 h-6 text-black" />
               <span className="text-black font-bold mx-1">Date :</span>
-              <span className="">Friday, October 27th 2023</span>
+              <span className="">Thur Nov 2, 2020</span>
             </div>
           </Card>
           <Card className="h-full w-full overflow-hidden rounded-none">

@@ -53,15 +53,15 @@ export default function Authenticated({ user, header, children }) {
   const { url } = usePage();
 
   const [open, setOpen] = React.useState(
-    route().current("inventory")  ? 1 : 0
+    route().current("products") ? 1 : 0
   );
 
   const [openReport, setOpenReport] = React.useState(
-    route().current("balancesheet")  ? 1 : 0
+    route().current("balancesheet") ? 1 : 0
   );
 
   const [openOrder, setOpenOrder] = React.useState(
-    route().current("sales")  ? 1 : 0 || route().current("purchasing")  ? 1 : 0
+    route().current("sales") ? 1 : 0 || route().current("purchasing") ? 1 : 0
   );
 
 
@@ -96,19 +96,19 @@ export default function Authenticated({ user, header, children }) {
               <Linkactive
                 href={route("dashboard")}
               >
-                  <ListItem className={`${route().current("dashboard") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                <ListItem className={`${route().current("dashboard") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
                   <ListItemPrefix>
-                    <HomeIcon className="h-5 w-5"/>
+                    <HomeIcon className="h-5 w-5" />
                   </ListItemPrefix>
                   Dashboard
                 </ListItem>
               </Linkactive>
               <ListItem>
-                  <ListItemPrefix>
-                    <ComputerDesktopIcon className="h-5 w-5"/>
-                  </ListItemPrefix>
-                  Point of Sale
-                </ListItem>
+                <ListItemPrefix>
+                  <ComputerDesktopIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Point of Sale
+              </ListItem>
               <Accordion
                 open={open === 1}
                 icon={
@@ -138,9 +138,9 @@ export default function Authenticated({ user, header, children }) {
                 <AccordionBody className="py-1">
                   <List className="p-0">
                     <Linkactive
-                      href={route("inventory")}
+                      href={route("products")}
                     >
-                      <ListItem className={`${route().current("inventory") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                      <ListItem className={`${route().current("products") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
                         <ListItemPrefix>
                           <ChevronRightIcon
                             strokeWidth={3}
@@ -186,26 +186,26 @@ export default function Authenticated({ user, header, children }) {
                   </AccordionHeader>
                 </ListItem>
                 <AccordionBody className="py-1">
-                  <List className="p-0">  
-                  <Linkactive
-                      href={route("purchasing")}
+                  <List className="p-0">
+                    <Linkactive
+                      href={route("purchases")}
                     >
-                    <ListItem className={`${route().current("purchasing") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                      </ListItemPrefix>
-                      Purchasing
-                    </ListItem>
+                      <ListItem className={`${route().current("purchases") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                        <ListItemPrefix>
+                          <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                        </ListItemPrefix>
+                        Purchases
+                      </ListItem>
                     </Linkactive>
                     <Linkactive
                       href={route("sales")}
                     >
-                    <ListItem className={`${route().current("sales") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                      </ListItemPrefix>
-                      Sales
-                    </ListItem>
+                      <ListItem className={`${route().current("sales") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                        <ListItemPrefix>
+                          <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                        </ListItemPrefix>
+                        Sales
+                      </ListItem>
                     </Linkactive>
                   </List>
                 </AccordionBody>
@@ -237,16 +237,16 @@ export default function Authenticated({ user, header, children }) {
                   </AccordionHeader>
                 </ListItem>
                 <AccordionBody className="py-1">
-                  <List className="p-0">  
-                  <Linkactive
-                href={route("balancesheet")}
-              >
-                  <ListItem className={`${route().current("balancesheet") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
-                      <ListItemPrefix>
-                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                      </ListItemPrefix>
-                      Balance sheet
-                    </ListItem>
+                  <List className="p-0">
+                    <Linkactive
+                      href={route("balancesheet")}
+                    >
+                      <ListItem className={`${route().current("balancesheet") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                        <ListItemPrefix>
+                          <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                        </ListItemPrefix>
+                        Balance sheet
+                      </ListItem>
                     </Linkactive>
                     <ListItem>
                       <ListItemPrefix>
@@ -264,11 +264,11 @@ export default function Authenticated({ user, header, children }) {
                 Customer
               </ListItem>
               <ListItem>
-                  <ListItemPrefix>
-                    <CalculatorIcon className="h-5 w-5"/>
-                  </ListItemPrefix>
-                  Accounting
-                </ListItem>
+                <ListItemPrefix>
+                  <CalculatorIcon className="h-5 w-5" />
+                </ListItemPrefix>
+                Accounting
+              </ListItem>
               <ListItem>
                 <ListItemPrefix>
                   <Cog6ToothIcon className="h-5 w-5" />
@@ -358,7 +358,7 @@ export default function Authenticated({ user, header, children }) {
               </div>
             </nav>
             <div className="lg:mb-auto mb-32">
-            {children}
+              {children}
             </div>
             <footer className="lg:flex hidden lg:text-left">
               <p className="p-5 text-center text-gray-500">
@@ -369,49 +369,48 @@ export default function Authenticated({ user, header, children }) {
         </div>
         <div className="fixed bottom-0 w-full lg:hidden inline-flex justify-between bg-white">
           <div className="grid grid-cols-5 items-center flex-grow">
-      <Button
-        variant="text"
-        className="inline-flex flex-col items-center justify-center font-medium py-3 px-4 text-ungukita rounded-none"
-        href="#"
-      >
-      <HomeIcon className="w-7 h-7"/>
-        <span className="">Dashboard</span>
-      </Button>
-      <Button
-        variant="text"
-        size="xs"
-        className="inline-flex flex-col items-center font-medium text-ungukita py-3 px-4 rounded-none"
-        href="#"
-      >
-      <ArchiveBoxIcon className="w-7 h-7"/>
-      <span className="">Inventory</span>
-      </Button>
-      <button className="inline-flex flex-col items-center text-xs font-medium text-white py-3 px-6 rounded-none">
-        <div className="absolute bottom-5 p-4 border-4 rounded-full bg-ungukita shadow-md shadow-blue-gray-200">
-        <Squares2X2Icon className="w-7 h-7"/>
+            <Button
+              variant="text"
+              className="inline-flex flex-col items-center justify-center font-medium py-3 px-4 text-ungukita rounded-none"
+              href="#"
+            >
+              <HomeIcon className="w-7 h-7" />
+              <span className="">Dashboard</span>
+            </Button>
+            <Button
+              variant="text"
+              size="xs"
+              className="inline-flex flex-col items-center font-medium text-ungukita py-3 px-4 rounded-none"
+              href="#"
+            >
+              <ArchiveBoxIcon className="w-7 h-7" />
+              <span className="">Inventory</span>
+            </Button>
+            <button className="inline-flex flex-col items-center text-xs font-medium text-white py-3 px-6 rounded-none">
+              <div className="absolute bottom-5 p-4 border-4 rounded-full bg-ungukita shadow-md shadow-blue-gray-200">
+                <Squares2X2Icon className="w-7 h-7" />
+              </div>
+            </button>
+            <Button
+              variant="text"
+              size="xs"
+              className="inline-flex flex-col items-center font-medium text-ungukita py-3 px-4 rounded-none"
+              href="#"
+            >
+              <ChartBarIcon className="w-7 h-7" />
+              <span className="">Customers</span>
+            </Button>
+            <Button
+              variant="text"
+              size="xs"
+              className="inline-flex flex-col items-center font-medium text-ungukita py-3 px-4 rounded-none"
+              href="#"
+            >
+              <UserGroupIcon className="w-7 h-7" />
+              <span className="">Profile</span>
+            </Button>
+          </div>
         </div>
-      </button>
-      <Button
-        variant="text"
-        size="xs"
-        className="inline-flex flex-col items-center font-medium text-ungukita py-3 px-4 rounded-none"
-        href="#"
-      >
-      <ChartBarIcon className="w-7 h-7"/>
-        <span className="">Customers</span>
-      </Button>
-      <Button
-        variant="text"
-        size="xs"
-        className="inline-flex flex-col items-center font-medium text-ungukita py-3 px-4 rounded-none"
-        href="#"
-      >
-      <UserGroupIcon className="w-7 h-7"/>
-        <span className="">Profile</span>
-      </Button>
-    </div>
-    </div>
-
       </div>
     </div>
   );

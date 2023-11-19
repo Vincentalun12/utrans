@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SaleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,37 +28,34 @@ Route::get('/', function () {
     ]);
 });
 
+Route::controller(ProductController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/products', 'index')->name('products');
+        Route::get('/products/create', 'create')->name('products.create');
+    });
+});
+
+Route::controller(PurchaseController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/purchases', 'index')->name('purchases');
+        Route::get('/purchases/detail', 'detail')->name('purchases.detail');
+    });
+});
+
+Route::controller(SaleController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/sales', 'index')->name('sales');
+        Route::get('/sales/detail', 'detail')->name('sales.detail');
+    });
+});
+
 Route::get('/dashboard', function () {
-    return Inertia::render('Layout/DashboardLayout');
+    return Inertia::render('Dashboard/Index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/inventory', function () {
-    return Inertia::render('Layout/InventoryLayout');
-})->middleware(['auth', 'verified'])->name('inventory');
-
-Route::get('/additem', function () {
-    return Inertia::render('Layout/AdditemLayout');
-})->middleware(['auth', 'verified'])->name('additem');
-
 Route::get('/balancesheet', function () {
-    return Inertia::render('Layout/BalancesheetLayout');
+    return Inertia::render('Dashboard/Reports/BalanceSheet/Index');
 })->middleware(['auth', 'verified'])->name('balancesheet');
-
-Route::get('/sales', function () {
-    return Inertia::render('Layout/SalesLayout');
-})->middleware(['auth', 'verified'])->name('sales');
-
-Route::get('/purchasing', function () {
-    return Inertia::render('Layout/PurchasingLayout');
-})->middleware(['auth', 'verified'])->name('purchasing');
-
-Route::get('/purchasingorder', function () {
-    return Inertia::render('Layout/PurchasingorderLayout');
-})->middleware(['auth', 'verified'])->name('purchasingorder');
-
-Route::get('/salesorder', function () {
-    return Inertia::render('Layout/SalesorderLayout');
-})->middleware(['auth', 'verified'])->name('salesorder');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -63,4 +63,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

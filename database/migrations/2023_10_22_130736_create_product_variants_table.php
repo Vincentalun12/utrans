@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('default_code')->unique();
             $table->string('name');
             $table->text('description');
+            $table->double('onhand_quantity', 65, 2);
+            $table->decimal('available_quantity', 65, 2);
             $table->decimal('standard_price', 65, 2);
             $table->foreignId('color_id')->constrained()->cascadeOnDelete();
             $table->string('size')->nullable();
