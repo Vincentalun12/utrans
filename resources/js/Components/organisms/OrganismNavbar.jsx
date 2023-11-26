@@ -1,4 +1,4 @@
-import { ApplicationLogo2, Dropdown } from "@/Components";
+import { ApplicationLogo2, MoleculesDropdown } from "@/Components";
 import { Link } from "@inertiajs/react";
 import {
     Typography,
@@ -29,7 +29,7 @@ export function OrganismNavbar({ user }) {
                         </a>
                         <a href="#">Edit</a>
                     </Breadcrumbs>
-                    <Dropdown>
+                    <MoleculesDropdown>
                         <Tooltip
                             placement="left"
                             content={"Hello, " + user.name}
@@ -88,7 +88,7 @@ export function OrganismNavbar({ user }) {
                                 </MenuList>
                             </Menu>
                         </Tooltip>
-                    </Dropdown>
+                    </MoleculesDropdown>
                 </div>
             </div>
         </nav>
