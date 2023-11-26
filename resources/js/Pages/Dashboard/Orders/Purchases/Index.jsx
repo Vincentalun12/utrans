@@ -132,9 +132,13 @@ export default function Purchasing({ auth }) {
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2 border-b border-gray-200">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
               <div className="flex gap-3">
+              <Linkactive
+                href={route("purchases.create")}
+              >
                 <Button className="bg-ungukita">
                   Create
                 </Button>
+                </Linkactive>
                 <Menu placement="right-start">
                   <MenuHandler>
                     <IconButton className="bg-ungukita">

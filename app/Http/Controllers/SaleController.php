@@ -16,4 +16,9 @@ class SaleController extends Controller
     {
         return Inertia::render('Dashboard/Orders/Sales/Detail');
     }
+
+    public function create()
+    {
+        return Inertia::render('Dashboard/Orders/Sales/Create');
+    }
 }

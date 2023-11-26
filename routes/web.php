@@ -39,6 +39,7 @@ Route::controller(PurchaseController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/purchases', 'index')->name('purchases');
         Route::get('/purchases/detail', 'detail')->name('purchases.detail');
+        Route::get('/purchases/create', 'create')->name('purchases.create');
     });
 });
 
@@ -46,6 +47,8 @@ Route::controller(SaleController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/sales', 'index')->name('sales');
         Route::get('/sales/detail', 'detail')->name('sales.detail');
+        Route::get('/sales/create', 'create')->name('sales.create');
+        
     });
 });
 
