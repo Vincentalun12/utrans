@@ -238,7 +238,7 @@ export function OrganismSidebar() {
                         <ListItemPrefix>
                             <UserGroupIcon className="h-5 w-5" />
                         </ListItemPrefix>
-                        Partners
+                        Customer
                     </ListItem>
                 </Linkactive>
                 <ListItem>
