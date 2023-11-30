@@ -143,7 +143,7 @@ export default function Sales({ auth }) {
               <a href="#">Edit</a>
             </Breadcrumbs>
           </div>
-          <div className="w-full mx-auto">
+          <div className="w-full mx-auto pb-5">
               <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                 <div className="p-6 text-gray-900">
                   <Typography variant="h4" className="text-ungukita" textGradient>
