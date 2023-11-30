@@ -79,8 +79,9 @@ export function OrganismBottomNavigation() {
                 </div>
             )}
             {isModalOpen && (
-                <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center backdrop-blur-md z-50">
-                <div className="bg-white p-4 m-2 rounded-2xl w-full h-2/3 overflow-auto">
+                <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center backdrop-blur-md z-50 ">
+                <div className="transition-transform duration-500 ease-in-out">
+                <div className="bg-white p-4 m-2 rounded-2xl w-full h-2/3 overflow-auto transform">
                     <div className="block pl-4 pt-2 text-lg text-black font-bold">Menu</div>
                     <div className="grid grid-cols-4 gap-4 mt-4 overflow-x-scroll">
                         <Button variant="text" className="inline-flex flex-col items-center">
@@ -120,6 +121,7 @@ export function OrganismBottomNavigation() {
                             <span className="text-[10px]">Settings</span>
                         </Button>
                     </div>
+                </div>
                     <div className="flex justify-center items-center">
                         <button onClick={handleCloseModal} className="inline-flex flex-col items-center text-xs font-medium text-white py-3 px-6 rounded-none">
                             <div className="absolute bottom-5 p-4 border-4 rounded-full bg-ungukita shadow-md shadow-blue-gray-200">

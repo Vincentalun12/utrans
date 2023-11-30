@@ -37,7 +37,7 @@ export function OrganismSidebar() {
     );
 
     const [openOrder, setOpenOrder] = useState(
-        route().current("sales") ? 1 : 0 || route().current("purchasing") ? 1 : 0
+        route().current("sales") ? 1 : 0 || route().current("purchases") ? 1 : 0
     );
 
 

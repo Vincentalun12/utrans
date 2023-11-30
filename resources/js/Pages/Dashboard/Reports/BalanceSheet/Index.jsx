@@ -67,6 +67,19 @@ export default function Balancesheet({ auth }) {
               <a href="#">Edit</a>
             </Breadcrumbs>
           </div>
+
+          <div className="w-full mx-auto py-6">
+              <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
+                <div className="p-6 text-gray-900">
+                  <Typography variant="h4" className="text-ungukita" textGradient>
+                    Balance Sheet
+                  </Typography>
+                  <Typography variant="lead">
+                    Manage your balance sheet reports here
+                  </Typography>
+                </div>
+              </div>
+          </div>
           <Card className="h-full w-full overflow-hidden rounded-none inline-flex">
             <div className="p-4 pt-5 inline-flex">
               <CalendarDaysIcon className="w-6 h-6 text-black" />

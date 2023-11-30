@@ -129,6 +129,18 @@ export default function Purchasing({ auth }) {
               <a href="#">Edit</a>
             </Breadcrumbs>
           </div>
+          <div className="w-full mx-auto py-6">
+              <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
+                <div className="p-6 text-gray-900">
+                  <Typography variant="h4" className="text-ungukita" textGradient>
+                    Purchases
+                  </Typography>
+                  <Typography variant="lead">
+                    Manage your order purchases here
+                  </Typography>
+                </div>
+              </div>
+          </div>
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2 border-b border-gray-200">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
               <div className="flex gap-3">
