@@ -74,7 +74,7 @@ export default function Balancesheet({ auth }) {
                   <Typography variant="h4" className="text-ungukita" textGradient>
                     Balance Sheet
                   </Typography>
-                  <Typography variant="lead">
+                  <Typography variant="paragraph">
                     Manage your balance sheet reports here
                   </Typography>
                 </div>

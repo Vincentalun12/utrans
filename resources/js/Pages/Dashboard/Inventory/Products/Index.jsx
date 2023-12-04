@@ -159,27 +159,17 @@ export default function Inventory({ auth }) {
               <a href="#">Edit</a>
             </Breadcrumbs>
           </div>
-          <div className="w-full mx-auto">
+          <div className="w-full mx-auto pb-5">
               <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                 <div className="p-6 text-gray-900">
                   <Typography variant="h4" className="text-ungukita" textGradient>
                     Products
                   </Typography>
-                  <Typography variant="lead">
+                  <Typography variant="paragraph">
                     Manage your products here
                   </Typography>
                 </div>
               </div>
-          </div>
-          <div className="py-6">
-            <div className="flex w-full flex-col gap-2">
-              <Alert variant="gradient" color="green" onClose={() => setOpen(false)}> {/* setOpen(false) hanya placeholder biar muncul X buttonnya -Jupiter */}
-              <Typography variant="h6" color="white">
-              <span className="font-semibold">Item successfully added!</span>
-              </Typography>
-              
-              </Alert>
-            </div>
           </div>
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">

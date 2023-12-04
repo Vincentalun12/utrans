@@ -66,6 +66,10 @@ Route::get('/balancesheet', function () {
     return Inertia::render('Dashboard/Reports/BalanceSheet/Index');
 })->middleware(['auth', 'verified'])->name('balancesheet');
 
+Route::get('/pos', function () {
+    return Inertia::render('Dashboard/Pos/Index');
+})->middleware(['auth', 'verified'])->name('pos');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

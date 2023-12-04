@@ -149,7 +149,7 @@ export default function Sales({ auth }) {
                   <Typography variant="h4" className="text-ungukita" textGradient>
                     Sales
                   </Typography>
-                  <Typography variant="lead">
+                  <Typography variant="paragraph">
                     Manage your order sales here
                   </Typography>
                 </div>

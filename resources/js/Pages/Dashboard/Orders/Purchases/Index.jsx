@@ -135,7 +135,7 @@ export default function Purchasing({ auth }) {
                   <Typography variant="h4" className="text-ungukita" textGradient>
                     Purchases
                   </Typography>
-                  <Typography variant="lead">
+                  <Typography variant="paragraph">
                     Manage your order purchases here
                   </Typography>
                 </div>
