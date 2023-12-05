@@ -203,7 +203,7 @@ export default function Inventory({ auth }) {
   };
 
   const handleNext = () => {
-    if (currentPage < Math.ceil(TABLE_ROWS.length / itemsPerPage)) {
+    if (paginated.length === itemsPerPage && currentPage < Math.ceil(TABLE_ROWS.length / itemsPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -393,7 +393,7 @@ export default function Inventory({ auth }) {
                 <Button variant="outlined" size="sm" onClick={handlePrevious}>
                   Previous
                 </Button>
-                <Button variant="outlined" size="sm" onClick={handleNext}>
+                <Button variant="outlined" size="sm" onClick={handleNext} disabled={paginated.length < itemsPerPage}>
                   Next
                 </Button>
               </div>
