@@ -23,6 +23,7 @@ import {
     ClipboardIcon,
     ShoppingCartIcon,
     CalculatorIcon,
+    TagIcon,
 } from "@heroicons/react/24/solid";
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -245,6 +246,12 @@ export function OrganismSidebar() {
                         Customer
                     </ListItem>
                 </Linkactive>
+                <ListItem>
+                    <ListItemPrefix>
+                        <TagIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    Brand
+                </ListItem>
                 <ListItem>
                     <ListItemPrefix>
                         <CalculatorIcon className="h-5 w-5" />

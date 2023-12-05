@@ -68,9 +68,6 @@ export default function Purchasingorder({ auth }) {
           </div>
           <Card className="h-full w-full overflow-hidden rounded-none border-b items-end flex">
             <div className="inline-flex">
-          <div>
-            <Button variant="outlined" className="w-full h-10 rounded-none border-r-0">Add Product</Button>
-            </div>
             <div>
             <Button variant="outlined"  className="w-full h-10 rounded-none">Create bill</Button>
             </div>
@@ -207,7 +204,7 @@ export default function Purchasingorder({ auth }) {
                 <td className="pl-4">0%</td>
             </tr>
             <tr>
-            <td className="pl-4">Change</td>
+            <td className="pl-4">Shipping</td>
             <td className="">:</td>
             <td className="pl-4">0</td>
             </tr>

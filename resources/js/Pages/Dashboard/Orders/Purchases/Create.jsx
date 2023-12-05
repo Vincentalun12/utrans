@@ -31,42 +31,37 @@ import {
   UserPlusIcon,
   DocumentTextIcon,
   DocumentArrowDownIcon,
-  DocumentChartBarIcon
+  DocumentChartBarIcon,
+  CalendarDaysIcon,
+  QrCodeIcon,
+  TrashIcon,
 } from "@heroicons/react/24/solid";
 
-const TABLE_HEAD = ["Reference", "Creation date", "Vendor", "Total item", "Total", "Status", ""];
+const TABLE_HEAD = ["SKU", "Item", "Quantity", "Unit price", "Disc", "Total",""];
 const TABLE_ROWS = [
   {
-    Reference: "BW-PU-A-001",
-    creation: "03/13/2017",
-    vendor: "PANAXIA SDN. BHD",
-    totalitem: "146 Units",
-    total: "Rp. 34,573,000.00",
-    status: true,
+    SKU: "BW-CB-001",
+    item : "Carbon Block CTO Kirei 10 inch",
+    quantity: "50",
+    unitprice: "25,000.00",
+    disc: "0",
+    total: "1,250,000.00",
   },
   {
-    Reference: "BW-PU-A-002",
-    creation: "03/14/2017",
-    vendor: "CV. TIR",
-    totalitem: "1.511 Units",
-    total: "Rp. 643,351,000.00",
-    status: true,
+    SKU: "BW-CB-002",
+    item : "Carbon Block CTO Kirei 20 inch",
+    quantity: "50",
+    unitprice: "25,000.00",
+    disc: "0",
+    total: "1,250,000.00",
   },
   {
-    Reference: "BW-PU-A-003",
-    creation: "03/14/2017",
-    vendor: "CV. MZU",
-    totalitem: "49 Units",
-    total: "Rp. 64,752,000.00",
-    status: true,
-  },
-  {
-    Reference: "BW-PU-A-004",
-    creation: "03/20/2017",
-    vendor: "CV. Global Plastik",
-    totalitem: "93 Units",
-    total: "Rp. 5.413.000,00",
-    status: true,
+    SKU: "BW-CF-003",
+    item : "Catridge Filter Kolon 10 inch 05 mikron",
+    quantity: "41",
+    unitprice: "25,000.00",
+    disc: "0",
+    total: "1,025,000.00",
   },
 ];
 
@@ -99,11 +94,71 @@ export default function Additem({ auth }) {
                 </div>
               </div>
           </div>
-          <div className="bg-white overflow-hidden shadow-md h-20 py-2">
-            <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
-              <div className="flex gap-3">
+          <div className="bg-white overflow-hidden shadow-md h-auto">
+            <div className="lg:flex w-full gap-2 md:justify-between px-4 py-4">
+              <div className="flex lg:gap-3 gap-6 flex-col lg:flex-row">
+              <div className="mx-2 lg:w-4/6 w-full">
+              <label className="flex">Vendor</label>
+              <div className="inline-flex items-center w-full">
+              <Input
+                  type="search"
+                  placeholder="Vendor name"
+
+                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                />
+                <div>
+                <IconButton className=" bg-ungukita ml-2">
+                    <MagnifyingGlassIcon className="w-5 h-5" />
+                  </IconButton>
+                </div>
+                </div>
+                </div>
+                <div className="mx-2 lg:w-4/6 w-full">
+              <label className="">Creation date</label>
+              <Input
+                  type="search"
+                  placeholder="12/5/2023"
+                  icon={<CalendarDaysIcon/>}
+
+                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                />
+                </div>
+                <div className="mx-2 lg:w-4/6 w-full">
+              <label className="">Expected Arrival</label>
+              <Input
+                  type="search"
+                  placeholder="14/5/2023"
+                  icon={<CalendarDaysIcon/>}
+
+                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                />
+                </div>
               </div>
             </div>
+            <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4">
+            <div className="mx-2 w-full flex flex-col">
+              <label className="">Product Name</label>
+              <Input
+                  type="search"
+                  placeholder="Search"
+                  icon={<QrCodeIcon/>}
+
+                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                />
+                </div>
+                </div>
             <div>
             </div>
           </div>
@@ -129,14 +184,14 @@ export default function Additem({ auth }) {
           </thead>
               <tbody>
                 {TABLE_ROWS.map(
-                  ({ Reference, creation, vendor, totalitem, status, total }, index) => {
+                  ({ SKU, item, quantity, unitprice , disc, total }, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
                       ? "p-4"
                       : "p-4 border-b border-blue-gray-50";
 
                     return (
-                      <tr key={Reference}>
+                      <tr key={SKU}>
                         <td className="p-2 border-b border-gray-200 pl-4">
                           <div className="flex items-center gap-3">
                             <div className="flex flex-col">
@@ -145,7 +200,7 @@ export default function Additem({ auth }) {
                                 color="blue-gray"
                                 className="font-normal"
                               >
-                                {Reference}
+                                {SKU}
                               </Typography>
 
                             </div>
@@ -158,7 +213,7 @@ export default function Additem({ auth }) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {creation}
+                              {item}
                             </Typography>
                           </div>
                         </td>
@@ -169,7 +224,7 @@ export default function Additem({ auth }) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {vendor}
+                              {quantity}
                             </Typography>
                           </div>
                         </td>
@@ -179,7 +234,16 @@ export default function Additem({ auth }) {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {totalitem}
+                            {unitprice}
+                          </Typography>
+                        </td>
+                        <td className="p-2 border-b border-gray-200 pl-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {disc}
                           </Typography>
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
@@ -192,27 +256,10 @@ export default function Additem({ auth }) {
                           </Typography>
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
-                          <div className="w-max">
-                            <div>
-                              <Chip
-                                className="static"
-                                variant="ghost"
-                                size="sm"
-                                value={status ? "Purchased" : "Cancelled"}
-                                color={status ? "green" : "gray"}
-                              />
-                            </div>
-                          </div>
-                        </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
                           <Tooltip content="Orders">
-                            <Linkactive
-                              href={route("purchases.detail")}
-                            >
                               <Button size="sm" variant="text" >
-                                <InformationCircleIcon className="h-5 w-5" />
+                                <TrashIcon className="h-5 w-5 text-red-500" />
                               </Button>
-                            </Linkactive>
                           </Tooltip>
                         </td>
                       </tr>
@@ -222,12 +269,73 @@ export default function Additem({ auth }) {
               </tbody>
             </table>
           </Card>
-          <Card className="flex bg-white p-4 rounded-none">
-            <div className="flex justify-between">
-              <div className="pt-2">
+          <Card className="flex bg-white rounded-none">
+          <div className="w-full gap-2 md:justify-between px-4 py-4">
+            <div className="flex lg:gap-3 gap-6 flex-col lg:flex-row">
+              <div className="mx-2 lg:w-4/6 w-full">
+                <label className="">Discount</label>
+                <Input
+                    type="search"
+                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                    labelProps={{
+                      className: "before:content-none after:content-none",
+                    }}
+                  />
+              </div>
+              <div className="mx-2 lg:w-4/6 w-full">
+                <label className="">Shipping</label>
+                <Input
+                    type="search"
+                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                    labelProps={{
+                      className: "before:content-none after:content-none",
+                    }}
+                  />
+              </div>
+              <div className="mx-2 lg:w-4/6 w-full">
+                <label className="">Status</label>
+                <Input
+                    type="search"
+                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                    labelProps={{
+                      className: "before:content-none after:content-none",
+                    }}
+                  />
               </div>
             </div>
-          </Card>
+          </div>
+        </Card>
+        <Card className="h-full w-full overflow-hidden rounded-none p-6 items-end">
+          <div className="flex justify-between items-center">
+
+            <div></div>
+            <table className="border-gray-300 border-t">
+              <tr>
+                <td className="pl-4">Discount</td>
+                <td className="">:</td>
+                <td className="pl-4">0%</td>
+              </tr>
+              <tr>
+                <td className="pl-4">Shipping</td>
+                <td className="">:</td>
+                <td className="pl-4">0</td>
+              </tr>
+              <tr>
+                <td className="pl-4">Total</td>
+                <td className="">:</td>
+                <td className="pl-4">Rp. 3,525,000.00</td>
+              </tr>
+            </table>
+          </div>
+          <div className="pt-6 pr-5">
+              <Button color="green" ripple="light">
+                Submit
+              </Button>
+              <Button color="red" ripple="dark" className="ml-4">
+                Cancel
+              </Button>
+            </div>
+        </Card>
         </div>
       </div>
     </AdditemLayout>

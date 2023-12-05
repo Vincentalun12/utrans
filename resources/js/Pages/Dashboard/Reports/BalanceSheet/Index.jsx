@@ -104,15 +104,15 @@ export default function Balancesheet({ auth }) {
               </div>
               <div className="flex-inline justify-between">
                 <p className="border-b w-full border-gray-400">Current Assets</p>
-                <details className="w-full">
-                  <summary className="border-b w-full border-gray-400 block" onClick={toggleDetailsBank}>
+                <details className="w-full cursor-default">
+                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsBank}>
                     <div className="flex">
                       {isOpenBank ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Bank and Cash Accounts</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp 132.047.000,00</span>
                     </div>
                   </summary>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                     <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>001.0001 Kas Besar (IDR)</span>
@@ -120,7 +120,7 @@ export default function Balancesheet({ auth }) {
                     </div>
                     </summary>
                   </details>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>001.0002 Kas Piutang (IDR)</span>
@@ -129,15 +129,15 @@ export default function Balancesheet({ auth }) {
                     </summary>
                   </details>
                 </details>
-                <details className="w-full">
-                  <summary className="border-b w-full border-gray-400 block" onClick={toggleDetailsReceivables}>
+                <details className="w-full cursor-default">
+                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsReceivables}>
                     <div className="flex">
                       {isOpenReceivables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Receivables</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp 180.523.000,00</span>
                     </div>
                   </summary>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                     <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>002.0001 Piutang Usaha (IDR)</span>
@@ -145,7 +145,7 @@ export default function Balancesheet({ auth }) {
                     </div>
                     </summary>
                   </details>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>002.0002 Account Receivable (IDR)</span>
@@ -154,15 +154,15 @@ export default function Balancesheet({ auth }) {
                     </summary>
                   </details>
                 </details>
-                <details className="w-full">
-                  <summary className="border-b w-full border-gray-400 block" onClick={toggleDetailsCurrentAssets}>
+                <details className="w-full cursor-default">
+                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsCurrentAssets}>
                     <div className="flex">
                       {isOpenCurrentAssets ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Current Assets</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp 2.467.431.839,00</span>
                     </div>
                   </summary>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                     <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>1000011 Bank Suspense Account</span>
@@ -170,7 +170,7 @@ export default function Balancesheet({ auth }) {
                     </div>
                     </summary>
                   </details>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>1000012 Outstanding Receipts</span>
@@ -178,7 +178,7 @@ export default function Balancesheet({ auth }) {
                     </div>
                     </summary>
                   </details>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>1000013 Good in Transit</span>
@@ -186,7 +186,7 @@ export default function Balancesheet({ auth }) {
                     </div>
                     </summary>
                   </details>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>003.0001 Persediaan Barang</span>
@@ -195,15 +195,15 @@ export default function Balancesheet({ auth }) {
                     </summary>
                   </details>
                 </details>
-                <details className="w-full">
-                  <summary className="border-b w-full border-gray-400 block" onClick={toggleDetailsPrepayments}>
+                <details className="w-full cursor-default">
+                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsPrepayments}>
                     <div className="flex">
                     {isOpenPrepayments ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Prepayments</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp -2.394.378.821,00</span>
                     </div>
                   </summary>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                     <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>001.3902 PPN (IDR)</span>
@@ -232,15 +232,15 @@ export default function Balancesheet({ auth }) {
                 </div>
                 </div>
                 <p className="border-b w-full border-gray-400 pl-6">Current Liabilities</p>
-                <details className="w-full">
-                  <summary className="border-b w-full border-gray-400 block" onClick={toggleDetailsPayables}>
+                <details className="w-full cursor-default">
+                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsPayables}>
                     <div className="flex">
                       {isOpenPayables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Payables</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp 21.216.514,00</span>
                     </div>
                   </summary>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                     <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>004.0001 Hutang usaha (IDR)</span>
@@ -248,7 +248,7 @@ export default function Balancesheet({ auth }) {
                     </div>
                     </summary>
                   </details>
-                  <details className="w-full">
+                  <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
                       <span>004.0001 Trade Receivable</span>
