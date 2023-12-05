@@ -1,4 +1,5 @@
 import InventoryLayout from "@/Layouts/NavigationLayout";
+import React, { useState, useEffect } from 'react';
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link } from "@inertiajs/react";
 import {
@@ -8,9 +9,6 @@ import {
   Button,
   Breadcrumbs,
   IconButton,
-  Tooltip,
-  Chip,
-  Alert,
 } from "@material-tailwind/react";
 
 import {
@@ -34,13 +32,13 @@ import { ButtonPrimary } from "@/Components";
 import { twMerge } from 'tailwind-merge'
 
 const TABLE_HEAD = [
-  "SKU",
-  "Name",
-  "Brand",
-  "Retail Price",
-  "Wholesale Price",
-  "Stock",
-  "Action",
+  { display: "SKU", field: "SKU" },
+  { display: "Name", field: "name" },
+  { display: "Brand", field: "brand" },
+  { display: "Retail Price", field: "retail" },
+  { display: "Wholesale Price", field: "wholesale" },
+  { display: "Stock", field: "stock" },
+  { display: "Action", field: null },
 ];
 
 const TABLE_ROWS = [
@@ -48,101 +46,167 @@ const TABLE_ROWS = [
     SKU: "BW-CB-001",
     name: "Carbon Block CTO Kirei 10 inch",
     brand: "Kirei",
-    retail: "25000",
-    wholesale: "30000",
+    retail: "25.000",
+    wholesale: "30.000",
     stock: "203",
   },
   {
     SKU: "BW-CB-002",
     name: "Carbon Block CTO Kirei 20 inch",
     brand: "Kirei",
-    retail: "45000",
-    wholesale: "55000",
+    retail: "45.000",
+    wholesale: "55.000",
     stock: "163",
   },
   {
     SKU: "BW-CF-001",
     name: "Catridge Filter Kolon 10 inch 01 mikron",
     brand: "Kolon",
-    retail: "10000",
-    wholesale: "9000",
+    retail: "10.000",
+    wholesale: "9.000",
     stock: "485",
   },
   {
     SKU: "BW-CF-002",
     name: "Catridge Filter Kolon 10 inch 03 mikron",
     brand: "Kolon",
-    retail: "10000",
-    wholesale: "9000",
+    retail: "10.000",
+    wholesale: "9.000",
     stock: "849",
   },
   {
     SKU: "BW-CF-003",
     name: "Catridge Filter Kolon 10 inch 05 mikron",
     brand: "Kolon",
-    retail: "10000",
-    wholesale: "9000",
+    retail: "10.000",
+    wholesale: "9.000",
     stock: "350",
   },
   {
     SKU: "BW-CF-004",
     name: "Catridge Filter Nano 10 inch 01 mikron",
     brand: "Nano",
-    retail: "10000",
-    wholesale: "12000",
+    retail: "10.000",
+    wholesale: "12.000",
     stock: "954",
   },
   {
     SKU: "BW-CF-005",
     name: "Catridge Filter Nano 10 inch 03 mikron",
     brand: "Nano",
-    retail: "10000",
-    wholesale: "12000",
+    retail: "10.000",
+    wholesale: "12.000",
     stock: "832",
   },
   {
     SKU: "BW-CF-006",
     name: "Catridge Filter Nano 10 inch 05 mikron",
     brand: "Nano",
-    retail: "10000",
-    wholesale: "12000",
+    retail: "10.000",
+    wholesale: "12.000",
     stock: "853",
   },
   {
     SKU: "BW-CF-007",
     name: "Catridge Filter Nano 10 inch 10 mikron",
     brand: "Nano",
-    retail: "10000",
-    wholesale: "12000",
+    retail: "10.000",
+    wholesale: "12.000",
     stock: "342",
   },
   {
     SKU: "BW-CF-008",
     name: "Catridge Filter DeWater 10 inch 01 mikron",
     brand: "DeWater",
-    retail: "25000",
-    wholesale: "24000",
+    retail: "25.000",
+    wholesale: "24.000",
     stock: "504",
   },
   {
     SKU: "BW-CF-009",
     name: "Catridge Filter Dewater 10 inch 03 mikron",
     brand: "DeWater",
-    retail: "25000",
-    wholesale: "24000",
+    retail: "25.000",
+    wholesale: "24.000",
     stock: "703",
   },
   {
     SKU: "BW-CF-010",
     name: "Catridge Filter Dewater 10 inch 05 mikron",
     brand: "DeWater",
-    retail: "25000",
-    wholesale: "24000",
+    retail: "25.000",
+    wholesale: "24.000",
     stock: "448",
   },
 ];
 
 export default function Inventory({ auth }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [paginated, setpaginated] = useState([]);
+  const [sorting, setsorting] = useState(null);
+  const [sortdirection, setsortdirection] = useState(null);
+  const [searchbar, setsearchbar] = useState('');
+
+  useEffect(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    let sortedItems = [...TABLE_ROWS];
+
+    if (searchbar) {
+      const terms = searchbar.toLowerCase().split(' ');
+      sortedItems = sortedItems.filter(item =>
+        terms.every(term =>
+          Object.values(item).some(val =>
+            String(val).toLowerCase().includes(term)
+          )
+        )
+      );
+    }
+
+    if (sorting && sortdirection) {
+      sortedItems.sort((a, b) => {
+        let aValue = a[sorting];
+        let bValue = b[sorting];
+    
+        if (sorting === 'retail' || sorting === 'wholesale') {
+          aValue = Number(aValue.replace(/\D/g, ''));
+          bValue = Number(bValue.replace(/\D/g, ''));
+        }
+    
+        if (aValue < bValue) {
+          return sortdirection === 'asc' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortdirection === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
+    setpaginated(sortedItems.slice(start, end));
+  }, [currentPage, sorting, sortdirection, searchbar]);
+
+  const handleSort = (field) => {
+    if (field === sorting) {
+      setsortdirection(sortdirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setsorting(field);
+      setsortdirection('asc');
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < Math.ceil(TABLE_ROWS.length / itemsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
   return (
     <InventoryLayout user={auth.user}>
       <Head title="Products" />
@@ -184,6 +248,8 @@ export default function Inventory({ auth }) {
                 <Input
                   type="search"
                   placeholder="Search"
+                  value={searchbar}
+                  onChange={e => setsearchbar(e.target.value)}
 
                   className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
                   labelProps={{
@@ -202,27 +268,28 @@ export default function Inventory({ auth }) {
             <table className="w-full min-w-max lg:min-w-full table-auto text-left">
               <thead>
                 <tr className="sticky top-0">
-                  {TABLE_HEAD.map((head, index) => (
-                    <th
-                      key={head}
-                      className="cursor-pointer border-b border-gray-300 bg-gray-100 p-4 transition-colors hover:bg-gray-400"
-                    >
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
-                      >
-                        {head}{" "}
-                        {index !== TABLE_HEAD.length - 1 && (
-                          <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                        )}
-                      </Typography>
-                    </th>
+                {TABLE_HEAD.map(({ display, field }, index) => (
+                <th
+                  key={display}
+                  className="cursor-pointer border-b border-gray-300 bg-gray-100 p-4 transition-colors hover:bg-gray-400"
+                  onClick={() => field && handleSort(field)}
+                >
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                  >
+                    {display}{" "}
+                    {index !== TABLE_HEAD.length - 1 && field && (
+                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                    )}
+                  </Typography>
+                </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {TABLE_ROWS.map(
+                {paginated.map(
                   ({ SKU, name, brand, retail, wholesale, stock }, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
@@ -306,7 +373,6 @@ export default function Inventory({ auth }) {
                             <EyeIcon className="w-5 h-5 text-gray-500" />
                             <PencilSquareIcon className="w-5 h-5 text-green-500" />
                             <TrashIcon className="w-5 h-5 text-red-500" />
-
                           </Typography>
                         </td>
                       </tr>
@@ -319,15 +385,15 @@ export default function Inventory({ auth }) {
           <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
             <div className="flex justify-between">
               <div className="pt-2">
-                <Typography variant="small" color="blue-gray" className="font-normal">
-                  Page 1 of 10
-                </Typography>
+              <Typography variant="small" color="blue-gray" className="font-normal">
+                Page {currentPage} of {Math.ceil(TABLE_ROWS.length / itemsPerPage)}
+              </Typography>
               </div>
               <div className="flex gap-3">
-                <Button variant="outlined" size="sm">
+                <Button variant="outlined" size="sm" onClick={handlePrevious}>
                   Previous
                 </Button>
-                <Button variant="outlined" size="sm">
+                <Button variant="outlined" size="sm" onClick={handleNext}>
                   Next
                 </Button>
               </div>

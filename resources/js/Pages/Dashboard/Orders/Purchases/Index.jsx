@@ -1,4 +1,5 @@
 import PurchasingLayout from "@/Layouts/NavigationLayout";
+import React, { useState, useEffect } from 'react';
 import Linkactive from "@/Components/Linkactive";
 import { Head } from "@inertiajs/react";
 import {
@@ -112,6 +113,27 @@ const TABLE_ROWS = [
 ];
 
 export default function Purchasing({ auth }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [paginatedItems, setPaginatedItems] = useState([]);
+
+  useEffect(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    setPaginatedItems(TABLE_ROWS.slice(start, end));
+  }, [currentPage]);
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < Math.ceil(TABLE_ROWS.length / itemsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
     <PurchasingLayout user={auth.user}>
@@ -214,7 +236,7 @@ export default function Purchasing({ auth }) {
                 </tr>
               </thead>
               <tbody>
-                {TABLE_ROWS.map(
+                {paginatedItems.map(
                   ({ Reference, creation, vendor, totalitem, status, total }, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
@@ -312,14 +334,14 @@ export default function Purchasing({ auth }) {
             <div className="flex justify-between">
               <div className="pt-2">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                  Page 1 of 39
+                  Page {currentPage} of {Math.ceil(TABLE_ROWS.length / itemsPerPage)}
                 </Typography>
               </div>
               <div className="flex gap-3">
-                <Button variant="outlined" size="sm">
+                <Button variant="outlined" size="sm" onClick={handlePrevious}>
                   Previous
                 </Button>
-                <Button variant="outlined" size="sm">
+                <Button variant="outlined" size="sm" onClick={handleNext}>
                   Next
                 </Button>
               </div>
