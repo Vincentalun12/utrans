@@ -35,11 +35,19 @@ import {
   MenuItem,
 } from "@material-tailwind/react";
 
+const TABLE_HEAD = [
+  { display: "Reference", field: "reference" },
+  { display: "Creation date", field: "creation" },
+  { display: "Vendor", field: "vendor" },
+  { display: "Total item", field: "totalitem" },
+  { display: "Total", field: "total" },
+  { display: "Status", field: "status" },
+  { display: "", field: null },
+];
 
-const TABLE_HEAD = ["Reference", "Creation date", "Vendor", "Total item", "Total", "Status", ""];
 const TABLE_ROWS = [
   {
-    Reference: "BW-PU-A-001",
+    reference: "BW-PU-A-001",
     creation: "03/13/2017",
     vendor: "PANAXIA SDN. BHD",
     totalitem: "146 Units",
@@ -47,7 +55,7 @@ const TABLE_ROWS = [
     status: true,
   },
   {
-    Reference: "BW-PU-A-002",
+    reference: "BW-PU-A-002",
     creation: "03/14/2017",
     vendor: "CV. TIR",
     totalitem: "1.511 Units",
@@ -55,7 +63,7 @@ const TABLE_ROWS = [
     status: true,
   },
   {
-    Reference: "BW-PU-A-003",
+    reference: "BW-PU-A-003",
     creation: "03/14/2017",
     vendor: "CV. MZU",
     totalitem: "49 Units",
@@ -63,7 +71,7 @@ const TABLE_ROWS = [
     status: true,
   },
   {
-    Reference: "BW-PU-A-004",
+    reference: "BW-PU-A-004",
     creation: "03/20/2017",
     vendor: "CV. Global Plastik",
     totalitem: "93 Units",
@@ -71,7 +79,7 @@ const TABLE_ROWS = [
     status: true,
   },
   {
-    Reference: "BW-PU-A-005",
+    reference: "BW-PU-A-005",
     creation: "03/20/2017",
     vendor: "PT. ALNCO",
     totalitem: "491 Units",
@@ -79,7 +87,7 @@ const TABLE_ROWS = [
     status: true,
   },
   {
-    Reference: "BW-PU-A-006",
+    reference: "BW-PU-A-006",
     creation: "03/29/2017",
     vendor: "PT. TRI MITRA GALON",
     totalitem: "1.401 Units",
@@ -87,7 +95,7 @@ const TABLE_ROWS = [
     status: true,
   },
   {
-    Reference: "BW-PU-A-007",
+    reference: "BW-PU-A-007",
     creation: "03/29/2017",
     vendor: "CV. JAYA ANLY",
     totalitem: "401 Units",
@@ -95,7 +103,7 @@ const TABLE_ROWS = [
     status: true,
   },
   {
-    Reference: "BW-PU-A-008",
+    reference: "BW-PU-A-008",
     creation: "03/29/2017",
     vendor: "CV. BUANA PLASTIK",
     totalitem: "1.403 Units",
@@ -103,7 +111,7 @@ const TABLE_ROWS = [
     status: true,
   },
   {
-    Reference: "BW-PU-A-009",
+    reference: "BW-PU-A-009",
     creation: "03/30/2017",
     vendor: "CV. ROFILL WATER",
     totalitem: "2 Units",
@@ -115,13 +123,58 @@ const TABLE_ROWS = [
 export default function Purchasing({ auth }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const [paginatedItems, setPaginatedItems] = useState([]);
+  const [paginated, setpaginated] = useState([]);
+  const [sorting, setsorting] = useState(null);
+  const [sortdirection, setsortdirection] = useState(null);
+  const [searchbar, setsearchbar] = useState('');
 
   useEffect(() => {
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    setPaginatedItems(TABLE_ROWS.slice(start, end));
-  }, [currentPage]);
+    let sortedItems = [...TABLE_ROWS];
+
+    if (searchbar) {
+      const terms = searchbar.toLowerCase().split(' ');
+      sortedItems = sortedItems.filter(item =>
+        terms.every(term =>
+          Object.values(item).some(val =>
+            String(val).toLowerCase().includes(term)
+          )
+        )
+      );
+    }
+
+    if (sorting && sortdirection) {
+      sortedItems.sort((a, b) => {
+        let aValue = a[sorting];
+        let bValue = b[sorting];
+    
+        if (sorting === 'totalitem' || sorting === 'total') {
+          aValue = Number(aValue.replace(/\D/g, ''));
+          bValue = Number(bValue.replace(/\D/g, ''));
+        }
+    
+        if (aValue < bValue) {
+          return sortdirection === 'asc' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortdirection === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
+    setpaginated(sortedItems.slice(start, end));
+  }, [currentPage, sorting, sortdirection, searchbar]);
+
+  const handleSort = (field) => {
+    if (field === sorting) {
+      setsortdirection(sortdirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setsorting(field);
+      setsortdirection('asc');
+    }
+  };
 
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -130,11 +183,10 @@ export default function Purchasing({ auth }) {
   };
 
   const handleNext = () => {
-    if (currentPage < Math.ceil(TABLE_ROWS.length / itemsPerPage)) {
+    if (paginated.length === itemsPerPage && currentPage < Math.ceil(TABLE_ROWS.length / itemsPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
-
   return (
     <PurchasingLayout user={auth.user}>
       <Head title="Sales" />
@@ -196,6 +248,8 @@ export default function Purchasing({ auth }) {
                 <Input
                   type="search"
                   placeholder="Search"
+                  value={searchbar}
+                  onChange={e => setsearchbar(e.target.value)}
 
                   className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
                   labelProps={{
@@ -216,17 +270,18 @@ export default function Purchasing({ auth }) {
             <table className="w-full min-w-max lg:min-w-full table-auto text-left">
               <thead>
                 <tr className="sticky top-0">
-                  {TABLE_HEAD.map((head, index) => (
+                  {TABLE_HEAD.map(({display, field}, index) => (
                     <th
-                      key={head}
+                      key={display}
                       className="cursor-pointer border-b border-gray-300 bg-gray-100 p-4 transition-colors hover:bg-gray-400"
+                      onClick={() => field && handleSort(field)}
                     >
                       <Typography
                         variant="small"
                         color="blue-gray"
                         className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                       >
-                        {head}{" "}
+                        {display}{" "}
                         {index !== TABLE_HEAD.length - 1 && (
                           <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
                         )}
@@ -236,15 +291,15 @@ export default function Purchasing({ auth }) {
                 </tr>
               </thead>
               <tbody>
-                {paginatedItems.map(
-                  ({ Reference, creation, vendor, totalitem, status, total }, index) => {
+                {paginated.map(
+                  ({ reference, creation, vendor, totalitem, status, total }, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
                       ? "p-4"
                       : "p-4 border-b border-blue-gray-50";
 
                     return (
-                      <tr key={Reference}>
+                      <tr key={reference}>
                         <td className="p-2 border-b border-gray-200 pl-4">
                           <div className="flex items-center gap-3">
                             <div className="flex flex-col">
@@ -253,7 +308,7 @@ export default function Purchasing({ auth }) {
                                 color="blue-gray"
                                 className="font-normal"
                               >
-                                {Reference}
+                                {reference}
                               </Typography>
 
                             </div>
@@ -341,7 +396,7 @@ export default function Purchasing({ auth }) {
                 <Button variant="outlined" size="sm" onClick={handlePrevious}>
                   Previous
                 </Button>
-                <Button variant="outlined" size="sm" onClick={handleNext}>
+                <Button variant="outlined" size="sm" onClick={handleNext} disabled={paginated.length < itemsPerPage}>
                   Next
                 </Button>
               </div>

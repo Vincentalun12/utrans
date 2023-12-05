@@ -1,5 +1,6 @@
 import NavigationLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
+import React, { useState, useEffect } from 'react';
 import { Head, Link } from "@inertiajs/react";
 import {
     Card,
@@ -156,7 +157,8 @@ export default function Customer({ auth }) {
                             </a>
                             <a href="#">Edit</a>
                         </Breadcrumbs>
-                        <div className="w-full mx-auto">
+                    </div>
+                    <div className="w-full mx-auto pb-5">
                             <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                                 <div className="p-6 text-gray-900">
                                 <Typography variant="h4" className="text-ungukita" textGradient>
@@ -168,7 +170,6 @@ export default function Customer({ auth }) {
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
                             <Linkactive

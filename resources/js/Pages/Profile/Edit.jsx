@@ -3,6 +3,7 @@ import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import { Head } from '@inertiajs/react';
+import { List, ListItem, Card } from "@material-tailwind/react";
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
     return (
@@ -12,22 +13,28 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
         >
             <Head title="Profile" />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div className="flex justify-center py-12 max-w-fit mx-auto sm:px-6 lg:px-8">
+
+                <Card className="mx-2 h-40">
+                    <List>
+                        <ListItem selected>Account</ListItem>
+                        <ListItem>Website</ListItem>
+                        <ListItem>More</ListItem>
+                    </List>
+                </Card>
+
+                <div className="space-y-6">
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
-                            className="max-w-xl"
+                            className="max-w-fit"
                         />
-                    </div>
 
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
+                    <UpdatePasswordForm className="max-w-fit space-y-3" />
 
-                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                        <DeleteUserForm className="max-w-xl" />
+                    <DeleteUserForm className="max-w-fit" />
+
                     </div>
                 </div>
             </div>
