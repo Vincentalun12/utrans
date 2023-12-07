@@ -164,8 +164,8 @@ export default function Customer({ auth }) {
                                 <Typography variant="h4" className="text-ungukita" textGradient>
                                     Partners
                                 </Typography>
-                                <Typography variant="lead">
-                                    Manage your partner lists here
+                                <Typography variant="paragraph">
+                                    Manage your order purchases here
                                 </Typography>
                                 </div>
                             </div>

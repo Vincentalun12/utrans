@@ -35,6 +35,7 @@ import {
   CalendarDaysIcon,
   QrCodeIcon,
   TrashIcon,
+  PlusIcon,
 } from "@heroicons/react/24/solid";
 
 const TABLE_HEAD = ["SKU", "Item", "Quantity", "Unit price", "Disc", "Total",""];
@@ -111,7 +112,7 @@ export default function Additem({ auth }) {
                 />
                 <div>
                 <IconButton className=" bg-ungukita ml-2">
-                    <MagnifyingGlassIcon className="w-5 h-5" />
+                    <PlusIcon className="w-5 h-5" />
                   </IconButton>
                 </div>
                 </div>
@@ -135,6 +136,18 @@ export default function Additem({ auth }) {
                   type="search"
                   placeholder="14/5/2023"
                   icon={<CalendarDaysIcon/>}
+
+                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                />
+                </div>
+                <div className="mx-2 lg:w-4/6 w-full">
+              <label className="">Reference</label>
+              <Input
+                  type="input"
+                  placeholder="Reference"
 
                   className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
                   labelProps={{
