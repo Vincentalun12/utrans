@@ -11,4 +11,9 @@ class VendorsController extends Controller
     {
         return Inertia::render('Dashboard/Partners/Vendors/Index');
     }
+
+    public function create()
+    {
+        return Inertia::render('Dashboard/Partners/Vendors/Create');
+    }
 }
