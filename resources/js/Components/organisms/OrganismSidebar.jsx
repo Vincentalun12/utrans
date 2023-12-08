@@ -31,7 +31,7 @@ import { Link } from "@inertiajs/react";
 
 export function OrganismSidebar() {
     const [open, setOpen] = useState(
-        route().current("products") ? 1 : 0
+        route().current("products") ? 1 : 0 || route().current("brand") ? 1 : 0
     );
 
     const [openReport, setOpenReport] = useState(

@@ -43,18 +43,37 @@ export default function Additem({ auth }) {
           <Card className="h-full w-full overflow-hidden rounded-none">
             <div className="grid lg:gap-8 grid-cols-1 gap-4 p-4 mx-4 mt-5">
               <div>
-                <div className="p-2 text-black font-bold text-xl mb-2">Name and brands</div>
+                <div className="p-2 text-black font-bold text-xl mb-2">Customer Information</div>
                   <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                    <Input variant="static" label="Name" className='border-none focus:shadow-none' placeholder="Input your product name" />
+                    <Input variant="static" label="Customer Name" className='border-none focus:shadow-none' placeholder="Input customer's full name" />
                   </div>
                   <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                  *Provide the name of your brands that is suitable for the
-                  item you are selling.
+                  *If doesn't know the real name, type the nickname.
                 </div>
                 </div>
-              <div>
+                <div>
                 <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                  <label className="">Brand</label>
+                    <Input variant="static" label="Phone Number" className='border-none focus:shadow-none' placeholder="Input customer's phone number" />
+                  </div>
+                  <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
+                  *Please use 08xxxxxxxxxx format.
+                </div>
+                </div>
+            <div>
+              <div className="p-2 text-black font-bold text-xl mb-2">Address Information</div>
+              <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
+                    <Input variant="static" label="Address" className='border-none focus:shadow-none' placeholder="Input customer's address" />
+                  </div>
+            </div>
+            <div>
+              <div className="flex mx-2 border-b lg:w-4/6 w-full border-black">
+                    <Input variant="static" label="District" className='border-none focus:shadow-none' placeholder="Input customer's district" />
+                    <Input variant="static" label="City" className='border-none focus:shadow-none' placeholder="Input customer's city" />
+                </div>
+              </div>
+              <div>
+              <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
+              <label className="">Province</label>
                   <Select variant="static" placeholder="Select brand from the following..">
                   <Option>1</Option>
                   <Option>2</Option>
@@ -62,50 +81,9 @@ export default function Additem({ auth }) {
                   <Option>4</Option>
                   <Option>5</Option>
                 </Select>
-                </div>
-                <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                  *Provide the name of your brands that is suitable for the
-                  item you are selling.
-                </div>
-              </div>
-            <div>
-              <div className="p-2 text-black font-bold text-xl mb-2">Prices and stock</div>
-              <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                    <Input variant="static" label="Retail" className='border-none focus:shadow-none' placeholder="Input your retail price" />
                   </div>
               <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                  *For each items.
-                </div>
-            </div>
-            <div>
-              <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                    <Input variant="static" label="Wholesale" className='border-none focus:shadow-none' placeholder="Input your wholesale price" />
-                </div>
-              <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                  *For each items.
-                </div>
-              </div>
-              <div>
-              <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                    <Input variant="static" label="Stocks" className='border-none focus:shadow-none' placeholder="Input your stocks" />
-                  </div>
-              <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                  *Put your stock x1.
-                </div>
-              </div>
-              <div>
-              <div className="p-2 text-black font-bold text-xl mb-2">Product image</div>
-              <div className="mx-2">
-                  <label className="flex justify-center items-center outline-dashed outline-2 outline-offset-2 px-4 py-4 h-48 lg:h-64 lg:w-4/6 w-full hover:outline-blue-800 hover:text-blue-800">
-                    <div className="flex flex-col items-center justify-center">
-                      <PlusCircleIcon className="h-6 w-6" />
-                    <div className="">Add image</div>
-                    </div>
-                    <input className="cursor-pointer hidden" type="file"/>
-                  </label>
-                  </div>
-                  <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                  *SVG, PNG, JPG or GIF (MAX. 300x300px or 1:1 ratio)
+                  *Please select any from the above.
                 </div>
               </div>
               <div>

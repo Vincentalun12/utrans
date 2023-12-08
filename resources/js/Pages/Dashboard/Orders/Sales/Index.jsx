@@ -57,7 +57,7 @@ const TABLE_HEAD = [
   { display: "Reference", field: "reference" },
   { display: "Total", field: "total" },
   { display: "Status", field: "status" },
-  { display: "Action", field: null },
+  { display: "", field: null },
 ];
 
 // const TABLE_HEAD = ["Number", "Creation date", "Customer", "Reference", "Total", "Status", ""];

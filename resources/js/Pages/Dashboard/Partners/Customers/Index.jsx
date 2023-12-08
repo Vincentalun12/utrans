@@ -34,10 +34,10 @@ import { twMerge } from 'tailwind-merge'
 
 const TABLE_HEAD = [
     "No",
-    "name",
-    "address",
-    "phone",
-    "Action",
+    "Name",
+    "Address",
+    "Phone",
+    "",
 ];
 
 const TABLE_ROWS = [
