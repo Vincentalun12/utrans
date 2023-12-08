@@ -27,6 +27,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { Link } from "@inertiajs/react";
 
 export function OrganismSidebar() {
     const [open, setOpen] = useState(
@@ -41,22 +42,36 @@ export function OrganismSidebar() {
         route().current("sales") ? 1 : 0 || route().current("purchases") ? 1 : 0
     );
 
+    const [openPartners, setOpenPartners] = useState(
+        route().current("vendors") ? 1 : 0 || route().current("customers") ? 1 : 0
+    );
+
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
         setOpenReport(0);
         setOpenOrder(0);
+        setOpenPartners(0);
     };
 
     const handleOpenReport = (value) => {
         setOpenReport(openReport === value ? 0 : value);
         setOpen(0);
+        setOpenPartners(0);
         setOpenOrder(0);
     };
 
     const handleOpenOrder = (value) => {
         setOpenOrder(openOrder === value ? 0 : value);
         setOpenReport(0);
+        setOpenPartners(0);
+        setOpen(0);
+    };
+
+    const handleOpenPartners = (value) => {
+        setOpenPartners(openPartners === value ? 0 : value);
+        setOpenReport(0);
+        setOpenOrder(0);
         setOpen(0);
     };
 
@@ -194,6 +209,53 @@ export function OrganismSidebar() {
                     </AccordionBody>
                 </Accordion>
                 <Accordion
+                    open={openPartners === 1}
+                    icon={
+                        <ChevronDownIcon
+                            strokeWidth={2.5}
+                            className={`mx-auto h-4 w-4 transition-transform ${openPartners === 1 ? "rotate-180" : ""
+                                }`}
+                        />
+                    }
+                >
+                    <ListItem className="p-0" selected={openPartners === 1}>
+                        <AccordionHeader
+                            onClick={() => handleOpenPartners(1)}
+                            className="border-b-0 p-3"
+                        >
+                            <ListItemPrefix>
+                                <UserGroupIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            <Typography
+                                color="blue-gray"
+                                className="mr-auto font-normal"
+                            >
+                                Partners
+                            </Typography>
+                        </AccordionHeader>
+                    </ListItem>
+                    <AccordionBody className="py-1">
+                        <List className="p-0">
+                            <Linkactive href={route("customers")}>
+                                <ListItem className={LinkActiveTheme('customers')}>
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                    </ListItemPrefix>
+                                    Customers
+                                </ListItem>
+                            </Linkactive>
+                            <Linkactive href={route("vendors")}>
+                                <ListItem className={LinkActiveTheme('vendors')}>
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                    </ListItemPrefix>
+                                    Vendors
+                                </ListItem>
+                            </Linkactive>
+                        </List>
+                    </AccordionBody>
+                </Accordion>
+                <Accordion
                     open={openReport === 1}
                     icon={
                         <ChevronDownIcon
@@ -240,22 +302,6 @@ export function OrganismSidebar() {
                         </List>
                     </AccordionBody>
                 </Accordion>
-                <Linkactive
-                    href={route("partners")}
-                >
-                    <ListItem className={LinkActiveTheme('partners')}>
-                        <ListItemPrefix>
-                            <UserGroupIcon className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Customer
-                    </ListItem>
-                </Linkactive>
-                <ListItem>
-                    <ListItemPrefix>
-                        <TagIcon className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Brand
-                </ListItem>
                 <ListItem>
                     <ListItemPrefix>
                         <CalculatorIcon className="h-5 w-5" />
