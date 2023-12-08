@@ -33,111 +33,25 @@ import { ButtonPrimary } from "@/Components";
 import { twMerge } from 'tailwind-merge'
 
 const TABLE_HEAD = [
-    "SKU",
-    "Name",
-    "Brand",
-    "Retail Price",
-    "Wholesale Price",
-    "Stock",
+    "No",
+    "name",
+    "address",
+    "phone",
     "Action",
 ];
 
 const TABLE_ROWS = [
     {
-        SKU: "BW-CB-001",
-        name: "Carbon Block CTO Kirei 10 inch",
-        brand: "Kirei",
-        retail: "25000",
-        wholesale: "30000",
-        stock: "203",
+        no: "1",
+        name: "John Doe",
+        address: "123 Main St",
+        phone: "123-456-7890",
     },
     {
-        SKU: "BW-CB-002",
-        name: "Carbon Block CTO Kirei 20 inch",
-        brand: "Kirei",
-        retail: "45000",
-        wholesale: "55000",
-        stock: "163",
-    },
-    {
-        SKU: "BW-CF-001",
-        name: "Catridge Filter Kolon 10 inch 01 mikron",
-        brand: "Kolon",
-        retail: "10000",
-        wholesale: "9000",
-        stock: "485",
-    },
-    {
-        SKU: "BW-CF-002",
-        name: "Catridge Filter Kolon 10 inch 03 mikron",
-        brand: "Kolon",
-        retail: "10000",
-        wholesale: "9000",
-        stock: "849",
-    },
-    {
-        SKU: "BW-CF-003",
-        name: "Catridge Filter Kolon 10 inch 05 mikron",
-        brand: "Kolon",
-        retail: "10000",
-        wholesale: "9000",
-        stock: "350",
-    },
-    {
-        SKU: "BW-CF-004",
-        name: "Catridge Filter Nano 10 inch 01 mikron",
-        brand: "Nano",
-        retail: "10000",
-        wholesale: "12000",
-        stock: "954",
-    },
-    {
-        SKU: "BW-CF-005",
-        name: "Catridge Filter Nano 10 inch 03 mikron",
-        brand: "Nano",
-        retail: "10000",
-        wholesale: "12000",
-        stock: "832",
-    },
-    {
-        SKU: "BW-CF-006",
-        name: "Catridge Filter Nano 10 inch 05 mikron",
-        brand: "Nano",
-        retail: "10000",
-        wholesale: "12000",
-        stock: "853",
-    },
-    {
-        SKU: "BW-CF-007",
-        name: "Catridge Filter Nano 10 inch 10 mikron",
-        brand: "Nano",
-        retail: "10000",
-        wholesale: "12000",
-        stock: "342",
-    },
-    {
-        SKU: "BW-CF-008",
-        name: "Catridge Filter DeWater 10 inch 01 mikron",
-        brand: "DeWater",
-        retail: "25000",
-        wholesale: "24000",
-        stock: "504",
-    },
-    {
-        SKU: "BW-CF-009",
-        name: "Catridge Filter Dewater 10 inch 03 mikron",
-        brand: "DeWater",
-        retail: "25000",
-        wholesale: "24000",
-        stock: "703",
-    },
-    {
-        SKU: "BW-CF-010",
-        name: "Catridge Filter Dewater 10 inch 05 mikron",
-        brand: "DeWater",
-        retail: "25000",
-        wholesale: "24000",
-        stock: "448",
+        no: "2",
+        name: "Jane Doe",
+        address: "456 High St",
+        phone: "987-654-3210",
     },
 ];
 
@@ -162,10 +76,10 @@ export default function Customer({ auth }) {
                             <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                                 <div className="p-6 text-gray-900">
                                 <Typography variant="h4" className="text-ungukita" textGradient>
-                                    Partners
+                                    Customers
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Manage your order purchases here
+                                    Manage your Customers information here
                                 </Typography>
                                 </div>
                             </div>
@@ -222,14 +136,14 @@ export default function Customer({ auth }) {
                             </thead>
                             <tbody>
                                 {TABLE_ROWS.map(
-                                    ({ SKU, name, brand, retail, wholesale, stock }, index) => {
+                                    ({ no,name,address,phone }, index) => {
                                         const isLast = index === TABLE_ROWS.length - 1;
                                         const classes = isLast
                                             ? "p-4"
                                             : "p-4 border-b border-blue-gray-50";
 
                                         return (
-                                            <tr key={SKU} className="even:bg-gray-100">
+                                            <tr key={no} className="even:bg-gray-100">
                                                 <td className="p-2 border-b border-gray-200 pl-4">
                                                     <div className="flex items-center gap-3">
                                                         <div className="flex flex-col">
@@ -238,7 +152,7 @@ export default function Customer({ auth }) {
                                                                 color="blue-gray"
                                                                 className="font-normal"
                                                             >
-                                                                {SKU}
+                                                                {no}
                                                             </Typography>
 
                                                         </div>
@@ -262,7 +176,7 @@ export default function Customer({ auth }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {brand}
+                                                            {address}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -272,28 +186,9 @@ export default function Customer({ auth }) {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {retail}
+                                                        {phone}
                                                     </Typography>
                                                 </td>
-                                                <td className="p-2 border-b border-gray-200 pl-4">
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal"
-                                                    >
-                                                        {wholesale}
-                                                    </Typography>
-                                                </td>
-                                                <td className="p-2 border-b border-gray-200 pl-4">
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal"
-                                                    >
-                                                        {stock}
-                                                    </Typography>
-                                                </td>
-
                                                 <td className="p-4">
                                                     <Typography
                                                         as="a"

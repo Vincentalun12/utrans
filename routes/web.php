@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\BrandController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +34,13 @@ Route::controller(ProductController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/products', 'index')->name('products');
         Route::get('/products/create', 'create')->name('products.create');
+    });
+});
+
+Route::controller(BrandController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/brand', 'index')->name('brand');
+        Route::get('/brand/create', 'create')->name('brand.create');
     });
 });
 

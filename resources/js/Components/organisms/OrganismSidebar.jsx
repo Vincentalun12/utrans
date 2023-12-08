@@ -129,12 +129,16 @@ export function OrganismSidebar() {
                                     Products
                                 </ListItem>
                             </Linkactive>
-                            <ListItem>
+                            <Linkactive
+                                href={route("brand")}
+                            >
+                            <ListItem className={`${route().current("brand") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
                                 <ListItemPrefix>
                                     <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                                 </ListItemPrefix>
-                                Stock
+                                Brand
                             </ListItem>
+                        </Linkactive>
                         </List>
                     </AccordionBody>
                 </Accordion>
