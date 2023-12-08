@@ -227,10 +227,10 @@ export default function Inventory({ auth }) {
               <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                 <div className="p-6 text-gray-900">
                   <Typography variant="h4" className="text-ungukita" textGradient>
-                    Products
+                    Brands
                   </Typography>
                   <Typography variant="paragraph">
-                    Manage your products here
+                    Manage your brands here
                   </Typography>
                 </div>
               </div>
