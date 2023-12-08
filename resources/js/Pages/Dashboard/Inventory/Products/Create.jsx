@@ -6,6 +6,8 @@ import {
   Input,
   Button,
   Breadcrumbs,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 
 import {
@@ -55,10 +57,13 @@ export default function Additem({ auth }) {
               <div>
                 <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
                   <label className="">Brand</label>
-                  <input
-                    className="w-full block px-0 mt-1 border-none focus:outline-none focus:ring-0"
-                    placeholder="Input your product brand."
-                  />
+                  <Select variant="static">
+                  <Option>1</Option>
+                  <Option>2</Option>
+                  <Option>3</Option>
+                  <Option>4</Option>
+                  <Option>5</Option>
+                </Select>
                 </div>
                 <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
                   *Provide the name of your brands that is suitable for the
