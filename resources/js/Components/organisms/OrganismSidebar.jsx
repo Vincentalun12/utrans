@@ -31,7 +31,7 @@ import { Link } from "@inertiajs/react";
 
 export function OrganismSidebar() {
     const [open, setOpen] = useState(
-        route().current("products") ? 1 : 0 || route().current("brand") ? 1 : 0
+        route().current("products") ? 1 : 0 || route().current("brands") ? 1 : 0
     );
 
     const [openReport, setOpenReport] = useState(
@@ -46,12 +46,18 @@ export function OrganismSidebar() {
         route().current("vendors") ? 1 : 0 || route().current("customers") ? 1 : 0
     );
 
+    const [openAccount, setOpenAccount] = useState(
+        route().current("coa") ? 1 : 0 || route().current("journals") ? 1 : 0 || route().current("journalentries") ? 1 : 0
+    );
+
+
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
         setOpenReport(0);
         setOpenOrder(0);
         setOpenPartners(0);
+        setOpenAccount(0);
     };
 
     const handleOpenReport = (value) => {
@@ -59,6 +65,7 @@ export function OrganismSidebar() {
         setOpen(0);
         setOpenPartners(0);
         setOpenOrder(0);
+        setOpenAccount(0);
     };
 
     const handleOpenOrder = (value) => {
@@ -66,6 +73,7 @@ export function OrganismSidebar() {
         setOpenReport(0);
         setOpenPartners(0);
         setOpen(0);
+        setOpenAccount(0);
     };
 
     const handleOpenPartners = (value) => {
@@ -73,11 +81,20 @@ export function OrganismSidebar() {
         setOpenReport(0);
         setOpenOrder(0);
         setOpen(0);
+        setOpenAccount(0);
+    };
+
+    const handleOpenAccount = (value) => {
+        setOpenAccount(openAccount === value ? 0 : value);
+        setOpenReport(0);
+        setOpenOrder(0);
+        setOpen(0);
+        setOpenPartners(0);
     };
 
 
     return (
-        <Card className="h-screen sticky top-0 w-full max-w-[18rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-50 lg:flex hidden overflow-y-auto">
+        <Card className="h-screen sticky top-0 w-full max-w-full lg:max-w-[19rem] xl 2xl:max-w-[18rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-50 lg:flex hidden overflow-y-auto">
             <div className="mb-2 p-2 w-full flex justify-center">
                 <ApplicationLogo2 />
             </div>
@@ -302,12 +319,61 @@ export function OrganismSidebar() {
                         </List>
                     </AccordionBody>
                 </Accordion>
-                <ListItem>
-                    <ListItemPrefix>
-                        <CalculatorIcon className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Accounting
-                </ListItem>
+                <Accordion
+                    open={openAccount === 1}
+                    icon={
+                        <ChevronDownIcon
+                            strokeWidth={2.5}
+                            className={`mx-auto h-4 w-4 transition-transform ${openAccount === 1 ? "rotate-180" : ""
+                                }`}
+                        />
+                    }
+                >
+                    <ListItem className="p-0" selected={openAccount === 1}>
+                        <AccordionHeader
+                            onClick={() => handleOpenAccount(1)}
+                            className="border-b-0 p-3"
+                        >
+                            <ListItemPrefix>
+                                <CalculatorIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            <Typography
+                                color="blue-gray"
+                                className="mr-auto font-normal"
+                            >
+                                Accounting
+                            </Typography>
+                        </AccordionHeader>
+                    </ListItem>
+                    <AccordionBody className="py-1">
+                        <List className="p-0">
+                            <Linkactive href={route("coa")}>
+                                <ListItem className={LinkActiveTheme('coa')}>
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                    </ListItemPrefix>
+                                    COA
+                                </ListItem>
+                            </Linkactive>
+                            <Linkactive href={route("journals")}>
+                            <ListItem className={LinkActiveTheme('journals')}>
+                                <ListItemPrefix>
+                                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                </ListItemPrefix>
+                                Journals
+                            </ListItem>
+                        </Linkactive>
+                        <Linkactive href={route("journalentries")}>
+                            <ListItem className={LinkActiveTheme('journalentries')}>
+                                <ListItemPrefix>
+                                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                </ListItemPrefix>
+                                Journal Entries
+                            </ListItem>
+                        </Linkactive>
+                        </List>
+                    </AccordionBody>
+                </Accordion>
                 <ListItem>
                     <ListItemPrefix>
                         <Cog6ToothIcon className="h-5 w-5" />

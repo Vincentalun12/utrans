@@ -37,7 +37,7 @@ const TABLE_HEAD = [
     "Name",
     "Address",
     "Phone",
-    "",
+    "Action",
 ];
 
 const TABLE_ROWS = [
@@ -58,7 +58,7 @@ const TABLE_ROWS = [
 export default function Customer({ auth }) {
     return (
         <NavigationLayout user={auth.user}>
-            <Head title="Products" />
+            <Head title="Customers" />
             <div className="lg:py-4 py-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6">
                     <div className="lg:hidden flex justify-between">

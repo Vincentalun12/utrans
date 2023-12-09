@@ -140,8 +140,7 @@ export default function Brand({ auth, brands, deleteSuccess }) {
 
   return (
     <InventoryLayout user={auth.user}>
-      <Head title="Products" />
-
+      <Head title="Brand"/>
       <Alert
         color={flash.message?.type == 'success' ? 'green' : 'red'}
         open={isShowAlert}
@@ -149,7 +148,6 @@ export default function Brand({ auth, brands, deleteSuccess }) {
       >
         {flash.message?.content}
       </Alert>
-
       <div className="lg:py-4 py-1">
         <div className="mx-auto px-4 sm:px-6 lg:px-6">
           <div className="lg:hidden flex justify-between">
