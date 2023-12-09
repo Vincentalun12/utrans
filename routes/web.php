@@ -80,12 +80,6 @@ Route::controller(SaleController::class)->group(function () {
     });
 });
 
-Route::controller(PartnerController::class)->group(function () {
-    Route::middleware(['auth', 'verified'])->group(function () {
-        Route::get('/partners', 'index')->name('partners');
-    });
-});
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/Index');
 })->middleware(['auth', 'verified'])->name('dashboard');
