@@ -6,6 +6,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\VendorsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,6 +39,13 @@ Route::controller(ProductController::class)->group(function () {
     });
 });
 
+Route::controller(VendorsController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/vendors', 'index')->name('vendors');
+        Route::get('/vendors/create', 'create')->name('vendors.create');
+    });
+});
+
 Route::controller(BrandController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/brand', 'index')->name('brands');
@@ -45,6 +54,13 @@ Route::controller(BrandController::class)->group(function () {
         Route::get('/brand/edit/{id}', 'edit')->name('brands.edit');
         Route::patch('/brand/update/{id}', 'update')->name('brands.update');
         Route::delete('/brand/destroy/{id}', 'destroy')->name('brands.destroy');
+    });
+});
+
+Route::controller(CustomersController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/customers', 'index')->name('customers');
+        Route::get('/customers/create', 'create')->name('customers.create');
     });
 });
 
