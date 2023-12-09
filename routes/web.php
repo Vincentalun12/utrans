@@ -39,8 +39,12 @@ Route::controller(ProductController::class)->group(function () {
 
 Route::controller(BrandController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
-        Route::get('/brand', 'index')->name('brand');
-        Route::get('/brand/create', 'create')->name('brand.create');
+        Route::get('/brand', 'index')->name('brands');
+        Route::get('/brand/create', 'create')->name('brands.create');
+        Route::post('/brand/store', 'store')->name('brands.store');
+        Route::get('/brand/edit/{id}', 'edit')->name('brands.edit');
+        Route::patch('/brand/update/{id}', 'update')->name('brands.update');
+        Route::delete('/brand/destroy/{id}', 'destroy')->name('brands.destroy');
     });
 });
 

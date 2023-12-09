@@ -81,12 +81,12 @@ export function OrganismSidebar() {
                 <Linkactive
                     href={route("pos")}
                 >
-                <ListItem className={`${route().current("pos") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
-                    <ListItemPrefix>
-                        <ComputerDesktopIcon className="h-5 w-5" />
-                    </ListItemPrefix>
-                    Point of Sale
-                </ListItem>
+                    <ListItem className={`${route().current("pos") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                        <ListItemPrefix>
+                            <ComputerDesktopIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Point of Sale
+                    </ListItem>
                 </Linkactive>
                 <Accordion
                     open={open === 1}
@@ -130,15 +130,15 @@ export function OrganismSidebar() {
                                 </ListItem>
                             </Linkactive>
                             <Linkactive
-                                href={route("brand")}
+                                href={route("brands")}
                             >
-                            <ListItem className={`${route().current("brand") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
-                                <ListItemPrefix>
-                                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                </ListItemPrefix>
-                                Brand
-                            </ListItem>
-                        </Linkactive>
+                                <ListItem className={`${route().current("brands") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                    </ListItemPrefix>
+                                    Brand
+                                </ListItem>
+                            </Linkactive>
                         </List>
                     </AccordionBody>
                 </Accordion>

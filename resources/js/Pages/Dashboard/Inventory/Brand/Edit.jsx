@@ -22,19 +22,20 @@ import {
     EllipsisHorizontalIcon,
     PlusCircleIcon
 } from "@heroicons/react/24/solid";
+import { useEffect } from "react";
 
-export default function CreateBrand({ auth }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        number: '',
-        email: '',
-        website: '',
+export default function EditBrand({ auth, brand }) {
+    const { data, setData, post, patch, processing, errors, reset } = useForm({
+        name: brand.name,
+        number: brand.number,
+        email: brand.email,
+        website: brand.website,
     });
 
     const actionSubmit = (e) => {
         e.preventDefault();
 
-        post(route('brands.store'));
+        patch(route('brands.update', brand.id));
     }
 
     return (
@@ -59,7 +60,7 @@ export default function CreateBrand({ auth }) {
                                 <div>
                                     <div className="p-2 text-black font-bold text-xl mb-2">Brands</div>
                                     <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                                        <Input variant="static" type="text" label="Name" className='border-none focus:shadow-none' placeholder="Input your product name" name="name" value={data.name} onChange={(e) => setData('name', e.target.value)} required={true} />
+                                        <Input variant="static" type="text" label="Name" className='border-none focus:shadow-none' placeholder="Input your product name" name="name" value={data.name} onChange={(e) => setData('name', e.target.value)} required="true" />
                                     </div>
                                     <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
                                         *Provide the name of your brands that is suitable for the
