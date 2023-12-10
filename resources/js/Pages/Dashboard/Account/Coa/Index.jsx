@@ -159,10 +159,10 @@ export default function Inventory({ auth }) {
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
               <Linkactive
-                href={route("products.create")}
+                href={route("coa.create")}
               >
                 <Button className={twMerge('px-2 py-1 bg-red hover:bg-dark-red md:flex hidden', 'p-3 bg-ungukita')}>
-                  Add Items
+                  Create
                 </Button>
               </Linkactive>
               <div className="inline-flex items-center">

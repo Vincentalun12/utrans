@@ -9,6 +9,7 @@ import {
   Button,
   Breadcrumbs,
   IconButton,
+  Chip,
 } from "@material-tailwind/react";
 
 import {
@@ -49,7 +50,7 @@ const TABLE_ROWS = [
     reference: "1", 
     journal: "1", 
     total: "1", 
-    status: "1" 
+    status: "purchased" 
   },
 ];
 
@@ -151,10 +152,10 @@ export default function Inventory({ auth }) {
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
               <Linkactive
-                href={route("products.create")}
+                href={route("journalentries.create")}
               >
                 <Button className={twMerge('px-2 py-1 bg-red hover:bg-dark-red md:flex hidden', 'p-3 bg-ungukita')}>
-                  Add Items
+                  Create
                 </Button>
               </Linkactive>
               <div className="inline-flex items-center">
@@ -281,14 +282,14 @@ export default function Inventory({ auth }) {
                           </div>
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {status}
-                            </Typography>
+                          <div className="flex flex-col w-1/2">
+                          <Chip
+                              className="static"
+                              variant="ghost"
+                              size="sm"
+                              value={status ? "Purchased" : "Cancelled"}
+                              color={status ? "green" : "gray"}
+                          />
                           </div>
                         </td>
                         <td className="p-4">
