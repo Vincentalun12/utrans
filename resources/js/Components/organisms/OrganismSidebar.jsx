@@ -436,12 +436,16 @@ export function OrganismSidebar() {
                         </List>
                     </AccordionBody>
                 </Accordion>
-                <ListItem>
+                <Linkactive href={route("settings")}>
+                <ListItem 
+                    className={LinkActiveTheme("settings")} 
+                    >
                     <ListItemPrefix>
                         <Cog6ToothIcon className="h-5 w-5" />
                     </ListItemPrefix>
                     Settings
                 </ListItem>
+            </Linkactive>
             </List>
         </Card>
     );

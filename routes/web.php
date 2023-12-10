@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\JournalsController;
 use App\Http\Controllers\JournalEntryController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\COAController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -99,6 +100,12 @@ Route::controller(JournalsController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/journals', 'index')->name('journals');
         Route::get('/journals/create', 'create')->name('journals.create');
+    });
+});
+
+Route::controller(SettingsController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/settings', 'index')->name('settings');
     });
 });
 
