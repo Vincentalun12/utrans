@@ -40,6 +40,9 @@ Route::controller(ProductController::class)->group(function () {
         Route::get('/products', 'index')->name('products');
         Route::get('/products/create', 'create')->name('products.create');
         Route::post('/products/store', 'store')->name('products.store');
+        Route::get('/products/edit/{id}', 'edit')->name('products.edit');
+        Route::patch('/products/update/{id}', 'update')->name('products.update');
+        Route::delete('/products/destroy/{id}', 'destroy')->name('products.destroy');
     });
 });
 

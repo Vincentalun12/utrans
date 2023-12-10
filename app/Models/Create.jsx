@@ -34,6 +34,7 @@ export default function AddProduct({ auth, brands }) {
 
     const actionSubmit = (e) => {
         e.preventDefault();
+        console.log("aaaaaaa");
         post(route("products.store"));
     };
 

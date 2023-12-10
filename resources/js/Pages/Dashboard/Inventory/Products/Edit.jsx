@@ -22,19 +22,28 @@ import {
     EllipsisHorizontalIcon,
     PlusCircleIcon,
 } from "@heroicons/react/24/solid";
+import { useEffect } from "react";
 
-export default function AddProduct({ auth, brands }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: "",
-        brand_id: brands[0].id,
-        description: "",
-        retail_price: "",
-        whole_sale_price: "",
+export default function AddProduct({ auth, brands, product }) {
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        name: product.name,
+        brand_id: product.brand.id,
+        description: product.description,
+        retail_price: product.retail_price,
+        whole_sale_price: product.whole_sale_price,
+    });
+
+    useEffect(() => {
+        let interval = setInterval(() => {
+            console.log(data);
+        }, 1000);
+        return () => clearInterval(interval);
     });
 
     const actionSubmit = (e) => {
         e.preventDefault();
-        post(route("products.store"));
+        console.log(data);
+        patch(route("products.update", product.id));
     };
 
     return (
@@ -84,11 +93,8 @@ export default function AddProduct({ auth, brands }) {
                                         <Select
                                             name="brand_id"
                                             value={data.brand_id}
-                                            onChange={(e) => {
-                                                setData(
-                                                    "brand_id",
-                                                    e.target.value
-                                                );
+                                            onChange={(value) => {
+                                                setData("brand_id", value);
                                             }}
                                             variant="static"
                                             placeholder="Select brand from the following.."

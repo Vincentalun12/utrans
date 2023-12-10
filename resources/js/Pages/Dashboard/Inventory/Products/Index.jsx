@@ -54,7 +54,6 @@ const TABLE_ROWS = [
 ];
 
 export default function Inventory({ auth, products }) {
-    console.log(products);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
@@ -342,7 +341,7 @@ export default function Inventory({ auth, products }) {
                                                     </Typography>
                                                 </td>
 
-                                                <td className="p-4">
+                                                <td className="p-4 flex gap-4">
                                                     <Typography
                                                         as="a"
                                                         href="#"
@@ -351,7 +350,33 @@ export default function Inventory({ auth, products }) {
                                                         className="font-medium inline-flex space-x-1"
                                                     >
                                                         <EyeIcon className="w-5 h-5 text-gray-500" />
+                                                    </Typography>
+                                                    <Typography
+                                                        as="a"
+                                                        href={route(
+                                                            "products.edit",
+                                                            id
+                                                        )}
+                                                        variant="small"
+                                                        color="black"
+                                                        className="font-medium inline-flex space-x-1"
+                                                    >
                                                         <PencilSquareIcon className="w-5 h-5 text-green-500" />
+                                                    </Typography>
+                                                    <Typography
+                                                        as="a"
+                                                        onClick={() =>
+                                                            destroy(
+                                                                route(
+                                                                    "products.destroy",
+                                                                    id
+                                                                )
+                                                            )
+                                                        }
+                                                        variant="small"
+                                                        color="black"
+                                                        className="font-medium inline-flex space-x-1 cursor-pointer"
+                                                    >
                                                         <TrashIcon className="w-5 h-5 text-red-500" />
                                                     </Typography>
                                                 </td>
