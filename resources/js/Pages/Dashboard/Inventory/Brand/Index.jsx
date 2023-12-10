@@ -229,7 +229,7 @@ export default function Brand({ auth, brands, deleteSuccess }) {
                 </tr>
               </thead>
               <tbody>
-                {brands.map(
+                {paginated.map(
                   ({ id, code, name }, index) => {
                     const isLast = index === brands.length - 1;
                     const classes = isLast

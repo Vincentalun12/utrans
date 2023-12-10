@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class BrandController extends Controller
@@ -70,7 +69,12 @@ class BrandController extends Controller
             'website' => $request->website,
         ]);
 
-        return redirect()->route('brands')->with('success', 'Brand updated.');
+        return redirect()->route('brands')->with([
+            'message' => [
+                'type' => 'success',
+                'content' => 'Brand updated.'
+            ]
+        ]);
     }
 
     public function destroy($id)
