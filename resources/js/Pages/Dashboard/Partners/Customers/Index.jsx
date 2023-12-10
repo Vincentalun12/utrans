@@ -1,6 +1,6 @@
 import NavigationLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Head, Link } from "@inertiajs/react";
 import {
     Card,
@@ -30,15 +30,9 @@ import {
 
 import { ButtonPrimary } from "@/Components";
 
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from "tailwind-merge";
 
-const TABLE_HEAD = [
-    "No",
-    "Name",
-    "Address",
-    "Phone",
-    "Action",
-];
+const TABLE_HEAD = ["No", "Name", "Address", "Phone", "Action"];
 
 const TABLE_ROWS = [
     {
@@ -55,7 +49,7 @@ const TABLE_ROWS = [
     },
 ];
 
-export default function Customer({ auth }) {
+export default function Customer({ auth, customers }) {
     return (
         <NavigationLayout user={auth.user}>
             <Head title="Customers" />
@@ -73,23 +67,30 @@ export default function Customer({ auth }) {
                         </Breadcrumbs>
                     </div>
                     <div className="w-full mx-auto pb-5">
-                            <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
-                                <div className="p-6 text-gray-900">
-                                <Typography variant="h4" className="text-ungukita" textGradient>
+                        <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
+                            <div className="p-6 text-gray-900">
+                                <Typography
+                                    variant="h4"
+                                    className="text-ungukita"
+                                    textGradient
+                                >
                                     Customers
                                 </Typography>
                                 <Typography variant="paragraph">
                                     Manage your Customers information here
                                 </Typography>
-                                </div>
                             </div>
                         </div>
+                    </div>
                     <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
-                            <Linkactive
-                                href={route("customers.create")}
-                            >
-                                <Button className={twMerge('px-2 py-1 bg-red hover:bg-dark-red md:flex hidden', 'p-3 bg-ungukita')}>
+                            <Linkactive href={route("customers.create")}>
+                                <Button
+                                    className={twMerge(
+                                        "px-2 py-1 bg-red hover:bg-dark-red md:flex hidden",
+                                        "p-3 bg-ungukita"
+                                    )}
+                                >
                                     Add Items
                                 </Button>
                             </Linkactive>
@@ -97,10 +98,10 @@ export default function Customer({ auth }) {
                                 <Input
                                     type="search"
                                     placeholder="Search"
-
                                     className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
                                     labelProps={{
-                                        className: "before:content-none after:content-none",
+                                        className:
+                                            "before:content-none after:content-none",
                                     }}
                                 />
                                 <div>
@@ -126,8 +127,12 @@ export default function Customer({ auth }) {
                                                 className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                                             >
                                                 {head}{" "}
-                                                {index !== TABLE_HEAD.length - 1 && (
-                                                    <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                                                {index !==
+                                                    TABLE_HEAD.length - 1 && (
+                                                    <ChevronUpDownIcon
+                                                        strokeWidth={2}
+                                                        className="h-4 w-4"
+                                                    />
                                                 )}
                                             </Typography>
                                         </th>
@@ -135,15 +140,29 @@ export default function Customer({ auth }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {TABLE_ROWS.map(
-                                    ({ no,name,address,phone }, index) => {
-                                        const isLast = index === TABLE_ROWS.length - 1;
+                                {customers.map(
+                                    (
+                                        {
+                                            id,
+                                            name,
+                                            phone,
+                                            address,
+                                            city,
+                                            district,
+                                        },
+                                        index
+                                    ) => {
+                                        const isLast =
+                                            index === customers.length - 1;
                                         const classes = isLast
                                             ? "p-4"
                                             : "p-4 border-b border-blue-gray-50";
 
                                         return (
-                                            <tr key={no} className="even:bg-gray-100">
+                                            <tr
+                                                key={id}
+                                                className="even:bg-gray-100"
+                                            >
                                                 <td className="p-2 border-b border-gray-200 pl-4">
                                                     <div className="flex items-center gap-3">
                                                         <div className="flex flex-col">
@@ -152,9 +171,8 @@ export default function Customer({ auth }) {
                                                                 color="blue-gray"
                                                                 className="font-normal"
                                                             >
-                                                                {no}
+                                                                {index + 1}
                                                             </Typography>
-
                                                         </div>
                                                     </div>
                                                 </td>
@@ -200,12 +218,11 @@ export default function Customer({ auth }) {
                                                         <EyeIcon className="w-5 h-5 text-gray-500" />
                                                         <PencilSquareIcon className="w-5 h-5 text-green-500" />
                                                         <TrashIcon className="w-5 h-5 text-red-500" />
-
                                                     </Typography>
                                                 </td>
                                             </tr>
                                         );
-                                    },
+                                    }
                                 )}
                             </tbody>
                         </table>
@@ -213,7 +230,11 @@ export default function Customer({ auth }) {
                     <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
                         <div className="flex justify-between">
                             <div className="pt-2">
-                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                >
                                     Page 1 of 10
                                 </Typography>
                             </div>

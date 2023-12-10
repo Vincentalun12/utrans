@@ -6,10 +6,10 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\BrandController;
-use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VendorsController;
 use App\Http\Controllers\JournalsController;
-use App\Http\Controllers\JournalentriesController;
+use App\Http\Controllers\JournalEntryController;
 use App\Http\Controllers\COAController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -60,10 +60,11 @@ Route::controller(BrandController::class)->group(function () {
     });
 });
 
-Route::controller(CustomersController::class)->group(function () {
+Route::controller(CustomerController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/customers', 'index')->name('customers');
         Route::get('/customers/create', 'create')->name('customers.create');
+        Route::post('/customers/store', 'store')->name('customers.store');
     });
 });
 
@@ -90,7 +91,7 @@ Route::controller(JournalsController::class)->group(function () {
     });
 });
 
-Route::controller(JournalentriesController::class)->group(function () {
+Route::controller(JournalEntryController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/journalentries', 'index')->name('journalentries');
         Route::get('/journalentries/create', 'create')->name('journalentries.create');

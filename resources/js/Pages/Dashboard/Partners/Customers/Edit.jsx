@@ -23,7 +23,7 @@ import {
     PlusCircleIcon,
 } from "@heroicons/react/24/solid";
 
-export default function AddCustomer({ auth }) {
+export default function EditCustomer({ auth }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         phone: "",
@@ -40,7 +40,7 @@ export default function AddCustomer({ auth }) {
 
     return (
         <AdditemLayout user={auth.user}>
-            <Head title="Add Customer" />
+            <Head title="Edit Customer" />
             <div className="lg:py-4 py-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6">
                     <div className="lg:hidden flex justify-between">
