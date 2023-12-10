@@ -43,14 +43,22 @@ export function OrganismSidebar() {
     );
 
     const [openPartners, setOpenPartners] = useState(
-        route().current("vendors") ? 1 : 0 || route().current("customers") ? 1 : 0
+        route().current("vendors")
+            ? 1
+            : 0 || route().current("customers")
+            ? 1
+            : 0
     );
 
     const [openAccount, setOpenAccount] = useState(
-        route().current("coa") ? 1 : 0 || route().current("journals") ? 1 : 0 || route().current("journalentries") ? 1 : 0
+        route().current("coa")
+            ? 1
+            : 0 || route().current("journals")
+            ? 1
+            : 0 || route().current("journalentries")
+            ? 1
+            : 0
     );
-
-
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
@@ -92,7 +100,6 @@ export function OrganismSidebar() {
         setOpenPartners(0);
     };
 
-
     return (
         <Card className="h-screen sticky top-0 w-full max-w-full lg:max-w-[19rem] xl 2xl:max-w-[18rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-50 lg:flex hidden overflow-y-auto">
             <div className="mb-2 p-2 w-full flex justify-center">
@@ -100,17 +107,21 @@ export function OrganismSidebar() {
             </div>
             <hr className="my-2 border-gray-200" />
             <List>
-                <Linkactive
-                    href={route("dashboard")}
-                >
-                    <ListItem className={`${route().current("dashboard") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                <Linkactive href={route("dashboard")}>
+                    <ListItem
+                        className={`${
+                            route().current("dashboard")
+                                ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                : ""
+                        }`}
+                    >
                         <ListItemPrefix>
                             <HomeIcon className="h-5 w-5" />
                         </ListItemPrefix>
                         Dashboard
                     </ListItem>
                 </Linkactive>
-                <Linkactive
+                {/* <Linkactive
                     href={route("pos")}
                 >
                     <ListItem className={`${route().current("pos") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
@@ -119,14 +130,15 @@ export function OrganismSidebar() {
                         </ListItemPrefix>
                         Point of Sale
                     </ListItem>
-                </Linkactive>
+                </Linkactive> */}
                 <Accordion
                     open={open === 1}
                     icon={
                         <ChevronDownIcon
                             strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""
-                                }`}
+                            className={`mx-auto h-4 w-4 transition-transform ${
+                                open === 1 ? "rotate-180" : ""
+                            }`}
                         />
                     }
                 >
@@ -148,10 +160,14 @@ export function OrganismSidebar() {
                     </ListItem>
                     <AccordionBody className="py-1">
                         <List className="p-0">
-                            <Linkactive
-                                href={route("products")}
-                            >
-                                <ListItem className={`${route().current("products") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                            <Linkactive href={route("products")}>
+                                <ListItem
+                                    className={`${
+                                        route().current("products")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
+                                >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
                                             strokeWidth={3}
@@ -161,12 +177,19 @@ export function OrganismSidebar() {
                                     Products
                                 </ListItem>
                             </Linkactive>
-                            <Linkactive
-                                href={route("brands")}
-                            >
-                                <ListItem className={`${route().current("brands") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
+                            <Linkactive href={route("brands")}>
+                                <ListItem
+                                    className={`${
+                                        route().current("brands")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
+                                >
                                     <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
                                     </ListItemPrefix>
                                     Brand
                                 </ListItem>
@@ -179,8 +202,9 @@ export function OrganismSidebar() {
                     icon={
                         <ChevronDownIcon
                             strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 transition-transform ${openOrder === 1 ? "rotate-180" : ""
-                                }`}
+                            className={`mx-auto h-4 w-4 transition-transform ${
+                                openOrder === 1 ? "rotate-180" : ""
+                            }`}
                         />
                     }
                 >
@@ -202,22 +226,26 @@ export function OrganismSidebar() {
                     </ListItem>
                     <AccordionBody className="py-1">
                         <List className="p-0">
-                            <Linkactive
-                                href={route("purchases")}
-                            >
-                                <ListItem className={LinkActiveTheme('purchases')}>
+                            <Linkactive href={route("purchases")}>
+                                <ListItem
+                                    className={LinkActiveTheme("purchases")}
+                                >
                                     <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
                                     </ListItemPrefix>
                                     Purchases
                                 </ListItem>
                             </Linkactive>
-                            <Linkactive
-                                href={route("sales")}
-                            >
-                                <ListItem className={LinkActiveTheme('sales')}>
+                            <Linkactive href={route("sales")}>
+                                <ListItem className={LinkActiveTheme("sales")}>
                                     <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
                                     </ListItemPrefix>
                                     Sales
                                 </ListItem>
@@ -230,8 +258,9 @@ export function OrganismSidebar() {
                     icon={
                         <ChevronDownIcon
                             strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 transition-transform ${openPartners === 1 ? "rotate-180" : ""
-                                }`}
+                            className={`mx-auto h-4 w-4 transition-transform ${
+                                openPartners === 1 ? "rotate-180" : ""
+                            }`}
                         />
                     }
                 >
@@ -254,17 +283,27 @@ export function OrganismSidebar() {
                     <AccordionBody className="py-1">
                         <List className="p-0">
                             <Linkactive href={route("customers")}>
-                                <ListItem className={LinkActiveTheme('customers')}>
+                                <ListItem
+                                    className={LinkActiveTheme("customers")}
+                                >
                                     <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
                                     </ListItemPrefix>
                                     Customers
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("vendors")}>
-                                <ListItem className={LinkActiveTheme('vendors')}>
+                                <ListItem
+                                    className={LinkActiveTheme("vendors")}
+                                >
                                     <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
                                     </ListItemPrefix>
                                     Vendors
                                 </ListItem>
@@ -277,8 +316,9 @@ export function OrganismSidebar() {
                     icon={
                         <ChevronDownIcon
                             strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 transition-transform ${openReport === 1 ? "rotate-180" : ""
-                                }`}
+                            className={`mx-auto h-4 w-4 transition-transform ${
+                                openReport === 1 ? "rotate-180" : ""
+                            }`}
                         />
                     }
                 >
@@ -300,19 +340,25 @@ export function OrganismSidebar() {
                     </ListItem>
                     <AccordionBody className="py-1">
                         <List className="p-0">
-                            <Linkactive
-                                href={route("balancesheet")}
-                            >
-                                <ListItem className={LinkActiveTheme('balancesheet')}>
+                            <Linkactive href={route("balancesheet")}>
+                                <ListItem
+                                    className={LinkActiveTheme("balancesheet")}
+                                >
                                     <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
                                     </ListItemPrefix>
                                     Balance sheet
                                 </ListItem>
                             </Linkactive>
                             <ListItem>
                                 <ListItemPrefix>
-                                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                    <ChevronRightIcon
+                                        strokeWidth={3}
+                                        className="h-3 w-5"
+                                    />
                                 </ListItemPrefix>
                                 Profit and loss
                             </ListItem>
@@ -324,8 +370,9 @@ export function OrganismSidebar() {
                     icon={
                         <ChevronDownIcon
                             strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 transition-transform ${openAccount === 1 ? "rotate-180" : ""
-                                }`}
+                            className={`mx-auto h-4 w-4 transition-transform ${
+                                openAccount === 1 ? "rotate-180" : ""
+                            }`}
                         />
                     }
                 >
@@ -348,29 +395,44 @@ export function OrganismSidebar() {
                     <AccordionBody className="py-1">
                         <List className="p-0">
                             <Linkactive href={route("coa")}>
-                                <ListItem className={LinkActiveTheme('coa')}>
+                                <ListItem className={LinkActiveTheme("coa")}>
                                     <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
                                     </ListItemPrefix>
                                     COA
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("journals")}>
-                            <ListItem className={LinkActiveTheme('journals')}>
-                                <ListItemPrefix>
-                                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                </ListItemPrefix>
-                                Journals
-                            </ListItem>
-                        </Linkactive>
-                        <Linkactive href={route("journalentries")}>
-                            <ListItem className={LinkActiveTheme('journalentries')}>
-                                <ListItemPrefix>
-                                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                </ListItemPrefix>
-                                Journal Entries
-                            </ListItem>
-                        </Linkactive>
+                                <ListItem
+                                    className={LinkActiveTheme("journals")}
+                                >
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Journals
+                                </ListItem>
+                            </Linkactive>
+                            <Linkactive href={route("journalentries")}>
+                                <ListItem
+                                    className={LinkActiveTheme(
+                                        "journalentries"
+                                    )}
+                                >
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Journal Entries
+                                </ListItem>
+                            </Linkactive>
                         </List>
                     </AccordionBody>
                 </Accordion>
@@ -382,5 +444,5 @@ export function OrganismSidebar() {
                 </ListItem>
             </List>
         </Card>
-    )
+    );
 }

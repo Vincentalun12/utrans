@@ -31,6 +31,7 @@ export default function AddCustomer({ auth }) {
         district: "",
         city: "",
         province: "",
+        email: "",
     });
 
     const actionSubmit = (e) => {
@@ -98,6 +99,22 @@ export default function AddCustomer({ auth }) {
                                     </div>
                                     <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
                                         *Please use 08xxxxxxxxxx format.
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
+                                        <Input
+                                            variant="static"
+                                            type="email"
+                                            label="Email Address"
+                                            className="border-none focus:shadow-none"
+                                            placeholder="Input customer's email address"
+                                            name="email"
+                                            value={data.email}
+                                            onChange={(e) =>
+                                                setData("email", e.target.value)
+                                            }
+                                        />
                                     </div>
                                 </div>
                                 <div>

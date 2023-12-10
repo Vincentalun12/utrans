@@ -7,7 +7,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\VendorsController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\JournalsController;
 use App\Http\Controllers\JournalEntryController;
 use App\Http\Controllers\COAController;
@@ -42,7 +42,7 @@ Route::controller(ProductController::class)->group(function () {
     });
 });
 
-Route::controller(VendorsController::class)->group(function () {
+Route::controller(VendorController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/vendors', 'index')->name('vendors');
         Route::get('/vendors/create', 'create')->name('vendors.create');
@@ -65,6 +65,9 @@ Route::controller(CustomerController::class)->group(function () {
         Route::get('/customers', 'index')->name('customers');
         Route::get('/customers/create', 'create')->name('customers.create');
         Route::post('/customers/store', 'store')->name('customers.store');
+        Route::get('/customers/edit/{id}', 'edit')->name('customers.edit');
+        Route::patch('/customers/update/{id}', 'update')->name('customers.update');
+        Route::delete('/customers/destroy/{id}', 'destroy')->name('customers.destroy');
     });
 });
 

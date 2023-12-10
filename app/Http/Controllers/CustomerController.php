@@ -48,4 +48,48 @@ class CustomerController extends Controller
             ]
         ]);
     }
+
+    public function edit($id)
+    {
+        $customer = Customer::findOrFail($id);
+
+        return Inertia::render('Dashboard/Partners/Customers/Edit', [
+            'customer' => $customer
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $customer = Customer::findOrFail($id);
+
+        $customer->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'district' => $request->district,
+            'city' => $request->city,
+            'phone' => $request->phone,
+            'email' => $request->email,
+        ]);
+
+        return redirect()->route('customers')->with([
+            'message' => [
+                'type' => 'success',
+                'content' => 'Customer updated successfully'
+            ]
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $customer = Customer::findOrFail($id);
+
+        $customer->delete();
+
+        return redirect()->route('customers')->with([
+            'message' => [
+                'type' => 'success',
+                'content' => 'Customer deleted successfully'
+            ]
+        ]);
+    }
 }

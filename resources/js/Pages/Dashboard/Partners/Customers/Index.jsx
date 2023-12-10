@@ -1,7 +1,7 @@
 import NavigationLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
 import React, { useState, useEffect } from "react";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import {
     Card,
     Typography,
@@ -11,6 +11,7 @@ import {
     IconButton,
     Tooltip,
     Chip,
+    Alert,
 } from "@material-tailwind/react";
 
 import {
@@ -50,9 +51,39 @@ const TABLE_ROWS = [
 ];
 
 export default function Customer({ auth, customers }) {
+    const { flash } = usePage().props;
+    const {
+        data,
+        setData,
+        delete: destroy,
+        processing,
+        errors,
+        reset,
+    } = useForm({});
+
+    const [isShowAlert, setIsShowAlert] = useState(false);
+
+    useEffect(() => {
+        if (flash.message) {
+            setIsShowAlert(true);
+            setTimeout(() => {
+                setIsShowAlert(false);
+                flash.message = null;
+            }, 3000);
+        }
+    }, [isShowAlert]);
+
     return (
         <NavigationLayout user={auth.user}>
             <Head title="Customers" />
+            <Alert
+                className="fixed top-4 right-4 z-50 w-1/4"
+                color={flash.message?.type == "success" ? "green" : "red"}
+                open={isShowAlert}
+                // icon={<Icon />}
+            >
+                {flash.message?.content}
+            </Alert>
             <div className="lg:py-4 py-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6">
                     <div className="lg:hidden flex justify-between">
@@ -207,7 +238,7 @@ export default function Customer({ auth, customers }) {
                                                         {phone}
                                                     </Typography>
                                                 </td>
-                                                <td className="p-4">
+                                                <td className="p-4 flex gap-4">
                                                     <Typography
                                                         as="a"
                                                         href="#"
@@ -216,7 +247,41 @@ export default function Customer({ auth, customers }) {
                                                         className="font-medium inline-flex space-x-1"
                                                     >
                                                         <EyeIcon className="w-5 h-5 text-gray-500" />
+                                                    </Typography>
+                                                    <Typography
+                                                        as="a"
+                                                        href={route(
+                                                            "customers.edit",
+                                                            id
+                                                        )}
+                                                        variant="small"
+                                                        color="black"
+                                                        className="font-medium inline-flex space-x-1"
+                                                    >
                                                         <PencilSquareIcon className="w-5 h-5 text-green-500" />
+                                                    </Typography>
+                                                    <Typography
+                                                        as="a"
+                                                        onClick={() =>
+                                                            destroy(
+                                                                route(
+                                                                    "customers.destroy",
+                                                                    id
+                                                                ),
+                                                                {
+                                                                    onSuccess:
+                                                                        () => {
+                                                                            setIsShowAlert(
+                                                                                true
+                                                                            );
+                                                                        },
+                                                                }
+                                                            )
+                                                        }
+                                                        variant="small"
+                                                        color="black"
+                                                        className="font-medium inline-flex space-x-1 cursor-pointer"
+                                                    >
                                                         <TrashIcon className="w-5 h-5 text-red-500" />
                                                     </Typography>
                                                 </td>

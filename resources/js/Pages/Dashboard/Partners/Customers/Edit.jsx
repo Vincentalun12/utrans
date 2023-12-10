@@ -23,19 +23,20 @@ import {
     PlusCircleIcon,
 } from "@heroicons/react/24/solid";
 
-export default function EditCustomer({ auth }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: "",
-        phone: "",
-        address: "",
-        district: "",
-        city: "",
-        province: "",
+export default function EditCustomer({ auth, customer }) {
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        name: customer.name,
+        phone: customer.phone,
+        address: customer.address,
+        district: customer.district,
+        city: customer.city,
+        province: customer.province,
+        email: customer.email,
     });
 
     const actionSubmit = (e) => {
         e.preventDefault();
-        post(route("customers.store"));
+        patch(route("customers.update", customer.id));
     };
 
     return (
@@ -98,6 +99,22 @@ export default function EditCustomer({ auth }) {
                                     </div>
                                     <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
                                         *Please use 08xxxxxxxxxx format.
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
+                                        <Input
+                                            variant="static"
+                                            type="email"
+                                            label="Email Address"
+                                            className="border-none focus:shadow-none"
+                                            placeholder="Input customer's email address"
+                                            name="email"
+                                            value={data.email}
+                                            onChange={(e) =>
+                                                setData("email", e.target.value)
+                                            }
+                                        />
                                     </div>
                                 </div>
                                 <div>
