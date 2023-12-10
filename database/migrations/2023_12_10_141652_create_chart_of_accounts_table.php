@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchase_orders', function (Blueprint $table) {
+        Schema::create('chart_of_accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('number')->unique();
-            $table->foreignId('vendor_id')->constrained('vendors');
-            $table->foreignId('user_id')->constrained();
-            $table->date('create_date');
-            $table->date('expected_arrival_date');
+            $table->string('code')->unique();
+            $table->string('account_name');
+            $table->string('account_type');
+            $table->decimal('balance', 65, 2)->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchase_orders');
+        Schema::dropIfExists('chart_of_accounts');
     }
 };
