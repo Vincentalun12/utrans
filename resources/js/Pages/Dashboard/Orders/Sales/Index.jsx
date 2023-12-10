@@ -56,7 +56,10 @@ const TABLE_HEAD = [
   { display: "Customer", field: "customer" },
   { display: "Reference", field: "reference" },
   { display: "Total", field: "total" },
+  { display: "Paid", field: "paid"},
   { display: "Status", field: "status" },
+  { display: "Payment", field: "payment"},
+  { display: "Due", field: "due" },
   { display: "", field: null },
 ];
 
@@ -68,7 +71,10 @@ const TABLE_ROWS = [
     customer: "Acuang Pinang",
     reference: "BW-CS-001",
     total: "Rp. 2,300,000.00",
+    paid: "Rp. 2,000,000.00",
     status: false,
+    payment: false,
+    due: "Rp. 300,000.00"
   },
   {
     number: "BWSL4031",
@@ -76,7 +82,10 @@ const TABLE_ROWS = [
     customer: "Ahiong",
     reference: "BW-CS-002",
     total: "Rp. 2,900,000.00",
+    paid: "Rp. 2,500,000.00",
     status: false,
+    payment: false,
+    due: "Rp. 400,000.00"
   },
   {
     number: "BWSL4030",
@@ -84,7 +93,10 @@ const TABLE_ROWS = [
     customer: "Depot Sembulang",
     reference: "BW-CS-014",
     total: "Rp. 18,300,000.00",
+    paid: "Rp. 18,000,000.00",
     status: true,
+    payment: false,
+    due: "Rp. 300,000.00"
   },
   {
     number: "BWSL4029",
@@ -92,7 +104,10 @@ const TABLE_ROWS = [
     customer: "EDI Bengkong",
     reference: "BW-CS-024",
     total: "Rp. 19,302,000.00",
+    paid: "Rp. 19,000,000.00",
     status: true,
+    payment: false,
+    due: "Rp. 302,000.00"
   },
   {
     number: "BWSL4028",
@@ -100,7 +115,10 @@ const TABLE_ROWS = [
     customer: "Erwin",
     reference: "BW-CS-029",
     total: "Rp. 2,322,000.00",
+    paid: "Rp. 2,322,000.00",
     status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
   {
     number: "BWSL4027",
@@ -108,7 +126,10 @@ const TABLE_ROWS = [
     customer: "Febri Depot",
     reference: "BW-CS-035",
     total: "Rp. 426,000.00",
+    paid: "Rp. 426,000.00",
     status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
   {
     number: "BWSL4026",
@@ -116,7 +137,10 @@ const TABLE_ROWS = [
     customer: "Hadianto",
     reference: "BW-CS-041",
     total: "Rp. 4,400,000.00",
+    paid: "Rp. 4,400,000.00",
     status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
   {
     number: "BWSL4025",
@@ -124,7 +148,10 @@ const TABLE_ROWS = [
     customer: "Hotel Anugerah",
     reference: "BW-CS-044",
     total: "Rp. 640,000.00",
+    paid: "Rp. 4,400,000.00",
     status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
   {
     number: "BWSL4024",
@@ -132,7 +159,10 @@ const TABLE_ROWS = [
     customer: "PT. Multidaya Investama",
     reference: "BW-CS-050",
     total: "Rp. 5,000,000.00",
+    paid: "Rp. 5,000,000.00",
     status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
 ];
 
@@ -308,7 +338,7 @@ export default function Sales({ auth }) {
               </thead>
               <tbody>
                 {paginated.map(
-                  ({ number, creation, customer, reference, status, total }, index) => {
+                  ({ number, creation, customer, reference, status, total, paid, payment, due}, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
                       ? "p-4"
@@ -371,6 +401,17 @@ export default function Sales({ auth }) {
                           </Typography>
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color={due === "Rp. 0,000.00" ? "blue-gray" : "red"}
+                              className="font-normal"
+                            >
+                              {paid}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className="p-2 border-b border-gray-200 pl-4">
                           <div className="w-max">
                             <div>
                               <Chip
@@ -378,10 +419,32 @@ export default function Sales({ auth }) {
                                 variant="ghost"
                                 size="sm"
                                 value={status ? "success" : "pending"}
-                                color={status ? "green" : "red"}
+                                color={status ? "green" : "orange"}
                               />
                             </div>
                           </div>
+                        </td>
+                        <td className="p-2 border-b border-gray-200 pl-4">
+                          <div className="w-max">
+                            <div>
+                              <Chip
+                                className="static"
+                                variant="ghost"
+                                size="sm"
+                                value={payment ? "PAID" : "DUE"}
+                                color={payment ? "green" : "red"}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-2 border-b border-gray-200 pl-4">
+                          <Typography
+                            variant="small"
+                            color={due === "Rp. 0,000.00" ? "green" : "red"}
+                            className="font-normal"
+                          >
+                            {due}
+                          </Typography>
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
                           <Tooltip content="Orders">
