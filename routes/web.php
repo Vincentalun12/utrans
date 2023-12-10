@@ -39,6 +39,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/products', 'index')->name('products');
         Route::get('/products/create', 'create')->name('products.create');
+        Route::post('/products/store', 'store')->name('products.store');
     });
 });
 
@@ -46,6 +47,10 @@ Route::controller(VendorController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/vendors', 'index')->name('vendors');
         Route::get('/vendors/create', 'create')->name('vendors.create');
+        Route::post('/vendors/store', 'store')->name('vendors.store');
+        Route::get('/vendors/edit/{id}', 'edit')->name('vendors.edit');
+        Route::patch('/vendors/update/{id}', 'update')->name('vendors.update');
+        Route::delete('/vendors/destroy/{id}', 'destroy')->name('vendors.destroy');
     });
 });
 

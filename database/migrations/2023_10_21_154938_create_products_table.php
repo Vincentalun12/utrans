@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->constrained('product_brands')->cascadeOnDelete();
-            $table->string('default_code')->unique();
+            $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
+            $table->string('code')->unique();
             $table->string('name');
             $table->text('description');
+            $table->decimal('stock', 65, 2);
+            $table->decimal('retail_price', 65, 2);
+            $table->decimal('whole_sale_price', 65, 2);
             $table->decimal('standard_price', 65, 2);
-            $table->decimal('sale_price', 65, 2);
-            $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -22,7 +22,7 @@ class Customer extends Model
 
     public static function generateCode()
     {
-        $lastCustomer = Customer::orderBy('id', 'desc')->first();
+        $lastCustomer = self::withTrashed()->orderBy('id', 'desc')->first();
 
         if (!$lastCustomer) {
             return 'CUS-0001';

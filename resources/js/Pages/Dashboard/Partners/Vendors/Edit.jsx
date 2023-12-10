@@ -23,25 +23,25 @@ import {
     PlusCircleIcon,
 } from "@heroicons/react/24/solid";
 
-export default function AddVendor({ auth }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: "",
-        phone: "",
-        address: "",
-        district: "",
-        city: "",
-        province: "",
-        email: "",
+export default function EditVendor({ auth, vendor }) {
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        name: vendor.name,
+        phone: vendor.phone,
+        address: vendor.address,
+        district: vendor.district,
+        city: vendor.city,
+        province: vendor.province,
+        email: vendor.email,
     });
 
     const actionSubmit = (e) => {
         e.preventDefault();
-        post(route("vendors.store"));
+        patch(route("vendors.update", vendor.id));
     };
 
     return (
         <AdditemLayout user={auth.user}>
-            <Head title="Add Vendor" />
+            <Head title="Edit Vendor" />
             <div className="lg:py-4 py-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6">
                     <div className="lg:hidden flex justify-between">

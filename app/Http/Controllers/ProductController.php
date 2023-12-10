@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Brand;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -9,11 +12,53 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Dashboard/Inventory/Products/Index');
+        $data = [
+            'products' => Product::with(['brand'])->get()
+        ];
+
+        return Inertia::render('Dashboard/Inventory/Products/Index', $data);
     }
 
     public function create()
     {
-        return Inertia::render('Dashboard/Inventory/Products/Create');
+        $data = [
+            'brands' => Brand::all()
+        ];
+
+        return Inertia::render('Dashboard/Inventory/Products/Create', $data);
+    }
+
+    public function store(Request $request)
+    {
+        $request->request->add([
+            'code' => Product::generateCode(data: $request->all())
+        ]);
+
+        $request->validate([
+            'brand_id' => 'required',
+            'code' => 'required|unique:products',
+            'name' => 'required',
+            'description' => 'required',
+            'retail_price' => 'required',
+            'whole_sale_price' => 'required',
+        ]);
+
+        Product::create([
+            'brand_id' => $request->brand_id,
+            'code' => $request->code,
+            'name' => $request->name,
+            'description' => $request->description,
+            'retail_price' => $request->retail_price,
+            'whole_sale_price' => $request->whole_sale_price,
+            'standard_price' => 0,
+            'stock' => 0,
+        ]);
+
+        return redirect()->route('products')->with([
+            'message' => [
+                'type' => 'success',
+                'content' => 'Product created successfully'
+            ]
+        ]);
     }
 }

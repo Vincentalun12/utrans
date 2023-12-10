@@ -19,4 +19,17 @@ class Vendor extends Model
         'phone',
         'email',
     ];
+
+    public static function generateCode()
+    {
+        $lastVendor = self::withTrashed()->orderBy('id', 'desc')->first();
+
+        if (!$lastVendor) {
+            return 'VEN-0001';
+        }
+
+        $lastVendorNumber = substr($lastVendor->code, 4);
+
+        return 'VEN-' . sprintf('%04d', $lastVendorNumber + 1);
+    }
 }

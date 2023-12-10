@@ -1,7 +1,7 @@
 import NavigationLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
-import React, { useState, useEffect } from 'react';
-import { Head, Link } from "@inertiajs/react";
+import React, { useState, useEffect } from "react";
+import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import {
     Card,
     Typography,
@@ -10,6 +10,7 @@ import {
     Breadcrumbs,
     IconButton,
     Tooltip,
+    Alert,
     Chip,
 } from "@material-tailwind/react";
 
@@ -30,35 +31,43 @@ import {
 
 import { ButtonPrimary } from "@/Components";
 
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from "tailwind-merge";
 
-const TABLE_HEAD = [
-    "No",
-    "Name",
-    "Address",
-    "Phone",
-    "Action",
-];
+const TABLE_HEAD = ["No", "Name", "Address", "Phone", "Action"];
 
-const TABLE_ROWS = [
-    {
-        no: "1",
-        name: "John Doe",
-        address: "123 Main St",
-        phone: "123-456-7890",
-    },
-    {
-        no: "2",
-        name: "Jane Doe",
-        address: "456 High St",
-        phone: "987-654-3210",
-    },
-];
+export default function Vendors({ auth, vendors }) {
+    const { flash } = usePage().props;
+    const [isShowAlert, setIsShowAlert] = useState(false);
+    const {
+        data,
+        setData,
+        delete: destroy,
+        processing,
+        errors,
+        reset,
+    } = useForm({});
 
-export default function Vendors({ auth }) {
+    useEffect(() => {
+        if (flash.message) {
+            setIsShowAlert(true);
+            setTimeout(() => {
+                setIsShowAlert(false);
+                flash.message = null;
+            }, 3000);
+        }
+    }, [isShowAlert]);
+
     return (
         <NavigationLayout user={auth.user}>
             <Head title="Vendors" />
+            <Alert
+                className="fixed top-4 right-4 z-50 w-1/4"
+                color={flash.message?.type == "success" ? "green" : "red"}
+                open={isShowAlert}
+                // icon={<Icon />}
+            >
+                {flash.message?.content}
+            </Alert>
             <div className="lg:py-4 py-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6">
                     <div className="lg:hidden flex justify-between">
@@ -73,23 +82,30 @@ export default function Vendors({ auth }) {
                         </Breadcrumbs>
                     </div>
                     <div className="w-full mx-auto pb-5">
-                            <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
-                                <div className="p-6 text-gray-900">
-                                <Typography variant="h4" className="text-ungukita" textGradient>
+                        <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
+                            <div className="p-6 text-gray-900">
+                                <Typography
+                                    variant="h4"
+                                    className="text-ungukita"
+                                    textGradient
+                                >
                                     Vendors
                                 </Typography>
                                 <Typography variant="paragraph">
                                     Manage your Vendors information here
                                 </Typography>
-                                </div>
                             </div>
                         </div>
+                    </div>
                     <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
-                            <Linkactive
-                                href={route("vendors.create")}
-                            >
-                                <Button className={twMerge('px-2 py-1 bg-red hover:bg-dark-red md:flex hidden', 'p-3 bg-ungukita')}>
+                            <Linkactive href={route("vendors.create")}>
+                                <Button
+                                    className={twMerge(
+                                        "px-2 py-1 bg-red hover:bg-dark-red md:flex hidden",
+                                        "p-3 bg-ungukita"
+                                    )}
+                                >
                                     Add Items
                                 </Button>
                             </Linkactive>
@@ -97,10 +113,10 @@ export default function Vendors({ auth }) {
                                 <Input
                                     type="search"
                                     placeholder="Search"
-
                                     className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
                                     labelProps={{
-                                        className: "before:content-none after:content-none",
+                                        className:
+                                            "before:content-none after:content-none",
                                     }}
                                 />
                                 <div>
@@ -126,8 +142,12 @@ export default function Vendors({ auth }) {
                                                 className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                                             >
                                                 {head}{" "}
-                                                {index !== TABLE_HEAD.length - 1 && (
-                                                    <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                                                {index !==
+                                                    TABLE_HEAD.length - 1 && (
+                                                    <ChevronUpDownIcon
+                                                        strokeWidth={2}
+                                                        className="h-4 w-4"
+                                                    />
                                                 )}
                                             </Typography>
                                         </th>
@@ -135,15 +155,19 @@ export default function Vendors({ auth }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {TABLE_ROWS.map(
-                                    ({ no,name,address,phone }, index) => {
-                                        const isLast = index === TABLE_ROWS.length - 1;
+                                {vendors.map(
+                                    ({ id, name, address, phone }, index) => {
+                                        const isLast =
+                                            index === vendors.length - 1;
                                         const classes = isLast
                                             ? "p-4"
                                             : "p-4 border-b border-blue-gray-50";
 
                                         return (
-                                            <tr key={no} className="even:bg-gray-100">
+                                            <tr
+                                                key={id}
+                                                className="even:bg-gray-100"
+                                            >
                                                 <td className="p-2 border-b border-gray-200 pl-4">
                                                     <div className="flex items-center gap-3">
                                                         <div className="flex flex-col">
@@ -152,9 +176,8 @@ export default function Vendors({ auth }) {
                                                                 color="blue-gray"
                                                                 className="font-normal"
                                                             >
-                                                                {no}
+                                                                {index + 1}
                                                             </Typography>
-
                                                         </div>
                                                     </div>
                                                 </td>
@@ -189,7 +212,7 @@ export default function Vendors({ auth }) {
                                                         {phone}
                                                     </Typography>
                                                 </td>
-                                                <td className="p-4">
+                                                <td className="p-4 flex gap-4">
                                                     <Typography
                                                         as="a"
                                                         href="#"
@@ -198,14 +221,47 @@ export default function Vendors({ auth }) {
                                                         className="font-medium inline-flex space-x-1"
                                                     >
                                                         <EyeIcon className="w-5 h-5 text-gray-500" />
+                                                    </Typography>
+                                                    <Typography
+                                                        as="a"
+                                                        href={route(
+                                                            "vendors.edit",
+                                                            id
+                                                        )}
+                                                        variant="small"
+                                                        color="black"
+                                                        className="font-medium inline-flex space-x-1"
+                                                    >
                                                         <PencilSquareIcon className="w-5 h-5 text-green-500" />
+                                                    </Typography>
+                                                    <Typography
+                                                        as="a"
+                                                        onClick={() =>
+                                                            destroy(
+                                                                route(
+                                                                    "vendors.destroy",
+                                                                    id
+                                                                ),
+                                                                {
+                                                                    onSuccess:
+                                                                        () => {
+                                                                            setIsShowAlert(
+                                                                                true
+                                                                            );
+                                                                        },
+                                                                }
+                                                            )
+                                                        }
+                                                        variant="small"
+                                                        color="black"
+                                                        className="font-medium inline-flex space-x-1 cursor-pointer"
+                                                    >
                                                         <TrashIcon className="w-5 h-5 text-red-500" />
-
                                                     </Typography>
                                                 </td>
                                             </tr>
                                         );
-                                    },
+                                    }
                                 )}
                             </tbody>
                         </table>
@@ -213,7 +269,11 @@ export default function Vendors({ auth }) {
                     <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
                         <div className="flex justify-between">
                             <div className="pt-2">
-                                <Typography variant="small" color="blue-gray" className="font-normal">
+                                <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                >
                                     Page 1 of 10
                                 </Typography>
                             </div>

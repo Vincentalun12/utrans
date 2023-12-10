@@ -29,6 +29,7 @@ class CustomerController extends Controller
 
         $request->validate([
             'code' => 'required|unique:customers',
+            'name' => 'required',
         ]);
 
         Customer::create([
@@ -61,6 +62,10 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $customer = Customer::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required',
+        ]);
 
         $customer->update([
             'name' => $request->name,

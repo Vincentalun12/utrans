@@ -35,21 +35,6 @@ import { twMerge } from "tailwind-merge";
 
 const TABLE_HEAD = ["No", "Name", "Address", "Phone", "Action"];
 
-const TABLE_ROWS = [
-    {
-        no: "1",
-        name: "John Doe",
-        address: "123 Main St",
-        phone: "123-456-7890",
-    },
-    {
-        no: "2",
-        name: "Jane Doe",
-        address: "456 High St",
-        phone: "987-654-3210",
-    },
-];
-
 export default function Customer({ auth, customers }) {
     const { flash } = usePage().props;
     const {
