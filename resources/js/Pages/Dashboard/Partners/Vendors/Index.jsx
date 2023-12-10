@@ -34,9 +34,9 @@ import { twMerge } from 'tailwind-merge'
 
 const TABLE_HEAD = [
     "No",
-    "name",
-    "address",
-    "phone",
+    "Name",
+    "Address",
+    "Phone",
     "Action",
 ];
 
@@ -58,7 +58,7 @@ const TABLE_ROWS = [
 export default function Vendors({ auth }) {
     return (
         <NavigationLayout user={auth.user}>
-            <Head title="Products" />
+            <Head title="Vendors" />
             <div className="lg:py-4 py-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6">
                     <div className="lg:hidden flex justify-between">

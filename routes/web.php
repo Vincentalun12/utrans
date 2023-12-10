@@ -8,6 +8,9 @@ use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\VendorsController;
+use App\Http\Controllers\JournalsController;
+use App\Http\Controllers\JournalentriesController;
+use App\Http\Controllers\COAController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -77,6 +80,27 @@ Route::controller(SaleController::class)->group(function () {
         Route::get('/sales', 'index')->name('sales');
         Route::get('/sales/detail', 'detail')->name('sales.detail');
         Route::get('/sales/create', 'create')->name('sales.create');
+    });
+});
+
+Route::controller(JournalsController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/journals', 'index')->name('journals');
+        Route::get('/journals/create', 'create')->name('journals.create');
+    });
+});
+
+Route::controller(JournalentriesController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/journalentries', 'index')->name('journalentries');
+        Route::get('/journalentries/create', 'create')->name('journalentries.create');
+    });
+});
+
+Route::controller(COAController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/coa', 'index')->name('coa');
+        Route::get('/coa/create', 'create')->name('coa.create');
     });
 });
 
