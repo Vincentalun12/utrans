@@ -32,11 +32,9 @@ class Product extends Model
         $previous_product = self::withTrashed()->where('brand_id', $data['brand_id'])->orderBy('id', 'desc')->first();
 
         if (!$previous_product) {
-            print("aaaaa");
             $string = strtoupper($brand->name) . '-' . date("Y") . '-' . "0001";
             return $string;
         } else {
-            print("bbbb");
             $explode_previous_product_code = explode('-', $previous_product->code);
             $previous_product_code = $explode_previous_product_code[2];
             $string = strtoupper($brand->name) . '-' . date("Y") . '-' . sprintf('%04d', $previous_product_code + 1);

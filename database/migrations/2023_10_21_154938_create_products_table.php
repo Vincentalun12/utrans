@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
             $table->string('code')->unique();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->decimal('stock', 65, 2);
             $table->decimal('retail_price', 65, 2);
             $table->decimal('whole_sale_price', 65, 2);

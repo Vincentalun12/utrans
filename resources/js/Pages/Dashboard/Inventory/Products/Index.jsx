@@ -38,19 +38,9 @@ const TABLE_HEAD = [
     { display: "Brand", field: "brand" },
     { display: "Retail Price", field: "retail" },
     { display: "Wholesale Price", field: "wholesale" },
+    { display: "COGS", field: "standard" },
     { display: "Stock", field: "stock" },
     { display: "Action", field: null },
-];
-
-const TABLE_ROWS = [
-    {
-        SKU: "BW-CB-001",
-        name: "Carbon Block CTO Kirei 10 inch",
-        brand: "Kirei",
-        retail: "25.000",
-        wholesale: "30.000",
-        stock: "203",
-    },
 ];
 
 export default function Inventory({ auth, products }) {
@@ -113,7 +103,7 @@ export default function Inventory({ auth, products }) {
         }
 
         setpaginated(sortedItems.slice(start, end));
-    }, [currentPage, sorting, sortdirection, searchbar]);
+    }, [currentPage, sorting, sortdirection, searchbar, isShowAlert]);
 
     const handleSort = (field) => {
         if (field === sorting) {
@@ -255,6 +245,7 @@ export default function Inventory({ auth, products }) {
                                             brand,
                                             retail_price,
                                             whole_sale_price,
+                                            standard_price,
                                             stock,
                                         },
                                         index
@@ -337,6 +328,20 @@ export default function Inventory({ auth, products }) {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
+                                                        Rp{" "}
+                                                        {Intl.NumberFormat(
+                                                            "id"
+                                                        ).format(
+                                                            standard_price
+                                                        )}
+                                                    </Typography>
+                                                </td>
+                                                <td className="p-2 border-b border-gray-200 pl-4">
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
                                                         {stock}
                                                     </Typography>
                                                 </td>
@@ -370,7 +375,15 @@ export default function Inventory({ auth, products }) {
                                                                 route(
                                                                     "products.destroy",
                                                                     id
-                                                                )
+                                                                ),
+                                                                {
+                                                                    onSuccess:
+                                                                        () => {
+                                                                            setIsShowAlert(
+                                                                                true
+                                                                            );
+                                                                        },
+                                                                }
                                                             )
                                                         }
                                                         variant="small"
