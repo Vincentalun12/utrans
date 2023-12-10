@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
@@ -7,9 +7,21 @@ import ButtonLogin from '@/Components/ButtonLogin';
 import TextInputLogin from '@/Components/TextInputLogin';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-import Language from '@/Languages/LoginPage/Login';
+import { Language } from '@/Languages/LoginPage/Login';
 
 export default function Login({ status, canResetPassword }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState('id');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, []);
+
+    const changeLanguage = (newLanguage) => {
+        setSelectedLanguage(newLanguage);
+        Language.setLanguage(newLanguage);
+    };
+
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -53,7 +65,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabelLogin htmlFor="password" value={Language.password_id} />
+                    <InputLabelLogin htmlFor="password" value={Language.password} />
 
                     <TextInputLogin
                         id="password"
@@ -75,21 +87,21 @@ export default function Login({ status, canResetPassword }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ml-2 text-sm text-black">{Language.remember_id}</span>
+                        <span className="ml-2 text-sm text-black">{Language.remember}</span>
                     </label>
                         {canResetPassword && (
                         <Link
                             href={route('password.request')}
                             className="text-sm text-black hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            {Language.forgot_id}
+                            {Language.forgot}
                         </Link>
                     )}
                 </div>
 
                   <div className="flex items-center mt-6">
                     <ButtonLogin className="w-full h-10" disabled={processing}>
-                      <span className="flex items-center justify-center">{Language.login_id}
+                      <span className="flex items-center justify-center">{Language.login}
                         </span>  
                     </ButtonLogin>
                 </div>
