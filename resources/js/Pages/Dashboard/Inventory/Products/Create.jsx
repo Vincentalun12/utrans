@@ -26,7 +26,7 @@ import {
 export default function AddProduct({ auth, brands }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
-        brand_id: brands[0].id,
+        brand_id: brands[0]?.id,
         description: "",
         retail_price: "",
         whole_sale_price: "",
