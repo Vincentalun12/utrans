@@ -1,6 +1,3 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import DataListInput from 'react-datalist-input';
-import 'react-datalist-input/dist/styles.css';
 import AdditemLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
 import { Head } from "@inertiajs/react";
@@ -41,12 +38,6 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/solid";
 
-const options = [
-  { name: 'Carbon Block CTO Kirei 10 inch' },
-  { name: 'Carbon Block CTO Kirei 20 inch' },
-  { name: 'Catridge Filter Kolon 10 inch 05 mikron' },
-];
-
 const TABLE_HEAD = ["SKU", "Item", "Quantity", "Unit price", "Disc", "Total",""];
 const TABLE_ROWS = [
   {
@@ -75,34 +66,7 @@ const TABLE_ROWS = [
   },
 ];
 
-const YourComponent = ({ options, onSelect }) => {
-  const items = useMemo(
-    () =>
-      options.map((option) => ({
-        id: option.name,
-        value: option.name,
-        ...option,
-      })),
-    [],
-  );
-
-  return (
-    <DataListInput
-      label="Product Name"
-      placeholder="Search for a product"
-      items={items}
-      onSelect={onSelect}
-    />
-  );
-};
-
 export default function Additem({ auth }) {
-  const [selectedProductName, setSelectedProductName] = useState('');
-
-  const handleProductNameSelect = useCallback((selectedItem) => {
-    setSelectedProductName(selectedItem.value);
-  }, []);
-  
   return (
     <AdditemLayout user={auth.user}>
       <Head title="Add item" />
@@ -193,20 +157,25 @@ export default function Additem({ auth }) {
                 </div>
               </div>
             </div>
+            <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4">
+            <div className="mx-2 w-full flex flex-col">
+              <label className="">Product Name</label>
+              <Input
+                  type="search"
+                  placeholder="Search"
+                  icon={<QrCodeIcon/>}
+
+                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                />
+                </div>
+                </div>
             <div>
             </div>
           </div>
-          <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
-            <div className="mx-2 w-full flex flex-col">
-            <YourComponent options={options} onSelect={handleProductNameSelect} />
-              </div>
-              </div>
           <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
-          <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4">
-            <div className="mx-2 w-full flex flex-col">
-                
-                </div>
-                </div>
             <table className="w-full min-w-max lg:min-w-full table-auto text-left">
             <thead>
             <tr>
@@ -263,7 +232,13 @@ export default function Additem({ auth }) {
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
                           <div className="flex flex-col">
-                            <input type="number" id="Quantity" class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"/>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {quantity}
+                            </Typography>
                           </div>
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
