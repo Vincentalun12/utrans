@@ -21,6 +21,8 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
+  Select,
+  Option
 } from "@material-tailwind/react";
 
 import {
@@ -281,6 +283,22 @@ export default function Additem({ auth }) {
                       className: "before:content-none after:content-none",
                     }}
                   />
+              </div>
+              <div className="mx-2 lg:w-4/6 w-full">
+                <label className="">Test</label>
+                <Select
+                className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                >
+                  <Option>Opsi 1</Option>
+                  <Option>Opsi 2</Option>
+                  <Option>Opsi 3</Option>
+                  <Option>Opsi 4</Option>
+                  <Option>Opsi 5</Option>
+                </Select>
+
               </div>
               <div className="mx-2 lg:w-4/6 w-full">
                 <label className="">Shipping</label>

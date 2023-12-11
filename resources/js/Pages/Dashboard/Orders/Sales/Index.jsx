@@ -251,13 +251,22 @@ export default function Sales({ auth }) {
           </div>
           <div className="w-full mx-auto pb-5">
               <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
-                <div className="p-6 text-gray-900">
-                  <Typography variant="h4" className="text-ungukita" textGradient>
-                    Sales
-                  </Typography>
-                  <Typography variant="paragraph">
-                    Manage your order sales here
-                  </Typography>
+                {/*
+                <div className="flex p-6 items-center">
+                  {React.createElement(InformationCircleIcon, {
+                    strokeWidth: 2,
+                    className: "h-6 text-gray-900 w-6 mr-4", // added margin-right for spacing
+                  })}
+                  */}
+                  <div className="p-6 items-center">
+                  <div>
+                    <Typography variant="h4" className="text-ungukita" textGradient>
+                      Sales
+                    </Typography>
+                    <Typography variant="paragraph">
+                      Manage your order sales here
+                    </Typography>
+                  </div>
                 </div>
               </div>
           </div>
@@ -419,7 +428,7 @@ export default function Sales({ auth }) {
                                 variant="ghost"
                                 size="sm"
                                 value={status ? "success" : "pending"}
-                                color={status ? "green" : "orange"}
+                                color={status ? "green" : "amber"}
                               />
                             </div>
                           </div>

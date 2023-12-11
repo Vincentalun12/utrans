@@ -71,69 +71,118 @@ export default function Settings({ auth }) {
           <div className="bg-gray-100 overflow-hidden shadow-md h-full min-h-[700px] py-2 border-b border-gray-200">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
             <div className="grid xl:grid-cols-2 grid-cols-1 gap-5 m-3">
-            <h2 className="col-span-2 text-2xl mb-4">Journal Settings</h2>
-            <div className="w-72 mb-4">
-                <Select variant="static" label="Sales Account">
-                    <Option>1</Option>
-                    <Option>2</Option>
-                    <Option>3</Option>
-                    <Option>4</Option>
-                    <Option>5</Option>
+            <h2 className="col-span-2 text-2xl">Journal Settings</h2>
+            <div className="w-72">
+            <label className="">Sales Account</label>
+                <Select
+                className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                value="Opsi 1"
+                >
+                  <Option value="Opsi 1">Opsi 1</Option>
+                  <Option value="Opsi 2">Opsi 2</Option>
+                  <Option value="Opsi 3">Opsi 3</Option>
+                  <Option value="Opsi 4">Opsi 4</Option>
+                  <Option value="Opsi 5">Opsi 5</Option>
                 </Select>
             </div>
-            <div className="w-72 mb-4">
-                <Select variant="static" label="Cash Account">
-                    <Option>1</Option>
-                    <Option>2</Option>
-                    <Option>3</Option>
-                    <Option>4</Option>
-                    <Option>5</Option>
+            <div className="w-72">
+            <label className="">Cash Account</label>
+                <Select
+                className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                value="Opsi 1"
+                >
+                  <Option value="Opsi 1">Opsi 1</Option>
+                  <Option value="Opsi 2">Opsi 2</Option>
+                  <Option value="Opsi 3">Opsi 3</Option>
+                  <Option value="Opsi 4">Opsi 4</Option>
+                  <Option value="Opsi 5">Opsi 5</Option>
                 </Select>
             </div>
-            <div className="w-72 mb-4">
-                <Select variant="static" label="Assets Account">
-                    <Option>1</Option>
-                    <Option>2</Option>
-                    <Option>3</Option>
-                    <Option>4</Option>
-                    <Option>5</Option>
+            <div className="w-72">
+            <label className="">Assets Account</label>
+                <Select
+                className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                value="Opsi 1"
+                >
+                  <Option value="Opsi 1">Opsi 1</Option>
+                  <Option value="Opsi 2">Opsi 2</Option>
+                  <Option value="Opsi 3">Opsi 3</Option>
+                  <Option value="Opsi 4">Opsi 4</Option>
+                  <Option value="Opsi 5">Opsi 5</Option>
                 </Select>
             </div>
-            <div className="w-72 mb-4">
-                <Select variant="static" label="Fixed Assets Account">
-                    <Option>1</Option>
-                    <Option>2</Option>
-                    <Option>3</Option>
-                    <Option>4</Option>
-                    <Option>5</Option>
+            <div className="w-72">
+            <label className="">Fixed Assets Account</label>
+                <Select
+                className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                value="Opsi 1"
+                >
+                  <Option value="Opsi 1">Opsi 1</Option>
+                  <Option value="Opsi 2">Opsi 2</Option>
+                  <Option value="Opsi 3">Opsi 3</Option>
+                  <Option value="Opsi 4">Opsi 4</Option>
+                  <Option value="Opsi 5">Opsi 5</Option>
                 </Select>
             </div>
-            <h2 className="col-span-2 text-2xl mb-4">Account Settings</h2>
-            <div className="w-72 mb-4">
-                <Select variant="static" label="Stock Valuation Journal">
-                    <Option>1</Option>
-                    <Option>2</Option>
-                    <Option>3</Option>
-                    <Option>4</Option>
-                    <Option>5</Option>
+            <h2 className="col-span-2 text-2xl">Account Settings</h2>
+            <div className="w-72">
+            <label className="">Stock Valuation Journal</label>
+                <Select
+                className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                value="Opsi 1"
+                >
+                  <Option value="Opsi 1">Opsi 1</Option>
+                  <Option value="Opsi 2">Opsi 2</Option>
+                  <Option value="Opsi 3">Opsi 3</Option>
+                  <Option value="Opsi 4">Opsi 4</Option>
+                  <Option value="Opsi 5">Opsi 5</Option>
                 </Select>
             </div>
-            <div className="w-72 mb-4">
-                <Select variant="static" label="Sales Journal">
-                    <Option>1</Option>
-                    <Option>2</Option>
-                    <Option>3</Option>
-                    <Option>4</Option>
-                    <Option>5</Option>
+            <div className="w-72">
+            <label className="">Sales Journal</label>
+                <Select
+                className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                value="Opsi 1"
+                >
+                  <Option value="Opsi 1">Opsi 1</Option>
+                  <Option value="Opsi 2">Opsi 2</Option>
+                  <Option value="Opsi 3">Opsi 3</Option>
+                  <Option value="Opsi 4">Opsi 4</Option>
+                  <Option value="Opsi 5">Opsi 5</Option>
                 </Select>
             </div>
-            <div className="w-72 mb-4">
-                <Select variant="static" label="Cash Journal">
-                    <Option>1</Option>
-                    <Option>2</Option>
-                    <Option>3</Option>
-                    <Option>4</Option>
-                    <Option>5</Option>
+            <div className="w-72">
+            <label className="">Cash Journal</label>
+                <Select
+                className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                value="Opsi 1"
+                >
+                  <Option value="Opsi 1">Opsi 1</Option>
+                  <Option value="Opsi 2">Opsi 2</Option>
+                  <Option value="Opsi 3">Opsi 3</Option>
+                  <Option value="Opsi 4">Opsi 4</Option>
+                  <Option value="Opsi 5">Opsi 5</Option>
                 </Select>
             </div>
             <div className="col-span-2 mb-4">
