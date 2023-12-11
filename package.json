@@ -28,10 +28,10 @@
         "@mui/material": "^5.14.14",
         "@mui/styled-engine-sc": "^6.0.0-alpha.2",
         "react": "^18.2.0",
-        "react-datalist-input": "^3.2.1",
         "react-dom": "^18.2.0",
         "react-dropdown": "^1.11.0",
         "react-localization": "^1.0.19",
+        "react-select": "^5.8.0",
         "styled-components": "^6.1.0"
     }
 }

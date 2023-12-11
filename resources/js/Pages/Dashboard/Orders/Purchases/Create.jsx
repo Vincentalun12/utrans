@@ -1,5 +1,7 @@
 import AdditemLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
+import React from 'react'
+import Select from 'react-select'
 import { Head } from "@inertiajs/react";
 import {
   Card,
@@ -65,6 +67,13 @@ const TABLE_ROWS = [
     total: "1,025,000.00",
   },
 ];
+
+const options = [
+  { value: '1', label: 'Test1' },
+  { value: '2', label: 'Test2' },
+  { value: '3', label: 'Test3' }
+]
+
 
 export default function Additem({ auth }) {
   return (
@@ -158,18 +167,10 @@ export default function Additem({ auth }) {
               </div>
             </div>
             <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4">
-            <div className="mx-2 w-full flex flex-col">
+            <div className="mx-2 w-full flex flex-col z-100">
+              
               <label className="">Product Name</label>
-              <Input
-                  type="search"
-                  placeholder="Search"
-                  icon={<QrCodeIcon/>}
-
-                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
+              <Select options={options} />
                 </div>
                 </div>
             <div>
