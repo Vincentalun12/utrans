@@ -193,14 +193,16 @@ export default function Additem({ auth }) {
                 </div>
               </div>
             </div>
+            <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4">
+            <div className="mx-2 w-full flex flex-col">
+            <YourComponent options={options} onSelect={handleProductNameSelect} />
+
+              </div>
+              </div>
+
             <div>
             </div>
           </div>
-          <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
-            <div className="mx-2 w-full flex flex-col">
-            <YourComponent options={options} onSelect={handleProductNameSelect} />
-              </div>
-              </div>
           <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
           <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4">
             <div className="mx-2 w-full flex flex-col">
@@ -263,7 +265,13 @@ export default function Additem({ auth }) {
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
                           <div className="flex flex-col">
-                            <input type="number" id="Quantity" class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"/>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {quantity}
+                            </Typography>
                           </div>
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
