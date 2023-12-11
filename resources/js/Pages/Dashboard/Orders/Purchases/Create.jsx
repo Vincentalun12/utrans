@@ -166,16 +166,16 @@ export default function Additem({ auth }) {
                 </div>
               </div>
             </div>
-            <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4">
-            <div className="mx-2 w-full flex flex-col z-100">
-              
-              <label className="">Product Name</label>
-              <Select options={options} />
-                </div>
-                </div>
             <div>
             </div>
           </div>
+          <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
+            <div className="mx-2 w-full flex flex-col z-100">
+              
+              <label className="">Product Name</label>
+              <Select options={options}/>
+                </div>
+                </div>
           <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
             <table className="w-full min-w-max lg:min-w-full table-auto text-left">
             <thead>
