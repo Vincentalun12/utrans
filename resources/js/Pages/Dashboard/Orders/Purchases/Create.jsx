@@ -238,7 +238,7 @@ export default function Additem({ auth }) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {quantity}
+                              <input type="number" id="Quantity" class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"/>
                             </Typography>
                           </div>
                         </td>
