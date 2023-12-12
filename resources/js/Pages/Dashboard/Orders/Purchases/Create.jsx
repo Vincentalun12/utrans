@@ -128,6 +128,10 @@ export default function Additem({ auth }) {
             <div className="lg:mx-2 w-full flex flex-col py-2 lg:py-0">
             <label className="flex">Vendor</label>
               <Select options={options}
+                      components={{
+                        DropdownIndicator: () => null,
+                        IndicatorSeparator: () => null
+                      }}
                       placeholder={'Search Vendor'}
                       styles={{
                         control: (base, state) => ({
@@ -249,6 +253,10 @@ export default function Additem({ auth }) {
               
               <label className="">Product Name</label>
               <Select options={options}
+                      components={{
+                        DropdownIndicator: () => null,
+                        IndicatorSeparator: () => null
+                      }}
                       styles={{
                         control: (base, state) => ({
                           ...base,
