@@ -174,10 +174,11 @@ export default function Additem({ auth }) {
                               setDate(newDate);
                             }
                           }}
-                          className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                          className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                           labelProps={{
                             className: "before:content-none after:content-none",
                           }}
+                          
                         />
                         </PopoverHandler>
                         <PopoverContent>
