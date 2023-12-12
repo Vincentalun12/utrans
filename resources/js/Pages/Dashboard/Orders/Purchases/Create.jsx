@@ -71,11 +71,29 @@ const TABLE_ROWS = [
 const options = [
   { value: '1', label: 'Test1' },
   { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
+  { value: '2', label: 'Test2' },
   { value: '3', label: 'Test3' }
 ]
 
 
 export default function Additem({ auth }) {
+  const style = {
+    control: base => ({
+      ...base,
+      border: 0,
+      // This line disable the blue border
+      boxShadow: 'none'
+    })
+  };
   return (
     <AdditemLayout user={auth.user}>
       <Head title="Add item" />
@@ -104,29 +122,23 @@ export default function Additem({ auth }) {
                 </div>
               </div>
           </div>
-          <div className="bg-white overflow-hidden shadow-md h-auto">
-            <div className="lg:flex w-full gap-2 md:justify-between px-4 py-4">
-              <div className="flex lg:gap-3 gap-6 flex-col lg:flex-row">
-              <div className="mx-2 lg:w-4/6 w-full">
-              <label className="flex">Vendor</label>
-              <div className="inline-flex items-center w-full">
-              <Input
-                  type="search"
-                  placeholder="Vendor name"
-
-                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
+          <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-6 pb-4 bg-white shadow-md">
+            <div className="lg:mx-2 w-full flex flex-col py-2 lg:py-0">
+            <label className="flex">Vendor</label>
+              <Select options={options}
+                      placeholder={'Search Vendor'}
+                      styles={{
+                        input: (base) => ({
+                                  ...base,
+                                  "input:focus": {
+                                       boxShadow: "none",
+                                       },
+                                })
+                     }}/>
                 <div>
-                <IconButton className=" bg-ungukita ml-2">
-                    <PlusIcon className="w-5 h-5" />
-                  </IconButton>
                 </div>
                 </div>
-                </div>
-                <div className="mx-2 lg:w-4/6 w-full">
+                <div className="lg:mx-2 lg:w-4/6 w-full py-2 lg:py-0">
               <label className="">Creation date</label>
               <Input
                   type="search"
@@ -139,7 +151,7 @@ export default function Additem({ auth }) {
                   }}
                 />
                 </div>
-                <div className="mx-2 lg:w-4/6 w-full">
+                <div className="lg:mx-2 lg:w-4/6 w-full py-2 lg:py-0">
               <label className="">Expected Arrival</label>
               <Input
                   type="search"
@@ -152,7 +164,7 @@ export default function Additem({ auth }) {
                   }}
                 />
                 </div>
-                <div className="mx-2 lg:w-4/6 w-full">
+                <div className="lg:mx-2 lg:w-4/6 w-full pt-2 lg:py-0">
               <label className="">Reference</label>
               <Input
                   type="input"
@@ -164,16 +176,21 @@ export default function Additem({ auth }) {
                   }}
                 />
                 </div>
-              </div>
-            </div>
-            <div>
-            </div>
-          </div>
+                </div>
           <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
-            <div className="mx-2 w-full flex flex-col z-100">
+            <div className="lg:mx-2 w-full flex flex-col z-100">
               
               <label className="">Product Name</label>
-              <Select options={options}/>
+              <Select options={options}
+                      styles={{
+                        input: (base) => ({
+                                  ...base,
+                                  "input:focus": {
+                                       boxShadow: "none",
+                                       },
+                                })
+                        
+                     }}/>
                 </div>
                 </div>
           <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
@@ -286,7 +303,7 @@ export default function Additem({ auth }) {
           <Card className="flex bg-white rounded-none">
           <div className="w-full gap-2 md:justify-between px-4 py-4">
             <div className="flex lg:gap-3 gap-6 flex-col lg:flex-row">
-              <div className="mx-2 lg:w-4/6 w-full">
+              <div className="lg:mx-2 lg:w-4/6 w-full">
                 <label className="">Discount</label>
                 <Input
                     type="search"
@@ -296,7 +313,7 @@ export default function Additem({ auth }) {
                     }}
                   />
               </div>
-              <div className="mx-2 lg:w-4/6 w-full">
+              <div className="lg:mx-2 lg:w-4/6 w-full">
                 <label className="">Shipping</label>
                 <Input
                     type="search"
@@ -306,7 +323,7 @@ export default function Additem({ auth }) {
                     }}
                   />
               </div>
-              <div className="mx-2 lg:w-4/6 w-full">
+              <div className="lg:mx-2 lg:w-4/6 w-full">
                 <label className="">Status</label>
                 <Input
                     type="search"
