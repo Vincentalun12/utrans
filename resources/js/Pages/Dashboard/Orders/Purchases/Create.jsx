@@ -125,14 +125,14 @@ export default function Additem({ auth }) {
               </div>
           </div>
           <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-6 pb-4 bg-white shadow-md">
-            <div className="lg:mx-2 w-full flex flex-col py-2 lg:py-0">
-            <label className="flex">Vendor</label>
+            <div className="lg:mx-2 w-full min-w-xl py-2 lg:py-0">
+            <label className="">Vendor</label>
               <Select options={options}
                       components={{
                         DropdownIndicator: () => null,
                         IndicatorSeparator: () => null
                       }}
-                      placeholder={'Search Vendor'}
+                      placeholder={'Search'}
                       styles={{
                         control: (base, state) => ({
                           ...base,
@@ -161,7 +161,7 @@ export default function Additem({ auth }) {
                       type="search"
                       placeholder="14-5-2023"
                       disabled
-                      className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                      className=" placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
                       labelProps={{
                         className: "before:content-none after:content-none",
                       }}
@@ -241,7 +241,7 @@ export default function Additem({ auth }) {
                   type="input"
                   placeholder="Reference"
 
-                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
@@ -392,7 +392,7 @@ export default function Additem({ auth }) {
                 <label className="">Discount</label>
                 <Input
                     type="search"
-                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                    className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                     labelProps={{
                       className: "before:content-none after:content-none",
                     }}
@@ -402,7 +402,7 @@ export default function Additem({ auth }) {
                 <label className="">Shipping</label>
                 <Input
                     type="search"
-                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                    className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                     labelProps={{
                       className: "before:content-none after:content-none",
                     }}
@@ -412,7 +412,7 @@ export default function Additem({ auth }) {
                 <label className="">Status</label>
                 <Input
                     type="search"
-                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                    className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                     labelProps={{
                       className: "before:content-none after:content-none",
                     }}
