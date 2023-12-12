@@ -78,17 +78,10 @@ const TABLE_ROWS = [
 const options = [
   { value: '1', label: 'Test1' },
   { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '2', label: 'Test2' },
-  { value: '3', label: 'Test3' }
+  { value: '3', label: 'Test3' },
+  { value: '4', label: 'Test4' },
+  { value: '5', label: 'Test5' },
+  { value: '6', label: 'Test6' },
 ]
 
 
@@ -137,13 +130,24 @@ export default function Additem({ auth }) {
               <Select options={options}
                       placeholder={'Search Vendor'}
                       styles={{
+                        control: (base, state) => ({
+                          ...base,
+                          boxShadow: state.isFocused ? 0 : 0,
+                          borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                          borderWidth: state.isFocused ? '2px' : '1px',
+                          "&:hover": {
+                            borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                          },
+                          borderRadius: '6px',
+                        }),
                         input: (base) => ({
-                                  ...base,
-                                  "input:focus": {
-                                       boxShadow: "none",
-                                       },
-                                })
-                     }}/>
+                          ...base,
+                          "input:focus": {
+                            boxShadow: "none",
+                          },
+                        })
+                      }}
+                />
                 <div>
                 </div>
                 </div>
@@ -160,7 +164,7 @@ export default function Additem({ auth }) {
                     />
                 </div>
                 <div className="lg:mx-2 lg:w-4/6 w-full py-2 lg:py-0">
-                <label className="">Arrival Date</label>
+                <label className="">Expected Arrival</label>
                     <Popover placement="bottom" trigger="click">
                         <PopoverHandler>
                         <Input
@@ -246,14 +250,24 @@ export default function Additem({ auth }) {
               <label className="">Product Name</label>
               <Select options={options}
                       styles={{
+                        control: (base, state) => ({
+                          ...base,
+                          boxShadow: state.isFocused ? 0 : 0,
+                          borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                          borderWidth: state.isFocused ? '2px' : '1px',
+                          "&:hover": {
+                            borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                          },
+                          borderRadius: '6px',
+                        }),
                         input: (base) => ({
-                                  ...base,
-                                  "input:focus": {
-                                       boxShadow: "none",
-                                       },
-                                })
-                        
-                     }}/>
+                          ...base,
+                          "input:focus": {
+                            boxShadow: "none",
+                          },
+                        })
+                      }}
+                  />
                 </div>
                 </div>
           <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
