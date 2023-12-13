@@ -124,8 +124,9 @@ export default function Additem({ auth }) {
                 </div>
               </div>
           </div>
-          <div className="2xl:flex w-full gap-2 md:justify-between px-4 pt-6 pb-4 bg-white shadow-md grid grid-cols-1 sm:grid-cols-2">
-            <div className="lg:mx-2 grid w-full min-w-xl py-2 lg:py-0">
+
+          <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2">
+            <div className="sm:col-span-1">
             <label className="">Vendor</label>
               <Select options={options}
                       components={{
@@ -155,7 +156,19 @@ export default function Additem({ auth }) {
                 <div>
                 </div>
                 </div>
-                <div className="lg:mx-2 lg:w-4/6 w-full py-2 lg:py-0">
+                <div className="sm:col-span-1">
+              <label className="">Reference</label>
+              <Input
+                  type="input"
+                  placeholder="Reference"
+
+                  className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                />
+                </div>
+                <div className="sm:col-span-1">
                 <label className="">Creation Date</label>
                   <Input
                       type="search"
@@ -167,7 +180,7 @@ export default function Additem({ auth }) {
                       }}
                     />
                 </div>
-                <div className="lg:mx-2 lg:w-4/6 w-full py-2 lg:py-0">
+                <div className="sm:col-span-1">
                 <label className="">Expected Arrival</label>
                     <Popover placement="bottom" trigger="click">
                         <PopoverHandler>
@@ -235,22 +248,9 @@ export default function Additem({ auth }) {
                         </PopoverContent>
                     </Popover>
                 </div>
-                <div className="lg:mx-2 lg:w-4/6 w-full pt-2 lg:py-0">
-              <label className="">Reference</label>
-              <Input
-                  type="input"
-                  placeholder="Reference"
-
-                  className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
-                </div>
                 </div>
           <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
-            <div className="lg:mx-2 w-full flex flex-col z-100">
-              
+            <div className="sm:col-span-2 w-full">
               <label className="">Product Name</label>
               <Select options={options}
                       components={{
@@ -386,38 +386,36 @@ export default function Additem({ auth }) {
             </table>
           </Card>
           <Card className="flex bg-white rounded-none">
-          <div className="w-full gap-2 md:justify-between px-4 py-4">
-            <div className="2xl:flex lg:gap-3 gap-6 flex-col lg:flex-row grid grid-cols-1 sm:grid-cols-2">
-              <div className="lg:mx-2 lg:w-4/6 w-full">
-                <label className="">Discount</label>
-                <Input
-                    type="search"
-                    className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
-              </div>
-              <div className="lg:mx-2 lg:w-4/6 w-full">
-                <label className="">Shipping</label>
-                <Input
-                    type="search"
-                    className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
-              </div>
-              <div className="lg:mx-2 lg:w-4/6 w-full">
-                <label className="">Status</label>
-                <Input
-                    type="search"
-                    className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
-              </div>
+          <div className="w-full gap-4 md:justify-between shadow-md px-2 pt-6 pb-4 bg-white grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 aspect-w-4 aspect-h-2 sm:aspect-w-4 sm:aspect-h-3">
+            <div>
+              <label className="">Discount</label>
+              <Input
+                type="search"
+                className="w-full placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+              />
+            </div>
+            <div>
+              <label className="">Shipping</label>
+              <Input
+                type="search"
+                className="w-full placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+              />
+            </div>
+            <div>
+              <label className="">Status</label>
+              <Input
+                type="search"
+                className="w-full placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+              />
             </div>
           </div>
         </Card>
