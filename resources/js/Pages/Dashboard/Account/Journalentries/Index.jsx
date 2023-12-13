@@ -126,17 +126,7 @@ export default function Inventory({ auth }) {
       <Head title="Journal Entries" />
       <div className="sm:mt-18 sm:mb-20 mt-12 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
-          <div className="lg:hidden flex justify-between">
-            <Breadcrumbs>
-              <a href="#" className="opacity-60">
-                Dashboard
-              </a>
-              <a href="#" className="Opacity-60">
-                stock
-              </a>
-              <a href="#">Edit</a>
-            </Breadcrumbs>
-          </div>
+
           <div className="w-full mx-auto pb-5">
               <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                 <div className="p-6 text-gray-900">
@@ -282,7 +272,7 @@ export default function Inventory({ auth }) {
                           </div>
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
-                          <div className="flex flex-col w-1/2">
+                          <div className="flex w-full">
                           <Chip
                               className="static"
                               variant="ghost"

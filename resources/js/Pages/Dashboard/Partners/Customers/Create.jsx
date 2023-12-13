@@ -44,17 +44,7 @@ export default function AddCustomer({ auth }) {
             <Head title="Add Customer" />
       <div className="sm:mt-18 sm:mb-20 mt-12 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
-                    <div className="lg:hidden flex justify-between">
-                        <Breadcrumbs>
-                            <a href="#" className="opacity-60">
-                                Dashboard
-                            </a>
-                            <a href="#" className="Opacity-60">
-                                Stock
-                            </a>
-                            <a href="#">Edit</a>
-                        </Breadcrumbs>
-                    </div>
+
                     <Card className="h-full w-full overflow-hidden rounded-none">
                         <form onSubmit={actionSubmit}>
                             <div className="grid lg:gap-8 grid-cols-1 gap-4 p-4 mx-4 mt-5">

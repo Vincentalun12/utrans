@@ -20,15 +20,11 @@ export function OrganismNavbar({ user }) {
                     <div className="mb-2 p-2 w-full flex justify-center lg:hidden">
                         <ApplicationLogo2 />
                     </div>
-                    <Breadcrumbs className="lg:flex hidden bg-white">
-                        <a href="#" className="opacity-60">
-                            Dashboard
-                        </a>
-                        <a href="#" className="Opacity-60">
-                            Stock
-                        </a>
-                        <a href="#">Edit</a>
-                    </Breadcrumbs>
+                    <div className="hidden lg:flex px-10">
+                    <ApplicationLogo2 />
+                    </div>
+
+
                     <MoleculesDropdown>
                         <Tooltip
                             placement="left"
