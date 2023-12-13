@@ -88,9 +88,17 @@ const options = [
 export default function Additem({ auth }) {
   const [date, setDate] = React.useState(new Date());
 
+  const style = {
+    control: base => ({
+      ...base,
+      border: 0,
+      // This line disable the blue border
+      boxShadow: 'none'
+    })
+  };
   return (
     <AdditemLayout user={auth.user}>
-      <Head title="Add Purchases" />
+      <Head title="Add item" />
       <div className="sm:min-h-screen sm:mt-18 sm:mb-20 mt-12 mb-0  justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
 
@@ -155,7 +163,6 @@ export default function Additem({ auth }) {
                   <Input
                       type="search"
                       placeholder="14-5-2023"
-                      value={format(date, 'dd-MM-yyyy')}
                       disabled
                       className=" placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
                       labelProps={{
@@ -368,6 +375,7 @@ export default function Additem({ auth }) {
               </tbody>
             </table>
           </Card>
+          <Card className="flex bg-white rounded-none">
           <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
             <div>
               <label className="">Discount</label>
@@ -400,6 +408,7 @@ export default function Additem({ auth }) {
               />
             </div>
           </div>
+        </Card>
         <Card className="h-full w-full overflow-hidden rounded-none p-6 items-end">
           <div className="flex justify-between items-center">
 

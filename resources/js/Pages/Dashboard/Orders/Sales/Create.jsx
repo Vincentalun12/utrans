@@ -249,7 +249,7 @@ export default function Additem({ auth }) {
                 </div>
           <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
             <table className="w-full min-w-max lg:min-w-full table-auto text-left">
-            <thead>
+            <thead className="max-w-[20rem]">
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
@@ -309,7 +309,7 @@ export default function Additem({ auth }) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {quantity}
+                              <input type="number" id="Quantity" class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"/>
                             </Typography>
                           </div>
                         </td>
@@ -354,6 +354,7 @@ export default function Additem({ auth }) {
               </tbody>
             </table>
           </Card>
+          <Card className="flex bg-white rounded-none">
           <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
             <div>
               <label className="">Discount</label>
@@ -386,6 +387,7 @@ export default function Additem({ auth }) {
               />
             </div>
           </div>
+        </Card>
         <Card className="h-full w-full overflow-hidden rounded-none p-6 items-end">
           <div className="flex justify-between items-center">
 
