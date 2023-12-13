@@ -1,6 +1,10 @@
 import AdditemLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
+import React from 'react'
+import Select from 'react-select'
 import { Head } from "@inertiajs/react";
+import { format, parse } from "date-fns";
+import { DayPicker } from "react-day-picker";
 import {
   Card,
   CardHeader,
@@ -13,6 +17,9 @@ import {
   Tabs,
   TabsHeader,
   Tab,
+  Popover,
+  PopoverContent,
+  PopoverHandler,
   Avatar,
   IconButton,
   Tooltip,
@@ -21,7 +28,6 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Select,
   Option
 } from "@material-tailwind/react";
 
@@ -34,6 +40,8 @@ import {
   DocumentTextIcon,
   DocumentArrowDownIcon,
   DocumentChartBarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   CalendarDaysIcon,
   QrCodeIcon,
   TrashIcon,
@@ -68,10 +76,21 @@ const TABLE_ROWS = [
   },
 ];
 
+const options = [
+  { value: '1', label: 'Test1' },
+  { value: '2', label: 'Test2' },
+  { value: '3', label: 'Test3' },
+  { value: '4', label: 'Test4' },
+  { value: '5', label: 'Test5' },
+  { value: '6', label: 'Test6' },
+]
+
 export default function Additem({ auth }) {
+  const [date, setDate] = React.useState(new Date());
+
   return (
     <AdditemLayout user={auth.user}>
-      <Head title="Add item" />
+      <Head title="Add Sales" />
       <div className="sm:mt-18 sm:mb-20 mt-12 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
 
@@ -87,73 +106,147 @@ export default function Additem({ auth }) {
                 </div>
               </div>
           </div>
-          <div className="bg-white overflow-hidden shadow-md h-auto">
-            <div className="lg:flex w-full gap-2 md:justify-between px-4 py-4">
-              <div className="flex lg:gap-3 gap-6 flex-col lg:flex-row">
-              <div className="mx-2 lg:w-4/6 w-full">
-              <label className="flex">Customer</label>
-              <div className="inline-flex items-center w-full">
-              <Input
-                  type="input"
-                  placeholder="Customer"
-
-                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
+          <div className=" w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-3 sm:grid-cols-3">
+            <div className="sm:col-span-1">
+            <label className="">Customer</label>
+              <Select options={options}
+                      components={{
+                        DropdownIndicator: () => null,
+                        IndicatorSeparator: () => null
+                      }}
+                      placeholder={'Search'}
+                      styles={{
+                        control: (base, state) => ({
+                          ...base,
+                          boxShadow: state.isFocused ? 0 : 0,
+                          borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                          borderWidth: state.isFocused ? '2px' : '1px',
+                          "&:hover": {
+                            borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                          },
+                          borderRadius: '6px',
+                        }),
+                        input: (base) => ({
+                          ...base,
+                          "input:focus": {
+                            boxShadow: "none",
+                          },
+                        })
+                      }}
                 />
                 <div>
-                <IconButton className=" bg-ungukita ml-2">
-                    <PlusIcon className="w-5 h-5" />
-                  </IconButton>
                 </div>
                 </div>
-                </div>
-                <div className="mx-2 lg:w-4/6 w-full">
-              <label className="">Order Date</label>
-              <Input
-                  type="input"
-                  placeholder="12/5/2023"
-                  icon={<CalendarDaysIcon/>}
-
-                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
-                </div>
-                <div className="mx-2 lg:w-4/6 w-full">
+                <div className="sm:col-span-1">
               <label className="">Reference</label>
               <Input
                   type="input"
                   placeholder="Reference"
 
-                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
                 />
                 </div>
-              </div>
-            </div>
-            <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4">
-            <div className="mx-2 w-full flex flex-col">
+                <div className="sm:col-span-1">
+                <label className="">Order Date</label>
+                    <Popover placement="bottom" trigger="click">
+                        <PopoverHandler>
+                        <Input
+                          type="text"
+                          placeholder="2023-05-12"
+                          icon={<CalendarDaysIcon/>}
+                          value={format(date, 'dd-MM-yyyy')}
+                          onChange={(e) => {
+                            const newDate = parse(e.target.value, "dd-MM-yyyy", new Date());
+                            if (!isNaN(newDate)) {
+                              setDate(newDate);
+                            }
+                          }}
+                          className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                          labelProps={{
+                            className: "before:content-none after:content-none",
+                          }}
+                          
+                        />
+                        </PopoverHandler>
+                        <PopoverContent>
+                        <DayPicker
+                            mode="single"
+                            selected={date}
+                            onSelect={(selectedDate) => {
+                              if (selectedDate) {
+                                setDate(selectedDate);
+                              }
+                            }}
+                            showOutsideDays
+                            className="border-0"
+                            classNames={{
+                              caption: "flex justify-center py-2 mb-4 relative items-center",
+                              caption_label: "text-sm font-medium text-gray-900",
+                              nav: "flex items-center",
+                              nav_button:
+                                "h-6 w-6 bg-transparent hover:bg-blue-gray-50 p-1 rounded-md transition-colors duration-300",
+                              nav_button_previous: "absolute left-1.5",
+                              nav_button_next: "absolute right-1.5",
+                              table: "w-full border-collapse",
+                              head_row: "flex font-medium text-gray-900",
+                              head_cell: "m-0.5 w-9 font-normal text-sm",
+                              row: "flex w-full mt-2",
+                              cell: "text-gray-600 rounded-md h-9 w-9 text-center text-sm p-0 m-0.5 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-900/20 [&:has([aria-selected].day-outside)]:text-white [&:has([aria-selected])]:bg-gray-900/50 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                              day: "h-9 w-9 p-0 font-normal",
+                              day_range_end: "day-range-end",
+                              day_selected:
+                                "rounded-md bg-gray-900 text-white hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white",
+                              day_today: "rounded-md bg-gray-200 text-gray-900",
+                              day_outside:
+                                "day-outside text-gray-500 opacity-50 aria-selected:bg-gray-500 aria-selected:text-gray-900 aria-selected:bg-opacity-10",
+                              day_disabled: "text-gray-500 opacity-50",
+                              day_hidden: "invisible",
+                            }}
+                            components={{
+                              IconLeft: ({ ...props }) => (
+                                <ChevronLeftIcon {...props} className="h-4 w-4 stroke-2" />
+                              ),
+                              IconRight: ({ ...props }) => (
+                                <ChevronRightIcon {...props} className="h-4 w-4 stroke-2" />
+                              ),
+                            }}
+                          />
+                        </PopoverContent>
+                    </Popover>
+                </div>
+                </div>
+          <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
+            <div className="sm:col-span-2 w-full">
               <label className="">Product Name</label>
-              <Input
-                  type="search"
-                  placeholder="Search"
-                  icon={<QrCodeIcon/>}
-
-                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
+              <Select options={options}
+                      components={{
+                        DropdownIndicator: () => null,
+                        IndicatorSeparator: () => null
+                      }}
+                      styles={{
+                        control: (base, state) => ({
+                          ...base,
+                          boxShadow: state.isFocused ? 0 : 0,
+                          borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                          borderWidth: state.isFocused ? '2px' : '1px',
+                          "&:hover": {
+                            borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                          },
+                          borderRadius: '6px',
+                        }),
+                        input: (base) => ({
+                          ...base,
+                          "input:focus": {
+                            boxShadow: "none",
+                          },
+                        })
+                      }}
+                  />
                 </div>
                 </div>
-            <div>
-            </div>
-          </div>
           <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
             <table className="w-full min-w-max lg:min-w-full table-auto text-left">
             <thead>
@@ -261,58 +354,38 @@ export default function Additem({ auth }) {
               </tbody>
             </table>
           </Card>
-          <Card className="flex bg-white rounded-none">
-          <div className="w-full gap-2 md:justify-between px-4 py-4">
-            <div className="flex lg:gap-3 gap-6 flex-col lg:flex-row">
-              <div className="mx-2 lg:w-4/6 w-full">
-                <label className="">Discount</label>
-                <Input
-                    type="search"
-                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
-              </div>
-              <div className="mx-2 lg:w-4/6 w-full">
-                <label className="">Test</label>
-                <Select
-                className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+          <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
+            <div>
+              <label className="">Discount</label>
+              <Input
+                type="search"
+                className="w-full placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
-                >
-                  <Option>Opsi 1</Option>
-                  <Option>Opsi 2</Option>
-                  <Option>Opsi 3</Option>
-                  <Option>Opsi 4</Option>
-                  <Option>Opsi 5</Option>
-                </Select>
-
-              </div>
-              <div className="mx-2 lg:w-4/6 w-full">
-                <label className="">Shipping</label>
-                <Input
-                    type="search"
-                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
-              </div>
-              <div className="mx-2 lg:w-4/6 w-full">
-                <label className="">Status</label>
-                <Input
-                    type="search"
-                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                  />
-              </div>
+              />
+            </div>
+            <div>
+              <label className="">Shipping</label>
+              <Input
+                type="search"
+                className="w-full placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+              />
+            </div>
+            <div>
+              <label className="">Status</label>
+              <Input
+                type="search"
+                className="w-full placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+              />
             </div>
           </div>
-        </Card>
         <Card className="h-full w-full overflow-hidden rounded-none p-6 items-end">
           <div className="flex justify-between items-center">
 
