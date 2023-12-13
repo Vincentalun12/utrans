@@ -270,7 +270,7 @@ export default function Inventory({ auth }) {
                         <Global
                           styles={css`
                             .bg-opacity-60 {
-                              --tw-bg-opacity: 0.1;
+                              --tw-bg-opacity: 0.15;
                           }
                           .backdrop-blur-sm {
                             --tw-backdrop-blur: blur(1px);
