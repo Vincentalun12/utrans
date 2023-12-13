@@ -41,8 +41,8 @@ export default function EditBrand({ auth, brand }) {
     return (
         <AdditemLayout user={auth.user}>
             <Head title="Create Brand" />
-            <div className="lg:py-4 py-1">
-                <div className="mx-auto px-4 sm:px-6 lg:px-6">
+      <div className="sm:min-h-screen sm:mt-18 sm:mb-20 mt-12 mb-0 flex justify-center ml-0 lg:ml-[300px] sm:mr-1">
+                <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-14">
                     <div className="lg:hidden flex justify-between">
                         <Breadcrumbs>
                             <a href="#" className="opacity-60">
