@@ -320,6 +320,16 @@ export default function Inventory({ auth }) {
                             .bg-opacity-60 {
                               --tw-bg-opacity: 0.1;
                           }
+                          .backdrop-blur-sm {
+                            --tw-backdrop-blur: blur(1px);
+                            -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+                            backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+                          }
+                          .shadow-2xl {
+                            --tw-shadow: 0 10px 25px -12px rgb(0 0 0 / 0.25);
+                            --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+                            box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+                        }
                           `}
                         />
                         <Dialog 
