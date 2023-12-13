@@ -7,8 +7,12 @@ import {
   Typography,
   Input,
   Button,
-  Breadcrumbs,
+  ThemeProvider,
   IconButton,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
 
 import {
@@ -30,6 +34,7 @@ import {
 import { ButtonPrimary } from "@/Components";
 
 import { twMerge } from 'tailwind-merge'
+import { Backdrop } from "@mui/material";
 
 const TABLE_HEAD = [
   { display: "Code", field: "code" },
@@ -68,6 +73,9 @@ export default function Inventory({ auth }) {
   const [sorting, setsorting] = useState(null);
   const [sortdirection, setsortdirection] = useState(null);
   const [searchbar, setsearchbar] = useState('');
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(!open);
 
   useEffect(() => {
     const start = (currentPage - 1) * itemsPerPage;
@@ -128,8 +136,56 @@ export default function Inventory({ auth }) {
       setCurrentPage(currentPage + 1);
     }
   };
+
+  const theme = {
+    dialog: {
+      defaultProps: {
+        size: "md",
+        dismiss: {},
+        animate: {
+          unmount: {},
+          mount: {},
+        },
+        className: "",
+      },
+      valid: {
+        sizes: ["xs", "sm", "md", "lg", "xl", "xxl"],
+      },
+      styles: {
+        base: {
+          backdrop: {
+            display: "grid",
+            placeItems: "place-items-center",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "w-screen",
+            height: "h-screen",
+            backgroundOpacity: "bg-opacity-100",
+            backdropFilter: "backdrop-blur-none",
+          },
+          container: {
+            position: "relative",
+            bg: "bg-white",
+            m: "m-4",
+            borderRadius: "rounded-lg",
+            boxShadow: "shadow-2xl",
+            color: "text-blue-gray-500",
+            fontSmoothing: "antialiased",
+            fontFamily: "font-sans",
+            fontSize: "text-base",
+            fontWeight: "font-light",
+            lineHeight: "leading-relaxed",
+          },
+        },
+      },
+    },
+  };
+
+
   return (
     <InventoryLayout user={auth.user}>
+      <ThemeProvider theme={theme}>
       <Head title="COA" />
       <div className="sm:mt-18 sm:mb-20 mt-12 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
           <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
@@ -253,11 +309,31 @@ export default function Inventory({ auth }) {
                             color="black"
                             className="font-medium inline-flex space-x-1"
                           >
-                            <EyeIcon className="w-5 h-5 text-gray-500" />
+                            <EyeIcon onClick={handleOpen} className="w-5 h-5 text-gray-500" />
                             <PencilSquareIcon className="w-5 h-5 text-green-500" />
                             <TrashIcon className="w-5 h-5 text-red-500" />
                           </Typography>
                         </td>
+                        <Dialog 
+                        
+                        open={open} handler={handleOpen}>
+                            <DialogHeader>Judul</DialogHeader>
+                            <DialogBody>
+                              Bisa muncul jir
+                            </DialogBody>
+                            <DialogFooter>
+                              <Button
+                                variant="text"
+                                onClick={handleOpen}
+                                className="mr-1"
+                              >
+                                <span>Close</span>
+                              </Button>
+                              <Button variant="gradient" onClick={handleOpen}>
+                                <span>EDIT</span>
+                              </Button>
+                            </DialogFooter>
+                          </Dialog>
                       </tr>
                     );
                   },
@@ -284,6 +360,7 @@ export default function Inventory({ auth }) {
           </Card>
         </div>
       </div>
+      </ThemeProvider>
     </InventoryLayout>
   );
 }
