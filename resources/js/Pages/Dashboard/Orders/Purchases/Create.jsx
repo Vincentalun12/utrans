@@ -99,8 +99,8 @@ export default function Additem({ auth }) {
   return (
     <AdditemLayout user={auth.user}>
       <Head title="Add item" />
-      <div className="lg:py-4 py-1">
-        <div className="mx-auto px-4 sm:px-6 lg:px-6">
+      <div className="sm:min-h-screen sm:mt-18 sm:mb-20 mt-12 mb-0 ml-0 lg:ml-[325px] sm:mr-5">
+        <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-10">
           <div className="lg:hidden flex justify-between">
             <Breadcrumbs>
               <a href="#" className="opacity-60">
@@ -124,8 +124,8 @@ export default function Additem({ auth }) {
                 </div>
               </div>
           </div>
-          <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-6 pb-4 bg-white shadow-md">
-            <div className="lg:mx-2 w-full min-w-xl py-2 lg:py-0">
+          <div className="2xl:flex w-full gap-2 md:justify-between px-4 pt-6 pb-4 bg-white shadow-md grid grid-cols-1 sm:grid-cols-2">
+            <div className="lg:mx-2 grid w-full min-w-xl py-2 lg:py-0">
             <label className="">Vendor</label>
               <Select options={options}
                       components={{
@@ -280,7 +280,7 @@ export default function Additem({ auth }) {
                 </div>
           <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
             <table className="w-full min-w-max lg:min-w-full table-auto text-left">
-            <thead>
+            <thead className="max-w-[20rem]">
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
@@ -387,7 +387,7 @@ export default function Additem({ auth }) {
           </Card>
           <Card className="flex bg-white rounded-none">
           <div className="w-full gap-2 md:justify-between px-4 py-4">
-            <div className="flex lg:gap-3 gap-6 flex-col lg:flex-row">
+            <div className="2xl:flex lg:gap-3 gap-6 flex-col lg:flex-row grid grid-cols-1 sm:grid-cols-2">
               <div className="lg:mx-2 lg:w-4/6 w-full">
                 <label className="">Discount</label>
                 <Input
