@@ -8,7 +8,6 @@ import {
   Typography,
   Input,
   Button,
-  ThemeProvider,
   IconButton,
   Dialog,
   DialogHeader,
@@ -138,55 +137,8 @@ export default function Inventory({ auth }) {
     }
   };
 
-  const theme = {
-    dialog: {
-      defaultProps: {
-        size: "md",
-        dismiss: {},
-        animate: {
-          unmount: {},
-          mount: {},
-        },
-        className: "",
-      },
-      valid: {
-        sizes: ["xs", "sm", "md", "lg", "xl", "xxl"],
-      },
-      styles: {
-        base: {
-          backdrop: {
-            display: "grid",
-            placeItems: "place-items-center",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "w-screen",
-            height: "h-screen",
-            backgroundOpacity: "bg-opacity-60", // Change this to adjust the opacity of the backdrop
-            backdropFilter: "backdrop-blur-md", // Change this to adjust
-          },
-          container: {
-            position: "relative",
-            bg: "bg-white",
-            m: "m-4",
-            borderRadius: "rounded-lg",
-            boxShadow: "shadow-2xl",
-            color: "text-blue-gray-500",
-            fontSmoothing: "antialiased",
-            fontFamily: "font-sans",
-            fontSize: "text-base",
-            fontWeight: "font-light",
-            lineHeight: "leading-relaxed",
-          },
-        },
-      },
-    },
-  };
-
-
   return (
     <InventoryLayout user={auth.user}>
-      <ThemeProvider theme={theme}>
       <Head title="COA" />
       <div className="sm:mt-18 sm:mb-20 mt-12 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
           <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
@@ -377,7 +329,6 @@ export default function Inventory({ auth }) {
           </Card>
         </div>
       </div>
-      </ThemeProvider>
     </InventoryLayout>
   );
 }
