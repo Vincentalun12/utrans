@@ -2,6 +2,7 @@ import InventoryLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from 'react';
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link } from "@inertiajs/react";
+import { Global, css } from '@emotion/react';
 import {
   Card,
   Typography,
@@ -161,8 +162,8 @@ export default function Inventory({ auth }) {
             left: 0,
             width: "w-screen",
             height: "h-screen",
-            backgroundOpacity: "bg-opacity-100",
-            backdropFilter: "backdrop-blur-none",
+            backgroundOpacity: "bg-opacity-60", // Change this to adjust the opacity of the backdrop
+            backdropFilter: "backdrop-blur-md", // Change this to adjust
           },
           container: {
             position: "relative",
@@ -314,8 +315,14 @@ export default function Inventory({ auth }) {
                             <TrashIcon className="w-5 h-5 text-red-500" />
                           </Typography>
                         </td>
+                        <Global
+                          styles={css`
+                            .bg-opacity-60 {
+                              --tw-bg-opacity: 0.1;
+                          }
+                          `}
+                        />
                         <Dialog 
-                        
                         open={open} handler={handleOpen}>
                             <DialogHeader>Judul</DialogHeader>
                             <DialogBody>
