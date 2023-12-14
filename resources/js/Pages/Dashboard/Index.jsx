@@ -462,7 +462,7 @@ export default function Dashboard({ auth }) {
                                     </Button>
                                 </div>
                                 </CardHeader>
-                                <CardBody className="px-2 pb-0">
+                                <CardBody className="px-2 pb-0 overflow-x-auto">
                                 <table className="w-full min-w-max lg:min-w-full table-auto text-left">
                                     <thead>
                                         <tr>
