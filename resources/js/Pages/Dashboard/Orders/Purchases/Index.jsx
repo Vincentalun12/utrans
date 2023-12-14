@@ -291,7 +291,9 @@ export default function Purchasing({ auth }) {
                       : "p-4 border-blue-gray-50";
 
                     return (
-                      <tr key={reference}>
+                      <tr key={reference}
+                          className="even:bg-gray-100"
+                      >
                         <td className="p-2 border-gray-200 pl-4">
                           <div className="flex items-center gap-3">
                             <div className="flex flex-col">

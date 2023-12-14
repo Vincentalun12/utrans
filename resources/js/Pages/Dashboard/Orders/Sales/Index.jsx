@@ -324,7 +324,7 @@ export default function Sales({ auth }) {
                       : "p-4 border-b border-blue-gray-50";
 
                     return (
-                      <tr key={number}>
+                      <tr key={number} className="even:bg-gray-100">
                         <td className="p-2 border-gray-200 pl-4">
                           <div className="flex items-center gap-3">
                             <div className="flex flex-col">
