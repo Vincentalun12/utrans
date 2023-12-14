@@ -171,16 +171,12 @@ export default function Inventory({ auth }) {
                   value={searchbar}
                   onChange={e => setsearchbar(e.target.value)}
 
-                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
                 />
-                <div>
-                  <IconButton className=" bg-ungukita mx-3">
-                    <MagnifyingGlassIcon className="w-5 h-5" />
-                  </IconButton>
-                </div>
+
               </div>
             </div>
           </div>

@@ -13,9 +13,9 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
         >
             <Head title="Profile" />
 
-            <div className="flex justify-center py-12 max-w-fit mx-auto sm:px-6 lg:px-8">
+            <div className="flex justify-center py-12 max-w-fit mx-auto sm:px-6 lg:px-8 sm:mt-24 lg:ml-[300px]">
 
-                <Card className="mx-2 h-40 w-3/12">
+                <Card className="mx-2 h-40 w-3/12 lg:flex hidden">
                     <List>
                         <ListItem selected>Account</ListItem>
                         <ListItem>Preferences</ListItem>

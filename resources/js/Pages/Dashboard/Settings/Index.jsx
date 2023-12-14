@@ -41,7 +41,7 @@ export default function Settings({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Settings" />
-      <div className="sm:mt-18 sm:mb-20 mt-12 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
+      <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
 
                     <div className="w-full mx-auto pb-5">

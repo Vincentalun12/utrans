@@ -236,11 +236,10 @@ export default function Sales({ auth }) {
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Sales" />
-      <div className="sm:mt-18 sm:mb-20 mt-12 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
+      <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
-
           <div className="w-full mx-auto pb-5">
-              <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
+              <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg lg:flex hidden">
                 {/*
                 <div className="flex p-6 items-center">
                   {React.createElement(InformationCircleIcon, {
@@ -259,6 +258,16 @@ export default function Sales({ auth }) {
                   </div>
                 </div>
               </div>
+                  <div className="pl-2 items-center lg:hidden flex">
+                  <div>
+                    <Typography variant="h4" className="text-ungukita" textGradient>
+                      Sales
+                    </Typography>
+                    <Typography variant="paragraph">
+                      Manage your order sales here
+                    </Typography>
+                  </div>
+                </div> 
           </div>
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2 border-b border-gray-200">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
@@ -266,7 +275,7 @@ export default function Sales({ auth }) {
               <Linkactive
                 href={route("sales.create")}
               >
-                <Button className="bg-ungukita">
+                <Button className="bg-ungukita md:flex hidden">
                   Create
                 </Button>
               </Linkactive>
@@ -296,15 +305,12 @@ export default function Sales({ auth }) {
                   value={searchbar}
                   onChange={e => setsearchbar(e.target.value)}
 
-                  className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
+                  className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
                 />
                 <div>
-                  <IconButton className=" bg-ungukita mx-3">
-                    <MagnifyingGlassIcon className="w-5 h-5" />
-                  </IconButton>
                 </div>
               </div>
             </div>

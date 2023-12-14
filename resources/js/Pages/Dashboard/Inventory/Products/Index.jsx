@@ -139,7 +139,7 @@ export default function Inventory({ auth, products }) {
             >
                 {flash.message?.content}
             </Alert>
-            <div className="sm:mt-18 sm:mb-20 mt-12 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
+            <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
 
                     <div className="w-full mx-auto pb-5">
@@ -170,25 +170,19 @@ export default function Inventory({ auth, products }) {
                                     Add Items
                                 </Button>
                             </Linkactive>
-                            <div className="inline-flex items-center">
-                                <Input
-                                    type="search"
-                                    placeholder="Search"
-                                    value={searchbar}
-                                    onChange={(e) =>
-                                        setsearchbar(e.target.value)
-                                    }
-                                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                                    labelProps={{
-                                        className:
-                                            "before:content-none after:content-none",
-                                    }}
-                                />
-                                <div>
-                                    <IconButton className=" bg-ungukita mx-3">
-                                        <MagnifyingGlassIcon className="w-5 h-5" />
-                                    </IconButton>
-                                </div>
+              <div className="inline-flex items-center">
+                <Input
+                  type="search"
+                  placeholder="Search"
+                  value={searchbar}
+                  onChange={e => setsearchbar(e.target.value)}
+
+                  className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}    
+                />
+
                             </div>
                         </div>
                     </div>
