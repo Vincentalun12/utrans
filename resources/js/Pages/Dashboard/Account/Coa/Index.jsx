@@ -184,7 +184,7 @@ export default function Inventory({ auth }) {
           <Card className="lg:overflow-auto overflow-x-scroll overflow-y-hidden lg:max-h-[460px] max-h-[480px] px-0 rounded-none">
             <table className="w-full min-w-max lg:min-w-full table-auto text-left">
               <thead>
-                <tr className="sticky top-0">
+                <tr className="sticky top-0 z-50">
                 {TABLE_HEAD.map(({ display, field }, index) => (
                 <th
                   key={display}

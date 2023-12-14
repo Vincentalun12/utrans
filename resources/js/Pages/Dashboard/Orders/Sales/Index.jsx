@@ -294,7 +294,7 @@ export default function Sales({ auth }) {
           <Card className="lg:overflow-auto overflow-x-scroll overflow-y-hidden lg:max-h-[460px] max-h-[480px] px-0 rounded-none">
             <table className="w-full min-w-max lg:min-w-full table-auto text-left">
               <thead>
-                <tr className="sticky top-0">
+                <tr className="sticky top-0 z-50">
                   {TABLE_HEAD.map(({ display, field }, index) => (
                     <th
                       key={display}
@@ -404,8 +404,7 @@ export default function Sales({ auth }) {
                           </div>
                         </td>
                         <td className="p-2 border-gray-200 pl-4">
-                          <div className="w-max">
-                            <div>
+                          <div className="flex items-center">
                               <Chip
                                 className="static"
                                 variant="ghost"
@@ -413,7 +412,6 @@ export default function Sales({ auth }) {
                                 value={payment ? "PAID" : "DUE"}
                                 color={payment ? "green" : "red"}
                               />
-                            </div>
                           </div>
                         </td>
                         <td className="p-2 border-gray-200 pl-4">
