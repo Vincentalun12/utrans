@@ -117,7 +117,6 @@ const TABLE_HEAD = ["No", "Nama Produk", "Stok", "Harga Retail", ""];
 const TABLE_ROWS = [
   {
     no: "1", //Testing aj ntar hapus
-    img: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
     name: "Filter Kolon 10 Mikron 10 inch",
     email: "SKU-TEST-001",
     stok: "100",
@@ -125,7 +124,6 @@ const TABLE_ROWS = [
   },
   {
     no: "2", //Testing aj ntar hapus
-    img: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
     name: "Filter Kolon 10 Mikron 10 inch",
     email: "SKU-TEST-001",
     stok: "100",
@@ -133,7 +131,6 @@ const TABLE_ROWS = [
   },
   {
     no: "3", //Testing aj ntar hapus
-    img: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
     name: "Filter Kolon 10 Mikron 10 inch",
     email: "SKU-TEST-001",
     stok: "100",
@@ -141,7 +138,6 @@ const TABLE_ROWS = [
   },
   {
     no: "4", //Testing aj ntar hapus
-    img: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
     name: "Filter Kolon 10 Mikron 10 inch",
     email: "SKU-TEST-001",
     stok: "100",
@@ -149,7 +145,6 @@ const TABLE_ROWS = [
   },
   {
     no: "5", //Testing aj ntar hapus
-    img: "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
     name: "Filter Kolon 10 Mikron 10 inch",
     email: "SKU-TEST-001",
     stok: "100",
@@ -404,9 +399,9 @@ export default function Dashboard({ auth }) {
                                         </div>
                                     </CardHeader>
                                 </Card>
-                    </div> 
-                    <div className="grid grid-cols-1 xl:grid-cols-1 lg:grid-cols-1 3xl:grid-cols-2 2xl:grid-cols-2 gap-4 mt-4">
-                    <Card>
+                            </div> 
+                            <div className="grid grid-cols-1 xl:grid-cols-1 lg:grid-cols-1 3xl:grid-cols-2 2xl:grid-cols-2 gap-4 mt-4">
+                            <Card>
                                 <CardHeader
                                     floated={false}
                                     shadow={false}
@@ -489,7 +484,7 @@ export default function Dashboard({ auth }) {
                                     </thead>
                                     <tbody>
                                         {TABLE_ROWS.map(
-                                        ({ img, name, email, stok, retail, date }, index) => {
+                                        ({ name, email, stok, retail, date }, index) => {
                                             const isLast = index === TABLE_ROWS.length - 1;
                                             const classes = isLast
                                             ? "p-4"
@@ -502,7 +497,6 @@ export default function Dashboard({ auth }) {
                                                 </td>
                                                 <td className={classes}>
                                                 <div className="flex items-center gap-3">
-                                                    <Avatar src={img} alt={name} size="sm" />
                                                     <div className="flex flex-col">
                                                     <Typography
                                                         variant="small"
