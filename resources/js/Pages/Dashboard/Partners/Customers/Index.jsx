@@ -71,7 +71,7 @@ export default function Customer({ auth, customers }) {
         let aValue = a[sorting];
         let bValue = b[sorting];
     
-        if (sorting === 'retail' || sorting === 'wholesale') {
+        if (sorting === 'asc' || sorting === 'desc') {
           aValue = Number(aValue.replace(/\D/g, ''));
           bValue = Number(bValue.replace(/\D/g, ''));
         }
@@ -88,6 +88,15 @@ export default function Customer({ auth, customers }) {
 
     setpaginated(sortedItems.slice(start, end));
   }, [currentPage, sorting, sortdirection, searchbar]);
+
+  const handleSort = (field) => {
+    if (field === sorting) {
+      setsortdirection(sortdirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setsorting(field);
+      setsortdirection('asc');
+    }
+  };
 
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -187,8 +196,9 @@ export default function Customer({ auth, customers }) {
                                 <tr className="sticky top-0">
                                     {TABLE_HEAD.map(({ display, field }, index) => (
                                         <th
-                                        key={display}
+                                            key={display}
                                             className="cursor-pointer border-b border-gray-300 bg-gray-100 p-4 transition-colors hover:bg-gray-400"
+                                            onClick={() => field && handleSort(field)}
                                         >
                                             <Typography
                                                 variant="small"
@@ -210,11 +220,11 @@ export default function Customer({ auth, customers }) {
                             </thead>
                             <tbody>
                                 {paginated.map(
-                  ({ id, name, phone, address, city, district}, index) => {
-                    const isLast = index === customers.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
+                                    ({ id, name, phone, address}, index) => {
+                                        const isLast = index === customers.length - 1;
+                                        const classes = isLast
+                                        ? "p-4"
+                                        : "p-4 border-b border-blue-gray-50";
 
                                         return (
                                             <tr

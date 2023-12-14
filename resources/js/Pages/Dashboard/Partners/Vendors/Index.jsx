@@ -43,95 +43,94 @@ const TABLE_HEAD = [
 
 export default function Vendors({ auth, vendors }) {
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const [paginated, setpaginated] = useState([]);
-  const [sorting, setsorting] = useState(null);
-  const [sortdirection, setsortdirection] = useState(null);
-  const [searchbar, setsearchbar] = useState('');
-
-  useEffect(() => {
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    let sortedItems = [...vendors];
-
-    if (searchbar) {
-      const terms = searchbar.toLowerCase().split(' ');
-      sortedItems = sortedItems.filter(item =>
-        terms.every(term =>
-          Object.values(item).some(val =>
-            String(val).toLowerCase().includes(term)
-          )
-        )
-      );
-    }
-
-    if (sorting && sortdirection) {
-      sortedItems.sort((a, b) => {
-        let aValue = a[sorting];
-        let bValue = b[sorting];
-    
-        if (sorting === 'retail' || sorting === 'wholesale') {
-          aValue = Number(aValue.replace(/\D/g, ''));
-          bValue = Number(bValue.replace(/\D/g, ''));
-        }
-    
-        if (aValue < bValue) {
-          return sortdirection === 'asc' ? -1 : 1;
-        }
-        if (aValue > bValue) {
-          return sortdirection === 'asc' ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-
-    setpaginated(sortedItems.slice(start, end));
-  }, [currentPage, sorting, sortdirection, searchbar]);
-
-  const handleSort = (field) => {
-    if (field === sorting) {
-      setsortdirection(sortdirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      setsorting(field);
-      setsortdirection('asc');
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (paginated.length === itemsPerPage && currentPage < Math.ceil(vendors.length / itemsPerPage)) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-    const { flash } = usePage().props;
-    const [isShowAlert, setIsShowAlert] = useState(false);
-    const {
-        data,
-        setData,
-        delete: destroy,
-        processing,
-        errors,
-        reset,
-    } = useForm({});
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+    const [paginated, setpaginated] = useState([]);
+    const [sorting, setsorting] = useState(null);
+    const [sortdirection, setsortdirection] = useState(null);
+    const [searchbar, setsearchbar] = useState('');
+  
     useEffect(() => {
-        if (flash.message) {
-            setIsShowAlert(true);
-            setTimeout(() => {
-                setIsShowAlert(false);
-                flash.message = null;
-            }, 3000);
-        }
-    }, [isShowAlert]);
-
-    
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      let sortedItems = [...vendors];
+  
+      if (searchbar) {
+        const terms = searchbar.toLowerCase().split(' ');
+        sortedItems = sortedItems.filter(item =>
+          terms.every(term =>
+            Object.values(item).some(val =>
+              String(val).toLowerCase().includes(term)
+            )
+          )
+        );
+      }
+  
+      if (sorting && sortdirection) {
+        sortedItems.sort((a, b) => {
+          let aValue = a[sorting];
+          let bValue = b[sorting];
+      
+          if (sorting === 'asc' || sorting === 'desc') {
+            aValue = Number(aValue.replace(/\D/g, ''));
+            bValue = Number(bValue.replace(/\D/g, ''));
+          }
+      
+          if (aValue < bValue) {
+            return sortdirection === 'asc' ? -1 : 1;
+          }
+          if (aValue > bValue) {
+            return sortdirection === 'asc' ? 1 : -1;
+          }
+          return 0;
+        });
+      }
+  
+      setpaginated(sortedItems.slice(start, end));
+    }, [currentPage, sorting, sortdirection, searchbar]);
+  
+    const handleSort = (field) => {
+      if (field === sorting) {
+        setsortdirection(sortdirection === 'asc' ? 'desc' : 'asc');
+      } else {
+        setsorting(field);
+        setsortdirection('asc');
+      }
+    };
+  
+    const handlePrevious = () => {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
+  
+    const handleNext = () => {
+      if (paginated.length === itemsPerPage && currentPage < Math.ceil(vendors.length / itemsPerPage)) {
+        setCurrentPage(currentPage + 1);
+      }
+    };
+  
+      const { flash } = usePage().props;
+      const {
+          data,
+          setData,
+          delete: destroy,
+          processing,
+          errors,
+          reset,
+      } = useForm({});
+  
+      const [isShowAlert, setIsShowAlert] = useState(false);
+  
+      useEffect(() => {
+          if (flash.message) {
+              setIsShowAlert(true);
+              setTimeout(() => {
+                  setIsShowAlert(false);
+                  flash.message = null;
+              }, 3000);
+          }
+      }, [isShowAlert]);  
 
     return (
         <NavigationLayout user={auth.user}>
@@ -220,14 +219,13 @@ export default function Vendors({ auth, vendors }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {vendors.map(
+                                {paginated.map(
                                     ({ id, name, address, phone }, index) => {
                                         const isLast =
                                             index === vendors.length - 1;
                                         const classes = isLast
                                             ? "p-4"
                                             : "p-4 border-b border-blue-gray-50";
-
                                         return (
                                             <tr
                                                 key={id}

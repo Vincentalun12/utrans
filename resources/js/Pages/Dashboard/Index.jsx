@@ -38,7 +38,7 @@ const chartConfig = {
     options: {
       chart: {
         toolbar: {
-          show: true,
+          show: false,
         },
       },
       title: {
