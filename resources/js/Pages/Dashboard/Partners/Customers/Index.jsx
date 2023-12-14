@@ -162,7 +162,7 @@ export default function Customer({ auth, customers }) {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
+                    <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
                             <Linkactive href={route("customers.create")}>
                                 <Button
@@ -231,7 +231,7 @@ export default function Customer({ auth, customers }) {
                                                 key={id}
                                                 className="even:bg-gray-100"
                                             >
-                                                <td className="p-2 border-b border-gray-200 pl-4">
+                                                <td className="p-2 border-gray-200 pl-4">
                                                     <div className="flex items-center gap-3">
                                                         <div className="flex flex-col">
                                                             <Typography
@@ -244,7 +244,7 @@ export default function Customer({ auth, customers }) {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="p-2 border-b border-gray-200 pl-4">
+                                                <td className="p-2 border-gray-200 pl-4">
                                                     <div className="flex flex-col">
                                                         <Typography
                                                             variant="small"
@@ -255,7 +255,7 @@ export default function Customer({ auth, customers }) {
                                                         </Typography>
                                                     </div>
                                                 </td>
-                                                <td className="p-2 border-b border-gray-200 pl-4">
+                                                <td className="p-2 border-gray-200 pl-4">
                                                     <div className="flex flex-col">
                                                         <Typography
                                                             variant="small"
@@ -266,7 +266,7 @@ export default function Customer({ auth, customers }) {
                                                         </Typography>
                                                     </div>
                                                 </td>
-                                                <td className="p-2 border-b border-gray-200 pl-4">
+                                                <td className="p-2 border-gray-200 pl-4">
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
@@ -305,7 +305,7 @@ export default function Customer({ auth, customers }) {
                             </tbody>
                         </table>
                     </Card>
-                    <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
+                    <Card className="flex border-t rounded-tr-none rounded-tl-none rounded-bl-lg rounded-br-lg bg-white border-gray-200 p-4">
                         <div className="flex justify-between">
                             <div className="pt-2">
                             <Typography variant="small" color="blue-gray" className="font-normal">

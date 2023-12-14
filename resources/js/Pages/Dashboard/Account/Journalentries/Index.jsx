@@ -278,7 +278,7 @@ export default function Inventory({ auth }) {
                           />
                           </div>
                         </td>
-                        <td className="p-2">
+                        <td className="p-2 flex">
                         <Tooltip content="View">
                             <a>
                             <IconButton variant="text">

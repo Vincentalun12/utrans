@@ -212,7 +212,7 @@ export default function Purchasing({ auth }) {
                 </div>
               </div>
           </div>
-          <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2 border-b border-gray-200">
+          <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2 border-b border-gray-200">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
               <div className="flex gap-3">
               <Linkactive
@@ -288,11 +288,11 @@ export default function Purchasing({ auth }) {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
                       ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
+                      : "p-4 border-blue-gray-50";
 
                     return (
                       <tr key={reference}>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="flex items-center gap-3">
                             <div className="flex flex-col">
                               <Typography
@@ -306,7 +306,7 @@ export default function Purchasing({ auth }) {
                             </div>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
@@ -317,7 +317,7 @@ export default function Purchasing({ auth }) {
                             </Typography>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
@@ -328,7 +328,7 @@ export default function Purchasing({ auth }) {
                             </Typography>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <Typography
                             variant="small"
                             color="blue-gray"
@@ -337,7 +337,7 @@ export default function Purchasing({ auth }) {
                             {totalitem}
                           </Typography>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <Typography
                             variant="small"
                             color="blue-gray"
@@ -346,7 +346,7 @@ export default function Purchasing({ auth }) {
                             {total}
                           </Typography>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="w-max">
                             <div>
                               <Chip
@@ -359,7 +359,7 @@ export default function Purchasing({ auth }) {
                             </div>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <Tooltip content="Orders">
                             <Linkactive
                               href={route("purchases.detail")}
@@ -377,7 +377,7 @@ export default function Purchasing({ auth }) {
               </tbody>
             </table>
           </Card>
-          <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
+          <Card className="flex border-t rounded-tr-none rounded-tl-none rounded-bl-lg rounded-br-lg bg-white border-gray-200 p-4">
             <div className="flex justify-between">
               <div className="pt-2">
                 <Typography variant="small" color="blue-gray" className="font-normal">

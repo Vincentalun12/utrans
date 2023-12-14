@@ -238,7 +238,7 @@ export default function Sales({ auth }) {
                 </div>
               </div>
           </div>
-          <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2 border-b border-gray-200">
+          <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2 border-b border-gray-200">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
               <div className="flex gap-3">
               <Linkactive
@@ -325,7 +325,7 @@ export default function Sales({ auth }) {
 
                     return (
                       <tr key={number}>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="flex items-center gap-3">
                             <div className="flex flex-col">
                               <Typography
@@ -339,7 +339,7 @@ export default function Sales({ auth }) {
                             </div>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
@@ -350,7 +350,7 @@ export default function Sales({ auth }) {
                             </Typography>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
@@ -361,7 +361,7 @@ export default function Sales({ auth }) {
                             </Typography>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <Typography
                             variant="small"
                             color="blue-gray"
@@ -370,7 +370,7 @@ export default function Sales({ auth }) {
                             {reference}
                           </Typography>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <Typography
                             variant="small"
                             color="blue-gray"
@@ -379,7 +379,7 @@ export default function Sales({ auth }) {
                             {total}
                           </Typography>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
@@ -390,7 +390,7 @@ export default function Sales({ auth }) {
                             </Typography>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="w-max">
                             <div>
                               <Chip
@@ -403,7 +403,7 @@ export default function Sales({ auth }) {
                             </div>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="w-max">
                             <div>
                               <Chip
@@ -416,7 +416,7 @@ export default function Sales({ auth }) {
                             </div>
                           </div>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <Typography
                             variant="small"
                             color={due === "Rp. 0,000.00" ? "green" : "red"}
@@ -425,7 +425,7 @@ export default function Sales({ auth }) {
                             {due}
                           </Typography>
                         </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
+                        <td className="p-2 border-gray-200 pl-4">
                           <Tooltip content="Orders">
                             <Linkactive
                               href={route("sales.detail")}
@@ -443,7 +443,7 @@ export default function Sales({ auth }) {
               </tbody>
             </table>
           </Card>
-          <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
+          <Card className="flex border-t rounded-tr-none rounded-tl-none rounded-bl-lg rounded-br-lg bg-white border-gray-200 p-4">
             <div className="flex justify-between">
               <div className="pt-2">
                 <Typography variant="small" color="blue-gray" className="font-normal">

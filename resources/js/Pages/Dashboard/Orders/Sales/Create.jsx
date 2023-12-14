@@ -143,7 +143,7 @@ export default function Additem({ auth }) {
                   type="input"
                   placeholder="Reference"
 
-                  className="  placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                  className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}

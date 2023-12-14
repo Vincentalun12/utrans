@@ -166,7 +166,7 @@ export default function Settings({ auth }) {
                                 </div>
                                 <hr className="w-full col-span-2"></hr>
                                 <Typography className="col-span-2" variant="h4">Account Settings</Typography>
-                                <div className="col-span-1">
+                                <div className="col-span-2">
                                 <Typography>Stock Valuation Journal</Typography>
                                 <Select options={options}
                                         placeholder={'Select...'}
