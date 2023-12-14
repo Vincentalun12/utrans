@@ -169,6 +169,8 @@ export default function Customer({ auth, customers }) {
                                 <Input
                                     type="search"
                                     placeholder="Search"
+                                    value={searchbar}
+                                    onChange={e => setsearchbar(e.target.value)}
                                     className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
                                     labelProps={{
                                         className:

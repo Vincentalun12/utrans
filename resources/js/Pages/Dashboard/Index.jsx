@@ -22,6 +22,8 @@ DocumentIcon,
 DocumentTextIcon,
 } from '@heroicons/react/24/outline';
 
+import { twMerge } from "tailwind-merge";
+
 import { Card, CardBody, CardHeader, CardFooter, Typography, Avatar, Chip, Tooltip, Button, IconButton } from '@material-tailwind/react';
 
 const chartConfig = {
@@ -453,13 +455,18 @@ export default function Dashboard({ auth }) {
                                     </Typography>
                                     </div>
                                 </div>
-                                <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                                    <Button variant="outlined" size="sm">
-                                    View
+                                <div className="flex flex-row gap-2">
+                                    <Button className="flex-grow" variant="outlined" size="sm">
+                                        View
                                     </Button>
-                                    <Button variant="outlined" size="sm">
+                                    <Button
+                                    className={twMerge(
+                                        "px-2 py-1 bg-red hover:bg-dark-red md:flex hidden",
+                                        "p-3 bg-ungukita"
+                                    )}
+                                >
                                     Add Items
-                                    </Button>
+                                </Button>
                                 </div>
                                 </CardHeader>
                                 <CardBody className="px-2 pb-0 overflow-x-auto">

@@ -43,7 +43,7 @@ const TABLE_HEAD = [
 
 export default function Vendors({ auth, vendors }) {
 
-    const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [paginated, setpaginated] = useState([]);
   const [sorting, setsorting] = useState(null);
@@ -179,6 +179,8 @@ export default function Vendors({ auth, vendors }) {
                                 <Input
                                     type="search"
                                     placeholder="Search"
+                                    value={searchbar}
+                                    onChange={e => setsearchbar(e.target.value)}
                                     className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
                                     labelProps={{
                                         className:

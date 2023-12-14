@@ -38,7 +38,7 @@ import { Backdrop } from "@mui/material";
 
 const TABLE_HEAD = [
   { display: "Code", field: "code" },
-  { display: "Accout Name", field: "name" },
+  { display: "Account Name", field: "name" },
   { display: "Type", field: "type" },
   { display: "View", field: "null" },
 ];
