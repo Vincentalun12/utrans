@@ -180,7 +180,7 @@ export default function Dashboard({ auth }) {
                             <ShoppingBagIcon className="h-6 w-6 hover:scale-150 duration-300" />
                             </div>
                             <div>
-                            <Typography className="xl:text-xl text-lg font-bold" color="blue-gray">
+                            <Typography className="text-md font-bold" color="blue-gray">
                             Rp122.000.000
                             </Typography>
                             <Typography
@@ -207,7 +207,7 @@ export default function Dashboard({ auth }) {
                                     <BanknotesIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
-                                    <Typography className="xl:text-xl text-lg font-bold" color="blue-gray">
+                                    <Typography className="text-md font-bold" color="blue-gray">
                                     Rp122.000.000
                                     </Typography>
                                     <Typography
@@ -234,7 +234,7 @@ export default function Dashboard({ auth }) {
                                     <ArrowDownOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
-                                    <Typography className="xl:text-xl text-lg font-bold" color="blue-gray">
+                                    <Typography className="text-md font-bold" color="blue-gray">
                                         Rp45.000.000
                                     </Typography>
                                     <Typography
@@ -261,7 +261,7 @@ export default function Dashboard({ auth }) {
                                     <ArrowUpOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
-                                    <Typography className="xl:text-xl text-lg font-bold" color="blue-gray">
+                                    <Typography className="text-md font-bold" color="blue-gray">
                                     Rp2.000.000
                                     </Typography>
                                     <Typography
@@ -288,7 +288,7 @@ export default function Dashboard({ auth }) {
                                     <UserIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
-                                    <Typography className="xl:text-xl text-lg font-bold" color="blue-gray">
+                                    <Typography className="text-md font-bold" color="blue-gray">
                                         242
                                     </Typography>
                                     <Typography
@@ -315,7 +315,7 @@ export default function Dashboard({ auth }) {
                                     <BuildingOfficeIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
-                                    <Typography className="xl:text-xl text-lg font-bold" color="blue-gray">
+                                    <Typography className="text-md font-bold" color="blue-gray">
                                         242
                                     </Typography>
                                     <Typography
@@ -342,7 +342,7 @@ export default function Dashboard({ auth }) {
                                     <DocumentIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
-                                    <Typography className="xl:text-xl text-lg font-bold" color="blue-gray">
+                                    <Typography className="text-md font-bold" color="blue-gray">
                                         1.093
                                     </Typography>
                                     <Typography
@@ -370,7 +370,7 @@ export default function Dashboard({ auth }) {
                                         <DocumentTextIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                         </div>
                                         <div>
-                                        <Typography className="xl:text-xl text-lg font-bold" color="blue-gray">
+                                        <Typography className="text-md font-bold" color="blue-gray">
                                             1.136
                                         </Typography>
                                         <Typography
