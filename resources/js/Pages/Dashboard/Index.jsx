@@ -176,7 +176,7 @@ export default function Dashboard({ auth }) {
                             color="transparent"
                             className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                         >
-                            <div className="w-max rounded-lg bg-orange-900 p-4 text-white">
+                            <div className="w-max rounded-lg bg-orange-900 p-4 text-white cursor-pointer"> 
                             <ShoppingBagIcon className="h-6 w-6 hover:scale-150 duration-300" />
                             </div>
                             <div>
@@ -203,7 +203,7 @@ export default function Dashboard({ auth }) {
                             color="transparent"
                             className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                         >
-                            <div className="w-max rounded-lg bg-green-500 p-4 text-white">
+                            <div className="w-max rounded-lg bg-green-500 p-4 text-white cursor-pointer">
                                     <BanknotesIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
@@ -230,7 +230,7 @@ export default function Dashboard({ auth }) {
                                     color="transparent"
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
-                                    <div className="w-max rounded-lg bg-blue-600 p-4 text-white">
+                                    <div className="w-max rounded-lg bg-blue-600 p-4 text-white cursor-pointer">
                                     <ArrowDownOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
@@ -257,7 +257,7 @@ export default function Dashboard({ auth }) {
                                     color="transparent"
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
-                                    <div className="w-max rounded-lg bg-red-900 p-4 text-white">
+                                    <div className="w-max rounded-lg bg-red-900 p-4 text-white cursor-pointer">
                                     <ArrowUpOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
@@ -284,7 +284,7 @@ export default function Dashboard({ auth }) {
                                     color="transparent"
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
-                                    <div className="w-max rounded-lg bg-orange-900 p-4 text-white">
+                                    <div className="w-max rounded-lg bg-orange-900 p-4 text-white cursor-pointer">
                                     <UserIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
@@ -311,7 +311,7 @@ export default function Dashboard({ auth }) {
                                     color="transparent"
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
-                                    <div className="w-max rounded-lg bg-blue-700 p-4 text-white">
+                                    <div className="w-max rounded-lg bg-blue-700 p-4 text-white cursor-pointer">
                                     <BuildingOfficeIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
@@ -338,7 +338,7 @@ export default function Dashboard({ auth }) {
                                     color="transparent"
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
-                                    <div className="w-max rounded-lg bg-blue-900 p-4 text-white">
+                                    <div className="w-max rounded-lg bg-blue-900 p-4 text-white cursor-pointer">
                                     <DocumentIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
@@ -365,7 +365,7 @@ export default function Dashboard({ auth }) {
                                     color="transparent"
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center md:justify-between"
                                     >
-                                    <div className="flex flex-col gap-4 md:flex-row md:items-center">
+                                    <div className="flex flex-col gap-4 md:flex-row md:items-center cursor-pointer">
                                         <div className="w-max rounded-lg bg-green-500 p-4 text-white">
                                         <DocumentTextIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                         </div>
@@ -410,7 +410,7 @@ export default function Dashboard({ auth }) {
                                     color="transparent"
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
-                                    <div className="w-max rounded-lg bg-green-900 p-4 text-white">
+                                    <div className="w-max rounded-lg bg-green-900 p-4 text-white cursor-pointer">
                                     <DocumentTextIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
@@ -439,7 +439,7 @@ export default function Dashboard({ auth }) {
                                 className="flex flex-col gap-4 rounded-none md:flex-row md:items-center md:justify-between"
                                 >
                                 <div className="flex flex-col gap-4 md:flex-row md:items-center">
-                                    <div className="w-max rounded-lg bg-orange-500 p-4 text-white">
+                                    <div className="w-max rounded-lg bg-orange-500 p-4 text-white cursor-pointer">
                                     <PencilSquareIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
