@@ -143,7 +143,7 @@ export default function Additem({ auth }) {
                   type="input"
                   placeholder="Reference"
 
-                  className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                  className="  placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
@@ -164,7 +164,7 @@ export default function Additem({ auth }) {
                               setDate(newDate);
                             }
                           }}
-                          className="  placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                          className="  placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                           labelProps={{
                             className: "before:content-none after:content-none",
                           }}
@@ -360,7 +360,7 @@ export default function Additem({ auth }) {
               <label className="">Discount</label>
               <Input
                 type="search"
-                className="w-full placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                className="w-full placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
@@ -370,7 +370,7 @@ export default function Additem({ auth }) {
               <label className="">Shipping</label>
               <Input
                 type="search"
-                className="w-full placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                className="w-full placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
@@ -380,7 +380,7 @@ export default function Additem({ auth }) {
               <label className="">Status</label>
               <Input
                 type="search"
-                className="w-full placeholder:text-ungukita !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                className="w-full placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
