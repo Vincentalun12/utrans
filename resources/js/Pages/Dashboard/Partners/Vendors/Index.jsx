@@ -275,51 +275,27 @@ export default function Vendors({ auth, vendors }) {
                                                     </Typography>
                                                 </td>
                                                 <td className="p-4 flex gap-4">
-                                                    <Typography
-                                                        as="a"
-                                                        href="#"
-                                                        variant="small"
-                                                        color="black"
-                                                        className="font-medium inline-flex space-x-1"
-                                                    >
-                                                        <EyeIcon className="w-5 h-5 text-gray-500" />
-                                                    </Typography>
-                                                    <Typography
-                                                        as="a"
-                                                        href={route(
-                                                            "vendors.edit",
-                                                            id
-                                                        )}
-                                                        variant="small"
-                                                        color="black"
-                                                        className="font-medium inline-flex space-x-1"
-                                                    >
-                                                        <PencilSquareIcon className="w-5 h-5 text-green-500" />
-                                                    </Typography>
-                                                    <Typography
-                                                        as="a"
-                                                        onClick={() =>
-                                                            destroy(
-                                                                route(
-                                                                    "vendors.destroy",
-                                                                    id
-                                                                ),
-                                                                {
-                                                                    onSuccess:
-                                                                        () => {
-                                                                            setIsShowAlert(
-                                                                                true
-                                                                            );
-                                                                        },
-                                                                }
-                                                            )
-                                                        }
-                                                        variant="small"
-                                                        color="black"
-                                                        className="font-medium inline-flex space-x-1 cursor-pointer"
-                                                    >
-                                                        <TrashIcon className="w-5 h-5 text-red-500" />
-                                                    </Typography>
+                                                <Tooltip content="View Item">
+                                                    <a>
+                                                    <IconButton variant="text">
+                                                    <EyeIcon className="h-5 w-5 text-blue-800" />
+                                                    </IconButton>
+                                                    </a>
+                                                </Tooltip>
+                                                <Tooltip content="Edit Item">
+                                                    <a href={route("vendors.edit",id)}>
+                                                    <IconButton variant="text">
+                                                    <PencilSquareIcon className="h-5 w-5 text-green-500" />
+                                                    </IconButton>
+                                                    </a>
+                                                </Tooltip>
+                                                <Tooltip content="Delete Item">
+                                                    <a onClick={() => destroy(route("vendors.destroy",id),{onSuccess:() => {setIsShowAlert(true);},})}>
+                                                    <IconButton variant="text">
+                                                    <TrashIcon className="h-5 w-5 text-red-500" />
+                                                    </IconButton>
+                                                    </a>
+                                                </Tooltip>
                                                 </td>
                                             </tr>
                                         );

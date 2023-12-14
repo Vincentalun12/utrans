@@ -7,7 +7,7 @@ import {
     Typography,
     Input,
     Button,
-    Breadcrumbs,
+    Tooltip,
     IconButton,
     Alert,
 } from "@material-tailwind/react";
@@ -258,52 +258,28 @@ export default function Brand({ auth, brands, deleteSuccess }) {
                                                     </Typography>
                                                 </div>
                                             </td>
-                                            <td className="p-4 flex gap-2">
-                                                <Typography
-                                                    as="a"
-                                                    href="#"
-                                                    variant="small"
-                                                    color="black"
-                                                    className="font-medium inline-flex space-x-1"
-                                                >
-                                                    <EyeIcon className="w-5 h-5 text-gray-500" />
-                                                </Typography>
-                                                <Typography
-                                                    as="a"
-                                                    href={route(
-                                                        "brands.edit",
-                                                        id
-                                                    )}
-                                                    variant="small"
-                                                    color="black"
-                                                    className="font-medium inline-flex space-x-1"
-                                                >
-                                                    <PencilSquareIcon className="w-5 h-5 text-green-500" />
-                                                </Typography>
-                                                <Typography
-                                                    as="a"
-                                                    onClick={() =>
-                                                        destroy(
-                                                            route(
-                                                                "brands.destroy",
-                                                                id
-                                                            ),
-                                                            {
-                                                                onSuccess:
-                                                                    () => {
-                                                                        setIsShowAlert(
-                                                                            true
-                                                                        );
-                                                                    },
-                                                            }
-                                                        )
-                                                    }
-                                                    variant="small"
-                                                    color="black"
-                                                    className="font-medium inline-flex space-x-1 cursor-pointer"
-                                                >
-                                                    <TrashIcon className="w-5 h-5 text-red-500" />
-                                                </Typography>
+                                            <td className="p-4 flex">
+                                                <Tooltip content="View Brand">
+                                                    <a>
+                                                    <IconButton variant="text">
+                                                    <EyeIcon className="h-5 w-5 text-blue-800" />
+                                                    </IconButton>
+                                                    </a>
+                                                </Tooltip>
+                                                <Tooltip content="Edit Brand">
+                                                    <a href={route("brands.edit",id)}>
+                                                    <IconButton variant="text">
+                                                    <PencilSquareIcon className="h-5 w-5 text-green-500" />
+                                                    </IconButton>
+                                                    </a>
+                                                </Tooltip>
+                                                <Tooltip content="Delete Brand">
+                                                    <a onClick={() => destroy(route("brands.destroy",id),{onSuccess:() => {setIsShowAlert(true);},})}>
+                                                    <IconButton variant="text">
+                                                    <TrashIcon className="h-5 w-5 text-red-500" />
+                                                    </IconButton>
+                                                    </a>
+                                                </Tooltip>
                                             </td>
                                         </tr>
                                     );

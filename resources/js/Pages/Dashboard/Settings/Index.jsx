@@ -1,6 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from "react";
 import { Head } from "@inertiajs/react";
+import Select from 'react-select';
 import {
     MagnifyingGlassIcon,
     ChevronUpDownIcon,
@@ -17,7 +18,6 @@ import {
     CardHeader,
     Input,
     Typography,
-    Select,
     Option,
     Button,
     CardBody,
@@ -34,16 +34,21 @@ import {
     MenuHandler,
     MenuList,
     MenuItem,
+    Label
 } from "@material-tailwind/react";
 import Linkactive from "@/Components/Linkactive";
+
+const options = [
+    { value: '1', label: 'Test1' },
+    { value: '2', label: 'Test2' },
+  ]
 
 export default function Settings({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Settings" />
       <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
-                <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
-
+                <div className="mx-auto sm:px-6 lg:px-6 w-full sm:mt-28">
                     <div className="w-full mx-auto pb-5">
                         <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                             <div className="p-6 text-gray-900">
@@ -60,98 +65,178 @@ export default function Settings({ auth }) {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-gray-100 overflow-hidden shadow-md h-full min-h-[700px] py-2 border-b border-gray-200">
-                        <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
-                            <div className="grid xl:grid-cols-2 grid-cols-1 gap-5 m-3">
-                                <h2 className="col-span-2 text-2xl mb-4">
-                                    Journal Settings
-                                </h2>
-                                <div className="w-72 mb-4">
-                                    <Select
-                                        variant="static"
-                                        label="Sales Account"
-                                    >
-                                        <Option>1</Option>
-                                        <Option>2</Option>
-                                        <Option>3</Option>
-                                        <Option>4</Option>
-                                        <Option>5</Option>
-                                    </Select>
+                    <div className="bg-white overflow-hidden shadow-md rounded-md h-full py-2 border-b border-gray-200">
+                            <div className="grid grid-cols-2 gap-5 m-3 px-6">
+                                <Typography className="col-span-2" variant="h4">Journal Settings</Typography>
+                                <div className="grid-span-1">
+                                <Typography>Sales Account</Typography>
+                                <Select options={options}
+                                        placeholder={'Select...'}
+                                        styles={{
+                                            control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
+                                            borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                                            borderWidth: state.isFocused ? '2px' : '1px',
+                                            "&:hover": {
+                                                borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                                            },
+                                            borderRadius: '6px',
+                                            }),
+                                            input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                            })
+                                        }}
+                                    />
                                 </div>
-                                <div className="w-72 mb-4">
-                                    <Select
-                                        variant="static"
-                                        label="Cash Account"
-                                    >
-                                        <Option>1</Option>
-                                        <Option>2</Option>
-                                        <Option>3</Option>
-                                        <Option>4</Option>
-                                        <Option>5</Option>
-                                    </Select>
+                                <div className="col-span-1">
+                                <Typography>Cash Account</Typography>
+                                <Select options={options}
+                                        placeholder={'Select...'}
+                                        styles={{
+                                            control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
+                                            borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                                            borderWidth: state.isFocused ? '2px' : '1px',
+                                            "&:hover": {
+                                                borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                                            },
+                                            borderRadius: '6px',
+                                            }),
+                                            input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                            })
+                                        }}
+                                    />
                                 </div>
-                                <div className="w-72 mb-4">
-                                    <Select
-                                        variant="static"
-                                        label="Assets Account"
-                                    >
-                                        <Option>1</Option>
-                                        <Option>2</Option>
-                                        <Option>3</Option>
-                                        <Option>4</Option>
-                                        <Option>5</Option>
-                                    </Select>
+                                <div className="col-span-1">
+                                <Typography>Static Account</Typography>
+                                <Select options={options}
+                                        placeholder={'Select...'}
+                                        styles={{
+                                            control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
+                                            borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                                            borderWidth: state.isFocused ? '2px' : '1px',
+                                            "&:hover": {
+                                                borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                                            },
+                                            borderRadius: '6px',
+                                            }),
+                                            input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                            })
+                                        }}
+                                    />
                                 </div>
-                                <div className="w-72 mb-4">
-                                    <Select
-                                        variant="static"
-                                        label="Fixed Assets Account"
-                                    >
-                                        <Option>1</Option>
-                                        <Option>2</Option>
-                                        <Option>3</Option>
-                                        <Option>4</Option>
-                                        <Option>5</Option>
-                                    </Select>
+                                <div className="col-span-1">
+                                <Typography>Fixed Assets Amount</Typography>
+                                <Select options={options}
+                                        placeholder={'Select...'}
+                                        styles={{
+                                            control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
+                                            borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                                            borderWidth: state.isFocused ? '2px' : '1px',
+                                            "&:hover": {
+                                                borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                                            },
+                                            borderRadius: '6px',
+                                            }),
+                                            input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                            })
+                                        }}
+                                    />
                                 </div>
-                                <h2 className="col-span-2 text-2xl mb-4">
-                                    Account Settings
-                                </h2>
-                                <div className="w-72 mb-4">
-                                    <Select
-                                        variant="static"
-                                        label="Stock Valuation Journal"
-                                    >
-                                        <Option>1</Option>
-                                        <Option>2</Option>
-                                        <Option>3</Option>
-                                        <Option>4</Option>
-                                        <Option>5</Option>
-                                    </Select>
+                                <hr className="w-full col-span-2"></hr>
+                                <Typography className="col-span-2" variant="h4">Account Settings</Typography>
+                                <div className="col-span-1">
+                                <Typography>Stock Valuation Journal</Typography>
+                                <Select options={options}
+                                        placeholder={'Select...'}
+                                        styles={{
+                                            control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
+                                            borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                                            borderWidth: state.isFocused ? '2px' : '1px',
+                                            "&:hover": {
+                                                borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                                            },
+                                            borderRadius: '6px',
+                                            }),
+                                            input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                            })
+                                        }}
+                                    />
                                 </div>
-                                <div className="w-72 mb-4">
-                                    <Select
-                                        variant="static"
-                                        label="Sales Journal"
-                                    >
-                                        <Option>1</Option>
-                                        <Option>2</Option>
-                                        <Option>3</Option>
-                                        <Option>4</Option>
-                                        <Option>5</Option>
-                                    </Select>
+                                <div className="col-span-1">
+                                <Typography>Sales Journal</Typography>
+                                <Select options={options}
+                                        placeholder={'Select...'}
+                                        styles={{
+                                            control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
+                                            borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                                            borderWidth: state.isFocused ? '2px' : '1px',
+                                            "&:hover": {
+                                                borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                                            },
+                                            borderRadius: '6px',
+                                            }),
+                                            input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                            })
+                                        }}
+                                    />
                                 </div>
-                                <div className="w-72 mb-4">
-                                    <Select
-                                        variant="static"
-                                        label="Cash Journal"
-                                    >
-                                        <Option>1</Option>
-                                        <Option>2</Option>
-                                        <Option>3</Option>
-                                        <Option>4</Option>
-                                        <Option>5</Option>
-                                    </Select>
+                                <div className="col-span-1 mb-4">
+                                <Typography>Cash Journal</Typography>
+                                <Select options={options}
+                                        placeholder={'Select...'}
+                                        styles={{
+                                            control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
+                                            borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                                            borderWidth: state.isFocused ? '2px' : '1px',
+                                            "&:hover": {
+                                                borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                                            },
+                                            borderRadius: '6px',
+                                            }),
+                                            input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                            })
+                                        }}
+                                    />
                                 </div>
                                 <div className="col-span-2 mb-4">
                                     <Button
@@ -165,7 +250,6 @@ export default function Settings({ auth }) {
                         </div>
                     </div>
                 </div>
-            </div>
         </AuthenticatedLayout>
     );
 }

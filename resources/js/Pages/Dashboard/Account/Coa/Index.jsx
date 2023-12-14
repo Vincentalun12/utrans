@@ -13,6 +13,7 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Tooltip,
 } from "@material-tailwind/react";
 
 import {
@@ -250,18 +251,28 @@ export default function Inventory({ auth }) {
                             </Typography>
                           </div>
                         </td>
-                        <td className="p-4">
-                          <Typography
-                            as="a"
-                            href="#"
-                            variant="small"
-                            color="black"
-                            className="font-medium inline-flex space-x-1"
-                          >
-                            <EyeIcon onClick={handleOpen} className="w-5 h-5 text-gray-500" />
-                            <PencilSquareIcon className="w-5 h-5 text-green-500" />
-                            <TrashIcon className="w-5 h-5 text-red-500" />
-                          </Typography>
+                        <td className="p-2">
+                          <Tooltip content="View">
+                            <a>
+                            <IconButton variant="text">
+                            <EyeIcon className="h-5 w-5 text-blue-800" />
+                            </IconButton>
+                            </a>
+                          </Tooltip>
+                          <Tooltip content="Edit">
+                              <a>
+                              <IconButton variant="text">
+                              <PencilSquareIcon className="h-5 w-5 text-green-500" />
+                              </IconButton>
+                            </a>
+                          </Tooltip>
+                          <Tooltip content="Delete">
+                            <a>
+                            <IconButton variant="text">
+                            <TrashIcon className="h-5 w-5 text-red-500" />
+                            </IconButton>
+                            </a>
+                          </Tooltip>
                         </td>
                         <Global
                           styles={css`
