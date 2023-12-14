@@ -193,7 +193,7 @@ export default function Customer({ auth, customers }) {
                     <Card className="lg:overflow-auto overflow-x-scroll overflow-y-hidden lg:max-h-[460px] max-h-[480px] px-0 rounded-none">
                         <table className="w-full min-w-max lg:min-w-full table-auto text-left">
                             <thead>
-                                <tr className="sticky top-0">
+                                <tr className="sticky top-0 z-50">
                                     {TABLE_HEAD.map(({ display, field }, index) => (
                                         <th
                                             key={display}
@@ -276,14 +276,14 @@ export default function Customer({ auth, customers }) {
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 flex">
-                                                <Tooltip content="View Item">
+                                                <Tooltip content="View">
                                                     <a>
                                                     <IconButton variant="text">
                                                     <EyeIcon className="h-5 w-5 text-blue-800" />
                                                     </IconButton>
                                                     </a>
                                                 </Tooltip>
-                                                <Tooltip content="Edit Item">
+                                                <Tooltip content="Edit">
                                                     <a href={route("customers.edit",id)}>
                                                     <IconButton variant="text">
                                                     <PencilSquareIcon className="h-5 w-5 text-green-500" />
