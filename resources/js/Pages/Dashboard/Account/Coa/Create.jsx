@@ -1,5 +1,5 @@
 import AdditemLayout from "@/Layouts/NavigationLayout";
-import { Head } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import {
     Card,
     Typography,
@@ -24,12 +24,17 @@ import {
 } from "@heroicons/react/24/solid";
 
 export default function CreateCoa({ auth }) {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        code: "",
+        account_name: "",
+        account_type: "",
+    });
+
     return (
         <AdditemLayout user={auth.user}>
             <Head title="Create Coa" />
-      <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
+            <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
-
                     <Card className="h-full w-full overflow-hidden rounded-none">
                         <div className="grid lg:gap-8 grid-cols-1 gap-4 p-4 mx-4 mt-5">
                             <div>
@@ -44,6 +49,10 @@ export default function CreateCoa({ auth }) {
                                         label="Code"
                                         className="border-none focus:shadow-none"
                                         placeholder="Account Code"
+                                        value={data.code}
+                                        onChange={(e) =>
+                                            setData("code", e.target.value)
+                                        }
                                     />
                                 </div>
                                 <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
@@ -57,6 +66,13 @@ export default function CreateCoa({ auth }) {
                                         label="Account name"
                                         className="border-none focus:shadow-none"
                                         placeholder="Account Name"
+                                        value={data.account_name}
+                                        onChange={(e) =>
+                                            setData(
+                                                "account_name",
+                                                e.target.value
+                                            )
+                                        }
                                     />
                                 </div>
                                 <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
@@ -66,7 +82,16 @@ export default function CreateCoa({ auth }) {
                             <div>
                                 <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
                                     <label className="">Type</label>
-                                    <Select variant="static">
+                                    <Select
+                                        variant="static"
+                                        value={data.account_type}
+                                        onChange={(e) =>
+                                            setData(
+                                                "account_type",
+                                                e.target.value
+                                            )
+                                        }
+                                    >
                                         <Option>Bank and Cash</Option>
                                         <Option>Receivable</Option>
                                         <Option>Payable</Option>
