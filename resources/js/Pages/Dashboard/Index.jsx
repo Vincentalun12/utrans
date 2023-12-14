@@ -2,6 +2,7 @@ import DashboardLayout from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
 import Chart from "react-apexcharts";
 import { React, useEffect, useState } from "react";
+import Linkactive from "@/Components/Linkactive";
 
 import {
     Square3Stack3DIcon,
@@ -450,10 +451,9 @@ export default function Dashboard({ auth }) {
                                     <Typography
                                         variant="small"
                                         color="gray"
-                                        className="max-w-sm font-normal"
+                                        className=" font-normal"
                                     >
-                                        In this page, you'll able to see how
-                                        many purchases & sales you've made.
+                                        In this page, you'll able to see how many purchases & sales you've made.
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -490,6 +490,9 @@ export default function Dashboard({ auth }) {
                                     </div>
                                 </div>
                                 <div className="flex flex-row gap-2">
+                                    <Linkactive
+                                        href={route("products")}
+                                    >
                                     <Button
                                         className="flex-grow"
                                         variant="outlined"
@@ -497,6 +500,10 @@ export default function Dashboard({ auth }) {
                                     >
                                         View
                                     </Button>
+                                    </Linkactive>
+                                    <Linkactive
+                                        href={route("products.create")}
+                                    >
                                     <Button
                                         className={twMerge(
                                             "px-2 py-1 bg-red hover:bg-dark-red md:flex hidden",
@@ -505,6 +512,7 @@ export default function Dashboard({ auth }) {
                                     >
                                         Add Items
                                     </Button>
+                                    </Linkactive>
                                 </div>
                             </CardHeader>
                             <CardBody className="px-2 pb-0 overflow-x-auto">
@@ -530,12 +538,12 @@ export default function Dashboard({ auth }) {
                                     <tbody>
                                         {TABLE_ROWS.map(
                                             (
-                                                {
+                                                {   
+                                                    no,
                                                     name,
                                                     email,
                                                     stok,
                                                     retail,
-                                                    date,
                                                 },
                                                 index
                                             ) => {
@@ -550,7 +558,9 @@ export default function Dashboard({ auth }) {
                                                     <tr key={name}>
                                                         <td
                                                             className={classes}
-                                                        ></td>
+                                                        >
+                                                            {no}
+                                                        </td>
                                                         <td className={classes}>
                                                             <div className="flex items-center gap-3">
                                                                 <div className="flex flex-col">

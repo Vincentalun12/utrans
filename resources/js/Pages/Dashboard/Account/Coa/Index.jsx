@@ -165,7 +165,7 @@ export default function Inventory({ auth, coa }) {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2">
+                    <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
                             <Linkactive href={route("coa.create")}>
                                 <Button
@@ -197,7 +197,7 @@ export default function Inventory({ auth, coa }) {
                     <Card className="lg:overflow-auto overflow-x-scroll overflow-y-hidden lg:max-h-[460px] max-h-[480px] px-0 rounded-none">
                         <table className="w-full min-w-max lg:min-w-full table-auto text-left">
                             <thead>
-                                <tr className="sticky top-0">
+                                <tr className="sticky top-0 z-50">
                                     {TABLE_HEAD.map(
                                         ({ display, field }, index) => (
                                             <th
@@ -446,7 +446,7 @@ export default function Inventory({ auth, coa }) {
                             </tbody>
                         </table>
                     </Card>
-                    <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
+                    <Card className="flex border-t rounded-tr-none rounded-tl-none rounded-bl-lg rounded-br-lg border-gray-200 p-4">
                         <div className="flex justify-between">
                             <div className="pt-2">
                                 <Typography
