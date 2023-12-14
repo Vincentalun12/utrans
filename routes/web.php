@@ -127,6 +127,10 @@ Route::controller(COAController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/coa', 'index')->name('coa');
         Route::get('/coa/create', 'create')->name('coa.create');
+        Route::post('/coa/store', 'store')->name('coa.store');
+        Route::get('/coa/edit/{id}', 'edit')->name('coa.edit');
+        Route::patch('/coa/update/{id}', 'update')->name('coa.update');
+        Route::delete('/coa/destroy/{id}', 'destroy')->name('coa.destroy');
     });
 });
 

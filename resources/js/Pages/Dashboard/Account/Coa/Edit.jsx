@@ -23,16 +23,16 @@ import {
     PlusCircleIcon,
 } from "@heroicons/react/24/solid";
 
-export default function CreateCoa({ auth }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        code: "",
-        account_name: "",
-        account_type: "bank_and_cash",
+export default function EditCoa({ auth, coa }) {
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        code: coa.code,
+        account_name: coa.account_name,
+        account_type: coa.account_type,
     });
 
     const actionSubmit = (e) => {
         e.preventDefault();
-        post(route("coa.store"));
+        patch(route("coa.update", coa.id));
     };
 
     return (

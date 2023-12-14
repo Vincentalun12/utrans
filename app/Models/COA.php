@@ -11,6 +11,8 @@ class COA extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = "chart_of_accounts";
+
     protected $fillable = [
         'code',
         'account_name',

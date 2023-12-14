@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('chart_of_accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
+            $table->string('code');
             $table->string('account_name');
             $table->string('account_type');
             $table->decimal('balance', 65, 2)->default(0);
