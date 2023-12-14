@@ -39,7 +39,6 @@ const TABLE_HEAD = [
     { display: "Address", field: "Address" },
     { display: "Phone", field: "Phone" },
     { display: "Action", field: "Action" },
-    { display: "", field: null },
   ];
 
 export default function Customer({ auth, customers }) {
