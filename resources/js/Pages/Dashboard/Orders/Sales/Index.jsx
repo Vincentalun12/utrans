@@ -35,21 +35,6 @@ import {
 } from "@material-tailwind/react";
 import Linkactive from "@/Components/Linkactive";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
-
 const TABLE_HEAD = [
   { display: "Number", field: "number" },
   { display: "Creation date", field: "creation" },

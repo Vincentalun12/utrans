@@ -54,8 +54,7 @@ export default function Salesorder({ auth }) {
     <AuthenticatedLayout user={auth.user}>
       <Head title="Add item" />
       <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
-                <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
-
+          <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
           <Card className="h-full w-full overflow-hidden rounded-none border-b items-end flex">
             <div className="inline-flex">
               <div>

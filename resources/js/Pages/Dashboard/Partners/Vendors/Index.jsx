@@ -33,9 +33,83 @@ import { ButtonPrimary } from "@/Components";
 
 import { twMerge } from "tailwind-merge";
 
-const TABLE_HEAD = ["No", "Name", "Address", "Phone", "Action"];
+const TABLE_HEAD = [
+    { display: "No", field: "No" },
+    { display: "Name", field: "Name" },
+    { display: "Address", field: "Address" },
+    { display: "Action", field: "Phone" },
+    { display: "", field: null },
+  ];
 
 export default function Vendors({ auth, vendors }) {
+
+    const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [paginated, setpaginated] = useState([]);
+  const [sorting, setsorting] = useState(null);
+  const [sortdirection, setsortdirection] = useState(null);
+  const [searchbar, setsearchbar] = useState('');
+
+  useEffect(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    let sortedItems = [...vendors];
+
+    if (searchbar) {
+      const terms = searchbar.toLowerCase().split(' ');
+      sortedItems = sortedItems.filter(item =>
+        terms.every(term =>
+          Object.values(item).some(val =>
+            String(val).toLowerCase().includes(term)
+          )
+        )
+      );
+    }
+
+    if (sorting && sortdirection) {
+      sortedItems.sort((a, b) => {
+        let aValue = a[sorting];
+        let bValue = b[sorting];
+    
+        if (sorting === 'retail' || sorting === 'wholesale') {
+          aValue = Number(aValue.replace(/\D/g, ''));
+          bValue = Number(bValue.replace(/\D/g, ''));
+        }
+    
+        if (aValue < bValue) {
+          return sortdirection === 'asc' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortdirection === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+
+    setpaginated(sortedItems.slice(start, end));
+  }, [currentPage, sorting, sortdirection, searchbar]);
+
+  const handleSort = (field) => {
+    if (field === sorting) {
+      setsortdirection(sortdirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setsorting(field);
+      setsortdirection('asc');
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (paginated.length === itemsPerPage && currentPage < Math.ceil(vendors.length / itemsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
     const { flash } = usePage().props;
     const [isShowAlert, setIsShowAlert] = useState(false);
     const {
@@ -56,6 +130,8 @@ export default function Vendors({ auth, vendors }) {
             }, 3000);
         }
     }, [isShowAlert]);
+
+    
 
     return (
         <NavigationLayout user={auth.user}>
@@ -117,17 +193,18 @@ export default function Vendors({ auth, vendors }) {
                         <table className="w-full min-w-max lg:min-w-full table-auto text-left">
                             <thead>
                                 <tr className="sticky top-0">
-                                    {TABLE_HEAD.map((head, index) => (
+                                    {TABLE_HEAD.map(({ display, field }, index) => (
                                         <th
-                                            key={head}
+                                            key={display}
                                             className="cursor-pointer border-b border-gray-300 bg-gray-100 p-4 transition-colors hover:bg-gray-400"
+                                            onClick={() => field && handleSort(field)}
                                         >
                                             <Typography
                                                 variant="small"
                                                 color="blue-gray"
                                                 className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                                             >
-                                                {head}{" "}
+                                                {display}{" "}
                                                 {index !==
                                                     TABLE_HEAD.length - 1 && (
                                                     <ChevronUpDownIcon
@@ -255,21 +332,17 @@ export default function Vendors({ auth, vendors }) {
                     <Card className="flex border-t bg-gray-100 border-gray-200 p-4 rounded-none">
                         <div className="flex justify-between">
                             <div className="pt-2">
-                                <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal"
-                                >
-                                    Page 1 of 10
+                            <Typography variant="small" color="blue-gray" className="font-normal">
+                                Page {currentPage} of {Math.ceil(vendors.length / itemsPerPage)}
                                 </Typography>
                             </div>
                             <div className="flex gap-3">
-                                <Button variant="outlined" size="sm">
-                                    Previous
-                                </Button>
-                                <Button variant="outlined" size="sm">
-                                    Next
-                                </Button>
+                            <Button variant="outlined" size="sm" onClick={handlePrevious}>
+                                Previous
+                            </Button>
+                            <Button variant="outlined" size="sm" onClick={handleNext} disabled={paginated.length < itemsPerPage}>
+                                Next
+                            </Button>
                             </div>
                         </div>
                     </Card>
