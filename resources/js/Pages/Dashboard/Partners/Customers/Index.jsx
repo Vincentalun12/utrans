@@ -176,15 +176,15 @@ export default function Customer({ auth, customers }) {
                             </Linkactive>
                             <div className="inline-flex items-center">
                                 <Input
-                                    type="search"
-                                    placeholder="Search"
-                                    value={searchbar}
-                                    onChange={e => setsearchbar(e.target.value)}
-                                    className="  placeholder:text-ungukita focus:!border-ungukita focus:ring-ungukita"
-                                    labelProps={{
-                                        className:
-                                            "before:content-none after:content-none",
-                                    }}
+                                type="search"
+                                placeholder="Search"
+                                value={searchbar}
+                                onChange={e => setsearchbar(e.target.value)}
+
+                                className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100"
+                                labelProps={{
+                                    className: "before:content-none after:content-none",
+                                }}
                                 />
 
                             </div>

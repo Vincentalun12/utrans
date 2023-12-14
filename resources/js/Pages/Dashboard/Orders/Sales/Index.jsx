@@ -34,6 +34,7 @@ import {
   MenuItem,
 } from "@material-tailwind/react";
 import Linkactive from "@/Components/Linkactive";
+import { PlusIcon } from "@heroicons/react/24/solid";
 
 const TABLE_HEAD = [
   { display: "Number", field: "number" },
@@ -224,14 +225,7 @@ export default function Sales({ auth }) {
       <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
           <div className="w-full mx-auto pb-5">
-              <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg lg:flex hidden">
-                {/*
-                <div className="flex p-6 items-center">
-                  {React.createElement(InformationCircleIcon, {
-                    strokeWidth: 2,
-                    className: "h-6 text-gray-900 w-6 mr-4", // added margin-right for spacing
-                  })}
-                  */}
+              <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg flex">
                   <div className="p-6 items-center">
                   <div>
                     <Typography variant="h4" className="text-ungukita" textGradient>
@@ -243,16 +237,6 @@ export default function Sales({ auth }) {
                   </div>
                 </div>
               </div>
-                  <div className="pl-2 items-center lg:hidden flex">
-                  <div>
-                    <Typography variant="h4" className="text-ungukita" textGradient>
-                      Sales
-                    </Typography>
-                    <Typography variant="paragraph">
-                      Manage your order sales here
-                    </Typography>
-                  </div>
-                </div> 
           </div>
           <div className="bg-gray-100 overflow-hidden shadow-md h-20 py-2 border-b border-gray-200">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
@@ -264,6 +248,7 @@ export default function Sales({ auth }) {
                   Create
                 </Button>
               </Linkactive>
+              <div className="md:flex hidden">
                 <Menu placement="right-start">
                   <MenuHandler>
                     <IconButton className="bg-ungukita">
@@ -281,6 +266,10 @@ export default function Sales({ auth }) {
                     </MenuItem>
                   </MenuList>
                 </Menu>
+                </div>
+                <IconButton className="bg-ungukita flex md:hidden">
+                  <PlusIcon className="w-5 h-5" />
+                </IconButton>
               </div>
 
               <div className="inline-flex items-center">

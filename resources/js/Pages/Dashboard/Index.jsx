@@ -177,7 +177,7 @@ export default function Dashboard({ auth }) {
                             className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                         >
                             <div className="w-max rounded-lg bg-orange-900 p-4 text-white">
-                            <ShoppingBagIcon className="h-6 w-6" />
+                            <ShoppingBagIcon className="h-6 w-6 hover:scale-150 duration-300" />
                             </div>
                             <div>
                             <Typography variant="h4" color="blue-gray">
@@ -204,7 +204,7 @@ export default function Dashboard({ auth }) {
                             className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                         >
                             <div className="w-max rounded-lg bg-green-500 p-4 text-white">
-                                    <BanknotesIcon className="h-6 w-6" />
+                                    <BanknotesIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
                                     <Typography variant="h4" color="blue-gray">
@@ -231,7 +231,7 @@ export default function Dashboard({ auth }) {
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
                                     <div className="w-max rounded-lg bg-blue-600 p-4 text-white">
-                                    <ArrowDownOnSquareStackIcon className="h-6 w-6" />
+                                    <ArrowDownOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
                                     <Typography variant="h4" color="blue-gray">
@@ -258,7 +258,7 @@ export default function Dashboard({ auth }) {
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
                                     <div className="w-max rounded-lg bg-red-900 p-4 text-white">
-                                    <ArrowUpOnSquareStackIcon className="h-6 w-6" />
+                                    <ArrowUpOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
                                     <Typography variant="h4" color="blue-gray">
@@ -285,7 +285,7 @@ export default function Dashboard({ auth }) {
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
                                     <div className="w-max rounded-lg bg-orange-900 p-4 text-white">
-                                    <UserIcon className="h-6 w-6" />
+                                    <UserIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
                                     <Typography variant="h3" color="blue-gray">
@@ -312,7 +312,7 @@ export default function Dashboard({ auth }) {
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
                                     <div className="w-max rounded-lg bg-blue-700 p-4 text-white">
-                                    <BuildingOfficeIcon className="h-6 w-6" />
+                                    <BuildingOfficeIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
                                     <Typography variant="h3" color="blue-gray">
@@ -339,7 +339,7 @@ export default function Dashboard({ auth }) {
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
                                     <div className="w-max rounded-lg bg-blue-900 p-4 text-white">
-                                    <DocumentIcon className="h-6 w-6" />
+                                    <DocumentIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
                                     <Typography variant="h3" color="blue-gray">
@@ -367,7 +367,7 @@ export default function Dashboard({ auth }) {
                                     >
                                     <div className="flex flex-col gap-4 md:flex-row md:items-center">
                                         <div className="w-max rounded-lg bg-green-500 p-4 text-white">
-                                        <DocumentTextIcon className="h-6 w-6" />
+                                        <DocumentTextIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                         </div>
                                         <div>
                                         <Typography variant="h3" color="blue-gray">
@@ -411,7 +411,7 @@ export default function Dashboard({ auth }) {
                                     className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                                 >
                                     <div className="w-max rounded-lg bg-green-900 p-4 text-white">
-                                    <DocumentTextIcon className="h-6 w-6" />
+                                    <DocumentTextIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
                                     <Typography className="xl:text-lg font-bold sm:text-sm" color="blue-gray">
@@ -440,7 +440,7 @@ export default function Dashboard({ auth }) {
                                 >
                                 <div className="flex flex-col gap-4 md:flex-row md:items-center">
                                     <div className="w-max rounded-lg bg-orange-500 p-4 text-white">
-                                    <PencilSquareIcon className="h-6 w-6" />
+                                    <PencilSquareIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
                                     <Typography className="xl:text-lg font-bold sm:text-sm" color="blue-gray">
