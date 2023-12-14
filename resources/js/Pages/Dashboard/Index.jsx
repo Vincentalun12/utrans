@@ -51,76 +51,76 @@ const chartConfig = {
             toolbar: {
                 show: false,
             },
-        },
-        title: {
-            show: "",
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        colors: ["#020617"],
-        plotOptions: {
-            bar: {
-                columnWidth: "40%",
-                borderRadius: 2,
+            title: {
+                show: "",
             },
-        },
-        xaxis: {
-            axisTicks: {
-                show: false,
+            dataLabels: {
+                enabled: false,
             },
-            axisBorder: {
-                show: false,
-            },
-            labels: {
-                style: {
-                    colors: "#616161",
-                    fontSize: "12px",
-                    fontFamily: "inherit",
-                    fontWeight: 400,
+            colors: ["#020617"],
+            plotOptions: {
+                bar: {
+                    columnWidth: "40%",
+                    borderRadius: 2,
                 },
             },
-            categories: [
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-            ],
-        },
-        yaxis: {
-            labels: {
-                style: {
-                    colors: "#616161",
-                    fontSize: "12px",
-                    fontFamily: "inherit",
-                    fontWeight: 400,
-                },
-            },
-        },
-        grid: {
-            show: true,
-            borderColor: "#dddddd",
-            strokeDashArray: 5,
             xaxis: {
-                lines: {
-                    show: true,
+                axisTicks: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: false,
+                },
+                labels: {
+                    style: {
+                        colors: "#616161",
+                        fontSize: "12px",
+                        fontFamily: "inherit",
+                        fontWeight: 400,
+                    },
+                },
+                categories: [
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                ],
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: "#616161",
+                        fontSize: "12px",
+                        fontFamily: "inherit",
+                        fontWeight: 400,
+                    },
                 },
             },
-            padding: {
-                top: 5,
-                right: 20,
+            grid: {
+                show: true,
+                borderColor: "#dddddd",
+                strokeDashArray: 5,
+                xaxis: {
+                    lines: {
+                        show: true,
+                    },
+                },
+                padding: {
+                    top: 5,
+                    right: 20,
+                },
             },
-        },
-        fill: {
-            opacity: 0.8,
-        },
-        tooltip: {
-            theme: "dark",
+            fill: {
+                opacity: 0.8,
+            },
+            tooltip: {
+                theme: "dark",
+            },
         },
     },
 };
@@ -195,7 +195,10 @@ export default function Dashboard({ auth }) {
                                     <ShoppingBagIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                 </div>
                                 <div>
-                                    <Typography variant="h4" color="blue-gray">
+                                    <Typography
+                                        className="text-md font-bold"
+                                        color="blue-gray"
+                                    >
                                         Rp122.000.000
                                     </Typography>
                                     <Typography
@@ -203,7 +206,15 @@ export default function Dashboard({ auth }) {
                                         color="gray"
                                         className="max-w-sm font-normal"
                                     >
-                                        Purchases Due
+                                        <div>
+                                            <Typography
+                                                variant="small"
+                                                color="gray"
+                                                className="max-w-sm font-normal"
+                                            >
+                                                Purchases Due
+                                            </Typography>
+                                        </div>
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -220,7 +231,10 @@ export default function Dashboard({ auth }) {
                                     <BanknotesIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                 </div>
                                 <div>
-                                    <Typography variant="h4" color="blue-gray">
+                                    <Typography
+                                        className="text-md font-bold"
+                                        color="blue-gray"
+                                    >
                                         Rp122.000.000
                                     </Typography>
                                     <Typography
@@ -245,7 +259,10 @@ export default function Dashboard({ auth }) {
                                     <ArrowDownOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                 </div>
                                 <div>
-                                    <Typography variant="h4" color="blue-gray">
+                                    <Typography
+                                        className="text-md font-bold"
+                                        color="blue-gray"
+                                    >
                                         Rp45.000.000
                                     </Typography>
                                     <Typography
@@ -270,7 +287,10 @@ export default function Dashboard({ auth }) {
                                     <ArrowUpOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                 </div>
                                 <div>
-                                    <Typography variant="h4" color="blue-gray">
+                                    <Typography
+                                        className="text-md font-bold"
+                                        color="blue-gray"
+                                    >
                                         Rp2.000.000
                                     </Typography>
                                     <Typography
@@ -295,7 +315,10 @@ export default function Dashboard({ auth }) {
                                     <UserIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                 </div>
                                 <div>
-                                    <Typography variant="h3" color="blue-gray">
+                                    <Typography
+                                        className="text-md font-bold"
+                                        color="blue-gray"
+                                    >
                                         242
                                     </Typography>
                                     <Typography
@@ -320,7 +343,10 @@ export default function Dashboard({ auth }) {
                                     <BuildingOfficeIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                 </div>
                                 <div>
-                                    <Typography variant="h3" color="blue-gray">
+                                    <Typography
+                                        className="text-md font-bold"
+                                        color="blue-gray"
+                                    >
                                         242
                                     </Typography>
                                     <Typography
@@ -345,7 +371,10 @@ export default function Dashboard({ auth }) {
                                     <DocumentIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                 </div>
                                 <div>
-                                    <Typography variant="h3" color="blue-gray">
+                                    <Typography
+                                        className="text-md font-bold"
+                                        color="blue-gray"
+                                    >
                                         1.093
                                     </Typography>
                                     <Typography
@@ -372,7 +401,7 @@ export default function Dashboard({ auth }) {
                                     </div>
                                     <div>
                                         <Typography
-                                            variant="h3"
+                                            className="text-md font-bold"
                                             color="blue-gray"
                                         >
                                             1.136
@@ -421,7 +450,7 @@ export default function Dashboard({ auth }) {
                                 </div>
                                 <div>
                                     <Typography
-                                        className="xl:text-lg font-bold sm:text-sm"
+                                        className="xl font-bold sm:text-sm"
                                         color="blue-gray"
                                     >
                                         Purchases & Sales
@@ -454,7 +483,7 @@ export default function Dashboard({ auth }) {
                                     </div>
                                     <div>
                                         <Typography
-                                            className="xl:text-lg font-bold sm:text-sm"
+                                            className="xl font-bold sm:text-sm"
                                             color="blue-gray"
                                         >
                                             Recently added Products
