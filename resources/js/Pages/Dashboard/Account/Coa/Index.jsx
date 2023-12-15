@@ -288,7 +288,7 @@ export default function Inventory({ auth, coa }) {
                                                 </td>
                                                 <td className="p-2">
                                                     <Tooltip content="View">
-                                                        <a>
+                                                        <a as="button" onClick={handleOpen}>
                                                             <IconButton variant="text">
                                                                 <EyeIcon className="h-5 w-5 text-blue-800" />
                                                             </IconButton>
@@ -427,14 +427,12 @@ export default function Inventory({ auth, coa }) {
                                                     <DialogFooter>
                                                         <Button
                                                             variant="text"
-                                                            onClick={handleOpen}
                                                             className="mr-1"
                                                         >
                                                             <span>Close</span>
                                                         </Button>
                                                         <Button
                                                             variant="gradient"
-                                                            onClick={handleOpen}
                                                         >
                                                             <span>EDIT</span>
                                                         </Button>

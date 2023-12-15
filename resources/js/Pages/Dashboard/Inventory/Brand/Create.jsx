@@ -100,12 +100,12 @@ export default function CreateBrand({ auth }) {
                                         * Input brand's email address, leave blank if not available
                                     </div>
                                         <Input
-                                            type="input"
+                                            type="text"
                                             name="email"
                                             placeholder="mail@address.com"
                                             value={data.email}
                                             onChange={(e) => {
-                                                setData("number", e.target.value);
+                                                setData("email", e.target.value);
                                             }}
                                             className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                                             labelProps={{
