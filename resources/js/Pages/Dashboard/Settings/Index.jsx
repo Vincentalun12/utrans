@@ -67,7 +67,7 @@ export default function Settings({ auth }) {
                     </div>
                     <div className="bg-white overflow-hidden shadow-md rounded-md h-full py-2 border-b border-gray-200">
                             <div className="grid grid-cols-2 gap-5 m-3 px-6">
-                                <Typography className="col-span-2" variant="h4">Journal Settings</Typography>
+                                <Typography className="col-span-2" variant="h4">Account Settings</Typography>
                                 <div className="grid-span-1">
                                 <Typography>Sales Account</Typography>
                                 <Select options={options}
@@ -165,7 +165,7 @@ export default function Settings({ auth }) {
                                     />
                                 </div>
                                 <hr className="w-full col-span-2"></hr>
-                                <Typography className="col-span-2" variant="h4">Account Settings</Typography>
+                                <Typography className="col-span-2" variant="h4">Journal Settings</Typography>
                                 <div className="col-span-2">
                                 <Typography>Stock Valuation Journal</Typography>
                                 <Select options={options}
