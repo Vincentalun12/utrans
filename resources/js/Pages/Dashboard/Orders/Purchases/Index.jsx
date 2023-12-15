@@ -46,7 +46,10 @@ const TABLE_HEAD = [
   { display: "Vendor", field: "vendor" },
   { display: "Total item", field: "totalitem" },
   { display: "Total", field: "total" },
+  { display: "Paid", field: "paid" },
   { display: "Status", field: "status" },
+  { display: "Payment", field: "payment" },
+  { display: "Due", field: "Due" },
   { display: "", field: null },
 ];
 
@@ -57,7 +60,10 @@ const TABLE_ROWS = [
     vendor: "PANAXIA SDN. BHD",
     totalitem: "146 Units",
     total: "Rp. 34,573,000.00",
-    status: true,
+    paid: "Rp. 34,573,000.00",
+    status: false,
+    payment: false,
+    due: "Rp. 0,000.00"
   },
   {
     reference: "BW-PU-A-002",
@@ -65,7 +71,10 @@ const TABLE_ROWS = [
     vendor: "CV. TIR",
     totalitem: "1.511 Units",
     total: "Rp. 643,351,000.00",
-    status: true,
+    paid: "Rp. 643,351,000.00",
+    status: false,
+    payment: false,
+    due: "Rp. 0,000.00"
   },
   {
     reference: "BW-PU-A-003",
@@ -73,7 +82,10 @@ const TABLE_ROWS = [
     vendor: "CV. MZU",
     totalitem: "49 Units",
     total: "Rp. 64,752,000.00",
-    status: true,
+    paid: "Rp. 64,752,000.00",
+    status: false,
+    payment: false,
+    due: "Rp. 0,000.00"
   },
   {
     reference: "BW-PU-A-004",
@@ -81,7 +93,10 @@ const TABLE_ROWS = [
     vendor: "CV. Global Plastik",
     totalitem: "93 Units",
     total: "Rp. 5.413.000,00",
+    paid: "Rp. 5.000.000,00",
     status: true,
+    payment: false,
+    due: "Rp. 413,000.00"
   },
   {
     reference: "BW-PU-A-005",
@@ -89,7 +104,10 @@ const TABLE_ROWS = [
     vendor: "PT. ALNCO",
     totalitem: "491 Units",
     total: "Rp. 195,752,000.00",
+    paid: "Rp. 195,752,000.00",
     status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
   {
     reference: "BW-PU-A-006",
@@ -97,7 +115,10 @@ const TABLE_ROWS = [
     vendor: "PT. TRI MITRA GALON",
     totalitem: "1.401 Units",
     total: "Rp. 903,414,000.00",
+    paid: "Rp. 903,414,000.00",
     status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
   {
     reference: "BW-PU-A-007",
@@ -105,7 +126,10 @@ const TABLE_ROWS = [
     vendor: "CV. JAYA ANLY",
     totalitem: "401 Units",
     total: "Rp. 514,000,000.00",
+    paid: "Rp. 514,000,000.00",
     status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
   {
     reference: "BW-PU-A-008",
@@ -113,7 +137,10 @@ const TABLE_ROWS = [
     vendor: "CV. BUANA PLASTIK",
     totalitem: "1.403 Units",
     total: "Rp. 931,403,000.00",
+    paid: "Rp. 931,403,000.00",
     status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
   {
     reference: "BW-PU-A-009",
@@ -121,7 +148,10 @@ const TABLE_ROWS = [
     vendor: "CV. ROFILL WATER",
     totalitem: "2 Units",
     total: "Rp. 2,166,000.00",
-    status: false,
+    paid: "Rp. 2,166,000.00",
+    status: true,
+    payment: true,
+    due: "Rp. 0,000.00"
   },
 ];
 
@@ -290,7 +320,7 @@ export default function Purchasing({ auth }) {
               </thead>
               <tbody>
                 {paginated.map(
-                  ({ reference, creation, vendor, totalitem, status, total }, index) => {
+                  ({ reference, creation, vendor, totalitem, status, total, paid, payment, due }, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
                       ? "p-4"
@@ -355,6 +385,17 @@ export default function Purchasing({ auth }) {
                           </Typography>
                         </td>
                         <td className="p-2 border-gray-200 pl-4">
+                          <div className="flex flex-col">
+                            <Typography
+                              variant="small"
+                              color={due === "Rp. 0,000.00" ? "blue-gray" : "red"}
+                              className="font-normal"
+                            >
+                              {paid}
+                            </Typography>
+                          </div>
+                        </td>
+                        <td className="p-2 border-gray-200 pl-4">
                           <div className="w-max">
                             <div>
                               <Chip
@@ -366,6 +407,26 @@ export default function Purchasing({ auth }) {
                               />
                             </div>
                           </div>
+                        </td>
+                        <td className="p-2 border-gray-200 pl-4">
+                          <div className="flex items-center">
+                              <Chip
+                                className="static"
+                                variant="ghost"
+                                size="sm"
+                                value={payment ? "PAID" : "DUE"}
+                                color={payment ? "green" : "red"}
+                              />
+                          </div>
+                        </td>
+                        <td className="p-2 border-gray-200 pl-4">
+                          <Typography
+                            variant="small"
+                            color={due === "Rp. 0,000.00" ? "green" : "red"}
+                            className="font-normal"
+                          >
+                            {due}
+                          </Typography>
                         </td>
                         <td className="p-2 border-gray-200 pl-4">
                           <Tooltip content="Orders">
