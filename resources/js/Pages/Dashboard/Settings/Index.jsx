@@ -102,7 +102,7 @@ export default function Settings({ auth }) {
                                 />
                             </div>
                             <div className="col-span-1">
-                                <Typography></Typography>
+                                <Typography>Assets Account</Typography>
                                 <Select
                                     options={options}
                                     placeholder={"Select..."}
