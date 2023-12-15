@@ -38,13 +38,6 @@ export default function AddProduct({ auth, brands, product }) {
         whole_sale_price: product.whole_sale_price,
     });
 
-    useEffect(() => {
-        let interval = setInterval(() => {
-            console.log(data);
-        }, 1000);
-        return () => clearInterval(interval);
-    });
-
     const actionSubmit = (e) => {
         e.preventDefault();
         console.log(data);
