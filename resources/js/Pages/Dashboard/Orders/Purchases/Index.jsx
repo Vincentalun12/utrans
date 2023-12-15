@@ -5,13 +5,19 @@ import { Head } from "@inertiajs/react";
 import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
-  InformationCircleIcon,
   PencilIcon,
   UserPlusIcon,
   DocumentTextIcon,
   DocumentArrowDownIcon,
   DocumentChartBarIcon,
   PlusIcon,
+  InformationCircleIcon,
+  EyeIcon,
+  PlusCircleIcon,
+  TrashIcon,
+  ArrowDownTrayIcon,
+  CreditCardIcon,
+  
 } from "@heroicons/react/24/outline";
 
 import {
@@ -429,14 +435,40 @@ export default function Purchasing({ auth }) {
                           </Typography>
                         </td>
                         <td className="p-2 border-gray-200 pl-4">
-                          <Tooltip content="Orders">
-                            <Linkactive
-                              href={route("purchases.detail")}
-                            >
+                        <Tooltip content="Orders">
+                          <Menu placement="left-start">
+                          <MenuHandler>
                               <Button size="sm" variant="text" >
-                                <InformationCircleIcon className="h-5 w-5" />
+                                  <InformationCircleIcon className="h-5 w-5" />
                               </Button>
-                            </Linkactive>
+                          </MenuHandler>
+                          <MenuList>
+                            <MenuItem className="flex items-center gap-2">
+                              <EyeIcon className="w-5 h-5"/>
+                              Purchase Detail
+                            </MenuItem>
+                            <MenuItem className="flex items-center gap-2">
+                              <PencilIcon className="w-5 h-5"/>
+                              Edit Purchase
+                            </MenuItem>
+                            <MenuItem className="flex items-center gap-2">
+                              <PlusCircleIcon className="w-5 h-5"/>
+                              Create Payment
+                            </MenuItem>
+                            <MenuItem className="flex items-center gap-2">
+                              <CreditCardIcon className="w-5 h-5"/>
+                              Show Payment
+                            </MenuItem>
+                            <MenuItem className="flex items-center gap-2">
+                              <TrashIcon className="w-5 h-5"/>
+                              Delete Purchase
+                            </MenuItem>
+                            <MenuItem className="flex items-center gap-2">
+                              <ArrowDownTrayIcon className="w-5 h-5"/>
+                              Download PDF
+                            </MenuItem>
+                          </MenuList>
+                        </Menu>
                           </Tooltip>
                         </td>
                       </tr>
