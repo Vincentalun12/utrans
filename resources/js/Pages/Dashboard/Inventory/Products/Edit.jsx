@@ -46,17 +46,17 @@ export default function AddProduct({ auth, brands, product }) {
 
     return (
         <AdditemLayout user={auth.user}>
-            <Head title="Add Product" />
+            <Head title="Edit Product" />
       <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
                 <div className="w-full mx-auto pb-5">
                     <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                         <Typography variant="h4" className="text-ungukita" textGradient>
-                            Create Products
+                            Edit Products
                         </Typography>
                         <Typography variant="paragraph">
-                            Create your Products to be sold on your store
+                            Edit your registered products
                         </Typography>
                         </div>
                     </div>

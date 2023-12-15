@@ -6,7 +6,6 @@ import {
     Input,
     Button,
     Breadcrumbs,
-    Select,
     Option,
     Label,
     Textarea
@@ -42,46 +41,96 @@ export default function CreateBrand({ auth }) {
             <Head title="Create Brand" />
       <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
-
-                    <Card className="h-full w-full overflow-hidden rounded-none">
+                <div className="w-full mx-auto pb-5">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
+                        <div className="p-6 text-gray-900">
+                        <Typography variant="h4" className="text-ungukita" textGradient>
+                            Create Brands
+                        </Typography>
+                        <Typography variant="paragraph">
+                            Create your Brands to be used by the products you are selling.
+                        </Typography>
+                        </div>
+                    </div>
+                </div>
+                    <Card className="h-full w-full rounded-md overflow-hidden pb-4">
                         <form onSubmit={actionSubmit}>
-                            <div className="grid lg:gap-8 grid-cols-1 gap-4 p-4 mx-4 mt-5">
-                                <div>
-                                    <div className="p-2 text-black font-bold text-xl mb-2">Brands</div>
-                                    <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                                        <Input variant="static" type="text" label="Name" className='border-none focus:shadow-none' placeholder="Input your product name" name="name" value={data.name} onChange={(e) => setData('name', e.target.value)} required={true} />
+                            <div className="grid lg:gap-8 lg:grid-cols-1 xl:grid-cols-4 gap-4 p-4 mx-4 mt-5">
+                            <div className="sm:col-span-2">
+                                    <Typography>Brand Name</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                        * Input your brand name
                                     </div>
-                                    <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                                        *Provide the name of your brands that is suitable for the
-                                        item you are selling.
-                                    </div>
+                                        <Input
+                                            type="text"
+                                            name="name"
+                                            placeholder="Name"
+                                            value={data.name}
+                                            onChange={(e) => {
+                                                setData("name", e.target.value);
+                                            }}
+                                            className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                            labelProps={{
+                                                className: "before:content-none after:content-none",
+                                            }}
+                                        />
                                 </div>
-                                <div>
-                                    <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                                        <Input variant="static" type="number" label="Number" className='border-none focus:shadow-none' placeholder="Input your product number" name="number" value={data.number} onChange={(e) => setData('number', e.target.value)} />
+                                <div className="sm:col-span-2">
+                                    <Typography>Product Number</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                        * Input brand's product number, leave blank if not available
                                     </div>
-                                    <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                                        *Provide the name of your brands that is suitable for the
-                                        item you are selling.
-                                    </div>
+                                        <Input
+                                            type="number"
+                                            name="number"
+                                            placeholder="Product Number"
+                                            value={data.number}
+                                            onChange={(e) => {
+                                                setData("number", e.target.value);
+                                            }}
+                                            className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                            labelProps={{
+                                                className: "before:content-none after:content-none",
+                                            }}
+                                        />
                                 </div>
-                                <div>
-                                    <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                                        <Input variant="static" type="email" label="Email" className='border-none focus:shadow-none' placeholder="Input your product email" name="email" value={data.email} onChange={(e) => setData('email', e.target.value)} />
+                                <div className="sm:col-span-2">
+                                    <Typography>Email Address</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                        * Input brand's email address, leave blank if not available
                                     </div>
-                                    <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                                        *Provide the name of your brands that is suitable for the
-                                        item you are selling.
-                                    </div>
+                                        <Input
+                                            type="input"
+                                            name="email"
+                                            placeholder="mail@address.com"
+                                            value={data.email}
+                                            onChange={(e) => {
+                                                setData("number", e.target.value);
+                                            }}
+                                            className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                            labelProps={{
+                                                className: "before:content-none after:content-none",
+                                            }}
+                                        />
                                 </div>
-                                <div>
-                                    <div className="mx-2 border-b lg:w-4/6 w-full border-black hover:border-b-2">
-                                        <Input variant="static" type="text" label="Website" className='border-none focus:shadow-none' placeholder="Input your product website" name="website" value={data.website} onChange={(e) => setData('website', e.target.value)} />
+                                <div className="sm:col-span-2">
+                                    <Typography>Website</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                        * Input brand's website URL, leave blank if not available
                                     </div>
-                                    <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">
-                                        *Provide the name of your brands that is suitable for the
-                                        item you are selling.
-                                    </div>
+                                        <Input
+                                            type="text"
+                                            name="Website"
+                                            placeholder="www.example.com"
+                                            value={data.website}
+                                            onChange={(e) => {
+                                                setData("website", e.target.value);
+                                            }}
+                                            className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                            labelProps={{
+                                                className: "before:content-none after:content-none",
+                                            }}
+                                        />
                                 </div>
                                 {/* <div>
                                     <div className="p-2 text-black font-bold text-xl mb-2">Product image</div>
@@ -98,9 +147,15 @@ export default function CreateBrand({ auth }) {
                                         *SVG, PNG, JPG or GIF (MAX. 300x300px or 1:1 ratio)
                                     </div>
                                 </div> */}
-                                <div>
-                                    <Button className="w-full lg:w-4/6 h-12 bg-ungukita" type="submit">Save</Button>
-                                </div>
+                                <div className="sm:col-span-4 pt-8">
+                                    <Button
+                                        fullWidth
+                                        type="submit"
+                                        className="bg-ungukita"
+                                    >
+                                        Save
+                                    </Button>
+                            </div>  
                             </div>
                         </form>
                     </Card>
