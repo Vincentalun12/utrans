@@ -96,35 +96,35 @@ export function OrganismBottomNavigation() {
                     <div className="block pl-4 pt-2 text-lg text-black font-bold">Menu</div>
                     <div className="grid grid-cols-4 gap-4 mt-4 overflow-x-hidden">
                     
-                        <Button variant="text" className="inline-flex flex-col items-center" onClick={window.location.href="/products"} >
+                        <Button variant="text" className="inline-flex flex-col items-center" onClick={() => window.location.href='/products'}>
                             <ArchiveBoxIcon className="w-7 h-7" />
                             <span className="text-[10px]">Product</span>
                         </Button>
-                        <Button variant="text" className="inline-flex flex-col items-center">
+                        <Button variant="text" className="inline-flex flex-col items-center" onClick={() => window.location.href='/brand'}>
                             <TagIcon className="w-7 h-7" />
                             <span className="text-[10px]">Brands</span>
                         </Button>
-                        <Button variant="text" className="inline-flex flex-col items-center">
+                        <Button variant="text" className="inline-flex flex-col items-center" onClick={() => window.location.href='/purchases'}>
                             <ShoppingBagIcon className="w-7 h-7" />
                             <span className="text-[10px]">Purchases</span>
                         </Button>
-                        <Button variant="text" className="inline-flex flex-col items-center">
+                        <Button variant="text" className="inline-flex flex-col items-center" onClick={() => window.location.href='/sales'}>
                             <ShoppingCartIcon className="w-7 h-7" />
                             <span className="text-[10px]">Sales</span>
                         </Button>
-                        <Button variant="text" className="inline-flex flex-col items-center">
+                        <Button variant="text" className="inline-flex flex-col items-center" onClick={() => window.location.href='/balancesheet'}>
                             <ClipboardIcon className="w-7 h-7" />
                             <span className="text-[10px]">Reports</span>
                         </Button>
-                        <Button variant="text" className="inline-flex flex-col items-center">
+                        <Button variant="text" className="inline-flex flex-col items-center" onClick={() => window.location.href='/coa'}>
                             <CalculatorIcon className="w-7 h-7" />
                             <span className="text-[10px]">Accounting</span>
                         </Button>
-                        <Button variant="text" className="inline-flex flex-col items-center">
+                        <Button variant="text" className="inline-flex flex-col items-center" onClick={() => window.location.href='/customers'}>
                             <UserGroupIcon className="w-7 h-7" />
                             <span className="text-[10px]">Customer</span>
                         </Button>
-                        <Button variant="text" className="inline-flex flex-col items-center">
+                        <Button variant="text" className="inline-flex flex-col items-center" onClick={() => window.location.href='/settings'}>
                             <Cog6ToothIcon className="w-7 h-7" />
                             <span className="text-[10px]">Settings</span>
                         </Button>
