@@ -452,7 +452,6 @@ export default function Inventory({ auth, products }) {
                                                         }
                                                     `}
                                                 />
-                                                <div onClick={handleOpen}>
                                                 <Dialog
                                                     open={open}
                                                     size="sm"
@@ -512,7 +511,6 @@ export default function Inventory({ auth, products }) {
                                                         </Button>
                                                     </DialogFooter>
                                                 </Dialog>
-                                                </div>
                                             </tr>
                                         );
                                     }
