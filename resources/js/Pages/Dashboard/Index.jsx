@@ -490,29 +490,14 @@ export default function Dashboard({ auth }) {
                                     </div>
                                 </div>
                                 <div className="flex flex-row gap-2">
-                                    <Linkactive
-                                        href={route("products")}
-                                    >
+                                <a href="/products">
                                     <Button
-                                        className="flex-grow"
-                                        variant="outlined"
-                                        size="sm"
+                                        className="flex-grow bg-ungukita"
+                                        variant="filled"
                                     >
                                         View
                                     </Button>
-                                    </Linkactive>
-                                    <Linkactive
-                                        href={route("products.create")}
-                                    >
-                                    <Button
-                                        className={twMerge(
-                                            "px-2 py-1 bg-red hover:bg-dark-red md:flex hidden",
-                                            "p-3 bg-ungukita"
-                                        )}
-                                    >
-                                        Add Items
-                                    </Button>
-                                    </Linkactive>
+                                </a>
                                 </div>
                             </CardHeader>
                             <CardBody className="px-2 pb-0 overflow-x-auto">
