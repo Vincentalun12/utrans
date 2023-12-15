@@ -164,7 +164,7 @@ export default function Additem({ auth }) {
                       type="search"
                       placeholder="14-5-2023"
                       disabled
-                      className=" placeholder:text-gray-600 focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100" 
+                      className=" placeholder:text-gray-600 focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100 !border-t-blue-gray-200" 
                       labelProps={{
                         className: "before:content-none after:content-none",
                       }}

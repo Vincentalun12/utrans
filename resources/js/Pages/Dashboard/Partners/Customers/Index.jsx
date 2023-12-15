@@ -182,7 +182,7 @@ export default function Customer({ auth, customers }) {
                                 value={searchbar}
                                 onChange={e => setsearchbar(e.target.value)}
 
-                                className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100"
+                                className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100 !border-t-blue-gray-200"
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
