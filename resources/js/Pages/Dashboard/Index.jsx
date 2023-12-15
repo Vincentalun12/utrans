@@ -492,8 +492,8 @@ export default function Dashboard({ auth }) {
                                 <div className="flex flex-row gap-2">
                                 <a href="/products">
                                     <Button
-                                        className="flex-grow bg-ungukita"
-                                        variant="filled"
+                                        className="flex-grow"
+                                        variant="outlined"
                                     >
                                         View
                                     </Button>

@@ -40,7 +40,7 @@ export function OrganismBottomNavigation() {
         <div className="fixed bottom-0 w-full lg:hidden inline-flex justify-between bg-white z-50">
             {isNavVisible && (
                 <div className="grid grid-cols-5 items-center flex-grow">
-                <Linkactive href={route("dashboard")}>
+                <a href="/dashboard">
                     <Button
                         variant="text"
                         className="inline-flex flex-col items-center justify-center font-medium py-3 px-4 text-ungukita rounded-none"
@@ -49,8 +49,8 @@ export function OrganismBottomNavigation() {
                         <HomeIcon className="w-7 h-7" />
                         <span className="">Home</span>
                     </Button>
-                </Linkactive>
-                <Linkactive href={route("inventorymenu")}>
+                </a>
+                <a href="/inventorymenu">
                     <Button
                         variant="text"
                         size="xs"
@@ -60,13 +60,13 @@ export function OrganismBottomNavigation() {
                         <ArchiveBoxIcon className="w-7 h-7" />
                         <span className="">Inven</span>
                     </Button>
-                </Linkactive>
+                </a>
                     <button onClick={handleOpenModal} className="inline-flex flex-col items-center text-xs font-medium text-white py-3 px-6 rounded-none">
                         <div className="absolute bottom-5 p-4 border-4 rounded-full bg-ungukita shadow-md shadow-blue-gray-200">
                             <Squares2X2Icon className="w-7 h-7" />
                         </div>
                     </button>
-                    <Linkactive href={route("sales")}>
+                    <a href="/sales">
                     <Button
                         variant="text"
                         size="xs"
@@ -76,8 +76,8 @@ export function OrganismBottomNavigation() {
                         <ChartBarIcon className="w-7 h-7" />
                         <span className="">Order</span>
                     </Button>
-                    </Linkactive>
-                    <Linkactive href={route("customers")}>
+                    </a>
+                    <a href="/customers">
                     <Button
                         variant="text"
                         size="xs"
@@ -87,7 +87,7 @@ export function OrganismBottomNavigation() {
                         <UserGroupIcon className="w-7 h-7" />
                         <span className="">Partner</span>
                     </Button>
-                    </Linkactive>
+                    </a>
                 </div>
             )}
             {isModalOpen && (
@@ -95,7 +95,8 @@ export function OrganismBottomNavigation() {
                 <div className="bg-white p-4 m-2 rounded-2xl w-full h-2/3 overflow-auto">
                     <div className="block pl-4 pt-2 text-lg text-black font-bold">Menu</div>
                     <div className="grid grid-cols-4 gap-4 mt-4 overflow-x-hidden">
-                        <Button variant="text" className="inline-flex flex-col items-center">
+                    
+                        <Button variant="text" className="inline-flex flex-col items-center" onClick={window.location.href="/products"} >
                             <ArchiveBoxIcon className="w-7 h-7" />
                             <span className="text-[10px]">Product</span>
                         </Button>

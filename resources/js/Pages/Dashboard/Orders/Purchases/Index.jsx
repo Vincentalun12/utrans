@@ -10,7 +10,8 @@ import {
   UserPlusIcon,
   DocumentTextIcon,
   DocumentArrowDownIcon,
-  DocumentChartBarIcon
+  DocumentChartBarIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 
 import {
@@ -218,10 +219,11 @@ export default function Purchasing({ auth }) {
               <Linkactive
                 href={route("purchases.create")}
               >
-                <Button className="bg-ungukita">
+                <Button className="bg-ungukita md:flex hidden">
                   Create
                 </Button>
                 </Linkactive>
+                <div className="md:flex hidden">
                 <Menu placement="right-start">
                   <MenuHandler>
                     <IconButton className="bg-ungukita">
@@ -239,6 +241,10 @@ export default function Purchasing({ auth }) {
                     </MenuItem>
                   </MenuList>
                 </Menu>
+                </div>
+                <IconButton className="bg-ungukita flex md:hidden">
+                  <PlusIcon className="w-5 h-5" />
+                </IconButton>
               </div>
 
               <div className="inline-flex items-center">

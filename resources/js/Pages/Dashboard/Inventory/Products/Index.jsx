@@ -25,6 +25,7 @@ import {
     TrashIcon,
     DocumentTextIcon,
     ArchiveBoxIcon,
+    PlusIcon,
 } from "@heroicons/react/24/solid";
 
 import { ButtonPrimary } from "@/Components";
@@ -160,14 +161,14 @@ export default function Inventory({ auth, products }) {
                     <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
                             <Linkactive href={route("products.create")}>
-                                <Button
-                                    className={twMerge(
-                                        "px-2 py-1 bg-red hover:bg-dark-red md:flex hidden",
-                                        "p-3 bg-ungukita"
-                                    )}
-                                >
-                                    Add Items
-                                </Button>
+                            <Button className="bg-ungukita md:flex hidden">
+                                Add
+                            </Button>
+                            </Linkactive>
+                            <Linkactive href={route("products.create")}>
+                            <IconButton className="bg-ungukita flex md:hidden">
+                                <PlusIcon className="w-5 h-5" />
+                            </IconButton>
                             </Linkactive>
               <div className="inline-flex items-center">
                 <Input
