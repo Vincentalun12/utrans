@@ -106,7 +106,7 @@ export default function Brand({ auth, brands, deleteSuccess }) {
         }
 
         setpaginated(sortedItems.slice(start, end));
-    }, [currentPage, sorting, sortdirection, searchbar]);
+    }, [currentPage, sorting, sortdirection, searchbar, brands]);
 
     const handleSort = (field) => {
         if (field === sorting) {
@@ -143,9 +143,8 @@ export default function Brand({ auth, brands, deleteSuccess }) {
             >
                 {flash.message?.content}
             </Alert>
-      <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
+            <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
-
                     <div className="w-full mx-auto pb-5">
                         <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                             <div className="p-6 text-gray-900">
@@ -164,29 +163,30 @@ export default function Brand({ auth, brands, deleteSuccess }) {
                     </div>
                     <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
-                        <Linkactive href={route("brands.create")}>
-                            <Button className="bg-ungukita md:flex hidden">
-                                Add
-                            </Button>
+                            <Linkactive href={route("brands.create")}>
+                                <Button className="bg-ungukita md:flex hidden">
+                                    Add
+                                </Button>
                             </Linkactive>
                             <Linkactive href={route("brands.create")}>
-                            <IconButton className="bg-ungukita flex md:hidden">
-                                <PlusIcon className="w-5 h-5" />
-                            </IconButton>
+                                <IconButton className="bg-ungukita flex md:hidden">
+                                    <PlusIcon className="w-5 h-5" />
+                                </IconButton>
                             </Linkactive>
-              <div className="inline-flex items-center">
-                <Input
-                  type="search"
-                  placeholder="Search"
-                  value={searchbar}
-                  onChange={e => setsearchbar(e.target.value)}
-
-                  className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
-
+                            <div className="inline-flex items-center">
+                                <Input
+                                    type="search"
+                                    placeholder="Search"
+                                    value={searchbar}
+                                    onChange={(e) =>
+                                        setsearchbar(e.target.value)
+                                    }
+                                    className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100"
+                                    labelProps={{
+                                        className:
+                                            "before:content-none after:content-none",
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>
@@ -262,23 +262,45 @@ export default function Brand({ auth, brands, deleteSuccess }) {
                                             <td className="p-4 flex">
                                                 <Tooltip content="View Brand">
                                                     <a>
-                                                    <IconButton variant="text">
-                                                    <EyeIcon className="h-5 w-5 text-blue-800" />
-                                                    </IconButton>
+                                                        <IconButton variant="text">
+                                                            <EyeIcon className="h-5 w-5 text-blue-800" />
+                                                        </IconButton>
                                                     </a>
                                                 </Tooltip>
                                                 <Tooltip content="Edit Brand">
-                                                    <a href={route("brands.edit",id)}>
-                                                    <IconButton variant="text">
-                                                    <PencilSquareIcon className="h-5 w-5 text-green-500" />
-                                                    </IconButton>
+                                                    <a
+                                                        href={route(
+                                                            "brands.edit",
+                                                            id
+                                                        )}
+                                                    >
+                                                        <IconButton variant="text">
+                                                            <PencilSquareIcon className="h-5 w-5 text-green-500" />
+                                                        </IconButton>
                                                     </a>
                                                 </Tooltip>
                                                 <Tooltip content="Delete Brand">
-                                                    <a onClick={() => destroy(route("brands.destroy",id),{onSuccess:() => {setIsShowAlert(true);},})}>
-                                                    <IconButton variant="text">
-                                                    <TrashIcon className="h-5 w-5 text-red-500" />
-                                                    </IconButton>
+                                                    <a
+                                                        onClick={() =>
+                                                            destroy(
+                                                                route(
+                                                                    "brands.destroy",
+                                                                    id
+                                                                ),
+                                                                {
+                                                                    onSuccess:
+                                                                        () => {
+                                                                            setIsShowAlert(
+                                                                                true
+                                                                            );
+                                                                        },
+                                                                }
+                                                            )
+                                                        }
+                                                    >
+                                                        <IconButton variant="text">
+                                                            <TrashIcon className="h-5 w-5 text-red-500" />
+                                                        </IconButton>
                                                     </a>
                                                 </Tooltip>
                                             </td>
