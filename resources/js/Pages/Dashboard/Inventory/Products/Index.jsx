@@ -452,10 +452,11 @@ export default function Inventory({ auth, products }) {
                                                         }
                                                     `}
                                                 />
+                                                <div onClick={handleOpen}>
                                                 <Dialog
                                                     open={open}
                                                     size="sm"
-                                                    handler={handleOpen}
+                                                    onClose={handleOpen}
                                                 >
                                                     <DialogHeader>
                                                         <Typography variant="h5">
@@ -471,8 +472,7 @@ export default function Inventory({ auth, products }) {
                                                             className="text-red-900"
                                                             variant="h4"
                                                         >
-                                                            You're about to
-                                                            delete this item!
+                                                            You're about to delete this item!
                                                         </Typography>
                                                         <Typography className="text-center font-normal">
                                                             This action cannot
@@ -487,22 +487,20 @@ export default function Inventory({ auth, products }) {
                                                         <Button
                                                             variant="gradient"
                                                             color="red"
-                                                            onClick={() =>
-                                                                destroy(
-                                                                    route(
-                                                                        "products.destroy",
-                                                                        id
-                                                                    ),
-                                                                    {
-                                                                        onSuccess:
-                                                                            () => {
-                                                                                setIsShowAlert(
-                                                                                    true
-                                                                                );
-                                                                            },
-                                                                    }
-                                                                )
-                                                            }
+                                                            onClick={async () => {
+                                                                await destroy(
+                                                                  route(
+                                                                    "products.destroy",
+                                                                    id
+                                                                  ),
+                                                                  {
+                                                                    onSuccess: () => {
+                                                                      setIsShowAlert(true);
+                                                                    },
+                                                                  }
+                                                                );
+                                                                handleOpen(); // Close the modal
+                                                              }}
                                                         >
                                                             Delete
                                                         </Button>
@@ -514,6 +512,7 @@ export default function Inventory({ auth, products }) {
                                                         </Button>
                                                     </DialogFooter>
                                                 </Dialog>
+                                                </div>
                                             </tr>
                                         );
                                     }
