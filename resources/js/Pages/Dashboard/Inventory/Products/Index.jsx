@@ -141,7 +141,6 @@ export default function Inventory({ auth, products }) {
             </Alert>
             <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
-
                     <div className="w-full mx-auto pb-5">
                         <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                             <div className="p-6 text-gray-900">
@@ -161,28 +160,29 @@ export default function Inventory({ auth, products }) {
                     <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
                             <Linkactive href={route("products.create")}>
-                            <Button className="bg-ungukita md:flex hidden">
-                                Add
-                            </Button>
+                                <Button className="bg-ungukita md:flex hidden">
+                                    Add
+                                </Button>
                             </Linkactive>
                             <Linkactive href={route("products.create")}>
-                            <IconButton className="bg-ungukita flex md:hidden">
-                                <PlusIcon className="w-5 h-5" />
-                            </IconButton>
+                                <IconButton className="bg-ungukita flex md:hidden">
+                                    <PlusIcon className="w-5 h-5" />
+                                </IconButton>
                             </Linkactive>
-              <div className="inline-flex items-center">
-                <Input
-                  type="search"
-                  placeholder="Search"
-                  value={searchbar}
-                  onChange={e => setsearchbar(e.target.value)}
-
-                  className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}    
-                />
-
+                            <div className="inline-flex items-center">
+                                <Input
+                                    type="search"
+                                    placeholder="Search"
+                                    value={searchbar}
+                                    onChange={(e) =>
+                                        setsearchbar(e.target.value)
+                                    }
+                                    className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100"
+                                    labelProps={{
+                                        className:
+                                            "before:content-none after:content-none",
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>
@@ -276,7 +276,7 @@ export default function Inventory({ auth, products }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {brand.name}
+                                                            {brand?.name}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -331,27 +331,49 @@ export default function Inventory({ auth, products }) {
                                                 </td>
 
                                                 <td className="p-2 flex">
-                                                <Tooltip content="View Item">
-                                                    <a>
-                                                    <IconButton variant="text">
-                                                    <EyeIcon className="h-5 w-5 text-blue-800" />
-                                                    </IconButton>
-                                                    </a>
-                                                </Tooltip>
-                                                <Tooltip content="Edit Item">
-                                                    <a href={route("products.edit",id)}>
-                                                    <IconButton variant="text">
-                                                    <PencilSquareIcon className="h-5 w-5 text-green-500" />
-                                                    </IconButton>
-                                                    </a>
-                                                </Tooltip>
-                                                <Tooltip content="Delete Item">
-                                                    <a onClick={() => destroy(route("products.destroy",id),{onSuccess:() => {setIsShowAlert(true);},})}>
-                                                    <IconButton variant="text">
-                                                    <TrashIcon className="h-5 w-5 text-red-500" />
-                                                    </IconButton>
-                                                    </a>
-                                                </Tooltip>
+                                                    <Tooltip content="View Item">
+                                                        <a>
+                                                            <IconButton variant="text">
+                                                                <EyeIcon className="h-5 w-5 text-blue-800" />
+                                                            </IconButton>
+                                                        </a>
+                                                    </Tooltip>
+                                                    <Tooltip content="Edit Item">
+                                                        <a
+                                                            href={route(
+                                                                "products.edit",
+                                                                id
+                                                            )}
+                                                        >
+                                                            <IconButton variant="text">
+                                                                <PencilSquareIcon className="h-5 w-5 text-green-500" />
+                                                            </IconButton>
+                                                        </a>
+                                                    </Tooltip>
+                                                    <Tooltip content="Delete Item">
+                                                        <a
+                                                            onClick={() =>
+                                                                destroy(
+                                                                    route(
+                                                                        "products.destroy",
+                                                                        id
+                                                                    ),
+                                                                    {
+                                                                        onSuccess:
+                                                                            () => {
+                                                                                setIsShowAlert(
+                                                                                    true
+                                                                                );
+                                                                            },
+                                                                    }
+                                                                )
+                                                            }
+                                                        >
+                                                            <IconButton variant="text">
+                                                                <TrashIcon className="h-5 w-5 text-red-500" />
+                                                            </IconButton>
+                                                        </a>
+                                                    </Tooltip>
                                                 </td>
                                             </tr>
                                         );
