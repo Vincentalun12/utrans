@@ -16,6 +16,7 @@ import {
   PlusCircleIcon, 
   PlusIcon, 
   TrashIcon,
+  EllipsisVerticalIcon,
 
 } from "@heroicons/react/24/outline";
 
@@ -434,7 +435,7 @@ export default function Sales({ auth }) {
                           <Menu placement="left-start">
                           <MenuHandler>
                               <Button size="sm" variant="text" >
-                                  <InformationCircleIcon className="h-5 w-5" />
+                                  <EllipsisVerticalIcon className="h-5 w-5" />
                               </Button>
                           </MenuHandler>
                           <MenuList>
@@ -455,12 +456,12 @@ export default function Sales({ auth }) {
                               Show Payment
                             </MenuItem>
                             <MenuItem className="flex items-center gap-2">
-                              <TrashIcon className="w-5 h-5"/>
-                              Delete Sale
-                            </MenuItem>
-                            <MenuItem className="flex items-center gap-2">
                               <ArrowDownTrayIcon className="w-5 h-5"/>
                               Download PDF
+                            </MenuItem>
+                            <MenuItem className="flex items-center gap-2">
+                              <TrashIcon className="w-5 h-5"/>
+                              Delete Sale
                             </MenuItem>
                           </MenuList>
                         </Menu>

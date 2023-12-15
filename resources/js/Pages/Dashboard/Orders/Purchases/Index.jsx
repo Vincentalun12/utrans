@@ -17,6 +17,7 @@ import {
   TrashIcon,
   ArrowDownTrayIcon,
   CreditCardIcon,
+  EllipsisVerticalIcon,
   
 } from "@heroicons/react/24/outline";
 
@@ -439,7 +440,7 @@ export default function Purchasing({ auth }) {
                           <Menu placement="left-start">
                           <MenuHandler>
                               <Button size="sm" variant="text" >
-                                  <InformationCircleIcon className="h-5 w-5" />
+                                  <EllipsisVerticalIcon className="h-5 w-5" />
                               </Button>
                           </MenuHandler>
                           <MenuList>
@@ -460,12 +461,12 @@ export default function Purchasing({ auth }) {
                               Show Payment
                             </MenuItem>
                             <MenuItem className="flex items-center gap-2">
-                              <TrashIcon className="w-5 h-5"/>
-                              Delete Purchase
-                            </MenuItem>
-                            <MenuItem className="flex items-center gap-2">
                               <ArrowDownTrayIcon className="w-5 h-5"/>
                               Download PDF
+                            </MenuItem>
+                            <MenuItem className="flex items-center gap-2">
+                              <TrashIcon className="w-5 h-5"/>
+                              Delete Purchase
                             </MenuItem>
                           </MenuList>
                         </Menu>
