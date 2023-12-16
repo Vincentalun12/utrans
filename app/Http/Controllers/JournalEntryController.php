@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JournalEntries;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 

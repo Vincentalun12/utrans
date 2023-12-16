@@ -312,7 +312,24 @@ export default function Inventory({ auth, journals }) {
                                                         </a>
                                                     </Tooltip>
                                                     <Tooltip content="Delete">
-                                                        <a>
+                                                        <a
+                                                            onClick={() => {
+                                                                destroy(
+                                                                    route(
+                                                                        "journals.destroy",
+                                                                        id
+                                                                    ),
+                                                                    {
+                                                                        onSuccess:
+                                                                            () => {
+                                                                                setIsShowAlert(
+                                                                                    true
+                                                                                );
+                                                                            },
+                                                                    }
+                                                                );
+                                                            }}
+                                                        >
                                                             <IconButton variant="text">
                                                                 <TrashIcon className="h-5 w-5 text-red-500" />
                                                             </IconButton>

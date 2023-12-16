@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\COA;
+use App\Models\ChartOfAccount;
 use App\Models\Setting;
 
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class SettingsController extends Controller
     public function index()
     {
         $data = [
-            'accounts' => COA::all(),
+            'accounts' => ChartOfAccount::all(),
         ];
 
         return Inertia::render('Dashboard/Settings/Index', $data);

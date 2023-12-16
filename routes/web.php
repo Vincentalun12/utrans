@@ -104,6 +104,7 @@ Route::controller(JournalsController::class)->group(function () {
         Route::post('/journals/store', 'store')->name('journals.store');
         Route::get('/journals/edit/{id}', 'edit')->name('journals.edit');
         Route::patch('/journals/update/{id}', 'update')->name('journals.update');
+        Route::delete('/journals/destroy/{id}', 'destroy')->name('journals.destroy');
     });
 });
 

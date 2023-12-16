@@ -24,6 +24,6 @@ class Setting extends Model
 
     public function getPurchaseAccount()
     {
-        return COA::take(1)->first();
+        return ChartOfAccount::take(1)->first();
     }
 }

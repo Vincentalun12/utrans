@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Brand extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes;
+
+    protected $cascadeDeletes = ['products'];
 
     protected $fillable = [
         'code',
@@ -31,5 +34,10 @@ class Brand extends Model
         $code = 'BRAND-' . substr('0000', 0, 4 - strlen($code)) . $code;
 
         return $code;
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

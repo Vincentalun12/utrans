@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Journal;
-use App\Models\COA;
+use App\Models\ChartOfAccount;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,7 +23,7 @@ class JournalsController extends Controller
     public function create()
     {
         $data = [
-            'accounts' => COA::all(),
+            'accounts' => ChartOfAccount::all(),
         ];
 
         return Inertia::render('Dashboard/Account/Journals/Create', $data);
@@ -63,7 +63,7 @@ class JournalsController extends Controller
     {
         $data = [
             'journal' => Journal::with(['chart_of_account'])->find($id),
-            'accounts' => COA::all(),
+            'accounts' => ChartOfAccount::all(),
         ];
 
         return Inertia::render('Dashboard/Account/Journals/Edit', $data);
@@ -100,6 +100,18 @@ class JournalsController extends Controller
         return redirect()->route('journals')->with(['message' => [
             'type' => 'success',
             'content' => 'Journal has been updated!',
+        ]]);
+    }
+
+    public function destroy($id)
+    {
+        $journal = Journal::find($id);
+
+        $journal->delete();
+
+        return redirect()->route('journals')->with(['message' => [
+            'type' => 'success',
+            'content' => 'Journal has been deleted!',
         ]]);
     }
 }

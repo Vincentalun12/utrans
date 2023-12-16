@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\COA;
+use App\Models\ChartOfAccount;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,7 +12,7 @@ class COAController extends Controller
     public function index()
     {
         $data = [
-            'coa' => COA::all()
+            'coa' => ChartOfAccount::all()
         ];
 
         return Inertia::render('Dashboard/Account/Coa/Index', $data);
@@ -31,7 +31,7 @@ class COAController extends Controller
             'account_type' => 'required',
         ]);
 
-        COA::create([
+        ChartOfAccount::create([
             'code' => $request->code,
             'account_name' => $request->account_name,
             'account_type' => $request->account_type,
@@ -49,7 +49,7 @@ class COAController extends Controller
     public function edit($id)
     {
         $data = [
-            'coa' => COA::find($id)
+            'coa' => ChartOfAccount::find($id)
         ];
 
         return Inertia::render('Dashboard/Account/Coa/Edit', $data);
@@ -63,7 +63,7 @@ class COAController extends Controller
             'account_type' => 'required',
         ]);
 
-        COA::find($id)->update([
+        ChartOfAccount::find($id)->update([
             'code' => $request->code,
             'account_name' => $request->account_name,
             'account_type' => $request->account_type,
@@ -79,7 +79,7 @@ class COAController extends Controller
 
     public function destroy($id)
     {
-        COA::find($id)->delete();
+        ChartOfAccount::find($id)->delete();
 
         return redirect()->route('coa')->with([
             'message' => [

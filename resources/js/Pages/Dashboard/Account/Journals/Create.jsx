@@ -106,7 +106,7 @@ export default function Createjournals({ auth, accounts }) {
                                                 setData("journal_type", value)
                                             }
                                         >
-                                            <Option value="sale">Sale</Option>
+                                            <Option value="sales">Sales</Option>
                                             <Option value="purchase">
                                                 Purchase
                                             </Option>

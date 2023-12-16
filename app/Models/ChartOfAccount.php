@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class COA extends Model
+class ChartOfAccount extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $table = "chart_of_accounts";
 
     protected $fillable = [
         'code',
@@ -19,4 +17,9 @@ class COA extends Model
         'account_type',
         'balance'
     ];
+
+    public function journals()
+    {
+        return $this->hasMany(Journal::class);
+    }
 }
