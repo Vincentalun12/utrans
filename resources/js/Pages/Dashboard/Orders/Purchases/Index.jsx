@@ -1,25 +1,36 @@
 import PurchasingLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from 'react';
 import Linkactive from "@/Components/Linkactive";
-import { Head } from "@inertiajs/react";
+import { Head, Link, usePage, useForm } from "@inertiajs/react";
+import { Global, css } from "@emotion/react";
+import Select from 'react-select';
+import { format, parse } from "date-fns";
+import { DayPicker } from "react-day-picker";
+
 import {
-  MagnifyingGlassIcon,
+  CalendarDaysIcon,
   ChevronUpDownIcon,
   PencilIcon,
-  UserPlusIcon,
   DocumentTextIcon,
   DocumentArrowDownIcon,
   DocumentChartBarIcon,
   PlusIcon,
-  InformationCircleIcon,
+  XMarkIcon,
   EyeIcon,
   PlusCircleIcon,
   TrashIcon,
   ArrowDownTrayIcon,
   CreditCardIcon,
   EllipsisVerticalIcon,
-  
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+
+import {
+  TrashIcon as TrashIconSolid,
+  PencilIcon as PencilIconSolid,
+  PrinterIcon as PrinterIconSolid,
+} from "@heroicons/react/24/solid";
 
 import {
   Card,
@@ -30,10 +41,10 @@ import {
   CardBody,
   Chip,
   CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
+  Popover,
+  PopoverContent,
+  PopoverHandler,
+  Textarea,
   IconButton,
   Tooltip,
   Breadcrumbs,
@@ -162,6 +173,29 @@ const TABLE_ROWS = [
   },
 ];
 
+const TABLE_HEAD_SHOW_PAYMENT = ["Date", "Reference", "Amount", "Paid By", ""];
+
+const TABLE_ROWS_SHOW_PAYMENT = [
+    {
+        date: "11-11-2023",
+        reference: "INV/2023/11/001",
+        amount: "Rp. 1,000,000.00",
+        paid_by: "Cash",
+    },
+    {
+        date: "16-12-2023",
+        reference: "INV/2023/12/001",
+        amount: "Rp. 1,000,000.00",
+        paid_by: "Cash",
+    },
+];
+
+const paymentoptions = [
+  { value: 'Cash', label: 'Cash' },
+  { value: 'Online', label: 'Online' },
+  { value: 'Inprogress', label: 'In Progress' },
+]
+
 export default function Purchasing({ auth }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -232,6 +266,11 @@ export default function Purchasing({ auth }) {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
+
+  const [openPayment, setOpenPayment] = React.useState(false);
+  const handleOpenPayment = () => setOpenPayment(!openPayment);
+
+  const [date, setDate] = React.useState(new Date());
 
   return (
     <PurchasingLayout user={auth.user}>
@@ -452,11 +491,11 @@ export default function Purchasing({ auth }) {
                               <PencilIcon className="w-5 h-5"/>
                               Edit Purchase
                             </MenuItem>
-                            <MenuItem className="flex items-center gap-2">
+                            <MenuItem onClick={handleOpenPayment} className="flex items-center gap-2">
                               <PlusCircleIcon className="w-5 h-5"/>
                               Create Payment
                             </MenuItem>
-                            <MenuItem className="flex items-center gap-2">
+                            <MenuItem onClick={handleOpen} className="flex items-center gap-2">
                               <CreditCardIcon className="w-5 h-5"/>
                               Show Payment
                             </MenuItem>
@@ -471,6 +510,416 @@ export default function Purchasing({ auth }) {
                           </MenuList>
                         </Menu>
                           </Tooltip>
+                          <Global
+                          styles={css`
+                                                        .bg-opacity-60 {
+                                                            --tw-bg-opacity: 0.01;
+                                                        }
+                                                        .backdrop-blur-sm {
+                                                            --tw-backdrop-blur: blur(
+                                                                1px
+                                                            );
+                                                            -webkit-backdrop-filter: var(
+                                                                    --tw-backdrop-blur
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-brightness
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-contrast
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-grayscale
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-hue-rotate
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-invert
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-opacity
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-saturate
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-sepia
+                                                                );
+                                                            backdrop-filter: var(
+                                                                    --tw-backdrop-blur
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-brightness
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-contrast
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-grayscale
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-hue-rotate
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-invert
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-opacity
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-saturate
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-sepia
+                                                                );
+                                                        }
+                                                        .shadow-2xl {
+                                                            --tw-shadow: 0 10px
+                                                                25px -12px rgb(0
+                                                                        0 0 /
+                                                                        0.25);
+                                                            --tw-shadow-colored: 0
+                                                                25px 50px -12px var(--tw-shadow-color);
+                                                            box-shadow: var(
+                                                                    --tw-ring-offset-shadow,
+                                                                    0 0 #0000
+                                                                ),
+                                                                var(
+                                                                    --tw-ring-shadow,
+                                                                    0 0 #0000
+                                                                ),
+                                                                var(--tw-shadow);
+                                                        }
+                                                    `}
+                                                />
+                                                <Dialog
+                                                    open={open}
+                                                    size="md"
+                                                    onClose={handleOpen}
+                                                >
+                                                    <DialogHeader>
+                                                        <Typography variant="h5">
+                                                            Show Payments
+                                                        </Typography>
+                                                    </DialogHeader>
+                                                    <DialogBody divider className="grid place-items-center px-2 pb-0 gap-4">
+                                                    <table className="w-full min-w-max lg:min-w-full table-auto text-left">
+                                                      <thead>
+                                                          <tr>
+                                                              {TABLE_HEAD_SHOW_PAYMENT.map((head) => (
+                                                                  <th
+                                                                      key={head}
+                                                                      className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                                                                  >
+                                                                      <Typography
+                                                                          variant="small"
+                                                                          color="blue-gray"
+                                                                          className="font-normal leading-none opacity-70"
+                                                                      >
+                                                                          {head}
+                                                                      </Typography>
+                                                                  </th>
+                                                              ))}
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                          {TABLE_ROWS_SHOW_PAYMENT.map(
+                                                              (
+                                                                  {   
+                                                                      date,
+                                                                      reference,
+                                                                      amount,
+                                                                      paid_by,
+                                                                  },
+                                                                  index
+                                                              ) => {
+                                                                  const isLast =
+                                                                      index ===
+                                                                      TABLE_ROWS_SHOW_PAYMENT.length - 1;
+                                                                  const classes = isLast
+                                                                      ? "p-4"
+                                                                      : "p-4 border-b border-blue-gray-50";
+
+                                                                  return (
+                                                                      <tr key={date}>
+                                                                          <td
+                                                                              className={classes}
+                                                                          >
+                                                                              {date}
+                                                                          </td>
+                                                                          <td className={classes}>
+                                                                              <div className="flex items-center gap-3">
+                                                                                  <div className="flex flex-col">
+                                                                                      <Typography
+                                                                                          variant="small"
+                                                                                          color="blue-gray"
+                                                                                          className="font-normal"
+                                                                                      >
+                                                                                          {reference}
+                                                                                      </Typography>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </td>
+                                                                          <td className={classes}>
+                                                                              <Typography
+                                                                                  variant="small"
+                                                                                  color="blue-gray"
+                                                                                  className="font-normal"
+                                                                              >
+                                                                                  {amount}
+                                                                              </Typography>
+                                                                          </td>
+                                                                          <td className={classes}>
+                                                                              <Typography
+                                                                                  variant="small"
+                                                                                  color="blue-gray"
+                                                                                  className="font-normal"
+                                                                              >
+                                                                                  {paid_by}
+                                                                              </Typography>
+                                                                          </td>
+                                                                          <td className={classes}>
+                                                                              <Tooltip content="Print">
+                                                                                  <IconButton variant="text">
+                                                                                      <PrinterIconSolid className="h-4 w-4 text-blue-400" />
+                                                                                  </IconButton>
+                                                                              </Tooltip>
+                                                                              <Tooltip content="Edit">
+                                                                                  <IconButton variant="text">
+                                                                                      <PencilIconSolid className="h-4 w-4 text-green-500" />
+                                                                                  </IconButton>
+                                                                              </Tooltip>
+                                                                              <Tooltip content="Delete">
+                                                                                  <IconButton variant="text">
+                                                                                      <TrashIconSolid className="h-4 w-4 text-red-500" />
+                                                                                  </IconButton>
+                                                                              </Tooltip>
+                                                                          </td>
+                                                                      </tr>
+                                                                  );
+                                                              }
+                                                          )}
+                                                      </tbody>
+                                                  </table>
+                                                    </DialogBody>
+                                                    <DialogFooter className="space-x-2">
+                                                        <Button
+                                                            variant="outlined"
+                                                            onClick={handleOpen}
+                                                        >
+                                                            Close
+                                                        </Button>
+                                                    </DialogFooter>
+                                                </Dialog>
+                                                <Dialog
+                                                    open={openPayment}
+                                                    size="sm"
+                                                    onClose={handleOpenPayment}
+                                                >
+                                                    <DialogHeader>
+                                                        <Typography variant="h5">
+                                                            Create Payment
+                                                        </Typography>
+                                                    </DialogHeader>
+                                                    <DialogBody divider className="grid place-items-center gap-4">
+                                                    <div className="w-full gap-2 md:justify-between px-4 pb-4 bg-white grid grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2">
+                                                  <div className="sm:col-span-1">
+                                                  <label className="">Payment Type</label>
+                                                  <div className="w-full text-xs mb-2 text-gray-500">
+                                                      * Select your payment type
+                                                  </div>
+                                                    <Select options={paymentoptions}
+                                                            placeholder={'Select...'}
+                                                            styles={{
+                                                              control: (base, state) => ({
+                                                                ...base,
+                                                                boxShadow: state.isFocused ? 0 : 0,
+                                                                borderColor: state.isFocused ? '#1A202C' : base.borderColor,
+                                                                borderWidth: state.isFocused ? '2px' : '1px',
+                                                                "&:hover": {
+                                                                  borderColor: state.isFocused ? '#1A202C' : base.borderColor
+                                                                },
+                                                                borderRadius: '6px',
+                                                              }),
+                                                              input: (base) => ({
+                                                                ...base,
+                                                                "input:focus": {
+                                                                  boxShadow: "none",
+                                                                },
+                                                              })
+                                                            }}
+                                                      />
+                                                    </div>
+                                                    <div className="sm:col-span-1">
+                                                      <label className="">Payment Date</label>
+                                                      <div className="w-full text-xs mb-2 text-gray-500">
+                                                        * Pick your payment date, it's customizable
+                                                      </div>
+                                                          <Popover placement="bottom" trigger="click">
+                                                              <PopoverHandler>
+                                                              <Input
+                                                                type="text"
+                                                                placeholder="2023-05-12"
+                                                                icon={<CalendarDaysIcon/>}
+                                                                value={format(date, 'dd-MM-yyyy')}
+                                                                onChange={(e) => {
+                                                                  const newDate = parse(e.target.value, "dd-MM-yyyy", new Date());
+                                                                  if (!isNaN(newDate)) {
+                                                                    setDate(newDate);
+                                                                  }
+                                                                }}
+                                                                className="  placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                                                labelProps={{
+                                                                  className: "before:content-none after:content-none",
+                                                                }}
+                                                                
+                                                              />
+                                                              </PopoverHandler>
+                                                              <PopoverContent className="z-[9999]">
+                                                              <DayPicker
+                                                                  mode="single"
+                                                                  selected={date}
+                                                                  onSelect={(selectedDate) => {
+                                                                    if (selectedDate) {
+                                                                      setDate(selectedDate);
+                                                                    }
+                                                                  }}
+                                                                  showOutsideDays
+                                                                  className="border-0 !z-[9999]"
+                                                                  classNames={{
+                                                                    caption: "flex justify-center py-2 mb-4 relative items-center",
+                                                                    caption_label: "text-sm font-medium text-gray-900",
+                                                                    nav: "flex items-center",
+                                                                    nav_button:
+                                                                      "h-6 w-6 bg-transparent hover:bg-blue-gray-50 p-1 rounded-md transition-colors duration-300",
+                                                                    nav_button_previous: "absolute left-1.5",
+                                                                    nav_button_next: "absolute right-1.5",
+                                                                    table: "w-full border-collapse",
+                                                                    head_row: "flex font-medium text-gray-900",
+                                                                    head_cell: "m-0.5 w-9 font-normal text-sm",
+                                                                    row: "flex w-full mt-2",
+                                                                    cell: "text-gray-600 rounded-md h-9 w-9 text-center text-sm p-0 m-0.5 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-900/20 [&:has([aria-selected].day-outside)]:text-white [&:has([aria-selected])]:bg-gray-900/50 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                                                                    day: "h-9 w-9 p-0 font-normal",
+                                                                    day_range_end: "day-range-end",
+                                                                    day_selected:
+                                                                      "rounded-md bg-gray-900 text-white hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white",
+                                                                    day_today: "rounded-md bg-gray-200 text-gray-900",
+                                                                    day_outside:
+                                                                      "day-outside text-gray-500 opacity-50 aria-selected:bg-gray-500 aria-selected:text-gray-900 aria-selected:bg-opacity-10",
+                                                                    day_disabled: "text-gray-500 opacity-50",
+                                                                    day_hidden: "invisible",
+                                                                  }}
+                                                                  components={{
+                                                                    IconLeft: ({ ...props }) => (
+                                                                      <ChevronLeftIcon {...props} className="h-4 w-4 stroke-2" />
+                                                                    ),
+                                                                    IconRight: ({ ...props }) => (
+                                                                      <ChevronRightIcon {...props} className="h-4 w-4 stroke-2" />
+                                                                    ),
+                                                                  }}
+                                                                />
+                                                              </PopoverContent>
+                                                          </Popover>
+                                                      </div>                   
+                                                      <div className="sm:col-span-1">
+                                                      <label className="">Paying Amount</label>
+                                                      <div className="w-full text-xs mb-2 text-gray-500">
+                                                        * Input your payment amount
+                                                      </div>
+                                                      <div className="flex">
+                                                          <Button
+                                                          ripple={false}
+                                                          variant="text"
+                                                          color="blue-gray"
+                                                          className="normal-case text-bold h-10 flex items-center rounded-r-none border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 px-3"
+                                                          >
+                                                          Rp
+                                                          </Button>
+                                                          <div className="relative flex-grow">
+                                                          <Input
+                                                              type="number"
+                                                              className="placeholder:text-gray-600 rounded-tl-none rounded-bl-none placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                                              labelProps={{
+                                                              className: "before:content-none after:content-none",
+                                                              }}
+                                                          />
+                                                          </div>
+                                                      </div>
+                                                      </div>
+                                                      <div className="sm:col-span-1">
+                                                      <label className="">Received Amount</label>
+                                                      <div className="w-full text-xs mb-2 text-gray-500">
+                                                        * Input your received amount
+                                                      </div>
+                                                      <div className="flex">
+                                                          <Button
+                                                          ripple={false}
+                                                          variant="text"
+                                                          color="blue-gray"
+                                                          className="normal-case text-bold h-10 flex items-center rounded-r-none border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 px-3"
+                                                          >
+                                                          Rp
+                                                          </Button>
+                                                          <div className="relative flex-grow">
+                                                          <Input
+                                                              type="number"
+                                                              className="placeholder:text-gray-600 rounded-tl-none rounded-bl-none placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                                              labelProps={{
+                                                              className: "before:content-none after:content-none",
+                                                              }}
+                                                          />
+                                                          </div>
+                                                      </div>
+                                                      </div>
+                                                      <div className="sm:col-span-2">
+                                                    <label className="">Reference</label>
+                                                      <div className="w-full text-xs mb-2 text-gray-500">
+                                                      * Create your own reference. Ex: INV/2023/11/001
+                                                      </div>
+                                                    <Input
+                                                        type="input"
+                                                        placeholder="Reference"
+
+                                                        className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                                        labelProps={{
+                                                          className: "before:content-none after:content-none",
+                                                        }}
+                                                      />
+                                                      </div>
+                                                      <div className="sm:col-span-2">
+                                                      <label className="">Additional Notes</label>
+                                                      <div className="w-full text-xs mb-2 text-gray-500">
+                                                          * Set your some notes
+                                                      </div>
+                                                      <div className="flex">
+                                                      <Textarea
+                                                          type="input"
+                                                          size="md"
+                                                          placeholder="Notes"
+                                                          className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                                          labelProps={{
+                                                              className: "before:content-none after:content-none",
+                                                          }}
+                                                      />
+                                                      </div>
+                                                      </div>
+                                                      </div>
+                                                    </DialogBody>
+                                                    <DialogFooter className="space-x-2">
+                                                        <Button
+                                                            variant="gradient"
+                                                            color="green">
+                                                            Submit
+                                                        </Button>
+                                                        <Button
+                                                            variant="outlined"
+                                                            onClick={handleOpenPayment}
+                                                        >
+                                                            Cancel
+                                                        </Button>
+                                                    </DialogFooter>
+                                                </Dialog>
                         </td>
                       </tr>
                     );

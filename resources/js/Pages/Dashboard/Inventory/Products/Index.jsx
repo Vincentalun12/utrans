@@ -478,8 +478,7 @@ export default function Inventory({ auth, products }) {
                                                             be undone. However,
                                                             we will keep your
                                                             data for audit
-                                                            purposes until it's
-                                                            permanently deleted.
+                                                            purposes.
                                                         </Typography>
                                                     </DialogBody>
                                                     <DialogFooter className="space-x-2">
@@ -498,7 +497,7 @@ export default function Inventory({ auth, products }) {
                                                                     },
                                                                   }
                                                                 );
-                                                                handleOpen(); // Close the modal
+                                                                handleOpen();
                                                               }}
                                                         >
                                                             Delete

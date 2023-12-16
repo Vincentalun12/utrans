@@ -88,14 +88,6 @@ const options = [
 export default function Additem({ auth }) {
   const [date, setDate] = React.useState(new Date());
 
-  const style = {
-    control: base => ({
-      ...base,
-      border: 0,
-      // This line disable the blue border
-      boxShadow: 'none'
-    })
-  };
   return (
     <AdditemLayout user={auth.user}>
       <Head title="Add item" />
