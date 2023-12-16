@@ -603,7 +603,7 @@ export default function Purchasing({ auth }) {
                                                             Show Payments
                                                         </Typography>
                                                     </DialogHeader>
-                                                    <DialogBody divider className="grid place-items-center px-2 pb-0 gap-4">
+                                                    <DialogBody divider className="grid place-items-center px-2 pb-0 gap-4 overflow-x-scroll">
                                                     <table className="w-full min-w-max lg:min-w-full table-auto text-left">
                                                       <thead>
                                                           <tr>
@@ -680,6 +680,7 @@ export default function Purchasing({ auth }) {
                                                                               </Typography>
                                                                           </td>
                                                                           <td className={classes}>
+                                                                            <div className="flex">
                                                                               <Tooltip content="Print">
                                                                                   <IconButton variant="text">
                                                                                       <PrinterIconSolid className="h-4 w-4 text-blue-400" />
@@ -695,6 +696,7 @@ export default function Purchasing({ auth }) {
                                                                                       <TrashIconSolid className="h-4 w-4 text-red-500" />
                                                                                   </IconButton>
                                                                               </Tooltip>
+                                                                              </div>
                                                                           </td>
                                                                       </tr>
                                                                   );
@@ -724,7 +726,7 @@ export default function Purchasing({ auth }) {
                                                     </DialogHeader>
                                                     <DialogBody divider className="grid place-items-center gap-4">
                                                     <div className="w-full gap-2 md:justify-between px-4 pb-4 bg-white grid grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2">
-                                                  <div className="sm:col-span-1">
+                                                  <div className="col-span-2 lg:col-span-1">
                                                   <label className="">Payment Type</label>
                                                   <div className="w-full text-xs mb-2 text-gray-500">
                                                       * Select your payment type
@@ -751,10 +753,10 @@ export default function Purchasing({ auth }) {
                                                             }}
                                                       />
                                                     </div>
-                                                    <div className="sm:col-span-1">
+                                                    <div className="col-span-2 lg:col-span-1">
                                                       <label className="">Payment Date</label>
                                                       <div className="w-full text-xs mb-2 text-gray-500">
-                                                        * Pick your payment date, it's customizable
+                                                        * Pick your payment date
                                                       </div>
                                                           <Popover placement="bottom" trigger="click">
                                                               <PopoverHandler>
@@ -822,7 +824,7 @@ export default function Purchasing({ auth }) {
                                                               </PopoverContent>
                                                           </Popover>
                                                       </div>                   
-                                                      <div className="sm:col-span-1">
+                                                      <div className="2xl:col-span-2 col-span-2">
                                                       <label className="">Paying Amount</label>
                                                       <div className="w-full text-xs mb-2 text-gray-500">
                                                         * Input your payment amount
@@ -847,7 +849,7 @@ export default function Purchasing({ auth }) {
                                                           </div>
                                                       </div>
                                                       </div>
-                                                      <div className="sm:col-span-1">
+                                                      <div className="2xl:col-span-2 col-span-2">
                                                       <label className="">Received Amount</label>
                                                       <div className="w-full text-xs mb-2 text-gray-500">
                                                         * Input your received amount
