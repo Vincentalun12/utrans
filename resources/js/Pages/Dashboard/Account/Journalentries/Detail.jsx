@@ -61,7 +61,7 @@ export default function Purchasingorder({ auth }) {
             variant="h6"
             color="black"
             >
-            Purchase order
+            Journal Entries Detail
             </Typography>
             <div className="inline-flex mx-4">
             <Typography
