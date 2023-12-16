@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Brand extends Model
 {
-    use HasFactory, SoftDeletes, CascadeSoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $cascadeDeletes = ['products'];
 
     protected $fillable = [
         'code',
