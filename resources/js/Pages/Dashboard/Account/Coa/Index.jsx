@@ -42,8 +42,9 @@ import { TitleCase } from "@/Utilities/titleCase";
 
 const TABLE_HEAD = [
     { display: "Code", field: "code" },
-    { display: "Account Name", field: "name" },
-    { display: "Type", field: "type" },
+    { display: "Account Name", field: "account_name" },
+    { display: "Type", field: "account_type" },
+    { display: "Balance", field: "balance" },
     { display: "View", field: "null" },
 ];
 
@@ -168,15 +169,15 @@ export default function Inventory({ auth, coa }) {
                     </div>
                     <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
-                        <Linkactive href={route("coa.create")}>
-                            <Button className="bg-ungukita md:flex hidden">
-                                Add
-                            </Button>
+                            <Linkactive href={route("coa.create")}>
+                                <Button className="bg-ungukita md:flex hidden">
+                                    Add
+                                </Button>
                             </Linkactive>
                             <Linkactive href={route("coa.create")}>
-                            <IconButton className="bg-ungukita flex md:hidden">
-                                <PlusIcon className="w-5 h-5" />
-                            </IconButton>
+                                <IconButton className="bg-ungukita flex md:hidden">
+                                    <PlusIcon className="w-5 h-5" />
+                                </IconButton>
                             </Linkactive>
                             <div className="inline-flex items-center">
                                 <Input
@@ -236,6 +237,7 @@ export default function Inventory({ auth, coa }) {
                                             code,
                                             account_name,
                                             account_type,
+                                            balance,
                                         },
                                         index
                                     ) => {
@@ -286,9 +288,26 @@ export default function Inventory({ auth, coa }) {
                                                         </Typography>
                                                     </div>
                                                 </td>
+                                                <td className="p-2 border-b border-gray-200 pl-4">
+                                                    <div className="flex flex-col">
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            Rp{" "}
+                                                            {Intl.NumberFormat(
+                                                                "id"
+                                                            ).format(balance)}
+                                                        </Typography>
+                                                    </div>
+                                                </td>
                                                 <td className="p-2">
                                                     <Tooltip content="View">
-                                                        <a as="button" onClick={handleOpen}>
+                                                        <a
+                                                            as="button"
+                                                            onClick={handleOpen}
+                                                        >
                                                             <IconButton variant="text">
                                                                 <EyeIcon className="h-5 w-5 text-blue-800" />
                                                             </IconButton>
@@ -431,9 +450,7 @@ export default function Inventory({ auth, coa }) {
                                                         >
                                                             <span>Close</span>
                                                         </Button>
-                                                        <Button
-                                                            variant="gradient"
-                                                        >
+                                                        <Button variant="gradient">
                                                             <span>EDIT</span>
                                                         </Button>
                                                     </DialogFooter>

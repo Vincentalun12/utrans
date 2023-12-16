@@ -287,7 +287,7 @@ export default function Inventory({ auth, journals }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {`${chart_of_account.code} ${chart_of_account.account_name}`}
+                                                            {`${chart_of_account?.code} ${chart_of_account?.account_name}`}
                                                         </Typography>
                                                     </div>
                                                 </td>

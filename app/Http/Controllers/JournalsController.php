@@ -80,6 +80,16 @@ class JournalsController extends Controller
             'chart_of_account' => 'required',
         ]);
 
+        if ($journal->code != $request->code) {
+            $journalExistanceCheck = Journal::where('code', $request->code)->first();
+
+            if ($journalExistanceCheck) {
+                throw ValidationException::withMessages([
+                    'code' => 'Journal code already exists.',
+                ]);
+            }
+        }
+
         $journal->update([
             'code' => $request->code,
             'journal_name' => $request->journal_name,

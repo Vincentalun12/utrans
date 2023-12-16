@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('journal_name');
             $table->string('journal_type');
-            $table->foreignId('chart_of_account_id')->constrained('chart_of_accounts');
+            $table->foreignId('chart_of_account_id')->constrained('chart_of_accounts')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

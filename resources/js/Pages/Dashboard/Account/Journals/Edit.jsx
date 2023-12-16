@@ -30,8 +30,8 @@ export default function EditJournals({ auth, journal, accounts }) {
         journal_name: journal.journal_name,
         journal_type: journal.journal_type,
         chart_of_account: {
-            value: journal.chart_of_account.id,
-            label: `${journal.chart_of_account.code} ${journal.chart_of_account.account_name}`,
+            value: journal.chart_of_account?.id,
+            label: `${journal.chart_of_account?.code} ${journal.chart_of_account?.account_name}`,
         },
     });
 
@@ -39,8 +39,8 @@ export default function EditJournals({ auth, journal, accounts }) {
 
     accounts?.forEach((account) => {
         options.push({
-            value: account.id,
-            label: `${account.code} ${account.account_name}`,
+            value: account?.id,
+            label: `${account?.code} ${account?.account_name}`,
         });
     });
 
