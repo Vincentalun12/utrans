@@ -79,7 +79,7 @@ export default function AddCustomer({ auth }) {
                                             }}
                                         />
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-1">
                                     <Typography>Phone Number</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Please use 08xxxxxxxxxx format. Leave blank if unknown.
@@ -97,7 +97,7 @@ export default function AddCustomer({ auth }) {
                                             }}
                                         />
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-1">
                                     <Typography>Email Address</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Provide the customer's email address. Leave blank if unknown.
@@ -136,7 +136,7 @@ export default function AddCustomer({ auth }) {
                                             }}
                                         />
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-1">
                                     <Typography>District</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Could be city, regency, or district, Leave blank if unknown.
@@ -154,7 +154,7 @@ export default function AddCustomer({ auth }) {
                                             }}
                                         />
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-1">
                                     <Typography>City</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Blankable
