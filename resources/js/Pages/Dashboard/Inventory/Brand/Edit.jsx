@@ -76,6 +76,7 @@ export default function EditBrand({ auth, brand }) {
                                                 className: "before:content-none after:content-none",
                                             }}
                                         />
+                                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
                                 </div>
                                 <div className="sm:col-span-2">
                                     <Typography>Product Number</Typography>
@@ -154,6 +155,7 @@ export default function EditBrand({ auth, brand }) {
                                         fullWidth
                                         type="submit"
                                         className="bg-ungukita"
+                                        disabled={!data.name}
                                     >
                                         Save
                                     </Button>
