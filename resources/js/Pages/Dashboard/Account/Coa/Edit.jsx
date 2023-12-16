@@ -112,8 +112,11 @@ export default function EditCoa({ auth, coa }) {
                                             <Option value="fixed_assets">
                                                 Fixed Assets
                                             </Option>
-                                            <Option value="fixed_assets">
+                                            <Option value="income">
                                                 Income
+                                            </Option>
+                                            <Option value="expense">
+                                                Expense
                                             </Option>
                                         </Select>
                                     </div>

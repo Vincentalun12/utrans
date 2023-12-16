@@ -24,12 +24,15 @@ import {
 } from "@heroicons/react/24/solid";
 import ReactSelect from "react-select";
 
-export default function Createjournals({ auth, accounts }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        code: null,
-        journal_name: null,
-        journal_type: "sale",
-        chart_of_account_id: null,
+export default function EditJournals({ auth, journal, accounts }) {
+    const { data, setData, patch, processing, errors, reset } = useForm({
+        code: journal.code,
+        journal_name: journal.journal_name,
+        journal_type: journal.journal_type,
+        chart_of_account: {
+            value: journal.chart_of_account.id,
+            label: `${journal.chart_of_account.code} ${journal.chart_of_account.account_name}`,
+        },
     });
 
     let options = [];
@@ -43,7 +46,7 @@ export default function Createjournals({ auth, accounts }) {
 
     const actionSubmit = (e) => {
         e.preventDefault();
-        post(route("journals.store"));
+        patch(route("journals.update", journal.id));
     };
 
     return (
@@ -129,12 +132,16 @@ export default function Createjournals({ auth, accounts }) {
                                         <ReactSelect
                                             options={options}
                                             placeholder={"Select..."}
-                                            value={data.label}
+                                            value={{
+                                                value: data.chart_of_account
+                                                    .value,
+                                                label: `${data.chart_of_account.label}`,
+                                            }}
                                             onChange={(e) => {
-                                                setData(
-                                                    "chart_of_account_id",
-                                                    e.value
-                                                );
+                                                setData("chart_of_account", {
+                                                    value: e.value,
+                                                    label: e.label,
+                                                });
                                             }}
                                             styles={{
                                                 control: (base, state) => ({

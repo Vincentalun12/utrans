@@ -101,6 +101,9 @@ Route::controller(JournalsController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/journals', 'index')->name('journals');
         Route::get('/journals/create', 'create')->name('journals.create');
+        Route::post('/journals/store', 'store')->name('journals.store');
+        Route::get('/journals/edit/{id}', 'edit')->name('journals.edit');
+        Route::patch('/journals/update/{id}', 'update')->name('journals.update');
     });
 });
 

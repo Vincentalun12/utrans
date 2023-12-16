@@ -14,8 +14,14 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sales_account_id')->nullable()->constrained('chart_of_accounts');
-            $table->foreignId('current_asset_account_id')->nullable()->constrained('chart_of_accounts');
+            $table->foreignId('purchase_account_id')->nullable()->constrained('chart_of_accounts');
+            $table->foreignId('assets_account_id')->nullable()->constrained('chart_of_accounts');
+            $table->foreignId('current_assets_account_id')->nullable()->constrained('chart_of_accounts');
+            $table->foreignId('fixed_assets_account_id')->nullable()->constrained('chart_of_accounts');
             $table->foreignId('cost_of_goods_sold_account_id')->nullable()->constrained('chart_of_accounts');
+            $table->foreignId('stock_valuation_journal_id')->nullable()->constrained('journals');
+            $table->foreignId('sales_journal_id')->nullable()->constrained('journals');
+            $table->foreignId('purchase_journal_id')->nullable()->constrained('journals');
             $table->timestamps();
         });
     }
