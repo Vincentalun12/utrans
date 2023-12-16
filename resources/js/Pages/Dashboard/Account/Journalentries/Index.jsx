@@ -284,11 +284,11 @@ export default function Inventory({ auth }) {
                         </td>
                         <td className="p-2 flex">
                         <Tooltip content="View">
-                            <a>
+                        <Linkactive href={route("journalentries.detail")}>
                             <IconButton variant="text">
                             <EyeIcon className="h-5 w-5 text-blue-800" />
                             </IconButton>
-                            </a>
+                            </Linkactive>
                           </Tooltip>
                           <Tooltip content="Edit">
                               <a>
