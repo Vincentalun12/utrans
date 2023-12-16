@@ -61,7 +61,7 @@ export default function EditVendor({ auth, vendor }) {
                         <form onSubmit={actionSubmit}>
                         <div className="grid grid-cols-2 gap-5 m-3 px-6">
                                 <Typography className="col-span-2" variant="h4">Vendor Information</Typography>
-                                <div className="sm:col-span-2">
+                                <div className="col-span-2 lg:col-span-2">
                                     <Typography>Vendor Name</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Provide the vendor name
@@ -79,7 +79,7 @@ export default function EditVendor({ auth, vendor }) {
                                             }}
                                         />
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-1">
                                     <Typography>Phone Number</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Please use 08xxxxxxxxxx format. Leave blank if unknown.
@@ -97,7 +97,7 @@ export default function EditVendor({ auth, vendor }) {
                                             }}
                                         />
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-1">
                                     <Typography>Email Address</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Provide the vendor's email address. Leave blank if unknown.
@@ -136,7 +136,7 @@ export default function EditVendor({ auth, vendor }) {
                                             }}
                                         />
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-1">
                                     <Typography>District</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Could be city, regency, or district, Leave blank if unknown.
@@ -154,7 +154,7 @@ export default function EditVendor({ auth, vendor }) {
                                             }}
                                         />
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-1">
                                     <Typography>City</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Blankable

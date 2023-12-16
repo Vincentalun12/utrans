@@ -61,7 +61,7 @@ export default function AddVendor({ auth }) {
                         <form onSubmit={actionSubmit}>
                         <div className="grid grid-cols-2 gap-5 m-3 px-6">
                                 <Typography className="col-span-2" variant="h4">General Information</Typography>
-                                <div className="sm:col-span-2">
+                                <div className="col-span-2 lg:col-span-2">
                                     <Typography>Vendor Name</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Provide the name vendor name
