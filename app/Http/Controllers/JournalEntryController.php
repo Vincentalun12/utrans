@@ -18,4 +18,9 @@ class JournalEntryController extends Controller
     {
         return Inertia::render('Dashboard/Account/Journalentries/Create');
     }
+
+    public function detail()
+    {
+        return Inertia::render('Dashboard/Account/Journalentries/Detail');
+    }
 }
