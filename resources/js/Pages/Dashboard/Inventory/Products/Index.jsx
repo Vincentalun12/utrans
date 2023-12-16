@@ -139,6 +139,147 @@ export default function Inventory({ auth, products }) {
     return (
         <InventoryLayout user={auth.user}>
             <Head title="Products" />
+            <Global
+                                                    styles={css`
+                                                        .bg-opacity-60 {
+                                                            --tw-bg-opacity: 0.15;
+                                                        }
+                                                        .backdrop-blur-sm {
+                                                            --tw-backdrop-blur: blur(
+                                                                1px
+                                                            );
+                                                            -webkit-backdrop-filter: var(
+                                                                    --tw-backdrop-blur
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-brightness
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-contrast
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-grayscale
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-hue-rotate
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-invert
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-opacity
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-saturate
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-sepia
+                                                                );
+                                                            backdrop-filter: var(
+                                                                    --tw-backdrop-blur
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-brightness
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-contrast
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-grayscale
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-hue-rotate
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-invert
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-opacity
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-saturate
+                                                                )
+                                                                var(
+                                                                    --tw-backdrop-sepia
+                                                                );
+                                                        }
+                                                        .shadow-2xl {
+                                                            --tw-shadow: 0 10px
+                                                                25px -12px rgb(0
+                                                                        0 0 /
+                                                                        0.25);
+                                                            --tw-shadow-colored: 0
+                                                                25px 50px -12px var(--tw-shadow-color);
+                                                            box-shadow: var(
+                                                                    --tw-ring-offset-shadow,
+                                                                    0 0 #0000
+                                                                ),
+                                                                var(
+                                                                    --tw-ring-shadow,
+                                                                    0 0 #0000
+                                                                ),
+                                                                var(--tw-shadow);
+                                                        }
+                                                    `}
+                                                />
+                                                <Dialog
+                                                    open={open}
+                                                    size="sm"
+                                                    onClose={handleOpen}
+                                                >
+                                                    <DialogHeader>
+                                                        <Typography variant="h5">
+                                                            Notification
+                                                        </Typography>
+                                                    </DialogHeader>
+                                                    <DialogBody
+                                                        divider
+                                                        className="grid place-items-center gap-4"
+                                                    >
+                                                        <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                                                        <Typography
+                                                            className="text-red-900"
+                                                            variant="h4"
+                                                        >
+                                                            You're about to delete this item!
+                                                        </Typography>
+                                                        <Typography className="text-center font-normal">
+                                                            This action cannot
+                                                            be undone. However,
+                                                            we will keep your
+                                                            data for audit
+                                                            purposes.
+                                                        </Typography>
+                                                    </DialogBody>
+                                                    <DialogFooter className="space-x-2">
+                                                        <Button
+                                                            variant="gradient"
+                                                            color="red"
+                                                            onClick={async () => {
+                                                                await destroy(
+                                                                  route(
+                                                                    "products.destroy",
+                                                                    id
+                                                                  ),
+                                                                  {
+                                                                    onSuccess: () => {
+                                                                      setIsShowAlert(true);
+                                                                    },
+                                                                  }
+                                                                );
+                                                                handleOpen();
+                                                              }}
+                                                        >
+                                                            Delete
+                                                        </Button>
+                                                        <Button
+                                                            variant="outlined"
+                                                            onClick={handleOpen}
+                                                        >
+                                                            Cancel
+                                                        </Button>
+                                                    </DialogFooter>
+                                                </Dialog>
             <Alert
                 className="fixed top-4 right-4 z-50 w-1/4"
                 color={flash.message?.type == "success" ? "green" : "red"}
@@ -369,147 +510,7 @@ export default function Inventory({ auth, products }) {
                                                         </a>
                                                     </Tooltip>
                                                 </td>
-                                                <Global
-                                                    styles={css`
-                                                        .bg-opacity-60 {
-                                                            --tw-bg-opacity: 0.15;
-                                                        }
-                                                        .backdrop-blur-sm {
-                                                            --tw-backdrop-blur: blur(
-                                                                1px
-                                                            );
-                                                            -webkit-backdrop-filter: var(
-                                                                    --tw-backdrop-blur
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-brightness
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-contrast
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-grayscale
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-hue-rotate
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-invert
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-opacity
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-saturate
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-sepia
-                                                                );
-                                                            backdrop-filter: var(
-                                                                    --tw-backdrop-blur
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-brightness
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-contrast
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-grayscale
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-hue-rotate
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-invert
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-opacity
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-saturate
-                                                                )
-                                                                var(
-                                                                    --tw-backdrop-sepia
-                                                                );
-                                                        }
-                                                        .shadow-2xl {
-                                                            --tw-shadow: 0 10px
-                                                                25px -12px rgb(0
-                                                                        0 0 /
-                                                                        0.25);
-                                                            --tw-shadow-colored: 0
-                                                                25px 50px -12px var(--tw-shadow-color);
-                                                            box-shadow: var(
-                                                                    --tw-ring-offset-shadow,
-                                                                    0 0 #0000
-                                                                ),
-                                                                var(
-                                                                    --tw-ring-shadow,
-                                                                    0 0 #0000
-                                                                ),
-                                                                var(--tw-shadow);
-                                                        }
-                                                    `}
-                                                />
-                                                <Dialog
-                                                    open={open}
-                                                    size="sm"
-                                                    onClose={handleOpen}
-                                                >
-                                                    <DialogHeader>
-                                                        <Typography variant="h5">
-                                                            Notification
-                                                        </Typography>
-                                                    </DialogHeader>
-                                                    <DialogBody
-                                                        divider
-                                                        className="grid place-items-center gap-4"
-                                                    >
-                                                        <InformationCircleIcon className="w-20 h-20 text-red-400" />
-                                                        <Typography
-                                                            className="text-red-900"
-                                                            variant="h4"
-                                                        >
-                                                            You're about to delete this item!
-                                                        </Typography>
-                                                        <Typography className="text-center font-normal">
-                                                            This action cannot
-                                                            be undone. However,
-                                                            we will keep your
-                                                            data for audit
-                                                            purposes.
-                                                        </Typography>
-                                                    </DialogBody>
-                                                    <DialogFooter className="space-x-2">
-                                                        <Button
-                                                            variant="gradient"
-                                                            color="red"
-                                                            onClick={async () => {
-                                                                await destroy(
-                                                                  route(
-                                                                    "products.destroy",
-                                                                    id
-                                                                  ),
-                                                                  {
-                                                                    onSuccess: () => {
-                                                                      setIsShowAlert(true);
-                                                                    },
-                                                                  }
-                                                                );
-                                                                handleOpen();
-                                                              }}
-                                                        >
-                                                            Delete
-                                                        </Button>
-                                                        <Button
-                                                            variant="outlined"
-                                                            onClick={handleOpen}
-                                                        >
-                                                            Cancel
-                                                        </Button>
-                                                    </DialogFooter>
-                                                </Dialog>
+                                                
                                             </tr>
                                         );
                                     }
