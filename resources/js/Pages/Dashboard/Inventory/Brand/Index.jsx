@@ -181,7 +181,7 @@ export default function Brand({ auth, brands, deleteSuccess }) {
                                     onChange={(e) =>
                                         setsearchbar(e.target.value)
                                     }
-                                    className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100 !border-t-blue-gray-200 !border-t-blue-gray-200"
+                                    className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100 !border-t-blue-gray-200"
                                     labelProps={{
                                         className:
                                             "before:content-none after:content-none",
