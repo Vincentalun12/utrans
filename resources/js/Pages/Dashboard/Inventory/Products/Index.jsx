@@ -48,6 +48,13 @@ const TABLE_HEAD = [
     { display: "Action", field: null },
 ];
 
+const [open, setOpen] = React.useState(false);
+const handleOpen = () => setOpen(!open);
+
+const { delete: destroy } = useForm({});
+
+const [isShowAlert, setIsShowAlert] = useState(false);
+
 export default function Inventory({ auth, products }) {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -56,13 +63,6 @@ export default function Inventory({ auth, products }) {
     const [sortdirection, setsortdirection] = useState(null);
     const [searchbar, setsearchbar] = useState("");
     const { flash } = usePage().props;
-
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(!open);
-
-    const { delete: destroy } = useForm({});
-
-    const [isShowAlert, setIsShowAlert] = useState(false);
 
     useEffect(() => {
         if (flash.message) {

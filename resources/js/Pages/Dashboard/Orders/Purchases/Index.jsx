@@ -196,6 +196,14 @@ const paymentoptions = [
   { value: 'Inprogress', label: 'In Progress' },
 ]
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(!open);
+
+  const [openPayment, setOpenPayment] = React.useState(false);
+  const handleOpenPayment = () => setOpenPayment(!openPayment);
+
+  const [date, setDate] = React.useState(new Date());
+
 export default function Purchasing({ auth }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -263,14 +271,6 @@ export default function Purchasing({ auth }) {
       setCurrentPage(currentPage + 1);
     }
   };
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(!open);
-
-  const [openPayment, setOpenPayment] = React.useState(false);
-  const handleOpenPayment = () => setOpenPayment(!openPayment);
-
-  const [date, setDate] = React.useState(new Date());
 
   return (
     <PurchasingLayout user={auth.user}>
