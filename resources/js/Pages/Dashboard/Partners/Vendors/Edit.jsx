@@ -177,6 +177,7 @@ export default function EditVendor({ auth, vendor }) {
                                     <Button
                                         className="bg-ungukita w-full"
                                         type="submit"
+                                        disabled={!data.name}
                                     >
                                         Save
                                     </Button>

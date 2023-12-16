@@ -177,6 +177,7 @@ export default function EditCustomer({ auth, customer }) {
                                     <Button
                                         className="bg-ungukita w-full"
                                         type="submit"
+                                        disabled={!data.name}
                                     >
                                         Save
                                     </Button>
