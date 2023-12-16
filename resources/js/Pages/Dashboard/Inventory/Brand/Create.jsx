@@ -74,6 +74,7 @@ export default function CreateBrand({ auth }) {
                                                 className: "before:content-none after:content-none",
                                             }}
                                         />
+                                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
                                 </div>
                                 <div className="sm:col-span-2">
                                     <Typography>Product Number</Typography>
