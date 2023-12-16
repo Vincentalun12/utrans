@@ -718,6 +718,7 @@ export default function Purchasing({ auth }) {
                                                     open={openPayment}
                                                     size="sm"
                                                     onClose={handleOpenPayment}
+                                                    className="overflow-auto max-h-[80vh]"
                                                 >
                                                     <DialogHeader>
                                                         <Typography variant="h5">
@@ -874,7 +875,7 @@ export default function Purchasing({ auth }) {
                                                           </div>
                                                       </div>
                                                       </div>
-                                                      <div className="col-span-2 lg:col-span-1">
+                                                      <div className="2xl:col-span-2 col-span-2">
                                                     <label className="">Reference</label>
                                                       <div className="w-full text-xs mb-2 text-gray-500">
                                                       * Create your own reference. Ex: INV/2023/11/001
