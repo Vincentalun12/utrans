@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('journal_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('journal_entry_id')->constrained('journals')->cascadeOnDelete();
+            $table->foreignId('journal_entry_id')->constrained('journals');
             $table->foreignId('chart_of_account_id')->constrained('chart_of_accounts');
             $table->string('label')->nullable();
             $table->decimal('debit', 65, 2)->nullable();

@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('journals', function (Blueprint $table) {
+        Schema::create('sale_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->string('journal_name');
-            $table->string('journal_type');
-            $table->foreignId('chart_of_account_id')->constrained('chart_of_accounts');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('journals');
+        Schema::dropIfExists('sale_orders');
     }
 };

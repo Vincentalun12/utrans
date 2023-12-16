@@ -17,7 +17,9 @@ return new class extends Migration
             $table->date('date');
             $table->string('journal_entry_name');
             $table->string('journal_entry_type');
-            $table->foreignId('journal_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('journal_id')->constrained('journals');
+            $table->foreignId('sale_order_id')->constrained('sale_orders')->nullable();
+            $table->foreignId('purchase_order_id')->constrained('purchase_orders')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
