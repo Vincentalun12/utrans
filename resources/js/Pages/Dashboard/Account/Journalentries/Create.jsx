@@ -316,7 +316,7 @@ export default function Additem({ auth }) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              <input type="number" id="debit" class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"/>
+                              <input type="number" id="debit" class="h-10 w-36 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"/>
                             </Typography>
                           </div>
                         </td>
@@ -326,7 +326,7 @@ export default function Additem({ auth }) {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            <input type="number" id="credit" class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"/>
+                            <input type="number" id="credit" class="h-10 w-36 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"/>
                           </Typography>
                         </td>
                         <td className="p-2 border-b border-gray-200 pl-4">
