@@ -76,6 +76,7 @@ export default function AddProduct({ auth, brands }) {
                                                 className: "before:content-none after:content-none",
                                             }}
                                         />
+                                        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
                                 </div>
                                 <div className="sm:col-span-1">
                                 <Typography>Brand</Typography>
@@ -108,6 +109,7 @@ export default function AddProduct({ auth, brands }) {
                                             })
                                         }}
                                     />
+                                    {errors.brand_id && <p className="text-red-500 text-sm">{errors.brand_id}</p>}
                                 </div>
                                 <div>
                                     <div className="sm:col-span-1">
@@ -131,7 +133,7 @@ export default function AddProduct({ auth, brands }) {
                                     </div>
                                 </div>
                                 <div className="grid sm:grid-cols-2 gap-4">
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-2">
                                     <Typography>Retail Price</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         * Input your Retail Price
@@ -157,10 +159,11 @@ export default function AddProduct({ auth, brands }) {
                                             className: "before:content-none after:content-none",
                                             }}
                                         />
+                                        {errors.retail_price && <p className="text-red-500 text-sm">{errors.retail_price}</p>}
                                         </div>
                                     </div>
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="col-span-2 lg:col-span-2">
                                     <Typography>Wholesale Price</Typography>
                                     <div className=" w-full text-xs mb-2 text-gray-500">
                                         * Must be greater than retail price
@@ -186,6 +189,7 @@ export default function AddProduct({ auth, brands }) {
                                             className: "before:content-none after:content-none",
                                             }}
                                         />
+                                        {errors.whole_sale_price && <p className="text-red-500 text-sm">{errors.whole_sale_price}</p>}
                                         </div>
                                     </div>
                                 </div>
