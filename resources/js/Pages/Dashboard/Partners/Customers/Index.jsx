@@ -88,7 +88,7 @@ export default function Customer({ auth, customers }) {
     }
 
     setpaginated(sortedItems.slice(start, end));
-  }, [currentPage, sorting, sortdirection, searchbar]);
+  }, [currentPage, sorting, sortdirection, searchbar, customers]);
 
   const handleSort = (field) => {
     if (field === sorting) {
