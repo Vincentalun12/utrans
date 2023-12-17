@@ -17,7 +17,7 @@ class ChartOfAccountSeeder extends Seeder
             [
                 'code' => '4000',
                 'account_name' => 'Sales',
-                'account_type' => 'Income',
+                'account_type' => 'income',
                 'balance' => 0,
                 'created_at' => now(),
             ]
@@ -26,7 +26,7 @@ class ChartOfAccountSeeder extends Seeder
             [
                 'code' => '5000',
                 'account_name' => 'Cost of Goods Sold',
-                'account_type' => 'Cost of Revenue',
+                'account_type' => 'cost_of_revenue',
                 'balance' => 0,
                 'created_at' => now(),
             ]
@@ -35,7 +35,7 @@ class ChartOfAccountSeeder extends Seeder
             [
                 'code' => '6000',
                 'account_name' => 'Purchases',
-                'account_type' => 'Expense',
+                'account_type' => 'expense',
                 'balance' => 0,
                 'created_at' => now(),
             ]

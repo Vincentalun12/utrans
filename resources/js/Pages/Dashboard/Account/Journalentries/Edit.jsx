@@ -51,16 +51,41 @@ import {
 
 const TABLE_HEAD = ["Account", "Label", "Debit", "Credit", ""];
 
-export default function CreateJournalEntries({ auth, accounts, journals }) {
+export default function EditJournalEntries({
+    auth,
+    accounts,
+    journals,
+    journalentry,
+}) {
     const [date, setDate] = useState(new Date());
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [journalItems, setJournalItems] = useState([]);
+
+    // journalentry?.journalitems.forEach((item) => {
+    //     setJournalItems([
+    //         ...journalItems,
+    //         {
+    //             order: journalItems.length,
+    //             id: item.id,
+    //             chart_of_account_id: item.chart_of_account_id,
+    //             chart_of_account_name: item.chart_of_account_name,
+    //             label: item.label,
+    //             debit: item.debit,
+    //             credit: item.credit,
+    //             balance: item.balance,
+    //         },
+    //     ]);
+    // });
+
+    // console.log(journalItems);
+    console.log(journalentry);
+
     const { data, setData, post, processing, errors, reset } = useForm({
-        journal_id: null,
-        reference: null,
-        accounting_date: new Date(),
-        status: "posted",
-        journal_items: [],
+        journal_id: journalentry.journal_id,
+        reference: journalentry.reference,
+        accounting_date: new Date(journalentry.accounting_date),
+        status: journalentry.status,
+        journal_items: journalentry?.journalitems,
     });
 
     useEffect(() => {
@@ -68,7 +93,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
             setJournalItems([
                 ...journalItems,
                 {
-                    id: journalItems.length,
+                    order: journalItems.length,
+                    id: null,
                     chart_of_account_id: selectedAccount.value,
                     chart_of_account_name: selectedAccount.label,
                     label: "",
@@ -82,6 +108,7 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
     }, [selectedAccount]);
 
     useEffect(() => {
+        console.log("pppppppp");
         setData("journal_items", journalItems);
     }, [journalItems]);
 
@@ -124,7 +151,7 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                         Journal Entries
                                     </Typography>
                                     <Typography variant="paragraph">
-                                        Add Journal Entries here
+                                        Edit Journal Entries here
                                     </Typography>
                                 </div>
                             </div>
@@ -390,8 +417,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                         (
                                             {
                                                 id,
-                                                chart_of_account_id,
-                                                chart_of_account_name,
+                                                chart_of_account,
+                                                order,
                                                 label,
                                                 debit,
                                                 credit,
@@ -415,9 +442,7 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                                     color="blue-gray"
                                                                     className="font-normal"
                                                                 >
-                                                                    {
-                                                                        chart_of_account_name
-                                                                    }
+                                                                    {`${chart_of_account?.code} ${chart_of_account?.account_name}`}
                                                                 </Typography>
                                                             </div>
                                                         </div>
@@ -443,8 +468,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                                                     item
                                                                                 ) => {
                                                                                     if (
-                                                                                        item.id ===
-                                                                                        id
+                                                                                        item.order ===
+                                                                                        order
                                                                                     ) {
                                                                                         item.label =
                                                                                             e.target.value;
@@ -483,8 +508,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                                                     item
                                                                                 ) => {
                                                                                     if (
-                                                                                        item.id ===
-                                                                                        id
+                                                                                        item.order ===
+                                                                                        order
                                                                                     ) {
                                                                                         item.debit =
                                                                                             parseInt(
@@ -524,8 +549,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                                                 item
                                                                             ) => {
                                                                                 if (
-                                                                                    item.id ===
-                                                                                    id
+                                                                                    item.order ===
+                                                                                    order
                                                                                 ) {
                                                                                     item.credit =
                                                                                         parseInt(
@@ -557,10 +582,9 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                                             (
                                                                                 item
                                                                             ) =>
-                                                                                item.id !==
-                                                                                id
+                                                                                item.order !==
+                                                                                order
                                                                         );
-
                                                                     setJournalItems(
                                                                         newJournalItems
                                                                     );

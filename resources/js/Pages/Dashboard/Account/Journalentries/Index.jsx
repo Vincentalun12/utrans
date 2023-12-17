@@ -364,11 +364,16 @@ export default function Inventory({ auth, journalentries }) {
                                                         </Linkactive>
                                                     </Tooltip>
                                                     <Tooltip content="Edit">
-                                                        <a>
+                                                        <Linkactive
+                                                            href={route(
+                                                                "journalentries.edit",
+                                                                id
+                                                            )}
+                                                        >
                                                             <IconButton variant="text">
                                                                 <PencilSquareIcon className="h-5 w-5 text-green-500" />
                                                             </IconButton>
-                                                        </a>
+                                                        </Linkactive>
                                                     </Tooltip>
                                                     <Tooltip content="Delete">
                                                         <a>

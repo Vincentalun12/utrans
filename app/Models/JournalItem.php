@@ -28,4 +28,16 @@ class JournalItem extends Model
     {
         return $this->belongsTo(ChartOfAccount::class);
     }
+
+    public static function deleteUnnecessaryJournalItems($previousJournalItems, $currentJournalItems)
+    {
+        $previousJournalItemIds = array_column($previousJournalItems, 'id');
+        $currentJournalItemIds = array_column($currentJournalItems, 'id');
+
+        $journalItemIdsToDelete = array_diff($previousJournalItemIds, $currentJournalItemIds);
+
+        foreach ($journalItemIdsToDelete as $journalItemId) {
+            self::find($journalItemId)->delete();
+        }
+    }
 }
