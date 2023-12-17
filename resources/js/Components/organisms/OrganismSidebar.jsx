@@ -101,7 +101,7 @@ export function OrganismSidebar() {
     };
 
     return (
-        <Card className="h-screen fixed top-0 w-full max-w-full 2xl:max-w-[18rem] lg:max-w-[19rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-30 lg:flex hidden overflow-y-auto">
+        <Card className="h-screen fixed top-0 w-full max-w-full 2xl:max-w-[18rem] lg:max-w-[20rem] shadow-md shadow-blue-gray-900/5 rounded-none p-4 z-30 lg:flex hidden overflow-y-auto">
             <div className="mb-2 p-2 w-full flex justify-center">
                 <ApplicationLogo2 />
             </div>
