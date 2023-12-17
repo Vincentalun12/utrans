@@ -132,10 +132,10 @@ export default function Inventory({ auth }) {
               <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                 <div className="p-6 text-gray-900">
                   <Typography variant="h4" className="text-ungukita" textGradient>
-                    Journal Entries
+                    Journal Items
                   </Typography>
                   <Typography variant="paragraph">
-                    Manage your Journal Entries
+                    Manage your Journal Items
                   </Typography>
                 </div>
               </div>
