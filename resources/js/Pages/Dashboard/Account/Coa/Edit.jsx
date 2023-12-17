@@ -118,6 +118,9 @@ export default function EditCoa({ auth, coa }) {
                                             <Option value="expense">
                                                 Expense
                                             </Option>
+                                            <Option value="cost_of_revenue">
+                                                Cost Of Revenue
+                                            </Option>
                                         </Select>
                                     </div>
                                     <div className="lg:w-4/6 w-full text-xs p-3 text-gray-500">

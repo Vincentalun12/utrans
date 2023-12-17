@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('journal_entries', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->date('date');
-            $table->string('journal_entry_name');
-            $table->string('journal_entry_type');
+            $table->string('status');
+            $table->date('accouting_date');
+            $table->string('reference')->nullable();
             $table->foreignId('journal_id')->constrained('journals');
             $table->foreignId('sale_order_id')->constrained('sale_orders')->nullable();
             $table->foreignId('purchase_order_id')->constrained('purchase_orders')->nullable();

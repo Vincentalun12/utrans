@@ -1,11 +1,13 @@
 import AdditemLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
 import { useState, useEffect } from "react";
-import Select from "react-select";
-import { Head } from "@inertiajs/react";
+import ReactSelect from "react-select";
+import { Head, useForm } from "@inertiajs/react";
 import { format, parse, set } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import {
+    Select,
+    Option,
     Card,
     CardHeader,
     Input,
@@ -48,38 +50,27 @@ import {
 } from "@heroicons/react/24/solid";
 
 const TABLE_HEAD = ["Account", "Label", "Debit", "Credit", ""];
-const TABLE_ROWS = [
-    {
-        account: "BW-CB-001",
-        label: "Carbon Block CTO Kirei 10 inch",
-        debit: "50",
-        credit: "25,000.00",
-    },
-    {
-        account: "BW-CB-001",
-        label: "Carbon Block CTO Kirei 10 inch",
-        debit: "50",
-        credit: "25,000.00",
-    },
-    {
-        account: "BW-CB-001",
-        label: "Carbon Block CTO Kirei 10 inch",
-        debit: "50",
-        credit: "25,000.00",
-    },
-];
 
-export default function Additem({ auth, accounts, journals }) {
+export default function CreateJournalEntries({ auth, accounts, journals }) {
     const [date, setDate] = useState(new Date());
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [journalItems, setJournalItems] = useState([]);
+    const { data, setData, post, processing, errors, reset } = useForm({
+        journal_id: null,
+        reference: null,
+        accounting_date: null,
+        status: "posted",
+        journal_items: journalItems,
+    });
 
     useEffect(() => {
         if (selectedAccount) {
             setJournalItems([
                 ...journalItems,
                 {
+                    id: journalItems.length,
                     chart_of_account_id: selectedAccount.value,
+                    chart_of_account_name: selectedAccount.label,
                     label: "",
                     debit: 0,
                     credit: 0,
@@ -90,9 +81,7 @@ export default function Additem({ auth, accounts, journals }) {
         setSelectedAccount(null);
     }, [selectedAccount]);
 
-    useEffect(() => {
-        console.log(journalItems);
-    }, [journalItems]);
+    useEffect(() => {}, [journalItems]);
 
     let journalOptions = [];
     let accountOptions = [];
@@ -136,8 +125,21 @@ export default function Additem({ auth, accounts, journals }) {
                     <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2">
                         <div className="sm:col-span-1">
                             <label className="">Journal</label>
-                            <Select
+                            <ReactSelect
                                 options={journalOptions}
+                                value={{
+                                    value: data.journal_id,
+                                    label: `${
+                                        data.journal_id
+                                            ? journals.find(
+                                                  (journal) =>
+                                                      journal.id ===
+                                                      data.journal_id
+                                              )?.journal_name
+                                            : ""
+                                    }`,
+                                }}
+                                onChange={(e) => setData("journal_id", e.value)}
                                 components={{
                                     DropdownIndicator: () => null,
                                     IndicatorSeparator: () => null,
@@ -174,6 +176,10 @@ export default function Additem({ auth, accounts, journals }) {
                             <label className="">Reference</label>
                             <Input
                                 type="input"
+                                value={data.reference}
+                                onChange={() =>
+                                    setData("reference", e.target.value)
+                                }
                                 placeholder="Reference"
                                 className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                                 labelProps={{
@@ -183,17 +189,23 @@ export default function Additem({ auth, accounts, journals }) {
                             />
                         </div>
                         <div className="sm:col-span-1">
-                            <label className="">Creation Date</label>
-                            <Input
-                                type="search"
-                                placeholder="14-5-2023"
-                                disabled
-                                className=" placeholder:text-gray-600 focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100 !border-t-blue-gray-200"
-                                labelProps={{
-                                    className:
-                                        "before:content-none after:content-none",
-                                }}
-                            />
+                            <label className="">Status</label>
+                            <div className="w-full">
+                                <Select
+                                    value={data.status}
+                                    onChange={(value) =>
+                                        setData("status", value)
+                                    }
+                                    labelProps={{
+                                        className:
+                                            "before:content-none after:content-none",
+                                    }}
+                                    className="placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita  focus:ring-ungukita"
+                                >
+                                    <Option value="draft">Draft</Option>
+                                    <Option value="posted">Posted</Option>
+                                </Select>
+                            </div>
                         </div>
                         <div className="sm:col-span-1">
                             <label className="">Accounting Date</label>
@@ -203,15 +215,26 @@ export default function Additem({ auth, accounts, journals }) {
                                         type="text"
                                         placeholder="2023-05-12"
                                         icon={<CalendarDaysIcon />}
-                                        value={format(date, "dd-MM-yyyy")}
+                                        value={
+                                            data.accounting_date
+                                                ? format(
+                                                      data.accounting_date,
+                                                      "dd-MM-yyyy"
+                                                  )
+                                                : ""
+                                        }
                                         onChange={(e) => {
                                             const newDate = parse(
                                                 e.target.value,
                                                 "dd-MM-yyyy",
                                                 new Date()
                                             );
+
                                             if (!isNaN(newDate)) {
-                                                setDate(newDate);
+                                                setData(
+                                                    "accounting_date",
+                                                    newDate
+                                                );
                                             }
                                         }}
                                         className="  placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
@@ -224,10 +247,17 @@ export default function Additem({ auth, accounts, journals }) {
                                 <PopoverContent>
                                     <DayPicker
                                         mode="single"
-                                        selected={date}
+                                        selected={
+                                            data.accounting_date
+                                                ? data.accounting_date
+                                                : new Date()
+                                        }
                                         onSelect={(selectedDate) => {
                                             if (selectedDate) {
-                                                setDate(selectedDate);
+                                                setData(
+                                                    "accounting_date",
+                                                    selectedDate
+                                                );
                                             }
                                         }}
                                         showOutsideDays
@@ -285,7 +315,7 @@ export default function Additem({ auth, accounts, journals }) {
                     <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
                         <div className="sm:col-span-2 w-full">
                             <label className="">Account</label>
-                            <Select
+                            <ReactSelect
                                 options={accountOptions}
                                 value={selectedAccount}
                                 onChange={(e) => {
@@ -349,7 +379,9 @@ export default function Additem({ auth, accounts, journals }) {
                                 {journalItems.map(
                                     (
                                         {
+                                            id,
                                             chart_of_account_id,
+                                            chart_of_account_name,
                                             label,
                                             debit,
                                             credit,
@@ -357,13 +389,13 @@ export default function Additem({ auth, accounts, journals }) {
                                         index
                                     ) => {
                                         const isLast =
-                                            index === TABLE_ROWS.length - 1;
+                                            index === journalItems.length - 1;
                                         const classes = isLast
                                             ? "p-4"
                                             : "p-4 border-b border-blue-gray-50";
 
                                         return (
-                                            <tr key={chart_of_account_id}>
+                                            <tr key={index}>
                                                 <td className="p-2 border-b border-gray-200 pl-4">
                                                     <div className="flex items-center gap-3">
                                                         <div className="flex flex-col">
@@ -373,7 +405,7 @@ export default function Additem({ auth, accounts, journals }) {
                                                                 className="font-normal"
                                                             >
                                                                 {
-                                                                    chart_of_account_id
+                                                                    chart_of_account_name
                                                                 }
                                                             </Typography>
                                                         </div>
@@ -392,18 +424,23 @@ export default function Additem({ auth, accounts, journals }) {
                                                                 onChange={(
                                                                     e
                                                                 ) => {
-                                                                    journalItems.findIndex(
-                                                                        (
-                                                                            item
-                                                                        ) => {
-                                                                            if (
-                                                                                item.chart_of_account_id ===
-                                                                                chart_of_account_id
-                                                                            ) {
-                                                                                item.label =
-                                                                                    e.target.value;
+                                                                    let newJournalItems =
+                                                                        journalItems.filter(
+                                                                            (
+                                                                                item
+                                                                            ) => {
+                                                                                if (
+                                                                                    item.id ===
+                                                                                    id
+                                                                                ) {
+                                                                                    item.label =
+                                                                                        e.target.value;
+                                                                                }
+                                                                                return item;
                                                                             }
-                                                                        }
+                                                                        );
+                                                                    setJournalItems(
+                                                                        newJournalItems
                                                                     );
                                                                 }}
                                                                 id="label"
@@ -422,6 +459,28 @@ export default function Additem({ auth, accounts, journals }) {
                                                             <input
                                                                 type="number"
                                                                 value={debit}
+                                                                onChange={(
+                                                                    e
+                                                                ) => {
+                                                                    let newJournalItems =
+                                                                        journalItems.filter(
+                                                                            (
+                                                                                item
+                                                                            ) => {
+                                                                                if (
+                                                                                    item.id ===
+                                                                                    id
+                                                                                ) {
+                                                                                    item.debit =
+                                                                                        e.target.value;
+                                                                                }
+                                                                                return item;
+                                                                            }
+                                                                        );
+                                                                    setJournalItems(
+                                                                        newJournalItems
+                                                                    );
+                                                                }}
                                                                 id="debit"
                                                                 class="h-10 w-36 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
                                                             />
@@ -437,6 +496,26 @@ export default function Additem({ auth, accounts, journals }) {
                                                         <input
                                                             type="number"
                                                             value={credit}
+                                                            onChange={(e) => {
+                                                                let newJournalItems =
+                                                                    journalItems.filter(
+                                                                        (
+                                                                            item
+                                                                        ) => {
+                                                                            if (
+                                                                                item.id ===
+                                                                                id
+                                                                            ) {
+                                                                                item.credit =
+                                                                                    e.target.value;
+                                                                            }
+                                                                            return item;
+                                                                        }
+                                                                    );
+                                                                setJournalItems(
+                                                                    newJournalItems
+                                                                );
+                                                            }}
                                                             id="credit"
                                                             class="h-10 w-36 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
                                                         />
@@ -447,6 +526,20 @@ export default function Additem({ auth, accounts, journals }) {
                                                         <Button
                                                             size="sm"
                                                             variant="text"
+                                                            onClick={() => {
+                                                                let newJournalItems =
+                                                                    journalItems.filter(
+                                                                        (
+                                                                            item
+                                                                        ) =>
+                                                                            item.id !==
+                                                                            id
+                                                                    );
+
+                                                                setJournalItems(
+                                                                    newJournalItems
+                                                                );
+                                                            }}
                                                         >
                                                             <TrashIcon className="h-5 w-5 text-red-500" />
                                                         </Button>
