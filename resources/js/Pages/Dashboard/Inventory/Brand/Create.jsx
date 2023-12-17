@@ -153,6 +153,7 @@ export default function CreateBrand({ auth }) {
                                         fullWidth
                                         type="submit"
                                         className="bg-ungukita"
+                                        disabled={!data.name}
                                     >
                                         Save
                                     </Button>

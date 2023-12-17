@@ -137,7 +137,7 @@ export default function Customer({ auth, customers }) {
         <NavigationLayout user={auth.user}>
             <Head title="Customers" />
             <Alert
-                className="fixed top-4 right-4 z-50 w-1/4"
+                className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
                 color={flash.message?.type == "success" ? "green" : "red"}
                 open={isShowAlert}
                 // icon={<Icon />}

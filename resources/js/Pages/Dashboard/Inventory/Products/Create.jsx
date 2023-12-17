@@ -198,6 +198,7 @@ export default function AddProduct({ auth, brands }) {
                                         fullWidth
                                         type="submit"
                                         className="bg-ungukita"
+                                        disabled={!data.name}
                                     >
                                         Save
                                     </Button>

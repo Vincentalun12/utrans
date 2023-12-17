@@ -46,6 +46,7 @@ import {
   ChevronRightIcon,
   PlusIcon,
 } from "@heroicons/react/24/solid";
+import { data } from "autoprefixer";
 
 const TABLE_HEAD = ["SKU", "Item", "Quantity", "Unit price", "Disc", "Total",""];
 const TABLE_ROWS = [
@@ -427,12 +428,14 @@ export default function Additem({ auth }) {
             </table>
           </div>
           <div className="pt-6 pr-5">
-              <Button color="green" ripple="light">
+              <Button color="green" ripple="light" disabled={!data.status}>
                 Submit
               </Button>
+              <a href="/purchases">
               <Button color="red" ripple="dark" className="ml-4">
                 Cancel
               </Button>
+              </a>
             </div>
         </Card>
         </div>
