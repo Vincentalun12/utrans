@@ -1,4 +1,4 @@
-import InventoryLayout from "@/Layouts/NavigationLayout";
+import BrandLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
@@ -133,13 +133,12 @@ export default function Brand({ auth, brands, deleteSuccess }) {
     };
 
     return (
-        <InventoryLayout user={auth.user}>
+        <BrandLayout user={auth.user}>
             <Head title="Brand" />
             <Alert
-                className="fixed top-4 right-4 z-50 w-1/4"
+                className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
                 color={flash.message?.type == "success" ? "green" : "red"}
                 open={isShowAlert}
-                // icon={<Icon />}
             >
                 {flash.message?.content}
             </Alert>
@@ -344,6 +343,6 @@ export default function Brand({ auth, brands, deleteSuccess }) {
                     </Card>
                 </div>
             </div>
-        </InventoryLayout>
+        </BrandLayout>
     );
 }
