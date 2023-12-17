@@ -882,7 +882,7 @@ export default function Purchasing({ auth }) {
                                                                 </Button>
                                                             </MenuHandler>
                                                             <MenuList>
-                                                                <MenuItem className="flex items-center gap-2">
+                                                                <MenuItem className="flex items-center gap-2" onClick={() => href = '/purchases/detail'}>
                                                                     <EyeIcon className="w-5 h-5" />
                                                                     Purchase
                                                                     Detail
