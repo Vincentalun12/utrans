@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('status');
-            $table->date('accouting_date');
+            $table->date('accounting_date');
             $table->string('reference')->nullable();
             $table->foreignId('journal_id')->constrained('journals');
-            $table->foreignId('sale_order_id')->constrained('sale_orders')->nullable();
-            $table->foreignId('purchase_order_id')->constrained('purchase_orders')->nullable();
+            $table->foreignId('sale_order_id')->nullable()->constrained('sale_orders');
+            $table->foreignId('purchase_order_id')->nullable()->constrained('purchase_orders');
             $table->timestamps();
             $table->softDeletes();
         });
