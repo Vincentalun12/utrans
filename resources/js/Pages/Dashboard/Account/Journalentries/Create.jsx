@@ -2,7 +2,7 @@ import AdditemLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
 import { useState, useEffect } from "react";
 import ReactSelect from "react-select";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { format, parse, set } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import {
@@ -588,13 +588,14 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                 >
                                     Submit
                                 </Button>
-                                <Button
+                                <Link
                                     color="red"
                                     ripple="dark"
                                     className="ml-4"
+                                    href={route("journalentries")}
                                 >
                                     Cancel
-                                </Button>
+                                </Link>
                             </div>
                         </Card>
                     </form>

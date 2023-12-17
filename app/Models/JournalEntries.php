@@ -21,6 +21,16 @@ class JournalEntries extends Model
         'purchase_order_id',
     ];
 
+    public function journal()
+    {
+        return $this->belongsTo(Journal::class);
+    }
+
+    public function journalItems()
+    {
+        return $this->hasMany(JournalItem::class, 'journal_entry_id');
+    }
+
     public static function generateCode($data)
     {
         $lastJournalEntriesWithYear = self::where('journal_id', $data['journal_id'])->whereYear('created_at', date('Y'))->orderBy('id', 'desc')->first();

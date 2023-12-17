@@ -18,4 +18,14 @@ class JournalItem extends Model
         'credit',
         'balance',
     ];
+
+    public function journalEntry()
+    {
+        return $this->belongsTo(JournalEntries::class, 'journal_entry_id');
+    }
+
+    public function chartOfAccount()
+    {
+        return $this->belongsTo(ChartOfAccount::class);
+    }
 }

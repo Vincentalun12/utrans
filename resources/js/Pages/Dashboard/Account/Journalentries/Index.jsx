@@ -58,6 +58,7 @@ const TABLE_ROWS = [
 ];
 
 export default function Inventory({ auth, journalentries }) {
+    console.log(journalentries);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
@@ -313,7 +314,9 @@ export default function Inventory({ auth, journalentries }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {journal}
+                                                            {
+                                                                journal?.journal_name
+                                                            }
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -336,8 +339,8 @@ export default function Inventory({ auth, journalentries }) {
                                                             size="sm"
                                                             value={
                                                                 status
-                                                                    ? "Purchased"
-                                                                    : "Cancelled"
+                                                                    ? "posted"
+                                                                    : "draft"
                                                             }
                                                             color={
                                                                 status
@@ -351,7 +354,8 @@ export default function Inventory({ auth, journalentries }) {
                                                     <Tooltip content="View">
                                                         <Linkactive
                                                             href={route(
-                                                                "journalentries.detail"
+                                                                "journalentries.detail",
+                                                                id
                                                             )}
                                                         >
                                                             <IconButton variant="text">

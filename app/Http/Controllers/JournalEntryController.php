@@ -16,7 +16,7 @@ class JournalEntryController extends Controller
     public function index()
     {
         $data = [
-            'journalentries' => JournalEntries::all(),
+            'journalentries' => JournalEntries::with(['journal'])->get(),
         ];
 
         return Inertia::render('Dashboard/Account/Journalentries/Index', $data);
@@ -32,9 +32,13 @@ class JournalEntryController extends Controller
         return Inertia::render('Dashboard/Account/Journalentries/Create', $data);
     }
 
-    public function detail()
+    public function detail($id)
     {
-        return Inertia::render('Dashboard/Account/Journalentries/Detail');
+        $data = [
+            'journalentry' => JournalEntries::with(['journal', 'journalitems.chartOfAccount'])->find($id),
+        ];
+
+        return Inertia::render('Dashboard/Account/Journalentries/Detail', $data);
     }
 
     public function store(Request $request)

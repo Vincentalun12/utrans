@@ -124,7 +124,7 @@ Route::controller(JournalEntryController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/journalentries', 'index')->name('journalentries');
         Route::get('/journalentries/create', 'create')->name('journalentries.create');
-        Route::get('/journalentries/detail', 'detail')->name('journalentries.detail');
+        Route::get('/journalentries/detail/{id}', 'detail')->name('journalentries.detail');
         Route::post('/journalentries/store', 'store')->name('journalentries.store');
     });
 });
