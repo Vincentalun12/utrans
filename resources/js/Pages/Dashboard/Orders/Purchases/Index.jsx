@@ -687,7 +687,7 @@ export default function Purchasing({ auth }) {
                             </div>
                         </div>
                     </div>
-                    <Card className="lg:overflow-auto overflow-x-scroll overflow-y-hidden lg:max-h-[460px] max-h-[480px] px-0 rounded-none">
+                    <Card className="lg:overflow-auto overflow-x-scroll overflow-y-hidden px-0 rounded-none">
                         <table className="w-full min-w-max lg:min-w-full table-auto text-left">
                             <thead>
                                 <tr className="sticky top-0 z-50">
@@ -1038,10 +1038,11 @@ export default function Purchasing({ auth }) {
                                 </Typography>
                             </div>
                             <div className="flex gap-3">
-                                <Button
+                                     <Button
                                     variant="outlined"
                                     size="sm"
                                     onClick={handlePrevious}
+                                    disabled={currentPage === 1}
                                 >
                                     Previous
                                 </Button>
