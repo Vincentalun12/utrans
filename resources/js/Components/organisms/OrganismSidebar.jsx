@@ -433,6 +433,21 @@ export function OrganismSidebar() {
                                     Journal Entries
                                 </ListItem>
                             </Linkactive>
+                            <Linkactive href={route("journalitems")}>
+                                <ListItem
+                                    className={LinkActiveTheme(
+                                        "journalitems"
+                                    )}
+                                >
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Journal Items
+                                </ListItem>
+                            </Linkactive>
                         </List>
                     </AccordionBody>
                 </Accordion>

@@ -12,6 +12,7 @@ use App\Http\Controllers\JournalsController;
 use App\Http\Controllers\JournalEntryController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\InventorymenuController;
+use App\Http\Controllers\JournalItemsController;
 use App\Http\Controllers\COAController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -137,6 +138,12 @@ Route::controller(COAController::class)->group(function () {
         Route::get('/coa/edit/{id}', 'edit')->name('coa.edit');
         Route::patch('/coa/update/{id}', 'update')->name('coa.update');
         Route::delete('/coa/destroy/{id}', 'destroy')->name('coa.destroy');
+    });
+});
+
+Route::controller(JournalItemsController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/journalitems', 'index')->name('journalitems');
     });
 });
 
