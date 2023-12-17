@@ -882,7 +882,7 @@ export default function Purchasing({ auth }) {
                                                                 </Button>
                                                             </MenuHandler>
                                                             <MenuList>
-                                                                <MenuItem className="flex items-center gap-2" onClick={() => href = '/purchases/detail'}>
+                                                                <MenuItem className="flex items-center gap-2" onClick={() => window.location.href = '/purchases/detail'}>
                                                                     <EyeIcon className="w-5 h-5" />
                                                                     Purchase
                                                                     Detail
@@ -915,8 +915,8 @@ export default function Purchasing({ auth }) {
                                                                     <ArrowDownTrayIcon className="w-5 h-5" />
                                                                     Download PDF
                                                                 </MenuItem>
-                                                                <MenuItem className="flex items-center gap-2">
-                                                                    <TrashIcon className="w-5 h-5" />
+                                                                <MenuItem className="flex items-center gap-2 !text-white hover:!text-white !bg-red-500 hover:!bg-red-900">
+                                                                    <TrashIcon className="w-5 h-5 text-white" />
                                                                     Delete
                                                                     Purchase
                                                                 </MenuItem>
