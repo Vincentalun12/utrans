@@ -93,11 +93,10 @@ class JournalEntryController extends Controller
                 ChartOfAccount::updateChartOfAccountBalance($item['chart_of_account_id']);
             }
 
-
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th);
+
             return redirect()->route('journalentries')->with([
                 'message' => [
                     'type' => 'danger',
@@ -192,6 +191,8 @@ class JournalEntryController extends Controller
                         'balance' => $journalItemBalance,
                     ]);
                 }
+
+                ChartOfAccount::updateChartOfAccountBalance($item['chart_of_account_id']);
             }
 
             JournalItem::deleteUnnecessaryJournalItems(
@@ -199,11 +200,11 @@ class JournalEntryController extends Controller
                 currentJournalItems: $request->journal_items
             );
 
-            ChartOfAccount::updateChartOfAccountBalance($item['chart_of_account_id']);
-
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
+
+            dd($th);
 
             return redirect()->route('journalentries')->with([
                 'message' => [

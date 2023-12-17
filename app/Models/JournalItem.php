@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class JournalItem extends Model
 {
@@ -37,7 +38,19 @@ class JournalItem extends Model
         $journalItemIdsToDelete = array_diff($previousJournalItemIds, $currentJournalItemIds);
 
         foreach ($journalItemIdsToDelete as $journalItemId) {
-            self::find($journalItemId)->delete();
+            try {
+                DB::beginTransaction();
+
+                self::find($journalItemId)->delete();
+
+                ChartOfAccount::updateChartOfAccountBalance($journalItemId);
+
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+
+                throw $th;
+            }
         }
     }
 }

@@ -68,7 +68,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
             setJournalItems([
                 ...journalItems,
                 {
-                    id: journalItems.length,
+                    id: null,
+                    order: journalItems.length,
                     chart_of_account_id: selectedAccount.value,
                     chart_of_account_name: selectedAccount.label,
                     label: "",
@@ -78,6 +79,7 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                 },
             ]);
         }
+
         setSelectedAccount(null);
     }, [selectedAccount]);
 
@@ -395,6 +397,7 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                 label,
                                                 debit,
                                                 credit,
+                                                order,
                                             },
                                             index
                                         ) => {
@@ -443,8 +446,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                                                     item
                                                                                 ) => {
                                                                                     if (
-                                                                                        item.id ===
-                                                                                        id
+                                                                                        item.order ===
+                                                                                        order
                                                                                     ) {
                                                                                         item.label =
                                                                                             e.target.value;
@@ -483,8 +486,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                                                     item
                                                                                 ) => {
                                                                                     if (
-                                                                                        item.id ===
-                                                                                        id
+                                                                                        item.order ===
+                                                                                        order
                                                                                     ) {
                                                                                         item.debit =
                                                                                             parseInt(
@@ -524,8 +527,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                                                 item
                                                                             ) => {
                                                                                 if (
-                                                                                    item.id ===
-                                                                                    id
+                                                                                    item.order ===
+                                                                                    order
                                                                                 ) {
                                                                                     item.credit =
                                                                                         parseInt(
@@ -557,8 +560,8 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                                             (
                                                                                 item
                                                                             ) =>
-                                                                                item.id !==
-                                                                                id
+                                                                                item.order !==
+                                                                                order
                                                                         );
 
                                                                     setJournalItems(

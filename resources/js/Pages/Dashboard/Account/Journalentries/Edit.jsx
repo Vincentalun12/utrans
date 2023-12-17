@@ -61,26 +61,29 @@ export default function EditJournalEntries({
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [journalItems, setJournalItems] = useState([]);
 
-    // journalentry?.journalitems.forEach((item) => {
-    //     setJournalItems([
-    //         ...journalItems,
-    //         {
-    //             order: journalItems.length,
-    //             id: item.id,
-    //             chart_of_account_id: item.chart_of_account_id,
-    //             chart_of_account_name: item.chart_of_account_name,
-    //             label: item.label,
-    //             debit: item.debit,
-    //             credit: item.credit,
-    //             balance: item.balance,
-    //         },
-    //     ]);
-    // });
+    useEffect(() => {
+        let newJournalItems = [];
 
-    // console.log(journalItems);
-    console.log(journalentry);
+        journalentry?.journalitems.forEach((item) => {
+            newJournalItems.push({
+                ...journalItems,
+                order: newJournalItems.length,
+                id: item.id,
+                chart_of_account_id: item.chart_of_account_id,
+                chart_of_account_name: `${item.chart_of_account.code} ${item.chart_of_account.account_name}`,
+                label: item.label,
+                debit: item.debit,
+                credit: item.credit,
+                balance: item.balance,
+            });
+        });
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+        setJournalItems(newJournalItems);
+    }, []);
+
+    console.log(journalItems);
+
+    const { data, setData, patch, processing, errors, reset } = useForm({
         journal_id: journalentry.journal_id,
         reference: journalentry.reference,
         accounting_date: new Date(journalentry.accounting_date),
@@ -108,7 +111,6 @@ export default function EditJournalEntries({
     }, [selectedAccount]);
 
     useEffect(() => {
-        console.log("pppppppp");
         setData("journal_items", journalItems);
     }, [journalItems]);
 
@@ -131,7 +133,7 @@ export default function EditJournalEntries({
 
     const actionSubmit = (e) => {
         e.preventDefault();
-        post(route("journalentries.store"));
+        patch(route("journalentries.update", journalentry.id));
     };
 
     return (
@@ -417,7 +419,7 @@ export default function EditJournalEntries({
                                         (
                                             {
                                                 id,
-                                                chart_of_account,
+                                                chart_of_account_name,
                                                 order,
                                                 label,
                                                 debit,
@@ -442,7 +444,7 @@ export default function EditJournalEntries({
                                                                     color="blue-gray"
                                                                     className="font-normal"
                                                                 >
-                                                                    {`${chart_of_account?.code} ${chart_of_account?.account_name}`}
+                                                                    {`${chart_of_account_name}`}
                                                                 </Typography>
                                                             </div>
                                                         </div>
@@ -482,7 +484,7 @@ export default function EditJournalEntries({
                                                                         );
                                                                     }}
                                                                     id="label"
-                                                                    class="h-10 w-48 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
+                                                                    className="h-10 w-48 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
                                                                 />
                                                             </Typography>
                                                         </div>
@@ -526,7 +528,7 @@ export default function EditJournalEntries({
                                                                         );
                                                                     }}
                                                                     id="debit"
-                                                                    class="h-10 w-36 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
+                                                                    className="h-10 w-36 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
                                                                 />
                                                             </Typography>
                                                         </div>
@@ -567,7 +569,7 @@ export default function EditJournalEntries({
                                                                     );
                                                                 }}
                                                                 id="credit"
-                                                                class="h-10 w-36 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
+                                                                className="h-10 w-36 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
                                                             />
                                                         </Typography>
                                                     </td>

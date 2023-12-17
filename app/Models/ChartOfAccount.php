@@ -33,7 +33,8 @@ class ChartOfAccount extends Model
 
         $totalDebit = $allPostedJournalItems->sum('debit');
         $totalCredit = $allPostedJournalItems->sum('credit');
-        $totalBalance = $totalDebit - $totalCredit;
+
+        $totalBalance = $allPostedJournalItems != null ? $totalDebit - $totalCredit : 0;
 
         return $totalBalance;
     }
@@ -41,9 +42,11 @@ class ChartOfAccount extends Model
     public static function updateChartOfAccountBalance($chartOfAccountId)
     {
         $totalBalance = self::getTotalChartOfAccountBalance($chartOfAccountId);
-
-        self::find($chartOfAccountId)->update([
-            'balance' => $totalBalance,
-        ]);
+        $chartOfAccount = self::find($chartOfAccountId);
+        // if ($chartOfAccountId == 3) {
+        //     dd($chartOfAccount->balance, $totalBalance);
+        // }
+        $chartOfAccount->balance = $totalBalance;
+        $chartOfAccount->save();
     }
 }
