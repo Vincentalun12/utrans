@@ -34,25 +34,13 @@ import { ButtonPrimary } from "@/Components";
 import { twMerge } from 'tailwind-merge'
 
 const TABLE_HEAD = [
-  { display: "Date", field: "date" },
-  { display: "Number", field: "number" },
-  { display: "Customer Name", field: "customername" },
-  { display: "reference", field: "reference" },
-  { display: "journal", field: "journal" },
-  { display: "total", field: "total" },
-  { display: "status", field: "status" },
-  { display: "", field: null },
+  { display: "Account", field: "account" },
+  { display: "Number", field: "label" },
+  { display: "Debit", field: "debit" },
+  { display: "Credit", field: "credit" },
 ];
 
 const TABLE_ROWS = [
-  { date: "2021-09-01", 
-    number: "1", 
-    customername: "John Doe", 
-    reference: "1", 
-    journal: "1", 
-    total: "1", 
-    status: "purchased" 
-  },
 ];
 
 export default function Inventory({ auth }) {
@@ -141,17 +129,7 @@ export default function Inventory({ auth }) {
               </div>
           </div>
           <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
-            <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
-                        <Linkactive href={route("journalentries.create")}>
-                            <Button className="bg-ungukita md:flex hidden">
-                                Add
-                            </Button>
-                            </Linkactive>
-                            <Linkactive href={route("journalentries.create")}>
-                            <IconButton className="bg-ungukita flex md:hidden">
-                                <PlusIcon className="w-5 h-5" />
-                            </IconButton>
-                            </Linkactive>
+            <div className="flex w-full gap-2 justify-center md:justify-end px-10 py-2">
               <div className="inline-flex items-center">
                 <Input
                   type="search"
@@ -194,14 +172,14 @@ export default function Inventory({ auth }) {
               </thead>
               <tbody>
                 {paginated.map(
-                  ({ date, number, customername, reference, journal, total, status }, index) => {
+                  ({ account, label, credit, debit }, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
                       ? "p-4"
                       : "p-4 border-b border-blue-gray-50";
 
                     return (
-                      <tr key={date} className="even:bg-gray-100">
+                      <tr key={account} className="even:bg-gray-100">
                         <td className="p-2 border-gray-200 pl-4">
                           <div className="flex items-center gap-3">
                             <div className="flex flex-col">
@@ -210,7 +188,7 @@ export default function Inventory({ auth }) {
                                 color="blue-gray"
                                 className="font-normal"
                               >
-                                {date}
+                                {account}
                               </Typography>
 
                             </div>
@@ -223,7 +201,7 @@ export default function Inventory({ auth }) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {number}
+                              {label}
                             </Typography>
                           </div>
                         </td>
@@ -234,7 +212,7 @@ export default function Inventory({ auth }) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {customername}
+                              {debit}
                             </Typography>
                           </div>
                         </td>
@@ -245,65 +223,9 @@ export default function Inventory({ auth }) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {reference}
+                              {credit}
                             </Typography>
                           </div>
-                        </td>
-                        <td className="p-2 border-b border-gray-200 pl-4">
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {journal}
-                            </Typography>
-                          </div>
-                        </td>
-                        <td className="p-2 border-gray-200 pl-4">
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {total}
-                            </Typography>
-                          </div>
-                        </td>
-                        <td className="p-2 border-gray-200 pl-4">
-                          <div className="flex w-full">
-                          <Chip
-                              className="static"
-                              variant="ghost"
-                              size="sm"
-                              value={status ? "Purchased" : "Cancelled"}
-                              color={status ? "green" : "gray"}
-                          />
-                          </div>
-                        </td>
-                        <td className="p-2 flex">
-                        <Tooltip content="View">
-                            <a>
-                            <IconButton variant="text">
-                            <EyeIcon className="h-5 w-5 text-blue-800" />
-                            </IconButton>
-                            </a>
-                          </Tooltip>
-                          <Tooltip content="Edit">
-                              <a>
-                              <IconButton variant="text">
-                              <PencilSquareIcon className="h-5 w-5 text-green-500" />
-                              </IconButton>
-                            </a>
-                          </Tooltip>
-                          <Tooltip content="Delete">
-                            <a>
-                            <IconButton variant="text">
-                            <TrashIcon className="h-5 w-5 text-red-500" />
-                            </IconButton>
-                            </a>
-                          </Tooltip>
                         </td>
                       </tr>
                     );
@@ -320,7 +242,7 @@ export default function Inventory({ auth }) {
               </Typography>
               </div>
               <div className="flex gap-3">
-                <Button variant="outlined" size="sm" onClick={handlePrevious}>
+                <Button variant="outlined" size="sm" onClick={handlePrevious} disabled={currentPage === 1}>
                   Previous
                 </Button>
                 <Button variant="outlined" size="sm" onClick={handleNext} disabled={paginated.length < itemsPerPage}>
