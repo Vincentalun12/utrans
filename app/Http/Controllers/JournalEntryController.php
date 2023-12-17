@@ -15,7 +15,11 @@ class JournalEntryController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Dashboard/Account/Journalentries/Index');
+        $data = [
+            'journalentries' => JournalEntries::all(),
+        ];
+
+        return Inertia::render('Dashboard/Account/Journalentries/Index', $data);
     }
 
     public function create()
@@ -93,12 +97,10 @@ class JournalEntryController extends Controller
             return redirect()->route('journalentries')->with([
                 'message' => [
                     'type' => 'danger',
-                    'content' => 'Journal Entry failed to create'
+                    'content' => 'Journal Entry failed to create \n' . $th->getMessage() . '\n' . $th->getLine() . '\n' . $th->getFile()
                 ]
             ]);
         }
-
-
 
         return redirect()->route('journalentries')->with([
             'message' => [
