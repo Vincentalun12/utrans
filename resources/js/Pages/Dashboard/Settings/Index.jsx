@@ -320,6 +320,7 @@ export default function Settings({ auth, accounts }) {
                                     <Select
                                         options={options}
                                         placeholder={"Select..."}
+                                        menuPosition={'fixed'} 
                                         styles={{
                                             control: (base, state) => ({
                                                 ...base,
@@ -353,6 +354,7 @@ export default function Settings({ auth, accounts }) {
                                     <Select
                                         options={options}
                                         placeholder={"Select..."}
+                                        menuPosition={'fixed'} 
                                         required={true}
                                         styles={{
                                             control: (base, state) => ({
