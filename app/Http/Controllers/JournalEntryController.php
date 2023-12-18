@@ -153,6 +153,9 @@ class JournalEntryController extends Controller
 
         try {
             DB::beginTransaction();
+
+            JournalEntries::deleteUnnecessaryJournalItems($id, $request->journal_items);
+
             JournalEntries::find($id)->update([
                 'code' => $request->code,
                 'status' => $request->status,
@@ -181,8 +184,9 @@ class JournalEntryController extends Controller
                         'credit' => $item['credit'],
                         'balance' => $journalItemBalance,
                     ]);
+                    ChartOfAccount::updateChartOfAccountBalance($item['chart_of_account_id']);
                 } else {
-                    JournalItem::create([
+                    $createJournalItem = JournalItem::create([
                         'journal_entry_id' => $id,
                         'chart_of_account_id' => $item['chart_of_account_id'],
                         'label' => $item['label'],
@@ -190,21 +194,14 @@ class JournalEntryController extends Controller
                         'credit' => $item['credit'],
                         'balance' => $journalItemBalance,
                     ]);
+
+                    ChartOfAccount::updateChartOfAccountBalance($createJournalItem->chart_of_account_id);
                 }
-
-                ChartOfAccount::updateChartOfAccountBalance($item['chart_of_account_id']);
             }
-
-            JournalItem::deleteUnnecessaryJournalItems(
-                previousJournalItems: $journalEntry->journalItems->toArray(),
-                currentJournalItems: $request->journal_items
-            );
 
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-
-            dd($th);
 
             return redirect()->route('journalentries')->with([
                 'message' => [

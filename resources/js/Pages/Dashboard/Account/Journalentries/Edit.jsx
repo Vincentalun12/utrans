@@ -74,7 +74,6 @@ export default function EditJournalEntries({
                 label: item.label,
                 debit: item.debit,
                 credit: item.credit,
-                balance: item.balance,
             });
         });
 
@@ -103,7 +102,6 @@ export default function EditJournalEntries({
                     label: "",
                     debit: 0,
                     credit: 0,
-                    balance: 0,
                 },
             ]);
         }

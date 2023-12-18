@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Journal;
+use App\Models\ChartOfAccount;
+
 
 class JournalEntries extends Model
 {
@@ -45,5 +47,26 @@ class JournalEntries extends Model
         $newJournalEntriesCode = sprintf('%04d', $lastJournalEntriesWithYearCode[2] + 1);
 
         return "$journalCode-$currentYear-$newJournalEntriesCode";
+    }
+
+    public static function deleteUnnecessaryJournalItems($id, $newItems)
+    {
+        $journalItems = JournalItem::where('journal_entry_id', $id)->get();
+
+        foreach ($journalItems as $journalItem) {
+            $isJournalItemExist = false;
+
+            foreach ($newItems as $newItem) {
+                if ($journalItem->id == $newItem['id']) {
+                    $isJournalItemExist = true;
+                }
+            }
+
+            if (!$isJournalItemExist) {
+                $journalItem->delete();
+            }
+
+            ChartOfAccount::updateChartOfAccountBalance($journalItem->chart_of_account_id);
+        }
     }
 }

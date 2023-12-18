@@ -41,11 +41,9 @@ class ChartOfAccount extends Model
 
     public static function updateChartOfAccountBalance($chartOfAccountId)
     {
+
         $totalBalance = self::getTotalChartOfAccountBalance($chartOfAccountId);
         $chartOfAccount = self::find($chartOfAccountId);
-        // if ($chartOfAccountId == 3) {
-        //     dd($chartOfAccount->balance, $totalBalance);
-        // }
         $chartOfAccount->balance = $totalBalance;
         $chartOfAccount->save();
     }
