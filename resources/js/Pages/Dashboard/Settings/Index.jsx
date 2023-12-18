@@ -11,7 +11,7 @@ import {
     DocumentTextIcon,
     DocumentArrowDownIcon,
     DocumentChartBarIcon,
-} from "@heroicons/react/24/outline";
+} from "@heroicons/react/24/solid";
 
 import {
     Card,

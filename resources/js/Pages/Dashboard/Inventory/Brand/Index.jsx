@@ -10,6 +10,10 @@ import {
     Tooltip,
     IconButton,
     Alert,
+    Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem,
 } from "@material-tailwind/react";
 
 import {
@@ -27,6 +31,8 @@ import {
     DocumentTextIcon,
     ArchiveBoxIcon,
     PlusIcon,
+    DocumentArrowDownIcon,
+    DocumentChartBarIcon,
 } from "@heroicons/react/24/solid";
 
 import { ButtonPrimary } from "@/Components";
@@ -162,16 +168,43 @@ export default function Brand({ auth, brands, deleteSuccess }) {
                     </div>
                     <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
+                            <div className="flex gap-3">
                             <Linkactive href={route("brands.create")}>
                                 <Button className="bg-ungukita md:flex hidden">
                                     Add
                                 </Button>
                             </Linkactive>
                             <Linkactive href={route("brands.create")}>
+                            <div className="md:flex hidden">
+                                    <Menu placement="right-start">
+                                        <MenuHandler>
+                                            <IconButton className="bg-ungukita">
+                                                <DocumentTextIcon className="w-5 h-5" />
+                                            </IconButton>
+                                        </MenuHandler>
+                                        <MenuList>
+                                            <MenuItem className="flex items-center gap-2">
+                                                <DocumentArrowDownIcon
+                                                    className="w-5 h-5"
+                                                    stroke="red"
+                                                />
+                                                Export as PDF
+                                            </MenuItem>
+                                            <MenuItem className="flex items-center gap-2">
+                                                <DocumentChartBarIcon
+                                                    className="w-5 h-5"
+                                                    stroke="green"
+                                                />
+                                                Export as CSV
+                                            </MenuItem>
+                                        </MenuList>
+                                    </Menu>
+                                </div>
                                 <IconButton className="bg-ungukita flex md:hidden">
                                     <PlusIcon className="w-5 h-5" />
                                 </IconButton>
                             </Linkactive>
+                            </div>
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"
