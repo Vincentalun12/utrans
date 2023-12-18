@@ -21,7 +21,7 @@ import {
    Cog6ToothIcon,
    PowerIcon,
  } from "@heroicons/react/24/solid";
- import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+ import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 
 export default function Dashboard() {
 

@@ -21,7 +21,7 @@ import {
     BuildingOfficeIcon,
     DocumentIcon,
     DocumentTextIcon,
-} from "@heroicons/react/24/outline";
+} from "@heroicons/react/24/solid";
 
 import { twMerge } from "tailwind-merge";
 

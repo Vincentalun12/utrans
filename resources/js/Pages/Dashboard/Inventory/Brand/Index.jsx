@@ -2,6 +2,7 @@ import BrandLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
+import { PDFDownloadLink, Document, Page, Text, View, StyleSheet} from '@react-pdf/renderer';
 import {
     Card,
     Typography,
@@ -10,6 +11,10 @@ import {
     Tooltip,
     IconButton,
     Alert,
+    Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem,
 } from "@material-tailwind/react";
 
 import {
@@ -27,7 +32,10 @@ import {
     DocumentTextIcon,
     ArchiveBoxIcon,
     PlusIcon,
+    DocumentArrowDownIcon,
+    DocumentChartBarIcon,
 } from "@heroicons/react/24/solid";
+
 
 import { ButtonPrimary } from "@/Components";
 
@@ -132,6 +140,102 @@ export default function Brand({ auth, brands, deleteSuccess }) {
         }
     };
 
+
+//print pdf
+const styles = StyleSheet.create({
+
+    title: {
+        textAlign: 'left',
+        fontSize: 14,
+        marginBottom: 5,
+        marginLeft: "9%",
+        marginRight: "9%", 
+        marginTop: 10,
+    },
+    dateTime: {
+        textAlign: 'left',
+        fontSize: 14,
+        marginBottom: 30,
+        marginLeft: "9%",
+        marginRight: "9%",
+    },
+    table: {
+        display: "table",
+        width: "80%",
+        marginLeft: "10%",
+        marginRight: "10%", 
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderRightWidth: 0,
+        borderBottomWidth: 0,
+        
+    },
+    tableRow: { 
+        margin: "auto", 
+        flexDirection: "row" 
+    },
+    tableColHeader: { 
+        width: "50%", 
+        backgroundColor: "#f8f4f4",
+        borderStyle: "solid", 
+        borderWidth: 1, 
+        borderLeftWidth: 0, 
+        borderTopWidth: 0,
+        padding: 5,
+    },
+    tableCol: { 
+        width: "50%", 
+        borderStyle: "solid", 
+        borderWidth: 1, 
+        borderLeftWidth: 0, 
+        borderTopWidth: 0,
+        padding: 5,
+        
+    },
+    
+    tableCellHeader: { 
+        margin: "auto", 
+        marginTop: 5, 
+        fontSize: 12, 
+        fontWeight: "bold"
+    },
+    tableCell: { 
+        margin: "auto", 
+        marginTop: 5, 
+        fontSize: 10 
+    }
+});
+
+const MyDocument = ({ data }) => (
+    <Document>
+        <Page>
+            <Text style={styles.title}>Report : Brand Report</Text>
+            <Text style={styles.dateTime}>Date : {new Date().toLocaleString()}</Text>
+            <View style={styles.table}>
+                <View style={styles.tableRow}>
+                    <View style={styles.tableColHeader}>
+                        <Text style={styles.tableCellHeader}>Brand Code</Text>
+                    </View>
+                    <View style={styles.tableColHeader}>
+                        <Text style={styles.tableCellHeader}>Brand Name</Text> 
+                    </View>
+                </View>
+
+                {data.map((brand, index) => (
+                    <View style={styles.tableRow} key={index}>
+                        <View style={styles.tableCol}>
+                            <Text style={styles.tableCell}>{brand.code}</Text>
+                        </View>
+                        <View style={styles.tableCol}>
+                            <Text style={styles.tableCell}>{brand.name}</Text> 
+                        </View>
+                    </View>
+                ))}
+            </View>
+        </Page>
+    </Document>
+);
+
     return (
         <BrandLayout user={auth.user}>
             <Head title="Brand" />
@@ -162,16 +266,44 @@ export default function Brand({ auth, brands, deleteSuccess }) {
                     </div>
                     <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
+                            <div className="flex gap-3">
                             <Linkactive href={route("brands.create")}>
                                 <Button className="bg-ungukita md:flex hidden">
                                     Add
                                 </Button>
                             </Linkactive>
-                            <Linkactive href={route("brands.create")}>
+                            <div className="md:flex hidden">
+                                    <Menu placement="right-start">
+                                        <MenuHandler>
+                                            <IconButton className="bg-ungukita">
+                                                <DocumentTextIcon className="w-5 h-5" />
+                                            </IconButton>
+                                        </MenuHandler>
+                                        <MenuList>
+                                            <MenuItem className="flex items-center gap-2">
+                                                <DocumentArrowDownIcon className="w-5 h-5" stroke="red" />
+                                                <PDFDownloadLink document={<MyDocument data={brands} />} fileName="brands.pdf">
+                                                    {({ blob, url, loading, error }) =>
+                                                        loading ? 'Loading document...' : 'Export as PDF'
+                                                    }
+                                                </PDFDownloadLink>
+                                            </MenuItem>
+                                            <MenuItem className="flex items-center gap-2">
+                                                <DocumentChartBarIcon
+                                                    className="w-5 h-5"
+                                                    stroke="green"
+                                                />
+                                                Export as CSV
+                                            </MenuItem>
+                                        </MenuList>
+                                    </Menu>
+                                </div>
+                                <Linkactive href={route("brands.create")}>
                                 <IconButton className="bg-ungukita flex md:hidden">
                                     <PlusIcon className="w-5 h-5" />
                                 </IconButton>
                             </Linkactive>
+                            </div>
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"

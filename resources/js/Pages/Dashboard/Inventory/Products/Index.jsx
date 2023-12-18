@@ -3,7 +3,24 @@ import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import { Global, css } from "@emotion/react";
-import { Card, Typography, Input, Button, Tooltip, IconButton, Alert, Dialog, DialogHeader, DialogBody, DialogFooter } from "@material-tailwind/react";
+import { PDFDownloadLink, Document, Page, Text, View, StyleSheet} from '@react-pdf/renderer';
+import { 
+    Card, 
+    Typography, 
+    Input, 
+    Button, 
+    Tooltip, 
+    IconButton, 
+    Alert, 
+    Dialog, 
+    DialogHeader, 
+    DialogBody, 
+    DialogFooter,
+    Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem,
+  } from "@material-tailwind/react";
 
 import {
     PencilSquareIcon,
@@ -19,6 +36,8 @@ import {
     DocumentTextIcon,
     ArchiveBoxIcon,
     PlusIcon,
+    DocumentArrowDownIcon,
+    DocumentChartBarIcon,
 } from "@heroicons/react/24/solid";
 
 import { ButtonPrimary } from "@/Components";
@@ -115,6 +134,125 @@ export default function Inventory({ auth, products }) {
             setCurrentPage(currentPage + 1);
         }
     };
+
+//print pdf
+const styles = StyleSheet.create({
+
+    title: {
+        textAlign: 'left',
+        fontSize: 14,
+        marginBottom: 5,
+        marginLeft: "9%",
+        marginRight: "9%", 
+        marginTop: 10,
+    },
+    dateTime: {
+        textAlign: 'left',
+        fontSize: 14,
+        marginBottom: 30,
+        marginLeft: "9%",
+        marginRight: "9%",
+    },
+    table: {
+        display: "table",
+        width: "80%",
+        marginLeft: "10%",
+        marginRight: "10%", 
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderRightWidth: 0,
+        borderBottomWidth: 0,
+        
+    },
+    table: {
+        width: "80%",
+        marginLeft: "10%",
+        marginRight: "10%", 
+        borderWidth: 1,
+    },
+    tableRow: { 
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    tableColHeader: { 
+        flex: 1,
+        backgroundColor: "#f8f4f4",
+        borderWidth: 1, 
+        padding: 3,
+    },
+    tableCol: { 
+        flex: 1,
+        borderWidth: 1, 
+        padding: 3,
+    },
+    
+    tableCellHeader: { 
+        margin: "auto", 
+        marginTop: 5, 
+        fontSize: 9, 
+        fontWeight: "bold"
+    },
+    tableCell: { 
+        margin: "auto", 
+        marginTop: 5, 
+        fontSize: 9 
+    }
+});
+
+const MyDocument = ({ data }) => (
+    <Document>
+        <Page>
+            <Text style={styles.title}>Report : Products Report</Text>
+            <Text style={styles.dateTime}>Date : {new Date().toLocaleString()}</Text>
+            <View style={styles.table}>
+                <View style={styles.tableRow}>
+                    <View style={styles.tableColHeader}>
+                        <Text style={styles.tableCellHeader}>SKU</Text>
+                    </View>
+                    <View style={styles.tableColHeader}>
+                        <Text style={styles.tableCellHeader}>Name</Text> 
+                    </View>
+                    <View style={styles.tableColHeader}>
+                        <Text style={styles.tableCellHeader}>Stock</Text> 
+                    </View>
+                    <View style={styles.tableColHeader}>
+                        <Text style={styles.tableCellHeader}>Retail price</Text> 
+                    </View>
+                    <View style={styles.tableColHeader}>
+                        <Text style={styles.tableCellHeader}>Whole sale price</Text> 
+                    </View>
+                    <View style={styles.tableColHeader}>
+                        <Text style={styles.tableCellHeader}>Standard price</Text> 
+                    </View>
+                </View>
+
+                {data.map((products, index) => (
+                    <View style={styles.tableRow} key={index}>
+                        <View style={styles.tableCol}>
+                            <Text style={styles.tableCell}>{products.code}</Text>
+                        </View>
+                        <View style={styles.tableCol}>
+                            <Text style={styles.tableCell}>{products.name}</Text> 
+                        </View>
+                        <View style={styles.tableCol}>
+                            <Text style={styles.tableCell}>{products.stock}</Text> 
+                        </View>
+                        <View style={styles.tableCol}>
+                            <Text style={styles.tableCell}>{products.retail_price}</Text> 
+                        </View>
+                        <View style={styles.tableCol}>
+                            <Text style={styles.tableCell}>{products.whole_sale_price}</Text> 
+                        </View>
+                        <View style={styles.tableCol}>
+                            <Text style={styles.tableCell}>{products.standard_price}</Text> 
+                        </View>
+                    </View>
+                ))}
+            </View>
+        </Page>
+    </Document>
+);
+
     return (
         <InventoryLayout user={auth.user}>
             <Head title="Products" />
@@ -168,6 +306,7 @@ export default function Inventory({ auth, products }) {
                     </Button>
                 </DialogFooter>
             </Dialog>
+
             <Alert
                 className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
                 color={flash.message?.type == "success" ? "green" : "red"}
@@ -190,14 +329,42 @@ export default function Inventory({ auth, products }) {
                     </div>
                     <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
+                        <div className="flex gap-3">
                             <Linkactive href={route("products.create")}>
                                 <Button className="bg-ungukita md:flex hidden">Add</Button>
                             </Linkactive>
-                            <Linkactive href={route("products.create")}>
+                            <div className="md:flex hidden">
+                                    <Menu placement="right-start">
+                                        <MenuHandler>
+                                            <IconButton className="bg-ungukita">
+                                                <DocumentTextIcon className="w-5 h-5" />
+                                            </IconButton>
+                                        </MenuHandler>
+                                        <MenuList>
+                                            <MenuItem className="flex items-center gap-2">
+                                                <DocumentArrowDownIcon className="w-5 h-5" stroke="red" />
+                                                <PDFDownloadLink document={<MyDocument data={products} />} fileName="products.pdf">
+                                                    {({ blob, url, loading, error }) =>
+                                                        loading ? 'Loading document...' : 'Export as PDF'
+                                                    }
+                                                </PDFDownloadLink>
+                                            </MenuItem>
+                                            <MenuItem className="flex items-center gap-2">
+                                                <DocumentChartBarIcon
+                                                    className="w-5 h-5"
+                                                    stroke="green"
+                                                />
+                                                Export as CSV
+                                            </MenuItem>
+                                        </MenuList>
+                                    </Menu>
+                                </div>
+                                <Linkactive href={route("products.create")}>
                                 <IconButton className="bg-ungukita flex md:hidden">
                                     <PlusIcon className="w-5 h-5" />
                                 </IconButton>
                             </Linkactive>
+                        </div>
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"

@@ -438,20 +438,47 @@ export default function Inventory({ auth, coa }) {
                                                     handler={handleOpen}
                                                 >
                                                     <DialogHeader>
-                                                        Judul
+                                                        COA Detail
                                                     </DialogHeader>
                                                     <DialogBody>
-                                                        Bisa muncul jir
+                                                        <div className="flex flex-col gap-2">
+                                                            <div className="flex flex-col">
+                                                                <Typography variant="small" color="blue-gray">
+                                                                    Code
+                                                                </Typography>
+                                                                <Typography variant="body" color="blue-gray">
+                                                                    {code}
+                                                                </Typography>
+                                                            </div>
+                                                            <div className="flex flex-col">
+                                                                <Typography variant="small" color="blue-gray">
+                                                                    Account Name
+                                                                </Typography>
+                                                                <Typography variant="body" color="blue-gray">
+                                                                    {account_name}
+                                                                </Typography>
+                                                            </div>
+                                                            <div className="flex flex-col">
+                                                                <Typography variant="small" color="blue-gray">
+                                                                    Type
+                                                                </Typography>
+                                                                <Typography variant="body" color="blue-gray">
+                                                                    {TitleCase(account_type)}
+                                                                </Typography>
+                                                            </div>
+                                                            <div className="flex flex-col">
+                                                                <Typography variant="small" color="blue-gray">
+                                                                    Balance
+                                                                </Typography>
+                                                                <Typography variant="body" color="blue-gray">
+                                                                    Rp {Intl.NumberFormat("id").format(balance)}
+                                                                </Typography>
+                                                            </div>
+                                                        </div>
                                                     </DialogBody>
                                                     <DialogFooter>
-                                                        <Button
-                                                            variant="text"
-                                                            className="mr-1"
-                                                        >
+                                                        <Button variant="solid" color="red"> 
                                                             <span>Close</span>
-                                                        </Button>
-                                                        <Button variant="gradient">
-                                                            <span>EDIT</span>
                                                         </Button>
                                                     </DialogFooter>
                                                 </Dialog>
