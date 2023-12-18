@@ -218,4 +218,32 @@ class JournalEntryController extends Controller
             ]
         ]);
     }
+
+    public function destroy($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            JournalEntries::deleteUnnecessaryJournalItems($id, []);
+            JournalEntries::find($id)->delete();
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return redirect()->route('journalentries')->with([
+                'message' => [
+                    'type' => 'danger',
+                    'content' => 'Journal Entry failed to delete \n' . $th->getMessage() . '\n' . $th
+                ]
+            ]);
+        }
+
+        return redirect()->route('journalentries')->with([
+            'message' => [
+                'type' => 'success',
+                'content' => 'Journal Entry deleted successfully'
+            ]
+        ]);
+    }
 }

@@ -45,20 +45,7 @@ const TABLE_HEAD = [
     { display: "", field: null },
 ];
 
-const TABLE_ROWS = [
-    {
-        date: "2021-09-01",
-        number: "1",
-        customername: "John Doe",
-        reference: "1",
-        journal: "1",
-        total: "1",
-        status: "purchased",
-    },
-];
-
 export default function Inventory({ auth, journalentries }) {
-    console.log(journalentries);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
@@ -119,7 +106,7 @@ export default function Inventory({ auth, journalentries }) {
         }
 
         setpaginated(sortedItems.slice(start, end));
-    }, [currentPage, sorting, sortdirection, searchbar]);
+    }, [currentPage, sorting, sortdirection, searchbar, journalentries]);
 
     const handleSort = (field) => {
         if (field === sorting) {
@@ -337,13 +324,10 @@ export default function Inventory({ auth, journalentries }) {
                                                             className="static"
                                                             variant="ghost"
                                                             size="sm"
-                                                            value={
-                                                                status
-                                                                    ? "posted"
-                                                                    : "draft"
-                                                            }
+                                                            value={status}
                                                             color={
-                                                                status
+                                                                status ==
+                                                                "posted"
                                                                     ? "green"
                                                                     : "gray"
                                                             }
@@ -376,7 +360,30 @@ export default function Inventory({ auth, journalentries }) {
                                                         </Linkactive>
                                                     </Tooltip>
                                                     <Tooltip content="Delete">
-                                                        <a>
+                                                        <a
+                                                            onClick={() => {
+                                                                destroy(
+                                                                    route(
+                                                                        "journalentries.destroy",
+                                                                        id
+                                                                    ),
+                                                                    {
+                                                                        onSuccess:
+                                                                            () => {
+                                                                                setIsShowAlert(
+                                                                                    true
+                                                                                );
+                                                                            },
+                                                                        onError:
+                                                                            () => {
+                                                                                setIsShowAlert(
+                                                                                    true
+                                                                                );
+                                                                            },
+                                                                    }
+                                                                );
+                                                            }}
+                                                        >
                                                             <IconButton variant="text">
                                                                 <TrashIcon className="h-5 w-5 text-red-500" />
                                                             </IconButton>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Journal;
 use App\Models\ChartOfAccount;
@@ -11,7 +12,9 @@ use App\Models\ChartOfAccount;
 
 class JournalEntries extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes;
+
+    protected $cascadeDeletes = ['journalItems'];
 
     protected $fillable = [
         'code',
