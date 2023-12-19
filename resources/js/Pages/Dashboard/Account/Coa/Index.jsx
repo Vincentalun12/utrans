@@ -156,7 +156,7 @@ export default function Inventory({ auth, coa }) {
   return (
     <InventoryLayout user={auth.user}>
       <Head title="COA" />
-      <Dialog open={opendetail} handler={handleOpendetail}>
+      <Dialog open={opendetail} handler={handleOpendetail} className="overflow-auto max-h-[80vh]">
         <DialogHeader>
             <Typography variant="h5">Chart of Account Detail</Typography>
         </DialogHeader>

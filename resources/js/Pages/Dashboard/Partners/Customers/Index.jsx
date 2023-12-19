@@ -12,6 +12,10 @@ import {
     Tooltip,
     Chip,
     Alert,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
 } from "@material-tailwind/react";
 
 import {
@@ -133,9 +137,124 @@ export default function Customer({ auth, customers }) {
         }
     }, [isShowAlert]);
 
+    const [deletecustomers, setDeletecustomers] = useState(null);
+    const [open, setOpen] = useState(false);
+  
+    const handleOpen = (id) => {
+      setDeletecustomers(id);
+      setOpen(!open);
+    };
+  
+    const [selectedcustomers, setSelectedcustomers] = useState(null);
+    const [opendetail, setOpendetail] = React.useState(false);
+    const handleOpendetail = (id) => {
+      setOpendetail(!opendetail);
+      const customersData = customers.find((customers) => customers.id === id);
+      setSelectedcustomers(customersData);
+      console.log(customers);
+      console.log(customersData);
+    };
+
     return (
         <NavigationLayout user={auth.user}>
             <Head title="Customers" />
+            <Dialog open={opendetail} handler={handleOpendetail} className="overflow-auto max-h-[80vh]">
+                <DialogHeader>
+                    <Typography variant="h5">Chart of Account Detail</Typography>
+                </DialogHeader>
+                <DialogBody divider>
+                <div className="flex flex-col gap-2">
+                    <div className="flex flex-col">
+                    <Typography variant="small" color="blue-gray">
+                        Code
+                    </Typography>
+                    <Typography variant="body" color="blue-gray">
+                        {selectedcustomers && <div>{selectedcustomers.code}</div>}
+                    </Typography>
+                    </div>
+                    <div className="flex flex-col">
+                    <Typography variant="small" color="blue-gray">
+                        Name
+                    </Typography>
+                    <Typography variant="body" color="blue-gray">
+                        {selectedcustomers && <div>{selectedcustomers.name}</div>}
+                    </Typography>
+                    </div>
+                    <div className="flex flex-col">
+                    <Typography variant="small" color="blue-gray">
+                        Name
+                    </Typography>
+                    <Typography variant="body" color="blue-gray">
+                        {selectedcustomers && <div>{selectedcustomers.phone}</div>}
+                    </Typography>
+                    </div>
+                    <div className="flex flex-col">
+                    <Typography variant="small" color="blue-gray">
+                        Email
+                    </Typography>
+                    <Typography variant="body" color="blue-gray">
+                        {selectedcustomers && <div>{selectedcustomers.email}</div>}
+                    </Typography>
+                    </div>
+                    <div className="flex flex-col">
+                    <Typography variant="small" color="blue-gray">
+                        Address
+                    </Typography>
+                    <Typography variant="body" color="blue-gray">
+                        {selectedcustomers && <div>{selectedcustomers.address},<br/>
+                                                 {selectedcustomers.district},<br/>
+                                                 {selectedcustomers.city}.</div>}
+                    </Typography>
+                    </div>
+                </div>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                <Button variant="gradient" color="green"
+                onClick={() => window.location.href = route("customers.edit", selectedcustomers.id)}>
+                    Edit Detail
+                </Button>
+                <Button variant="outlined" onClick={handleOpendetail}>
+                    <span>Close</span>
+                </Button>
+                </DialogFooter>
+            </Dialog>
+            <Dialog open={open} size="sm" onClose={handleOpen}>
+                <DialogHeader>
+                <Typography variant="h5">Notification</Typography>
+                </DialogHeader>
+                <DialogBody divider className="grid place-items-center gap-4">
+                <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                <Typography className="text-red-900" variant="h4">
+                    You're about to delete this item!
+                </Typography>
+                <Typography className="text-center font-normal">
+                    This action cannot be undone. However, we will keep your data for
+                    audit purposes.
+                </Typography>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                <Button
+                    variant="gradient"
+                    color="red"
+                    onClick={async () => {
+                    if (deletecustomers) {
+                        await destroy(route("customers.destroy", deletecustomers), {
+                        onSuccess: () => {
+                            setIsShowAlert(true);
+                            setDeletecustomers(null);
+                        },
+                        });
+                    }
+                    handleOpen(null);
+                    }}
+                >
+                    Delete
+                </Button>
+                <Button variant="outlined" onClick={handleOpen}>
+                    Cancel
+                </Button>
+                </DialogFooter>
+            </Dialog>
             <Alert
                 className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
                 color={flash.message?.type == "success" ? "green" : "red"}
@@ -278,11 +397,9 @@ export default function Customer({ auth, customers }) {
                                                 </td>
                                                 <td className="p-2 flex">
                                                 <Tooltip content="View">
-                                                    <a>
-                                                    <IconButton variant="text">
+                                                    <IconButton variant="text" onClick={() => handleOpendetail(id)}>
                                                     <EyeIcon className="h-5 w-5 text-blue-800" />
                                                     </IconButton>
-                                                    </a>
                                                 </Tooltip>
                                                 <Tooltip content="Edit">
                                                     <a href={route("customers.edit",id)}>
@@ -292,11 +409,9 @@ export default function Customer({ auth, customers }) {
                                                     </a>
                                                 </Tooltip>
                                                 <Tooltip content="Delete Item">
-                                                    <a onClick={() => destroy(route("customers.destroy",id),{onSuccess:() => {setIsShowAlert(true);},})}>
-                                                    <IconButton variant="text">
+                                                <IconButton variant="text" onClick={() => handleOpen(id)}>
                                                     <TrashIcon className="h-5 w-5 text-red-500" />
                                                     </IconButton>
-                                                    </a>
                                                 </Tooltip>
                                                 </td>
                                             </tr>

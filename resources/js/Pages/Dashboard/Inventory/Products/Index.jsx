@@ -140,6 +140,16 @@ export default function Inventory({ auth, products }) {
         }
     };
 
+    const [selectedProducts, setselectedProducts] = useState(null);
+    const [opendetail, setOpendetail] = React.useState(false);
+    const handleOpendetail = (id) => {
+      setOpendetail(!opendetail);
+      const productsData = products.find((products) => products.id === id);
+      setselectedProducts(productsData);
+      console.log(products);
+      console.log(productsData);
+    };
+
 //print pdf
 const styles = StyleSheet.create({
 
@@ -280,6 +290,74 @@ const MyDocument = ({ data }) => (
                     }
                 `}
             />
+                    <Dialog open={opendetail} handler={handleOpendetail} className="overflow-auto max-h-[80vh]">
+            <DialogHeader>
+                <Typography variant="h5">Products Detail</Typography>
+            </DialogHeader>
+            <DialogBody divider>
+            <div className="flex flex-col gap-2">
+                <div className="flex flex-col">
+                <Typography variant="small" color="blue-gray">
+                    Code
+                </Typography>
+                <Typography variant="body" color="blue-gray">
+                    {selectedProducts && <div>{selectedProducts.code}</div>}
+                </Typography>
+                </div>
+                <div className="flex flex-col">
+                <Typography variant="small" color="blue-gray">
+                    Name
+                </Typography>
+                <Typography variant="body" color="blue-gray">
+                    {selectedProducts && <div>{selectedProducts.name}</div>}
+                </Typography>
+                </div>
+                <div className="flex flex-col">
+                <Typography variant="small" color="blue-gray">
+                    Stock
+                </Typography>
+                <Typography variant="body" color="blue-gray">
+                    {selectedProducts && <div>{selectedProducts.stock}</div>}
+                </Typography>
+                </div>
+                <div className="flex flex-col">
+                <Typography variant="small" color="blue-gray">
+                    Brand
+                </Typography>
+                <Typography variant="body" color="blue-gray">
+                    {selectedProducts && (
+                    <div>{selectedProducts.brand?.name}</div>
+                    )}
+                </Typography>
+                </div>
+                <div className="flex flex-col">
+                <Typography variant="small" color="blue-gray">
+                    Retail price
+                </Typography>
+                <Typography variant="body" color="blue-gray">
+                    Rp {selectedProducts && Intl.NumberFormat("id").format(selectedProducts.retail_price)}
+                </Typography>
+                </div>
+                <div className="flex flex-col">
+                <Typography variant="small" color="blue-gray">
+                    Wholesale price
+                </Typography>
+                <Typography variant="body" color="blue-gray">
+                    Rp {selectedProducts && Intl.NumberFormat("id").format(selectedProducts.retail_price)}
+                </Typography>
+                </div>
+            </div>
+            </DialogBody>
+            <DialogFooter className="space-x-2">
+            <Button variant="gradient" color="green"
+            onClick={() => window.location.href = route("products.edit", selectedProducts.id)}>
+                Edit Detail
+            </Button>
+            <Button variant="outlined" onClick={handleOpendetail}>
+                <span>Close</span>
+            </Button>
+            </DialogFooter>
+        </Dialog>
             <Dialog open={open} size="sm" onClose={handleOpen}>
                 <DialogHeader>
                     <Typography variant="h5">Notification</Typography>
@@ -452,11 +530,9 @@ const MyDocument = ({ data }) => (
 
                                             <td className="p-2 flex">
                                                 <Tooltip content="View Item">
-                                                    <a>
-                                                        <IconButton variant="text">
+                                                        <IconButton variant="text" onClick={() => handleOpendetail(id)}>
                                                             <EyeIcon className="h-5 w-5 text-blue-800" />
                                                         </IconButton>
-                                                    </a>
                                                 </Tooltip>
                                                 <Tooltip content="Edit Item">
                                                     <a href={route("products.edit", id)}>
