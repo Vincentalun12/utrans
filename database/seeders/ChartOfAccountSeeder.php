@@ -15,11 +15,32 @@ class ChartOfAccountSeeder extends Seeder
     {
         DB::table('chart_of_accounts')->insert(
             [
+                'code' => '1000',
+                'account_name' => 'Current Assets',
+                'account_type' => 'current_assets',
+                'balance' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+        DB::table('chart_of_accounts')->insert(
+            [
+                'code' => '1100',
+                'account_name' => 'Fixed Assets',
+                'account_type' => 'fixed_assets',
+                'balance' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+        DB::table('chart_of_accounts')->insert(
+            [
                 'code' => '4000',
                 'account_name' => 'Sales',
                 'account_type' => 'income',
                 'balance' => 0,
                 'created_at' => now(),
+                'updated_at' => now(),
             ]
         );
         DB::table('chart_of_accounts')->insert(
@@ -29,6 +50,7 @@ class ChartOfAccountSeeder extends Seeder
                 'account_type' => 'cost_of_revenue',
                 'balance' => 0,
                 'created_at' => now(),
+                'updated_at' => now(),
             ]
         );
         DB::table('chart_of_accounts')->insert(
@@ -38,6 +60,7 @@ class ChartOfAccountSeeder extends Seeder
                 'account_type' => 'expense',
                 'balance' => 0,
                 'created_at' => now(),
+                'updated_at' => now(),
             ]
         );
     }

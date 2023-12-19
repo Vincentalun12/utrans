@@ -112,6 +112,7 @@ Route::controller(JournalsController::class)->group(function () {
 Route::controller(SettingsController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/settings', 'index')->name('settings');
+        Route::post('/settings/save', 'save')->name('settings.save');
     });
 });
 

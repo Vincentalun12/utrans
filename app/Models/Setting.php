@@ -13,7 +13,6 @@ class Setting extends Model
     protected $fillable = [
         'sales_account_id',
         'purchase_account_id',
-        'assets_account_id',
         'current_assets_account_id',
         'fixed_assets_account_id',
         'cost_of_goods_sold_account_id',
