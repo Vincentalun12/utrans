@@ -17,6 +17,7 @@ import {
     Alert,
 } from "@material-tailwind/react";
 
+
 import {
     PencilSquareIcon,
     TrashIcon,
@@ -32,12 +33,12 @@ import {
     DocumentTextIcon,
     ArchiveBoxIcon,
     PlusIcon,
+    CodeBracketIcon,
 } from "@heroicons/react/24/solid";
 
 import { ButtonPrimary } from "@/Components";
 
 import { twMerge } from "tailwind-merge";
-import { Backdrop } from "@mui/material";
 import { TitleCase } from "@/Utilities/titleCase";
 
 const TABLE_HEAD = [
@@ -64,10 +65,17 @@ export default function Inventory({ auth, coa }) {
         setOpen(!open);
     };
 
-    const [opendetail, setOpendetail] = React.useState(false);
-    const handleOpendetail = () => setOpendetail(!open);
-
-
+    const [selectedCoa, setSelectedCoa] = useState(null);
+    const [OpenViewDetail, setOpenViewDetail] = useState(false);
+    const handleOpenViewDetail = (id) => {
+        if (id) {
+          const coaItem = coa.find((coa) => coa.id === id);
+          setSelectedCoa(coaItem);
+          setOpenViewDetail(!OpenViewDetail);
+        }
+        else setOpenViewDetail(!OpenViewDetail);
+      };
+    
 
     const { delete: destroy } = useForm({});
 
@@ -151,7 +159,7 @@ export default function Inventory({ auth, coa }) {
     return (
         <InventoryLayout user={auth.user}>
             <Head title="COA" />
-            <Dialog open={open} size="sm" onClose={handleOpen}>
+            <Dialog open={open} size="sm" onClose={handleOpenViewDetail}>
                 <DialogHeader>
                     <Typography variant="h5">Notification</Typography>
                 </DialogHeader>
@@ -180,11 +188,52 @@ export default function Inventory({ auth, coa }) {
                     >
                         Delete
                     </Button>
-                    <Button variant="outlined" onClick={handleOpen}>
+                    <Button variant="outlined" onClick={handleOpen} onClose={handleOpenViewDetail}>
                         Cancel
                     </Button>
                 </DialogFooter>
             </Dialog>
+
+                {OpenViewDetail && selectedCoa && (
+                        <Dialog open={OpenViewDetail} >
+                            <DialogHeader>
+                            COA Detail
+                            </DialogHeader>
+                            <DialogBody>
+                            <div className="flex flex-col gap-2">
+                                <div className="flex flex-col">
+                                <Typography variant="small" color="blue-gray">
+                                    Code
+                                </Typography>
+                                <Typography variant="body" color="blue-gray">
+                                    {selectedCoa.code}
+                                </Typography>
+                                </div>
+                                <div className="flex flex-col">
+                                <Typography variant="small" color="blue-gray">
+                                    Account Name
+                                </Typography>
+                                <Typography variant="body" color="blue-gray">
+                                    {selectedCoa.account_name}
+                                </Typography>
+                                </div>
+                                <div className="flex flex-col">
+                                <Typography variant="small" color="blue-gray">
+                                    Type
+                                </Typography>
+                                <Typography variant="body" color="blue-gray">
+                                    {TitleCase(selectedCoa.account_type)}
+                                </Typography>
+                                </div>
+                            </div>
+                            </DialogBody>
+                            <DialogFooter>
+                                <Button variant="filled" color="red" onClick={() => handleOpenViewDetail()}> 
+                                    Close
+                                </Button>
+                            </DialogFooter>
+                        </Dialog>
+                        )}
             <Alert
                 className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
                 color={flash.message?.type == "success" ? "green" : "red"}
@@ -350,7 +399,7 @@ export default function Inventory({ auth, coa }) {
                                                     <Tooltip content="View">
                                                         <a
                                                             as="button"
-                                                            onClick={handleOpendetail}
+                                                            onClick={() => handleOpenViewDetail(id)}
                                                         >
                                                             <IconButton variant="text">
                                                                 <EyeIcon className="h-5 w-5 text-blue-800" />
@@ -460,55 +509,6 @@ export default function Inventory({ auth, coa }) {
                                                         }
                                                     `}
                                                 />
-                                                <Dialog
-                                                    open={opendetail}
-                                                    handler={handleOpendetail}
-                                                >
-                                                    <DialogHeader>
-                                                        COA Detail
-                                                    </DialogHeader>
-                                                    <DialogBody>
-                                                        <div className="flex flex-col gap-2">
-                                                            <div className="flex flex-col">
-                                                                <Typography variant="small" color="blue-gray">
-                                                                    Code
-                                                                </Typography>
-                                                                <Typography variant="body" color="blue-gray">
-                                                                    {code}
-                                                                </Typography>
-                                                            </div>
-                                                            <div className="flex flex-col">
-                                                                <Typography variant="small" color="blue-gray">
-                                                                    Account Name
-                                                                </Typography>
-                                                                <Typography variant="body" color="blue-gray">
-                                                                    {account_name}
-                                                                </Typography>
-                                                            </div>
-                                                            <div className="flex flex-col">
-                                                                <Typography variant="small" color="blue-gray">
-                                                                    Type
-                                                                </Typography>
-                                                                <Typography variant="body" color="blue-gray">
-                                                                    {TitleCase(account_type)}
-                                                                </Typography>
-                                                            </div>
-                                                            <div className="flex flex-col">
-                                                                <Typography variant="small" color="blue-gray">
-                                                                    Balance
-                                                                </Typography>
-                                                                <Typography variant="body" color="blue-gray">
-                                                                    Rp {Intl.NumberFormat("id").format(balance)}
-                                                                </Typography>
-                                                            </div>
-                                                        </div>
-                                                    </DialogBody>
-                                                    <DialogFooter>
-                                                        <Button variant="solid" color="red" onClick={handleOpendetail}> 
-                                                            <span>Close</span>
-                                                        </Button>
-                                                    </DialogFooter>
-                                                </Dialog>
                                             </tr>
                                         );
                                     }

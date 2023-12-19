@@ -45,6 +45,16 @@ export default function Settings({ auth, accounts }) {
         options.push({ value: account.id, label: account.account_name });
     });
 
+    const languageoptions = [
+        { value: "en", label: "English" },
+        { value: "id", label: "Bahasa Indonesia" },
+    ]
+
+    const modeoptions = [
+        { value: "light", label: "Light" },
+        { value: "dark", label: "Dark" },
+    ]
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Settings" />
@@ -395,6 +405,91 @@ export default function Settings({ auth, accounts }) {
                             </div>
                         </div>
                     </form>
+                    <div className="bg-white overflow-hidden shadow-md rounded-md h-full py-2 mt-8 border-b border-gray-200">
+                    <form>
+                            <div className="grid grid-cols-2 gap-5 m-3 px-6">
+                                <Typography className="col-span-2" variant="h4">
+                                    Appearance Settings
+                                </Typography>
+                                <div className="grid-span-1">
+                                    <Typography>Language</Typography>
+                                    <Select
+                                        options={languageoptions}
+                                        placeholder={"Select..."}
+                                        menuPosition={'fixed'}
+                                        styles={{
+                                            control: (base, state) => ({
+                                                ...base,
+                                                boxShadow: state.isFocused
+                                                    ? 0
+                                                    : 0,
+                                                borderColor: state.isFocused
+                                                    ? "#1A202C"
+                                                    : base.borderColor,
+                                                borderWidth: state.isFocused
+                                                    ? "2px"
+                                                    : "1px",
+                                                "&:hover": {
+                                                    borderColor: state.isFocused
+                                                        ? "#1A202C"
+                                                        : base.borderColor,
+                                                },
+                                                borderRadius: "6px",
+                                            }),
+                                            input: (base) => ({
+                                                ...base,
+                                                "input:focus": {
+                                                    boxShadow: "none",
+                                                },
+                                            }),
+                                        }}
+                                    />
+                                </div>
+                                <div className="grid-span-1">
+                                    <Typography>Theme</Typography>
+                                    <Select
+                                        options={modeoptions}
+                                        placeholder={"Select..."}
+                                        menuPosition={'fixed'}
+                                        styles={{
+                                            control: (base, state) => ({
+                                                ...base,
+                                                boxShadow: state.isFocused
+                                                    ? 0
+                                                    : 0,
+                                                borderColor: state.isFocused
+                                                    ? "#1A202C"
+                                                    : base.borderColor,
+                                                borderWidth: state.isFocused
+                                                    ? "2px"
+                                                    : "1px",
+                                                "&:hover": {
+                                                    borderColor: state.isFocused
+                                                        ? "#1A202C"
+                                                        : base.borderColor,
+                                                },
+                                                borderRadius: "6px",
+                                            }),
+                                            input: (base) => ({
+                                                ...base,
+                                                "input:focus": {
+                                                    boxShadow: "none",
+                                                },
+                                            }),
+                                        }}
+                                    />
+                                </div>
+                                <div className="col-span-2 mb-4">
+                                    <Button
+                                        className="bg-ungukita w-full"
+                                        type="submit"
+                                    >
+                                        Save
+                                    </Button>
+                                </div>
+                        </div>
+                    </form>
+                    </div>
                 </div>
             </div>
         </AuthenticatedLayout>
