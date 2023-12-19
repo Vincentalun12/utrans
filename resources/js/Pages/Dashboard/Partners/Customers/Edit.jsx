@@ -1,5 +1,7 @@
 import AdditemLayout from "@/Layouts/NavigationLayout";
 import { Head, useForm } from "@inertiajs/react";
+import React, { useState, useEffect } from "react";
+import { Language } from "@/Languages/Partners/Customers/CustomerEdit";
 import {
     Card,
     Typography,
@@ -24,6 +26,13 @@ import {
 } from "@heroicons/react/24/solid";
 
 export default function EditCustomer({ auth, customer }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const { data, setData, patch, processing, errors, reset } = useForm({
         name: customer.name,
         phone: customer.phone,
@@ -48,10 +57,10 @@ export default function EditCustomer({ auth, customer }) {
                     <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                         <Typography variant="h4" className="text-ungukita" textGradient>
-                            Edit Data Customer
+                            {Language.title}
                         </Typography>
                         <Typography variant="paragraph">
-                            Edit your loyal customers data. Please do not change the data if it is not necessary.   
+                            {Language.description}
                         </Typography>
                         </div>
                     </div>
@@ -60,15 +69,15 @@ export default function EditCustomer({ auth, customer }) {
                     <Card className="h-full w-full overflow-hidden rounded-md pb-4">
                         <form onSubmit={actionSubmit}>
                         <div className="grid grid-cols-2 gap-5 m-3 px-6">
-                                <Typography className="col-span-2" variant="h4">General Information</Typography>
+                                <Typography className="col-span-2" variant="h4">{Language.customer.generalinformation}</Typography>
                                 <div className="col-span-2 lg:col-span-2">
-                                    <Typography>Customer Name</Typography>
+                                    <Typography>{Language.customer.name}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                        * Provide the name customer name
+                                        {Language.customer.description}
                                     </div>
                                         <Input
                                             type="input"
-                                            placeholder="Name"
+                                            placeholder={Language.customer.description}
                                             value={data.name}
                                             onChange={(e) => {
                                                 setData("name", e.target.value);
@@ -80,13 +89,13 @@ export default function EditCustomer({ auth, customer }) {
                                         />
                                 </div>
                                 <div className="col-span-2 lg:col-span-1">
-                                    <Typography>Phone Number</Typography>
+                                    <Typography>{Language.phonenumber.name}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                        * Please use 08xxxxxxxxxx format. Leave blank if unknown.
+                                        {Language.phonenumber.description}
                                     </div>
                                         <Input
                                             type="number"
-                                            placeholder="08xxxxxxxxxx"
+                                            placeholder={Language.phonenumber.placeholder}
                                             value={data.phone}
                                             onChange={(e) => {
                                                 setData("phone", e.target.value);
@@ -98,13 +107,13 @@ export default function EditCustomer({ auth, customer }) {
                                         />
                                 </div>
                                 <div className="col-span-2 lg:col-span-1">
-                                    <Typography>Email Address</Typography>
+                                    <Typography>{Language.emailaddress.name}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                        * Provide the customer's email address. Leave blank if unknown.
+                                        {Language.emailaddress.description}
                                     </div>
                                         <Input
                                             type="input"
-                                            placeholder="name@mail.com"
+                                            placeholder={Language.emailaddress.email}
                                             value={data.email}
                                             onChange={(e) => {
                                                 setData("email", e.target.value);
@@ -116,16 +125,16 @@ export default function EditCustomer({ auth, customer }) {
                                         />
                                 </div>
                                 <hr className="w-full col-span-2"></hr>
-                                <Typography className="col-span-2" variant="h4">Address Information</Typography>
+                                <Typography className="col-span-2" variant="h4">{Language.address.generalinformation}</Typography>
                                 <div className="sm:col-span-2">
-                                    <Typography>Address</Typography>
+                                    <Typography>{Language.address.name}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                        * Provide the customer's address. Leave blank if unknown.
+                                    {Language.address.description}
                                     </div>
                                     <Textarea
                                             type="input"
                                             size="md"
-                                            placeholder="Address"
+                                            placeholder={Language.address.placeholder}
                                             value={data.address}
                                             onChange={(e) => {
                                                 setData("address", e.target.value);
@@ -137,13 +146,13 @@ export default function EditCustomer({ auth, customer }) {
                                         />
                                 </div>
                                 <div className="col-span-2 lg:col-span-1">
-                                    <Typography>District</Typography>
+                                    <Typography>{Language.district.name}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                        * Could be city, regency, or district, Leave blank if unknown.
+                                    {Language.district.description}
                                     </div>
                                         <Input
                                             type="input"
-                                            placeholder="District"
+                                            placeholder={Language.district.placeholder}
                                             value={data.district}
                                             onChange={(e) => {
                                                 setData("district", e.target.value);
@@ -155,13 +164,13 @@ export default function EditCustomer({ auth, customer }) {
                                         />
                                 </div>
                                 <div className="col-span-2 lg:col-span-1">
-                                    <Typography>City</Typography>
+                                    <Typography>{Language.city.name}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                        * Blankable
+                                        {Language.city.description}
                                     </div>
                                         <Input
                                             type="input"
-                                            placeholder="Province"
+                                            placeholder={Language.city.placeholder}
                                             value={data.city}
                                             onChange={(e) => {
                                                 setData("city", e.target.value);
@@ -179,7 +188,7 @@ export default function EditCustomer({ auth, customer }) {
                                         type="submit"
                                         disabled={!data.name}
                                     >
-                                        Save
+                                        {Language.savebutton}
                                     </Button>
                                 </div>
                             </div>

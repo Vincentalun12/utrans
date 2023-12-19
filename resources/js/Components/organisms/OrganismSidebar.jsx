@@ -1,7 +1,9 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ApplicationLogo2 } from "@/Components";
 import { LinkActiveTheme } from "@/Themes";
 import Linkactive from "@/Components/Linkactive";
+
+import { Language } from "@/Languages/Organism/Sidebar";
 
 import {
     Card,
@@ -30,6 +32,13 @@ import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import { Link } from "@inertiajs/react";
 
 export function OrganismSidebar() {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const [open, setOpen] = useState(
         route().current("products") ? 1 : 0 || route().current("brands") ? 1 : 0
     );
@@ -118,7 +127,7 @@ export function OrganismSidebar() {
                         <ListItemPrefix>
                             <HomeIcon className="h-5 w-5" />
                         </ListItemPrefix>
-                        Dashboard
+                        {Language.Dashboard}
                     </ListItem>
                 </Linkactive>
                 {/* <Linkactive
@@ -154,7 +163,7 @@ export function OrganismSidebar() {
                                 color="blue-gray"
                                 className="mr-auto font-normal"
                             >
-                                Inventory
+                                {Language.Inventory}
                             </Typography>
                         </AccordionHeader>
                     </ListItem>
@@ -174,7 +183,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Products
+                                    {Language.Products}
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("brands")}>
@@ -191,7 +200,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Brand
+                                    {Language.Brand}
                                 </ListItem>
                             </Linkactive>
                         </List>
@@ -220,7 +229,7 @@ export function OrganismSidebar() {
                                 color="blue-gray"
                                 className="mr-auto font-normal"
                             >
-                                Order
+                                {Language.Order}
                             </Typography>
                         </AccordionHeader>
                     </ListItem>
@@ -236,7 +245,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Purchases
+                                    {Language.Purchases}
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("sales")}>
@@ -247,7 +256,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Sales
+                                    {Language.Sales}
                                 </ListItem>
                             </Linkactive>
                         </List>
@@ -276,7 +285,7 @@ export function OrganismSidebar() {
                                 color="blue-gray"
                                 className="mr-auto font-normal"
                             >
-                                Partners
+                                {Language.Partners}
                             </Typography>
                         </AccordionHeader>
                     </ListItem>
@@ -292,7 +301,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Customers
+                                    {Language.Customers}
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("vendors")}>
@@ -305,7 +314,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Vendors
+                                    {Language.Vendors}
                                 </ListItem>
                             </Linkactive>
                         </List>
@@ -334,7 +343,7 @@ export function OrganismSidebar() {
                                 color="blue-gray"
                                 className="mr-auto font-normal"
                             >
-                                Reports
+                                {Language.Reports}
                             </Typography>
                         </AccordionHeader>
                     </ListItem>
@@ -350,7 +359,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Balance sheet
+                                    {Language.Products}
                                 </ListItem>
                             </Linkactive>
                             <ListItem>
@@ -360,7 +369,7 @@ export function OrganismSidebar() {
                                         className="h-3 w-5"
                                     />
                                 </ListItemPrefix>
-                                Profit and loss
+                                {Language.ProfitandLoss}
                             </ListItem>
                         </List>
                     </AccordionBody>
@@ -388,7 +397,7 @@ export function OrganismSidebar() {
                                 color="blue-gray"
                                 className="mr-auto font-normal"
                             >
-                                Accounting
+                                {Language.Accounting}
                             </Typography>
                         </AccordionHeader>
                     </ListItem>
@@ -402,7 +411,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    COA
+                                    {Language.COA}
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("journals")}>
@@ -415,7 +424,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Journals
+                                    {Language.Journals}
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("journalentries")}>
@@ -430,7 +439,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Journal Entries
+                                    {Language.JournalEntries}
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("journalitems")}>
@@ -445,7 +454,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    Journal Items
+                                    {Language.JournalItems}
                                 </ListItem>
                             </Linkactive>
                         </List>
@@ -458,7 +467,7 @@ export function OrganismSidebar() {
                     <ListItemPrefix>
                         <Cog6ToothIcon className="h-5 w-5" />
                     </ListItemPrefix>
-                    Settings
+                    {Language.Settings}
                 </ListItem>
             </Linkactive>
             </List>

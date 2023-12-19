@@ -2,14 +2,16 @@ import LocalizedStrings from "react-localization";
 
 let Language = new LocalizedStrings({
     id: {
-        "title": "Merek",
-        "subtitle": "Kelola merek Anda di sini",
+        "title": "Pelanggan",
+        "subtitle": "Kelola pelanggan Anda di sini",
         "addbutton": "Tambah",
-        "searchplaceholder": "Cari merek...",
+        "searchplaceholder": "Cari Pelanggan...",
         "tableheader": {
-            "code": "Kode",
-            "Name": "Nama",
-            "Action": "Aksi",
+            "no": "Nomor",
+            "name": "Nama",
+            "address": "Alamat",
+            "phone": "Nomor Telepon",
+            "action": "Aksi",
         },
         "tableaction": {
             "view": "Lihat",
@@ -27,11 +29,12 @@ let Language = new LocalizedStrings({
             "csv": "Ekspor ke CSV",
         },
         "info": {
-            "header": "Informasi Merek",
-            "code": "Kode Merek",
-            "name": "Nama Merek",
-            "email": "Email Merek",
-            "phone": "Nomor Telepon Merek",
+            "header": "Informasi Pelanggan",
+            "code": "Kode Pelanggan",
+            "name": "Nama Pelanggan",
+            "email": "Email Pelanggan",
+            "phone": "Nomor Telepon Pelanggan",
+            "address": "Alamat Pelanggan",
             "editbutton": "Ubah Detail",
             "closebutton": "Tutup",
         },
@@ -45,13 +48,15 @@ let Language = new LocalizedStrings({
     },
 
     en: {
-        "title": "Brand",
-        "subtitle": "Manage your brands here",
+        "title": "Customers",
+        "subtitle": "Manage your customers information here.",
         "addbutton": "Add",
-        "searchplaceholder": "Search brand...",
+        "searchplaceholder": "Search customers...",
         "tableheader": {
-            "code": "Code",
-            "Name": "Name",
+            "no": "No",
+            "name": "Name",
+            "address": "Address",
+            "phone": "Phone Number",
             "Action": "Action",
         },
         "tableaction": {
@@ -62,26 +67,27 @@ let Language = new LocalizedStrings({
         "pagination": {
             "previous": "Previous",
             "next": "Next",
-            "page": "Halaman",
-            "of": "dari",
+            "page": "Page",
+            "of": "of",
         },
         "export": {
             "pdf": "Export to PDF",
             "csv": "Export to CSV",
         },
         "info": {
-            "header": "Brand Information",
-            "code": "Brand Code",
-            "name": "Brand Name",
-            "email": "Brand Email",
-            "phone": "Brand Phone Number",
+            "header": "Customer Information",
+            "code": "Customer Code",
+            "name": "Customer Name",
+            "email": "Customer Email",
+            "phone": " Customer Phone Number",
+            "address": "Customer Address",
             "editbutton": "Edit Detail",
             "closebutton": "Close",
         },
         "delete": {
             "header": "Notification",
-            "title": "You will delete this brand!",
-            "description": "This action cannot be undone. However, we will still save it for audit purposes.",
+            "title": "You will delete this customer!",
+            "description": "This action cannot be undone. However, we will still keep it for audit purposes.",
             "confirmbutton": "Delete",
             "cancelbutton": "Cancel",
         }

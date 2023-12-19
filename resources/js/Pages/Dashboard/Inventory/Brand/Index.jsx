@@ -264,16 +264,16 @@ const MyDocument = ({ data }) => (
 
     return (
         <BrandLayout user={auth.user}>
-            <Head title="Brand" />
+            <Head title={Language.title} />
                 <Dialog open={opendetail} handler={handleOpendetail} className="overflow-auto max-h-[80vh]">
                 <DialogHeader>
-                    <Typography variant="h5">Chart of Account Detail</Typography>
+                    <Typography variant="h5">{Language.info.header}</Typography>
                 </DialogHeader>
                 <DialogBody divider>
                 <div className="flex flex-col gap-2">
                     <div className="flex flex-col">
                     <Typography variant="small" color="blue-gray">
-                        Code
+                    {Language.info.code}
                     </Typography>
                     <Typography variant="body" color="blue-gray">
                         {selectedbrands && <div>{selectedbrands.code}</div>}
@@ -281,10 +281,26 @@ const MyDocument = ({ data }) => (
                     </div>
                     <div className="flex flex-col">
                     <Typography variant="small" color="blue-gray">
-                        Name
+                    {Language.info.name}
                     </Typography>
                     <Typography variant="body" color="blue-gray">
                         {selectedbrands && <div>{selectedbrands.name}</div>}
+                    </Typography>
+                    </div>
+                    <div className="flex flex-col">
+                    <Typography variant="small" color="blue-gray">
+                    {Language.info.email}
+                    </Typography>
+                    <Typography variant="body" color="blue-gray">
+                        {selectedbrands && <div>{selectedbrands.email}</div>}
+                    </Typography>
+                    </div>
+                    <div className="flex flex-col">
+                    <Typography variant="small" color="blue-gray">
+                    {Language.info.phone}
+                    </Typography>
+                    <Typography variant="body" color="blue-gray">
+                        {selectedbrands && <div>{selectedbrands.number}</div>}
                     </Typography>
                     </div>
                 </div>
@@ -292,25 +308,24 @@ const MyDocument = ({ data }) => (
                 <DialogFooter className="space-x-2">
                 <Button variant="gradient" color="green"
                 onClick={() => window.location.href = route("brands.edit", selectedbrands.id)}>
-                    Edit Detail
+                    {Language.info.editbutton}
                 </Button>
                 <Button variant="outlined" onClick={handleOpendetail}>
-                    <span>Close</span>
+                    <span>{Language.info.closebutton}</span>
                 </Button>
                 </DialogFooter>
             </Dialog>
             <Dialog open={open} size="sm" onClose={handleOpen}>
                 <DialogHeader>
-                <Typography variant="h5">Notification</Typography>
+                <Typography variant="h5">{Language.delete.header}</Typography>
                 </DialogHeader>
                 <DialogBody divider className="grid place-items-center gap-4">
                 <InformationCircleIcon className="w-20 h-20 text-red-400" />
                 <Typography className="text-red-900" variant="h4">
-                    You're about to delete this item!
+                {Language.delete.title}
                 </Typography>
                 <Typography className="text-center font-normal">
-                    This action cannot be undone. However, we will keep your data for
-                    audit purposes.
+                {Language.delete.description}
                 </Typography>
                 </DialogBody>
                 <DialogFooter className="space-x-2">
@@ -329,10 +344,10 @@ const MyDocument = ({ data }) => (
                     handleOpen(null);
                     }}
                 >
-                    Delete
+                    {Language.delete.confirmbutton}
                 </Button>
                 <Button variant="outlined" onClick={handleOpen}>
-                    Cancel
+                {Language.delete.cancelbutton}
                 </Button>
                 </DialogFooter>
             </Dialog>
@@ -528,7 +543,7 @@ const MyDocument = ({ data }) => (
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    Page {currentPage} of{" "}
+                                    {Language.pagination.page} {currentPage} {Language.pagination.of} {" "}
                                     {Math.ceil(brands.length / itemsPerPage)}
                                 </Typography>
                             </div>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Select from 'react-select';
 import { LanguageContext } from '@/Languages/LanguageContext';
 
@@ -7,6 +7,14 @@ const LanguageSwitcher = ({ onLanguageChange }) => {
         { value: "en", label: "English" },
         { value: "id", label: "Bahasa Indonesia" },
     ];
+
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    useEffect(() => {
+        const storedLanguage = localStorage.getItem('language') || 'en';
+        const defaultOption = languageOptions.find(option => option.value === storedLanguage);
+        setSelectedOption(defaultOption);
+    }, []);
 
     const handleChange = (selectedOption) => {
         console.log('Language selected:', selectedOption.value);
@@ -18,6 +26,7 @@ const LanguageSwitcher = ({ onLanguageChange }) => {
         <Select
                                         options={languageOptions}
                                         onChange={handleChange}
+                                        value={selectedOption}
                                         placeholder={"Select..."}
                                         menuPosition={'fixed'}
                                         styles={{
