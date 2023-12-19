@@ -18,6 +18,10 @@ import {
     MenuHandler,
     MenuList,
     MenuItem,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
 } from "@material-tailwind/react";
 
 import {
@@ -144,6 +148,24 @@ export default function Brand({ auth, brands, deleteSuccess }) {
         }
     };
 
+    const [deletebrandsId, setDeletebrandsId] = useState(null);
+    const [open, setOpen] = useState(false);
+  
+    const handleOpen = (id) => {
+      setDeletebrandsId(id);
+      setOpen(!open);
+    };
+  
+    const [selectedbrands, setSelectedbrands] = useState(null);
+    const [opendetail, setOpendetail] = React.useState(false);
+    const handleOpendetail = (id) => {
+      setOpendetail(!opendetail);
+      const brandsData = brands.find((brands) => brands.id === id);
+      setSelectedbrands(brandsData);
+      console.log(brands);
+      console.log(brandsData);
+    };
+
 
 //print pdf
 const styles = StyleSheet.create({
@@ -243,6 +265,77 @@ const MyDocument = ({ data }) => (
     return (
         <BrandLayout user={auth.user}>
             <Head title="Brand" />
+                <Dialog open={opendetail} handler={handleOpendetail} className="overflow-auto max-h-[80vh]">
+                <DialogHeader>
+                    <Typography variant="h5">Chart of Account Detail</Typography>
+                </DialogHeader>
+                <DialogBody divider>
+                <div className="flex flex-col gap-2">
+                    <div className="flex flex-col">
+                    <Typography variant="small" color="blue-gray">
+                        Code
+                    </Typography>
+                    <Typography variant="body" color="blue-gray">
+                        {selectedbrands && <div>{selectedbrands.code}</div>}
+                    </Typography>
+                    </div>
+                    <div className="flex flex-col">
+                    <Typography variant="small" color="blue-gray">
+                        Name
+                    </Typography>
+                    <Typography variant="body" color="blue-gray">
+                        {selectedbrands && <div>{selectedbrands.name}</div>}
+                    </Typography>
+                    </div>
+                </div>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                <Button variant="gradient" color="green"
+                onClick={() => window.location.href = route("brands.edit", selectedbrands.id)}>
+                    Edit Detail
+                </Button>
+                <Button variant="outlined" onClick={handleOpendetail}>
+                    <span>Close</span>
+                </Button>
+                </DialogFooter>
+            </Dialog>
+            <Dialog open={open} size="sm" onClose={handleOpen}>
+                <DialogHeader>
+                <Typography variant="h5">Notification</Typography>
+                </DialogHeader>
+                <DialogBody divider className="grid place-items-center gap-4">
+                <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                <Typography className="text-red-900" variant="h4">
+                    You're about to delete this item!
+                </Typography>
+                <Typography className="text-center font-normal">
+                    This action cannot be undone. However, we will keep your data for
+                    audit purposes.
+                </Typography>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                <Button
+                    variant="gradient"
+                    color="red"
+                    onClick={async () => {
+                    if (deletebrandsId) {
+                        await destroy(route("brands.destroy", deletebrandsId), {
+                        onSuccess: () => {
+                            setIsShowAlert(true);
+                            setDeletebrandsId(null);
+                        },
+                        });
+                    }
+                    handleOpen(null);
+                    }}
+                >
+                    Delete
+                </Button>
+                <Button variant="outlined" onClick={handleOpen}>
+                    Cancel
+                </Button>
+                </DialogFooter>
+            </Dialog>
             <Alert
                 className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
                 color={flash.message?.type == "success" ? "green" : "red"}
@@ -396,11 +489,9 @@ const MyDocument = ({ data }) => (
                                             </td>
                                             <td className="p-4 flex">
                                                 <Tooltip content={Language.tableaction.view}>
-                                                    <a>
-                                                        <IconButton variant="text">
+                                                        <IconButton variant="text" onClick={() => handleOpendetail(id)}>
                                                             <EyeIcon className="h-5 w-5 text-blue-800" />
                                                         </IconButton>
-                                                    </a>
                                                 </Tooltip>
                                                 <Tooltip content={Language.tableaction.edit}>
                                                     <a
@@ -415,28 +506,12 @@ const MyDocument = ({ data }) => (
                                                     </a>
                                                 </Tooltip>
                                                 <Tooltip content={Language.tableaction.delete}>
-                                                    <a
-                                                        onClick={() =>
-                                                            destroy(
-                                                                route(
-                                                                    "brands.destroy",
-                                                                    id
-                                                                ),
-                                                                {
-                                                                    onSuccess:
-                                                                        () => {
-                                                                            setIsShowAlert(
-                                                                                true
-                                                                            );
-                                                                        },
-                                                                }
-                                                            )
-                                                        }
-                                                    >
-                                                        <IconButton variant="text">
+                                                        <IconButton
+                                                        variant="text"
+                                                        onClick={() => handleOpen(id)}
+                                                        >                                                   
                                                             <TrashIcon className="h-5 w-5 text-red-500" />
                                                         </IconButton>
-                                                    </a>
                                                 </Tooltip>
                                             </td>
                                         </tr>
