@@ -1,7 +1,12 @@
 import AuthenticatedLayout from "@/Layouts/NavigationLayout";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Head } from "@inertiajs/react";
 import Select from "react-select";
+
+import { LanguageContext } from '@/Languages/LanguageContext';
+import { Language } from '@/Languages/Settings/Settings';
+import LanguageSwitcher from "@/Languages/LanguageSwitcher";
+
 import {
     MagnifyingGlassIcon,
     ChevronUpDownIcon,
@@ -39,16 +44,37 @@ import {
 import Linkactive from "@/Components/Linkactive";
 
 export default function Settings({ auth, accounts }) {
+
+    useEffect(() => {
+        const storedLanguage = localStorage.getItem('language');
+        if (storedLanguage) {
+            Language.setLanguage(storedLanguage);
+        }
+    }, []);
+
+    const { setLanguage } = useContext(LanguageContext);
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    const handleLanguageChange = (value) => {
+        console.log('Selected language:', value);
+        setSelectedLanguage(value);
+        localStorage.setItem('language', value);
+        window.location.reload();
+    };
+
+    const handleSave = (event) => {
+        console.log('handleSave is called');
+        event.preventDefault();
+        if (selectedLanguage) {
+            setLanguage(selectedLanguage);
+        }
+    };
+
     let options = [];
 
     accounts.forEach((account) => {
         options.push({ value: account.id, label: account.account_name });
     });
-
-    const languageoptions = [
-        { value: "en", label: "English" },
-        { value: "id", label: "Bahasa Indonesia" },
-    ]
 
     const modeoptions = [
         { value: "light", label: "Light" },
@@ -69,10 +95,10 @@ export default function Settings({ auth, accounts }) {
                                         className="text-ungukita"
                                         textGradient
                                     >
-                                        Settings
+                                        {Language.title}
                                     </Typography>
                                     <Typography variant="paragraph">
-                                        Manage your Accounting here.
+                                        {Language.subtitle}
                                     </Typography>
                                 </div>
                             </div>
@@ -413,37 +439,7 @@ export default function Settings({ auth, accounts }) {
                                 </Typography>
                                 <div className="grid-span-1">
                                     <Typography>Language</Typography>
-                                    <Select
-                                        options={languageoptions}
-                                        placeholder={"Select..."}
-                                        menuPosition={'fixed'}
-                                        styles={{
-                                            control: (base, state) => ({
-                                                ...base,
-                                                boxShadow: state.isFocused
-                                                    ? 0
-                                                    : 0,
-                                                borderColor: state.isFocused
-                                                    ? "#1A202C"
-                                                    : base.borderColor,
-                                                borderWidth: state.isFocused
-                                                    ? "2px"
-                                                    : "1px",
-                                                "&:hover": {
-                                                    borderColor: state.isFocused
-                                                        ? "#1A202C"
-                                                        : base.borderColor,
-                                                },
-                                                borderRadius: "6px",
-                                            }),
-                                            input: (base) => ({
-                                                ...base,
-                                                "input:focus": {
-                                                    boxShadow: "none",
-                                                },
-                                            }),
-                                        }}
-                                    />
+                                    <LanguageSwitcher onLanguageChange={handleLanguageChange}/>
                                 </div>
                                 <div className="grid-span-1">
                                     <Typography>Theme</Typography>
@@ -483,6 +479,7 @@ export default function Settings({ auth, accounts }) {
                                     <Button
                                         className="bg-ungukita w-full"
                                         type="submit"
+                                        onClick={handleSave}
                                     >
                                         Save
                                     </Button>

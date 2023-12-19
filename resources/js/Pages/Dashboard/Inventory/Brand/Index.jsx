@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet} from '@react-pdf/renderer';
+
+import { Language } from '@/Languages/Inventory/Brand/BrandIndex';
+
 import {
     Card,
     Typography,
@@ -41,20 +44,21 @@ import { ButtonPrimary } from "@/Components";
 
 import { twMerge } from "tailwind-merge";
 
-const TABLE_HEAD = [
-    { display: "Code", field: "SKU" },
-    { display: "Name", field: "name" },
-    { display: "Action", field: null },
-];
-
-const TABLE_ROWS = [
-    {
-        SKU: "BW-CB-001",
-        name: "Carbon Block CTO Kirei 10 inch",
-    },
-];
 
 export default function Brand({ auth, brands, deleteSuccess }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
+    const TABLE_HEAD = [
+        { display: Language.tableheader.code, field: "SKU" },
+        { display: Language.tableheader.Name, field: "name" },
+        { display: Language.tableheader.Action, field: null },
+    ];
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
@@ -256,10 +260,10 @@ const MyDocument = ({ data }) => (
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    Brands
+                                    {Language.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Manage your brands here
+                                    {Language.subtitle}
                                 </Typography>
                             </div>
                         </div>
@@ -269,7 +273,7 @@ const MyDocument = ({ data }) => (
                             <div className="flex gap-3">
                             <Linkactive href={route("brands.create")}>
                                 <Button className="bg-ungukita md:flex hidden">
-                                    Add
+                                    {Language.addbutton}
                                 </Button>
                             </Linkactive>
                             <div className="md:flex hidden">
@@ -284,7 +288,7 @@ const MyDocument = ({ data }) => (
                                                 <DocumentArrowDownIcon className="w-5 h-5" stroke="red" />
                                                 <PDFDownloadLink document={<MyDocument data={brands} />} fileName="brands.pdf">
                                                     {({ blob, url, loading, error }) =>
-                                                        loading ? 'Loading document...' : 'Export as PDF'
+                                                        loading ? 'Loading document...' : `${Language.export.pdf}`
                                                     }
                                                 </PDFDownloadLink>
                                             </MenuItem>
@@ -293,7 +297,7 @@ const MyDocument = ({ data }) => (
                                                     className="w-5 h-5"
                                                     stroke="green"
                                                 />
-                                                Export as CSV
+                                                {Language.export.csv}
                                             </MenuItem>
                                         </MenuList>
                                     </Menu>
@@ -307,7 +311,7 @@ const MyDocument = ({ data }) => (
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"
-                                    placeholder="Search"
+                                    placeholder={Language.searchplaceholder}
                                     value={searchbar}
                                     onChange={(e) =>
                                         setsearchbar(e.target.value)
@@ -391,14 +395,14 @@ const MyDocument = ({ data }) => (
                                                 </div>
                                             </td>
                                             <td className="p-4 flex">
-                                                <Tooltip content="View Brand">
+                                                <Tooltip content={Language.tableaction.view}>
                                                     <a>
                                                         <IconButton variant="text">
                                                             <EyeIcon className="h-5 w-5 text-blue-800" />
                                                         </IconButton>
                                                     </a>
                                                 </Tooltip>
-                                                <Tooltip content="Edit Brand">
+                                                <Tooltip content={Language.tableaction.edit}>
                                                     <a
                                                         href={route(
                                                             "brands.edit",
@@ -410,7 +414,7 @@ const MyDocument = ({ data }) => (
                                                         </IconButton>
                                                     </a>
                                                 </Tooltip>
-                                                <Tooltip content="Delete Brand">
+                                                <Tooltip content={Language.tableaction.delete}>
                                                     <a
                                                         onClick={() =>
                                                             destroy(
@@ -460,7 +464,7 @@ const MyDocument = ({ data }) => (
                                     onClick={handlePrevious}
                                     disabled={currentPage === 1}
                                 >
-                                    Previous
+                                    {Language.pagination.previous}
                                 </Button>
                                 <Button
                                     variant="outlined"
@@ -468,7 +472,7 @@ const MyDocument = ({ data }) => (
                                     onClick={handleNext}
                                     disabled={paginated.length < itemsPerPage}
                                 >
-                                    Next
+                                    {Language.pagination.next}
                                 </Button>
                             </div>
                         </div>

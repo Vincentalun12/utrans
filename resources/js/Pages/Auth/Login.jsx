@@ -11,16 +11,12 @@ import { Language } from '@/Languages/LoginPage/Login';
 
 export default function Login({ status, canResetPassword }) {
 
-    const [selectedLanguage, setSelectedLanguage] = useState('id');
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
 
     useEffect(() => {
         Language.setLanguage(selectedLanguage);
-    }, []);
+    }, [selectedLanguage]);
 
-    const changeLanguage = (newLanguage) => {
-        setSelectedLanguage(newLanguage);
-        Language.setLanguage(newLanguage);
-    };
 
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
