@@ -56,12 +56,22 @@ export default function Inventory({ auth, coa }) {
     const [sortdirection, setsortdirection] = useState(null);
     const [searchbar, setsearchbar] = useState("");
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(!open);
+    const [deletecoaId, setDeletecoaId] = useState(null);
+    const [open, setOpen] = useState(false);
 
-    const { flash } = usePage().props;
+    const handleOpen = (id) => {
+        setDeletecoaId(id);
+        setOpen(!open);
+    };
+
+    const [opendetail, setOpendetail] = React.useState(false);
+    const handleOpendetail = () => setOpendetail(!open);
+
+
 
     const { delete: destroy } = useForm({});
+
+    const { flash } = usePage().props;
 
     const [isShowAlert, setIsShowAlert] = useState(false);
 
@@ -141,6 +151,40 @@ export default function Inventory({ auth, coa }) {
     return (
         <InventoryLayout user={auth.user}>
             <Head title="COA" />
+            <Dialog open={open} size="sm" onClose={handleOpen}>
+                <DialogHeader>
+                    <Typography variant="h5">Notification</Typography>
+                </DialogHeader>
+                <DialogBody divider className="grid place-items-center gap-4">
+                    <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                    <Typography className="text-red-900" variant="h4">
+                        You're about to delete this item!
+                    </Typography>
+                    <Typography className="text-center font-normal">This action cannot be undone. However, we will keep your data for audit purposes.</Typography>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                        <Button
+                        variant="gradient"
+                        color="red"
+                        onClick={async () => {
+                            if (deletecoaId) {
+                                await destroy(route("coa.destroy", deletecoaId), {
+                                    onSuccess: () => {
+                                        setIsShowAlert(true);
+                                        setDeletecoaId(null);
+                                    },
+                                });
+                            }
+                            handleOpen(null);
+                        }}
+                    >
+                        Delete
+                    </Button>
+                    <Button variant="outlined" onClick={handleOpen}>
+                        Cancel
+                    </Button>
+                </DialogFooter>
+            </Dialog>
             <Alert
                 className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
                 color={flash.message?.type == "success" ? "green" : "red"}
@@ -306,7 +350,7 @@ export default function Inventory({ auth, coa }) {
                                                     <Tooltip content="View">
                                                         <a
                                                             as="button"
-                                                            onClick={handleOpen}
+                                                            onClick={handleOpendetail}
                                                         >
                                                             <IconButton variant="text">
                                                                 <EyeIcon className="h-5 w-5 text-blue-800" />
@@ -326,24 +370,7 @@ export default function Inventory({ auth, coa }) {
                                                         </a>
                                                     </Tooltip>
                                                     <Tooltip content="Delete">
-                                                        <a
-                                                            onClick={() => {
-                                                                destroy(
-                                                                    route(
-                                                                        "coa.destroy",
-                                                                        id
-                                                                    ),
-                                                                    {
-                                                                        onSuccess:
-                                                                            () => {
-                                                                                setIsShowAlert(
-                                                                                    true
-                                                                                );
-                                                                            },
-                                                                    }
-                                                                );
-                                                            }}
-                                                        >
+                                                        <a as="button" onClick={() => handleOpen(id)}>
                                                             <IconButton variant="text">
                                                                 <TrashIcon className="h-5 w-5 text-red-500" />
                                                             </IconButton>
@@ -434,8 +461,8 @@ export default function Inventory({ auth, coa }) {
                                                     `}
                                                 />
                                                 <Dialog
-                                                    open={open}
-                                                    handler={handleOpen}
+                                                    open={opendetail}
+                                                    handler={handleOpendetail}
                                                 >
                                                     <DialogHeader>
                                                         COA Detail
@@ -477,7 +504,7 @@ export default function Inventory({ auth, coa }) {
                                                         </div>
                                                     </DialogBody>
                                                     <DialogFooter>
-                                                        <Button variant="solid" color="red"> 
+                                                        <Button variant="solid" color="red" onClick={handleOpendetail}> 
                                                             <span>Close</span>
                                                         </Button>
                                                     </DialogFooter>

@@ -64,12 +64,17 @@ export default function Inventory({ auth, products }) {
     const [searchbar, setsearchbar] = useState("");
     const { flash } = usePage().props;
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(!open);
-
     const { delete: destroy } = useForm({});
 
     const [isShowAlert, setIsShowAlert] = useState(false);
+
+    const [deleteProductId, setDeleteProductId] = useState(null);
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = (id) => {
+        setDeleteProductId(id);
+        setOpen(!open);
+    };
 
     useEffect(() => {
         if (flash.message) {
@@ -287,16 +292,19 @@ const MyDocument = ({ data }) => (
                     <Typography className="text-center font-normal">This action cannot be undone. However, we will keep your data for audit purposes.</Typography>
                 </DialogBody>
                 <DialogFooter className="space-x-2">
-                    <Button
+                        <Button
                         variant="gradient"
                         color="red"
                         onClick={async () => {
-                            await destroy(route("products.destroy", id), {
-                                onSuccess: () => {
-                                    setIsShowAlert(true);
-                                },
-                            });
-                            handleOpen();
+                            if (deleteProductId) {
+                                await destroy(route("products.destroy", deleteProductId), {
+                                    onSuccess: () => {
+                                        setIsShowAlert(true);
+                                        setDeleteProductId(null);
+                                    },
+                                });
+                            }
+                            handleOpen(null);
                         }}
                     >
                         Delete
@@ -306,7 +314,6 @@ const MyDocument = ({ data }) => (
                     </Button>
                 </DialogFooter>
             </Dialog>
-
             <Alert
                 className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
                 color={flash.message?.type == "success" ? "green" : "red"}
@@ -459,7 +466,7 @@ const MyDocument = ({ data }) => (
                                                     </a>
                                                 </Tooltip>
                                                 <Tooltip content="Delete Item">
-                                                    <a as="button" onClick={handleOpen}>
+                                                    <a as="button" onClick={() => handleOpen(id)}>
                                                         <IconButton variant="text">
                                                             <TrashIcon className="h-5 w-5 text-red-500" />
                                                         </IconButton>
