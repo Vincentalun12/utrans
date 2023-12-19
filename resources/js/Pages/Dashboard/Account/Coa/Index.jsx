@@ -157,8 +157,10 @@ export default function Inventory({ auth, coa }) {
     <InventoryLayout user={auth.user}>
       <Head title="COA" />
       <Dialog open={opendetail} handler={handleOpendetail}>
-        <DialogHeader>COA Detail</DialogHeader>
-        <DialogBody>
+        <DialogHeader>
+            <Typography variant="h5">Chart of Account Detail</Typography>
+        </DialogHeader>
+        <DialogBody divider>
           <div className="flex flex-col gap-2">
             <div className="flex flex-col">
               <Typography variant="small" color="blue-gray">
@@ -191,13 +193,17 @@ export default function Inventory({ auth, coa }) {
                 Balance
               </Typography>
               <Typography variant="body" color="blue-gray">
-                Rp
+                Rp {selectedCoa && Intl.NumberFormat("id").format(selectedCoa.balance)}
               </Typography>
             </div>
           </div>
         </DialogBody>
-        <DialogFooter>
-          <Button variant="solid" color="red" onClick={handleOpendetail}>
+        <DialogFooter className="space-x-2">
+        <Button variant="gradient" color="green"
+        onClick={() => window.location.href = route("coa.edit", selectedCoa.id)}>
+            Edit Detail
+          </Button>
+          <Button variant="outlined" onClick={handleOpendetail}>
             <span>Close</span>
           </Button>
         </DialogFooter>
