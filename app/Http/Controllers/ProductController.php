@@ -38,8 +38,7 @@ class ProductController extends Controller
             'brand_id' => 'required',
             'code' => 'required|unique:products',
             'name' => 'required',
-            'retail_price' => 'required',
-            'whole_sale_price' => 'required',
+            'sales_price' => 'required',
         ]);
 
         Product::create([
@@ -47,8 +46,7 @@ class ProductController extends Controller
             'code' => $request->code,
             'name' => $request->name,
             'description' => $request->description,
-            'retail_price' => $request->retail_price,
-            'whole_sale_price' => $request->whole_sale_price,
+            'sales_price' => $request->sales_price,
             'standard_price' => 0,
             'stock' => 0,
         ]);
@@ -76,8 +74,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'retail_price' => 'required',
-            'whole_sale_price' => 'required',
+            'sales_price' => 'required',
         ]);
 
         $product = Product::find($id);
@@ -96,8 +93,7 @@ class ProductController extends Controller
                 'code' => $request->code,
                 'name' => $request->name,
                 'description' => $request->description,
-                'retail_price' => $request->retail_price,
-                'whole_sale_price' => $request->whole_sale_price,
+                'sales_price' => $request->sales_price,
             ];
         } else {
 
@@ -105,8 +101,7 @@ class ProductController extends Controller
                 'brand_id' => $request->brand_id,
                 'name' => $request->name,
                 'description' => $request->description,
-                'retail_price' => $request->retail_price,
-                'whole_sale_price' => $request->whole_sale_price,
+                'sales_price' => $request->sales_price,
             ];
         }
 

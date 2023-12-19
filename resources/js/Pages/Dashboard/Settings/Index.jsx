@@ -3,8 +3,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Head } from "@inertiajs/react";
 import Select from "react-select";
 
-import { LanguageContext } from '@/Languages/LanguageContext';
-import { Language } from '@/Languages/Settings/Settings';
+import { LanguageContext } from "@/Languages/LanguageContext";
+import { Language } from "@/Languages/Settings/Settings";
 import LanguageSwitcher from "@/Languages/LanguageSwitcher";
 
 import {
@@ -43,43 +43,56 @@ import {
 } from "@material-tailwind/react";
 import Linkactive from "@/Components/Linkactive";
 
-export default function Settings({ auth, accounts }) {
-
+export default function Settings({ auth, accounts, journals }) {
     useEffect(() => {
-        const storedLanguage = localStorage.getItem('language');
+        const storedLanguage = localStorage.getItem("language");
         if (storedLanguage) {
             Language.setLanguage(storedLanguage);
         }
     }, []);
 
     const { setLanguage } = useContext(LanguageContext);
-    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+    const [selectedLanguage, setSelectedLanguage] = useState(
+        localStorage.getItem("language") || "en"
+    );
 
     const handleLanguageChange = (value) => {
-        console.log('Selected language:', value);
+        console.log("Selected language:", value);
         setSelectedLanguage(value);
-        localStorage.setItem('language', value);
+        localStorage.setItem("language", value);
         window.location.reload();
     };
 
     const handleSave = (event) => {
-        console.log('handleSave is called');
+        console.log("handleSave is called");
         event.preventDefault();
         if (selectedLanguage) {
             setLanguage(selectedLanguage);
         }
     };
 
-    let options = [];
+    const [accountOptions, setAccountOptions] = useState([]);
+    const [journalOptions, setJournalOptions] = useState([]);
 
-    accounts.forEach((account) => {
-        options.push({ value: account.id, label: account.account_name });
-    });
+    useEffect(() => {
+        setAccountOptions(
+            accounts.map((account) => ({
+                value: account.id,
+                label: account.account_name,
+            }))
+        );
+        setJournalOptions(
+            journals.map((journal) => ({
+                value: journal.id,
+                label: journal.account_name,
+            }))
+        );
+    }, []);
 
     const modeoptions = [
         { value: "light", label: "Light" },
         { value: "dark", label: "Dark" },
-    ]
+    ];
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -111,7 +124,7 @@ export default function Settings({ auth, accounts }) {
                                 <div className="grid-span-1">
                                     <Typography>Sales Account</Typography>
                                     <Select
-                                        options={options}
+                                        options={accountOptions}
                                         placeholder={"Select..."}
                                         styles={{
                                             control: (base, state) => ({
@@ -144,7 +157,7 @@ export default function Settings({ auth, accounts }) {
                                 <div className="grid-span-1">
                                     <Typography>Purchase Account</Typography>
                                     <Select
-                                        options={options}
+                                        options={accountOptions}
                                         placeholder={"Select..."}
                                         styles={{
                                             control: (base, state) => ({
@@ -177,7 +190,7 @@ export default function Settings({ auth, accounts }) {
                                 <div className="col-span-1">
                                     <Typography>Assets Account</Typography>
                                     <Select
-                                        options={options}
+                                        options={accountOptions}
                                         placeholder={"Select..."}
                                         styles={{
                                             control: (base, state) => ({
@@ -212,7 +225,7 @@ export default function Settings({ auth, accounts }) {
                                         Current Assets Account
                                     </Typography>
                                     <Select
-                                        options={options}
+                                        options={accountOptions}
                                         placeholder={"Select..."}
                                         styles={{
                                             control: (base, state) => ({
@@ -247,7 +260,7 @@ export default function Settings({ auth, accounts }) {
                                         Fixed Assets Account
                                     </Typography>
                                     <Select
-                                        options={options}
+                                        options={accountOptions}
                                         placeholder={"Select..."}
                                         styles={{
                                             control: (base, state) => ({
@@ -282,7 +295,7 @@ export default function Settings({ auth, accounts }) {
                                         Cost Of Goods Sold Account
                                     </Typography>
                                     <Select
-                                        options={options}
+                                        options={accountOptions}
                                         placeholder={"Select..."}
                                         styles={{
                                             control: (base, state) => ({
@@ -321,7 +334,7 @@ export default function Settings({ auth, accounts }) {
                                         Stock Valuation Journal
                                     </Typography>
                                     <Select
-                                        options={options}
+                                        options={journalOptions}
                                         placeholder={"Select..."}
                                         styles={{
                                             control: (base, state) => ({
@@ -354,9 +367,9 @@ export default function Settings({ auth, accounts }) {
                                 <div className="col-span-1">
                                     <Typography>Sales Journal</Typography>
                                     <Select
-                                        options={options}
+                                        options={journalOptions}
                                         placeholder={"Select..."}
-                                        menuPosition={'fixed'} 
+                                        menuPosition={"fixed"}
                                         styles={{
                                             control: (base, state) => ({
                                                 ...base,
@@ -388,9 +401,9 @@ export default function Settings({ auth, accounts }) {
                                 <div className="col-span-1 mb-4">
                                     <Typography>Purchase Journal</Typography>
                                     <Select
-                                        options={options}
+                                        options={journalOptions}
                                         placeholder={"Select..."}
-                                        menuPosition={'fixed'} 
+                                        menuPosition={"fixed"}
                                         required={true}
                                         styles={{
                                             control: (base, state) => ({
@@ -432,21 +445,23 @@ export default function Settings({ auth, accounts }) {
                         </div>
                     </form>
                     <div className="bg-white overflow-hidden shadow-md rounded-md h-full py-2 mt-8 border-b border-gray-200">
-                    <form>
+                        <form>
                             <div className="grid grid-cols-2 gap-5 m-3 px-6">
                                 <Typography className="col-span-2" variant="h4">
                                     Appearance Settings
                                 </Typography>
                                 <div className="grid-span-1">
                                     <Typography>Language</Typography>
-                                    <LanguageSwitcher onLanguageChange={handleLanguageChange}/>
+                                    <LanguageSwitcher
+                                        onLanguageChange={handleLanguageChange}
+                                    />
                                 </div>
                                 <div className="grid-span-1">
                                     <Typography>Theme</Typography>
                                     <Select
                                         options={modeoptions}
                                         placeholder={"Select..."}
-                                        menuPosition={'fixed'}
+                                        menuPosition={"fixed"}
                                         styles={{
                                             control: (base, state) => ({
                                                 ...base,
@@ -484,8 +499,8 @@ export default function Settings({ auth, accounts }) {
                                         Save
                                     </Button>
                                 </div>
-                        </div>
-                    </form>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('stock', 65, 2);
-            $table->decimal('retail_price', 65, 2);
-            $table->decimal('whole_sale_price', 65, 2);
+            $table->decimal('sales_price', 65, 2);
             $table->decimal('standard_price', 65, 2);
             $table->timestamps();
             $table->softDeletes();

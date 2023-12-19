@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChartOfAccount;
+use App\Models\Journal;
 use App\Models\Setting;
 
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ class SettingsController extends Controller
     {
         $data = [
             'accounts' => ChartOfAccount::all(),
+            'journals' => Journal::all(),
         ];
 
         return Inertia::render('Dashboard/Settings/Index', $data);

@@ -22,7 +22,7 @@ class Setting extends Model
         'purchase_journal_id'
     ];
 
-    public function getPurchaseAccount()
+    public function getSetting()
     {
         return ChartOfAccount::take(1)->first();
     }

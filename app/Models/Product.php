@@ -16,8 +16,7 @@ class Product extends Model
         'name',
         'description',
         'stock',
-        'retail_price',
-        'whole_sale_price',
+        'sales_price',
         'standard_price',
     ];
 

@@ -15,9 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('number')->unique();
             $table->foreignId('vendor_id')->constrained('vendors');
-            $table->foreignId('user_id')->constrained();
             $table->date('create_date');
-            $table->date('expected_arrival_date');
+            $table->integer('total_item');
+            $table->decimal('total_price', 65, 2);
+            $table->decimal('total_paid', 65, 2);
+            $table->decimal('total_due', 65, 2);
+            $table->string('status');
+            $table->string('payment_status');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });

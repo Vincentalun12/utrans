@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Vendor;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ChartOfAccountSeeder::class,
+            VendorSeeder::class,
+            BrandSeeder::class,
         ]);
     }
 }

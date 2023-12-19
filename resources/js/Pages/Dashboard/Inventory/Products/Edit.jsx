@@ -34,13 +34,11 @@ export default function AddProduct({ auth, brands, product }) {
         name: product.name,
         brand_id: product.brand?.id,
         description: product.description,
-        retail_price: product.retail_price,
-        whole_sale_price: product.whole_sale_price,
+        sales_price: product.sales_price,
     });
 
     const actionSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
         patch(route("products.update", product.id));
     };
 
@@ -88,7 +86,11 @@ export default function AddProduct({ auth, brands, product }) {
                                                 "before:content-none after:content-none",
                                         }}
                                     />
-                                    {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                                    {errors.name && (
+                                        <p className="text-red-500 text-sm">
+                                            {errors.name}
+                                        </p>
+                                    )}
                                 </div>
                                 <div className="sm:col-span-1">
                                     <Typography>Brand</Typography>
@@ -159,7 +161,11 @@ export default function AddProduct({ auth, brands, product }) {
                                             }),
                                         }}
                                     />
-                                    {errors.brand_id && <p className="text-red-500 text-sm">{errors.brand_id}</p>}
+                                    {errors.brand_id && (
+                                        <p className="text-red-500 text-sm">
+                                            {errors.brand_id}
+                                        </p>
+                                    )}
                                 </div>
                                 <div>
                                     <div className="sm:col-span-1">
@@ -189,9 +195,9 @@ export default function AddProduct({ auth, brands, product }) {
                                 </div>
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     <div className="sm:col-span-1">
-                                        <Typography>Retail Price</Typography>
+                                        <Typography>Sales Price</Typography>
                                         <div className="w-full text-xs mb-2 text-gray-500">
-                                            * Input your Retail Price
+                                            * Input your Sales Price
                                         </div>
                                         <div className="flex">
                                             <Button
@@ -205,10 +211,10 @@ export default function AddProduct({ auth, brands, product }) {
                                             <div className="relative flex-grow">
                                                 <Input
                                                     type="number"
-                                                    value={data.retail_price}
+                                                    value={data.sales_price}
                                                     onChange={(e) => {
                                                         setData(
-                                                            "retail_price",
+                                                            "sales_price",
                                                             e.target.value
                                                         );
                                                     }}
@@ -218,43 +224,11 @@ export default function AddProduct({ auth, brands, product }) {
                                                             "before:content-none after:content-none",
                                                     }}
                                                 />
-                                            {errors.retail_price && <p className="text-red-500 text-sm">{errors.retail_price}</p>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="sm:col-span-1">
-                                        <Typography>Wholesale Price</Typography>
-                                        <div className=" w-full text-xs mb-2 text-gray-500">
-                                            * Must be greater than retail price
-                                        </div>
-                                        <div className="flex">
-                                            <Button
-                                                ripple={false}
-                                                variant="text"
-                                                color="blue-gray"
-                                                className="normal-case text-bold h-10 flex items-center rounded-r-none border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 px-3"
-                                            >
-                                                Rp
-                                            </Button>
-                                            <div className="relative flex-grow">
-                                                <Input
-                                                    type="number"
-                                                    value={
-                                                        data.whole_sale_price
-                                                    }
-                                                    onChange={(e) => {
-                                                        setData(
-                                                            "whole_sale_price",
-                                                            e.target.value
-                                                        );
-                                                    }}
-                                                    className="placeholder:text-gray-600 rounded-tl-none rounded-bl-none placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                                                    labelProps={{
-                                                        className:
-                                                            "before:content-none after:content-none",
-                                                    }}
-                                                />
-                                            {errors.whole_sale_price && <p className="text-red-500 text-sm">{errors.whole_sale_price}</p>}
+                                                {errors.sales_price && (
+                                                    <p className="text-red-500 text-sm">
+                                                        {errors.sales_price}
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
