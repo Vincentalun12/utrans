@@ -66,6 +66,8 @@ export function OrganismSidebar() {
             ? 1
             : 0 || route().current("journalentries")
             ? 1
+            : 0 || route().current("journalitems")
+            ? 1
             : 0
     );
 
@@ -359,7 +361,7 @@ export function OrganismSidebar() {
                                             className="h-3 w-5"
                                         />
                                     </ListItemPrefix>
-                                    {Language.Products}
+                                    {Language.BalanceSheet}
                                 </ListItem>
                             </Linkactive>
                             <ListItem>
