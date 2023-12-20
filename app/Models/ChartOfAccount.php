@@ -46,5 +46,7 @@ class ChartOfAccount extends Model
         $chartOfAccount = self::find($chartOfAccountId);
         $chartOfAccount->balance = $totalBalance;
         $chartOfAccount->save();
+
+        return $chartOfAccount->balance;
     }
 }

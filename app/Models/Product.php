@@ -40,4 +40,26 @@ class Product extends Model
             return $string;
         }
     }
+
+    public static function updateStandardPrice($productId)
+    {
+        // Using AVCO (Average Cost Valuation Method) to calculate standard price
+        $product = self::find($productId);
+        $purchaseOrderLines = PurchaseOrderLine::where('product_id', $productId)->get();
+        $totalQuantity = 0;
+        $totalPrice = 0;
+
+        foreach ($purchaseOrderLines as $purchaseOrderLine) {
+            $totalQuantity += $purchaseOrderLine->quantity;
+            $totalPrice += $purchaseOrderLine->quantity * $purchaseOrderLine->price;
+        }
+
+        $standardPrice = $totalPrice / $totalQuantity;
+
+        $product->update([
+            'standard_price' => $standardPrice
+        ]);
+
+        return $standardPrice;
+    }
 }

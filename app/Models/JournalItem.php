@@ -13,6 +13,8 @@ class JournalItem extends Model
     protected $fillable = [
         'journal_entry_id',
         'chart_of_account_id',
+        'purchase_order_line_id',
+        'sales_order_line_id',
         'label',
         'debit',
         'credit',

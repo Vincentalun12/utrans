@@ -72,14 +72,10 @@ const TABLE_ROWS = [
 
 export default function CreatePurchaseOrder({ auth, products, vendors }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        vendor_id: "",
+        vendor_id: null,
         reference: "",
         status: "posted",
-        product_id: "",
-        quantity: "",
-        unitprice: "",
-        disc: "",
-        total: "",
+        create_date: format(new Date(), "dd-MM-yyyy"),
     });
 
     const [stock, setStock] = useState(0);
@@ -116,7 +112,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
         if (selectedProduct) {
             setListProduct([
                 ...listProduct,
-                {   
+                {
                     id: null,
                     code: selectedProduct.code,
                     order: listProduct.length,
@@ -128,6 +124,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                 },
             ]);
         }
+        setSelectedProduct(null);
     }, [selectedProduct]);
 
     useEffect(() => {
@@ -148,7 +145,14 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
         const total = product.stock * product.price - product.discount;
         return sum + total;
     }, 0);
-    const formattedMainTotal = isNaN(mainTotal) ? '0' : mainTotal.toLocaleString("de-DE");
+    const formattedMainTotal = isNaN(mainTotal)
+        ? "0"
+        : mainTotal.toLocaleString("de-DE");
+
+    const actionSubmit = (e) => {
+        e.preventDefault();
+        post(route("purchases.store"));
+    };
 
     return (
         <AdditemLayout user={auth.user}>
@@ -172,281 +176,376 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                         </div>
                     </div>
 
-                    <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2">
-                        <div className="sm:col-span-1">
-                            <label className="">Vendor</label>
-                            <ReactSelect
-                                options={vendorOptions}
-                                components={{
-                                    DropdownIndicator: () => null,
-                                    IndicatorSeparator: () => null,
-                                }}
-                                placeholder={"Search"}
-                                styles={{
-                                    control: (base, state) => ({
-                                        ...base,
-                                        boxShadow: state.isFocused ? 0 : 0,
-                                        borderColor: state.isFocused
-                                            ? "#1A202C"
-                                            : base.borderColor,
-                                        borderWidth: state.isFocused
-                                            ? "2px"
-                                            : "1px",
-                                        "&:hover": {
+                    <form onSubmit={actionSubmit}>
+                        <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2">
+                            <div className="sm:col-span-1">
+                                <label className="">Vendor</label>
+                                <ReactSelect
+                                    options={vendorOptions}
+                                    value={data.vendor_id}
+                                    onChange={(value) => {
+                                        setData("vendor_id", value);
+                                    }}
+                                    components={{
+                                        DropdownIndicator: () => null,
+                                        IndicatorSeparator: () => null,
+                                    }}
+                                    placeholder={"Search"}
+                                    styles={{
+                                        control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
                                             borderColor: state.isFocused
                                                 ? "#1A202C"
                                                 : base.borderColor,
-                                        },
-                                        borderRadius: "6px",
-                                    }),
-                                    input: (base) => ({
-                                        ...base,
-                                        "input:focus": {
-                                            boxShadow: "none",
-                                        },
-                                    }),
-                                }}
-                            />
-                            <div></div>
-                        </div>
-                        <div className="sm:col-span-1">
-                            <label className="">Reference</label>
-                            <Input
-                                type="input"
-                                placeholder="Reference"
-                                className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                                labelProps={{
-                                    className:
-                                        "before:content-none after:content-none",
-                                }}
-                            />
-                        </div>
-                        <div className="sm:col-span-1">
-                            <label className="">Creation Date</label>
-                            <Input
-                                type="search"
-                                placeholder="14-5-2023"
-                                disabled
-                                className=" placeholder:text-gray-600 focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100 !border-t-blue-gray-200"
-                                labelProps={{
-                                    className:
-                                        "before:content-none after:content-none",
-                                }}
-                            />
-                        </div>
-                        <div className="sm:col-span-1">
-                            <label className="">Status</label>
-                            <div className="w-full">
-                                <Select
+                                            borderWidth: state.isFocused
+                                                ? "2px"
+                                                : "1px",
+                                            "&:hover": {
+                                                borderColor: state.isFocused
+                                                    ? "#1A202C"
+                                                    : base.borderColor,
+                                            },
+                                            borderRadius: "6px",
+                                        }),
+                                        input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                        }),
+                                    }}
+                                />
+                                <div></div>
+                            </div>
+                            <div className="sm:col-span-1">
+                                <label className="">Reference</label>
+                                <Input
+                                    type="input"
+                                    value={data.reference}
+                                    onChange={(e) => {
+                                        setData("reference", e.target.value);
+                                    }}
+                                    placeholder="Reference"
+                                    className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                                     labelProps={{
                                         className:
                                             "before:content-none after:content-none",
                                     }}
-                                    value={data.status}
-                                    onChange={(value) =>
-                                        setData("status", value)
-                                    }
-                                    className="placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita  focus:ring-ungukita"
-                                >
-                                    <Option value="draft">Draft</Option>
-                                    <Option value="posted">Posted</Option>
-                                    <Option value="pending">Pending</Option>
-                                    <Option value="canceled">Canceled</Option>
-                                </Select>
+                                />
+                            </div>
+                            <div className="sm:col-span-1">
+                                <label className="">Creation Date</label>
+                                <Input
+                                    type="search"
+                                    value={data.create_date}
+                                    onChange={(value) => {
+                                        setData("create_date", value);
+                                    }}
+                                    placeholder="14-5-2023"
+                                    disabled
+                                    className=" placeholder:text-gray-600 focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100 !border-t-blue-gray-200"
+                                    labelProps={{
+                                        className:
+                                            "before:content-none after:content-none",
+                                    }}
+                                />
+                            </div>
+                            <div className="sm:col-span-1">
+                                <label className="">Status</label>
+                                <div className="w-full">
+                                    <Select
+                                        labelProps={{
+                                            className:
+                                                "before:content-none after:content-none",
+                                        }}
+                                        value={data.status}
+                                        onChange={(value) =>
+                                            setData("status", value)
+                                        }
+                                        className="placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita  focus:ring-ungukita"
+                                    >
+                                        <Option value="draft">Draft</Option>
+                                        <Option value="posted">Posted</Option>
+                                        <Option value="pending">Pending</Option>
+                                        <Option value="canceled">
+                                            Canceled
+                                        </Option>
+                                    </Select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
-                        <div className="sm:col-span-2 w-full">
-                            <label className="">Product Name</label>
-                            <ReactSelect
-                                options={ProductList}
-                                value={selectedProduct}
-                                onChange={(e) => {
-                                    setSelectedProduct({
-                                        value: e.value,
-                                        label: e.label,
-                                    });
-                                }}
-                                components={{
-                                    DropdownIndicator: () => null,
-                                    IndicatorSeparator: () => null,
-                                }}
-                                styles={{
-                                    control: (base, state) => ({
-                                        ...base,
-                                        boxShadow: state.isFocused ? 0 : 0,
-                                        borderColor: state.isFocused
-                                            ? "#1A202C"
-                                            : base.borderColor,
-                                        borderWidth: state.isFocused
-                                            ? "2px"
-                                            : "1px",
-                                        "&:hover": {
+                        <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
+                            <div className="sm:col-span-2 w-full">
+                                <label className="">Product Name</label>
+                                <ReactSelect
+                                    options={ProductList}
+                                    value={selectedProduct}
+                                    onChange={(e) => {
+                                        setSelectedProduct({
+                                            value: e.value,
+                                            label: e.label,
+                                        });
+                                    }}
+                                    components={{
+                                        DropdownIndicator: () => null,
+                                        IndicatorSeparator: () => null,
+                                    }}
+                                    styles={{
+                                        control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
                                             borderColor: state.isFocused
                                                 ? "#1A202C"
                                                 : base.borderColor,
-                                        },
-                                        borderRadius: "6px",
-                                    }),
-                                    input: (base) => ({
-                                        ...base,
-                                        "input:focus": {
-                                            boxShadow: "none",
-                                        },
-                                    }),
-                                }}
-                            />
+                                            borderWidth: state.isFocused
+                                                ? "2px"
+                                                : "1px",
+                                            "&:hover": {
+                                                borderColor: state.isFocused
+                                                    ? "#1A202C"
+                                                    : base.borderColor,
+                                            },
+                                            borderRadius: "6px",
+                                        }),
+                                        input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                        }),
+                                    }}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
-                        <table className="w-full min-w-max lg:min-w-full table-auto text-left">
-                            <thead className="max-w-[20rem]">
-                                <tr>
-                                    {TABLE_HEAD.map((head) => (
-                                        <th
-                                            key={head}
-                                            className="border-b border-blue-gray-100 bg-gray-50 p-4"
-                                        >
-                                            <Typography
-                                                variant="small"
-                                                color="blue-gray"
-                                                className="font-normal leading-none opacity-70"
+                        <Card className="lg:overflow-auto overflow-x-scroll rounded-none px-6">
+                            <table className="w-full min-w-max lg:min-w-full table-auto text-left">
+                                <thead className="max-w-[20rem]">
+                                    <tr>
+                                        {TABLE_HEAD.map((head) => (
+                                            <th
+                                                key={head}
+                                                className="border-b border-blue-gray-100 bg-gray-50 p-4"
                                             >
-                                                {head}
-                                            </Typography>
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {listProduct.map(({ id, code, order, product_id, product_name, quantity, stock, price, discount }, index) => {
-                                const correspondingProduct = ProductList.find(product => product.value === product_id);
-                                const itemcode = correspondingProduct.code;
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-normal leading-none opacity-70"
+                                                >
+                                                    {head}
+                                                </Typography>
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {listProduct.map(
+                                        (
+                                            {
+                                                id,
+                                                code,
+                                                order,
+                                                product_id,
+                                                product_name,
+                                                quantity,
+                                                stock,
+                                                price,
+                                                discount,
+                                            },
+                                            index
+                                        ) => {
+                                            const correspondingProduct =
+                                                ProductList.find(
+                                                    (product) =>
+                                                        product.value ===
+                                                        product_id
+                                                );
+                                            const itemcode =
+                                                correspondingProduct.code;
 
-                                const totalValue = stock * price - discount;
-                                const total = isNaN(totalValue) ? '0' : totalValue.toLocaleString("de-DE");
+                                            const totalValue =
+                                                stock * price - discount;
+                                            const total = isNaN(totalValue)
+                                                ? "0"
+                                                : totalValue.toLocaleString(
+                                                      "de-DE"
+                                                  );
 
-                                    const isLast = index === TABLE_ROWS.length - 1;
-                                    const classes = isLast
-                                        ? "p-4"
-                                        : "p-4 border-b border-blue-gray-50";
+                                            const isLast =
+                                                index === TABLE_ROWS.length - 1;
+                                            const classes = isLast
+                                                ? "p-4"
+                                                : "p-4 border-b border-blue-gray-50";
 
-                                    return (
-                                        <tr key={index}>
-                                            <td className="p-2 border-b border-gray-200 pl-4">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="flex flex-col">
+                                            return (
+                                                <tr key={index}>
+                                                    <td className="p-2 border-b border-gray-200 pl-4">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="flex flex-col">
+                                                                <Typography
+                                                                    variant="small"
+                                                                    color="blue-gray"
+                                                                    className="font-normal"
+                                                                >
+                                                                    {itemcode}
+                                                                </Typography>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="p-2 border-b border-gray-200 pl-4">
+                                                        <div className="flex flex-col">
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {product_name}
+                                                            </Typography>
+                                                        </div>
+                                                    </td>
+                                                    <td className="p-2 border-b border-gray-200 pl-4">
+                                                        <div className="flex flex-col">
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                <input
+                                                                    type="number"
+                                                                    id="Quantity"
+                                                                    class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
+                                                                    onChange={(
+                                                                        event
+                                                                    ) => {
+                                                                        const newListProduct =
+                                                                            [
+                                                                                ...listProduct,
+                                                                            ];
+                                                                        newListProduct[
+                                                                            index
+                                                                        ].quantity =
+                                                                            Number(
+                                                                                event
+                                                                                    .target
+                                                                                    .value
+                                                                            );
+                                                                        setListProduct(
+                                                                            newListProduct
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            </Typography>
+                                                        </div>
+                                                    </td>
+                                                    <td className="p-2 border-b border-gray-200 pl-4">
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {itemcode}
+                                                            <input
+                                                                type="number"
+                                                                id="UnitPrice"
+                                                                class="h-10 w-25 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
+                                                                onChange={(
+                                                                    event
+                                                                ) => {
+                                                                    const newListProduct =
+                                                                        [
+                                                                            ...listProduct,
+                                                                        ];
+                                                                    newListProduct[
+                                                                        index
+                                                                    ].price =
+                                                                        Number(
+                                                                            event
+                                                                                .target
+                                                                                .value
+                                                                        );
+                                                                    setListProduct(
+                                                                        newListProduct
+                                                                    );
+                                                                }}
+                                                            />
                                                         </Typography>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="p-2 border-b border-gray-200 pl-4">
-                                                <div className="flex flex-col">
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal"
-                                                    >
-                                                        {product_name}
-                                                    </Typography>
-                                                </div>
-                                            </td>
-                                            <td className="p-2 border-b border-gray-200 pl-4">
-                                                <div className="flex flex-col">
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal"
-                                                    >
-                                                        <input
-                                                            type="number"
-                                                            id="Quantity"
-                                                            class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
-                                                            onChange={(event) => {
-                                                                const newListProduct = [...listProduct];
-                                                                newListProduct[index].stock = Number(event.target.value);
-                                                                setListProduct(newListProduct);
-                                                            }}
-                                                        />
-                                                    </Typography>
-                                                </div>
-                                            </td>
-                                            <td className="p-2 border-b border-gray-200 pl-4">
-                                                <Typography
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-normal"
-                                                >
-                                                    <input
-                                                        type="number"
-                                                        id="UnitPrice"
-                                                        class="h-10 w-25 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
-                                                        onChange={(event) => {
-                                                            const newListProduct = [...listProduct];
-                                                            newListProduct[index].price = Number(event.target.value);
-                                                            setListProduct(newListProduct);
-                                                        }}
-                                                    />
-                                                </Typography>
-                                            </td>
-                                            <td className="p-2 border-b border-gray-200 pl-4">
-                                                <Typography
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-normal"
-                                                >
-                                                    <input
-                                                        type="number"
-                                                        id="Discount"
-                                                        class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
-                                                        onChange={(event) => {
-                                                            const newListProduct = [...listProduct];
-                                                            newListProduct[index].discount = Number(event.target.value);
-                                                            setListProduct(newListProduct);
-                                                        }}
-                                                    />
-                                                </Typography>
-                                            </td>
-                                            <td className="p-2 border-b border-gray-200 pl-4">
-                                                <Typography
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-normal"
-                                                >
-                                                    Rp{total}
-                                                </Typography>
-                                            </td>
-                                            <td className="p-2 border-b border-gray-200 pl-4">
-                                                <Tooltip content="Delete">
-                                                    <Button
-                                                        size="sm"
-                                                        variant="text"
-                                                        onClick={() => {
-                                                            const newList = listProduct.filter((item) => item.order !== order);
-                                                            setListProduct(newList);
-                                                            setSelectedProduct(null);
-                                                        }}
-                                                    >
-                                                        <TrashIcon className="h-5 w-5 text-red-500" />
-                                                    </Button>
-                                                </Tooltip>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </Card>
-                    <Card className="flex bg-white rounded-none">
-                        <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
-                            {/* <div>
+                                                    </td>
+                                                    <td className="p-2 border-b border-gray-200 pl-4">
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            <input
+                                                                type="number"
+                                                                id="Discount"
+                                                                class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
+                                                                onChange={(
+                                                                    event
+                                                                ) => {
+                                                                    const newListProduct =
+                                                                        [
+                                                                            ...listProduct,
+                                                                        ];
+                                                                    newListProduct[
+                                                                        index
+                                                                    ].discount =
+                                                                        Number(
+                                                                            event
+                                                                                .target
+                                                                                .value
+                                                                        );
+                                                                    setListProduct(
+                                                                        newListProduct
+                                                                    );
+                                                                }}
+                                                            />
+                                                        </Typography>
+                                                    </td>
+                                                    <td className="p-2 border-b border-gray-200 pl-4">
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            Rp{total}
+                                                        </Typography>
+                                                    </td>
+                                                    <td className="p-2 border-b border-gray-200 pl-4">
+                                                        <Tooltip content="Delete">
+                                                            <Button
+                                                                size="sm"
+                                                                variant="text"
+                                                                onClick={() => {
+                                                                    const newList =
+                                                                        listProduct.filter(
+                                                                            (
+                                                                                item
+                                                                            ) =>
+                                                                                item.order !==
+                                                                                order
+                                                                        );
+                                                                    setListProduct(
+                                                                        newList
+                                                                    );
+                                                                    setSelectedProduct(
+                                                                        null
+                                                                    );
+                                                                }}
+                                                            >
+                                                                <TrashIcon className="h-5 w-5 text-red-500" />
+                                                            </Button>
+                                                        </Tooltip>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        }
+                                    )}
+                                </tbody>
+                            </table>
+                        </Card>
+                        <Card className="flex bg-white rounded-none">
+                            <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
+                                {/* <div>
                                 <label className="">Discount</label>
                                 <Input
                                     type="search"
@@ -470,7 +569,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                     }}
                                 />
                             </div> */}
-                            {/* <div>
+                                {/* <div>
                                 <label className="">Status</label>
                                 <div className="w-full">
                                     <Select
@@ -485,48 +584,52 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                     </Select>
                                 </div>
                             </div> */}
-                        </div>
-                    </Card>
-                    <Card className="h-full w-full overflow-hidden rounded-none p-6 items-end">
-                        <div className="flex justify-between items-center">
-                            <div></div>
-                            <table className="border-gray-300 border-t">
-                                {/* <tr>
+                            </div>
+                        </Card>
+                        <Card className="h-full w-full overflow-hidden rounded-none p-6 items-end">
+                            <div className="flex justify-between items-center">
+                                <div></div>
+                                <table className="border-gray-300 border-t">
+                                    {/* <tr>
                                     <td className="pl-4">Discount</td>
                                     <td className="">:</td>
                                     <td className="pl-4">0%</td>
                                 </tr> */}
-                                {/* <tr>
+                                    {/* <tr>
                                     <td className="pl-4">Shipping</td>
                                     <td className="">:</td>
                                     <td className="pl-4">0</td>
                                 </tr> */}
-                                <tr>
-                                    <td className="pl-4">Total</td>
-                                    <td className="">:</td>
-                                    <td className="pl-4">Rp{formattedMainTotal}</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div className="pt-6 pr-5">
-                            <Button
-                                color="green"
-                                ripple="light"
-                                disabled={!data.status}
-                            >
-                                Submit
-                            </Button>
-                            <a href="/purchases">
+                                    <tr>
+                                        <td className="pl-4">Total</td>
+                                        <td className="">:</td>
+                                        <td className="pl-4">
+                                            Rp{formattedMainTotal}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div className="pt-6 pr-5">
                                 <Button
-                                    color="red"
-                                    ripple="dark"
-                                    className="ml-4"
+                                    type="submit"
+                                    color="green"
+                                    ripple="light"
+                                    disabled={!data.status}
                                 >
-                                    Cancel
+                                    Submit
                                 </Button>
-                            </a>
-                        </div>
-                    </Card>
+                                <a href="/purchases">
+                                    <Button
+                                        color="red"
+                                        ripple="dark"
+                                        className="ml-4"
+                                    >
+                                        Cancel
+                                    </Button>
+                                </a>
+                            </div>
+                        </Card>
+                    </form>
                 </div>
             </div>
         </AdditemLayout>

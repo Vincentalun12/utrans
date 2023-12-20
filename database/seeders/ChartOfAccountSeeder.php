@@ -16,7 +16,7 @@ class ChartOfAccountSeeder extends Seeder
         DB::table('chart_of_accounts')->insert(
             [
                 'code' => '1000',
-                'account_name' => 'Current Assets',
+                'account_name' => 'Inventory Account',
                 'account_type' => 'current_assets',
                 'balance' => 0,
                 'created_at' => now(),
@@ -58,6 +58,26 @@ class ChartOfAccountSeeder extends Seeder
                 'code' => '6000',
                 'account_name' => 'Purchases',
                 'account_type' => 'expense',
+                'balance' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+        DB::table('chart_of_accounts')->insert(
+            [
+                'code' => '2000',
+                'account_name' => 'Account Payable',
+                'account_type' => 'liability',
+                'balance' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+        DB::table('chart_of_accounts')->insert(
+            [
+                'code' => '3000',
+                'account_name' => 'Account Receivable',
+                'account_type' => 'current_assets',
                 'balance' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -100,11 +100,8 @@ export default function CreateCoa({ auth }) {
                                             <Option value="bank_and_cash">
                                                 Bank and Cash
                                             </Option>
-                                            <Option value="receivable">
-                                                Receivable
-                                            </Option>
-                                            <Option value="payable">
-                                                Payable
+                                            <Option value="liabilites">
+                                                Liabilities
                                             </Option>
                                             <Option value="current_assets">
                                                 Current Assets

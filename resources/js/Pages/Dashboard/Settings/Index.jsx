@@ -55,9 +55,11 @@ export default function Settings({ auth, accounts, journals, setting }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         sales_account_id: setting?.sales_account_id,
         purchase_account_id: setting?.purchase_account_id,
-        current_assets_account_id: setting?.current_assets_account_id,
+        inventory_account_id: setting?.inventory_account_id,
         fixed_assets_account_id: setting?.fixed_assets_account_id,
         cost_of_goods_sold_account_id: setting?.cost_of_goods_sold_account_id,
+        account_receivable_id: setting?.account_receivable_id,
+        account_payable_id: setting?.account_payable_id,
         stock_valuation_journal_id: setting?.stock_valuation_journal_id,
         sales_journal_id: setting?.sales_journal_id,
         purchase_journal_id: setting?.purchase_journal_id,
@@ -275,30 +277,28 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                     />
                                 </div>
                                 <div className="col-span-1">
-                                    <Typography>
-                                        Current Assets Account
-                                    </Typography>
+                                    <Typography>Inventory Account</Typography>
                                     <Select
                                         options={accountOptions}
                                         value={{
-                                            value: data.current_assets_account_id,
+                                            value: data.inventory_account_id,
                                             label: `${
                                                 accounts?.find(
                                                     (account) =>
                                                         account.id ===
-                                                        data.current_assets_account_id
+                                                        data.inventory_account_id
                                                 )?.code || ""
                                             } ${
                                                 accounts?.find(
                                                     (account) =>
                                                         account.id ===
-                                                        data.current_assets_account_id
+                                                        data.inventory_account_id
                                                 )?.account_name || ""
                                             }`,
                                         }}
                                         onChange={(e) =>
                                             setData(
-                                                "current_assets_account_id",
+                                                "inventory_account_id",
                                                 e.value
                                             )
                                         }
@@ -413,6 +413,116 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                         onChange={(e) =>
                                             setData(
                                                 "cost_of_goods_sold_account_id",
+                                                e.value
+                                            )
+                                        }
+                                        placeholder={"Select..."}
+                                        styles={{
+                                            control: (base, state) => ({
+                                                ...base,
+                                                boxShadow: state.isFocused
+                                                    ? 0
+                                                    : 0,
+                                                borderColor: state.isFocused
+                                                    ? "#1A202C"
+                                                    : base.borderColor,
+                                                borderWidth: state.isFocused
+                                                    ? "2px"
+                                                    : "1px",
+                                                "&:hover": {
+                                                    borderColor: state.isFocused
+                                                        ? "#1A202C"
+                                                        : base.borderColor,
+                                                },
+                                                borderRadius: "6px",
+                                            }),
+                                            input: (base) => ({
+                                                ...base,
+                                                "input:focus": {
+                                                    boxShadow: "none",
+                                                },
+                                            }),
+                                        }}
+                                    />
+                                </div>
+                                <div className="col-span-1">
+                                    <Typography>Account Receivable</Typography>
+                                    <Select
+                                        options={accountOptions}
+                                        value={{
+                                            value: data.account_receivable_id,
+                                            label: `${
+                                                accounts?.find(
+                                                    (account) =>
+                                                        account.id ===
+                                                        data.account_receivable_id
+                                                )?.code || ""
+                                            } ${
+                                                accounts?.find(
+                                                    (account) =>
+                                                        account.id ===
+                                                        data.account_receivable_id
+                                                )?.account_name || ""
+                                            }`,
+                                        }}
+                                        onChange={(e) =>
+                                            setData(
+                                                "account_receivable_id",
+                                                e.value
+                                            )
+                                        }
+                                        placeholder={"Select..."}
+                                        styles={{
+                                            control: (base, state) => ({
+                                                ...base,
+                                                boxShadow: state.isFocused
+                                                    ? 0
+                                                    : 0,
+                                                borderColor: state.isFocused
+                                                    ? "#1A202C"
+                                                    : base.borderColor,
+                                                borderWidth: state.isFocused
+                                                    ? "2px"
+                                                    : "1px",
+                                                "&:hover": {
+                                                    borderColor: state.isFocused
+                                                        ? "#1A202C"
+                                                        : base.borderColor,
+                                                },
+                                                borderRadius: "6px",
+                                            }),
+                                            input: (base) => ({
+                                                ...base,
+                                                "input:focus": {
+                                                    boxShadow: "none",
+                                                },
+                                            }),
+                                        }}
+                                    />
+                                </div>
+                                <div className="col-span-1">
+                                    <Typography>Account Payable</Typography>
+                                    <Select
+                                        options={accountOptions}
+                                        value={{
+                                            value: data.account_payable_id,
+                                            label: `${
+                                                accounts?.find(
+                                                    (account) =>
+                                                        account.id ===
+                                                        data.account_payable_id
+                                                )?.code || ""
+                                            } ${
+                                                accounts?.find(
+                                                    (account) =>
+                                                        account.id ===
+                                                        data.account_payable_id
+                                                )?.account_name || ""
+                                            }`,
+                                        }}
+                                        onChange={(e) =>
+                                            setData(
+                                                "account_payable_id",
                                                 e.value
                                             )
                                         }

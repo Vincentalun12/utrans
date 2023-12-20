@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sales_account_id')->nullable()->constrained('chart_of_accounts');
             $table->foreignId('purchase_account_id')->nullable()->constrained('chart_of_accounts');
-            $table->foreignId('current_assets_account_id')->nullable()->constrained('chart_of_accounts');
+            $table->foreignId('inventory_account_id')->nullable()->constrained('chart_of_accounts');
             $table->foreignId('fixed_assets_account_id')->nullable()->constrained('chart_of_accounts');
             $table->foreignId('cost_of_goods_sold_account_id')->nullable()->constrained('chart_of_accounts');
+            $table->foreignId('account_payable_id')->nullable()->constrained('chart_of_accounts');
+            $table->foreignId('account_receivable_id')->nullable()->constrained('chart_of_accounts');
             $table->foreignId('stock_valuation_journal_id')->nullable()->constrained('journals');
             $table->foreignId('sales_journal_id')->nullable()->constrained('journals');
             $table->foreignId('purchase_journal_id')->nullable()->constrained('journals');

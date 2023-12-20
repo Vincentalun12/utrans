@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('number')->unique();
+            $table->string('code')->unique();
             $table->foreignId('vendor_id')->constrained('vendors');
             $table->date('create_date');
             $table->integer('total_item');

@@ -13,16 +13,34 @@ class Setting extends Model
     protected $fillable = [
         'sales_account_id',
         'purchase_account_id',
-        'current_assets_account_id',
+        'inventory_account_id',
         'fixed_assets_account_id',
         'cost_of_goods_sold_account_id',
+        'account_payable_id',
+        'account_receivable_id',
         'stock_valuation_journal_id',
         'sales_journal_id',
         'purchase_journal_id'
     ];
 
-    public function getSetting()
+    public static function getSetting()
     {
-        return ChartOfAccount::take(1)->first();
+        $setting = self::first();
+        $sales_account_id = $setting->sales_account_id;
+        $purchase_account_id = $setting->purchase_account_id;
+        $inventory_account_id = $setting->inventory_account_id;
+        $fixed_assets_account_id = $setting->fixed_assets_account_id;
+        $cost_of_goods_sold_account_id = $setting->cost_of_goods_sold_account_id;
+        $account_payable_id = $setting->account_payable_id;
+        $account_receivable_id = $setting->account_receivable_id;
+        $stock_valuation_journal_id = $setting->stock_valuation_journal_id;
+        $sales_journal_id = $setting->sales_journal_id;
+        $purchase_journal_id = $setting->purchase_journal_id;
+
+        if (!$sales_account_id || !$purchase_account_id || !$inventory_account_id || !$fixed_assets_account_id || !$cost_of_goods_sold_account_id || !$account_payable_id || !$account_receivable_id || !$stock_valuation_journal_id || !$sales_journal_id || !$purchase_journal_id) {
+            throw new \Exception('Please complete the setting first');
+        }
+
+        return $setting;
     }
 }

@@ -11,7 +11,7 @@ class PurchaseOrder extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'number',
+        'code',
         'vendor_id',
         'create_date',
         'total_item',
@@ -22,6 +22,22 @@ class PurchaseOrder extends Model
         'payment_status',
         'user_id',
     ];
+
+    public static function generateCode()
+    {
+        $lastPurchase = self::withTrashed()->orderBy('id', 'desc')->first();
+        $currentYear = date('Y');
+
+        if (!$lastPurchase) {
+            return "PO-$currentYear-0001";
+        }
+
+        $code = substr($lastPurchase->code, 6);
+        $code = (int) $code + 1;
+        $code = "PO-$currentYear" . substr('0000', 0, 4 - strlen($code)) . $code;
+
+        return $code;
+    }
 
     public function vendor()
     {
