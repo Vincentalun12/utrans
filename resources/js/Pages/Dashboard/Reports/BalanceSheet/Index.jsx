@@ -8,7 +8,16 @@ import {
   Button,
   Breadcrumbs,
   CardHeader,
+  Menu,
+  MenuList,
+  MenuItem,
+  MenuHandler,
+  IconButton,
 } from "@material-tailwind/react";
+
+import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import { Utranslogo2 } from '@/Assets';
+import { Language } from '@/Languages/Inventory/Brand/BrandIndex';
 
 import {
   PencilSquareIcon,
@@ -21,6 +30,9 @@ import {
   EllipsisHorizontalIcon,
   PlusCircleIcon,
   CalendarDaysIcon,
+  DocumentTextIcon,
+  DocumentArrowDownIcon,
+  DocumentChartBarIcon,
 } from "@heroicons/react/24/solid";
 
 export default function Balancesheet({ auth }) {
@@ -51,6 +63,254 @@ export default function Balancesheet({ auth }) {
     setIsOpenPayables(!isOpenPayables);
   };
 
+  const styles = StyleSheet.create({
+    page: {
+        fontSize: 11,
+        paddingTop: 20,
+        paddingLeft: 40,
+        paddingRight: 40,
+        lineHeight: 1.5,
+        flexDirection: 'column' 
+    },
+    
+    title: {
+        fontSize: 16,  
+        textAlign: 'center',
+        marginBottom: 5,
+        marginLeft: "9%",
+        marginRight: "9%",
+        marginTop: 10,
+    },
+    dateTime: {
+        textAlign: "right",
+        fontSize: 10,
+        marginBottom: 30,
+        marginLeft: "9%",
+        marginRight: "9%",
+    },
+    spaceBetween : {
+        flex : 1,
+        flexDirection: 'row',
+        alignItems:'center',
+        justifyContent:'space-between',
+        color: "#3E3E3E" 
+    },
+
+    titleContainer: {
+        flexDirection: 'row',
+        marginTop: 24
+    },
+    
+    table: {
+        display: "flex",
+        width: "80%",
+        marginLeft: "10%",
+        marginRight: "10%",
+        borderStyle: "solid",
+        borderRightWidth: 0,
+        borderBottomWidth: 0,
+    },
+    
+    tableRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width:'100%',
+    },
+    tableColHeader: {
+        flex: 1,
+        paddingTop: 4 ,
+        borderBottomWidth:1,
+        textAlign: "left",
+    },
+    tableCol: {
+      flex: 1,
+      paddingTop: 4 , 
+      textAlign: "left",
+      minWidth: '50%',
+    },
+
+    tableColHeader2: {
+      flex: 1,
+      paddingTop: 4 , 
+      borderBottomWidth:1,
+      textAlign: "right",
+    },
+
+    tableCol2: {
+      flex: 1,
+      paddingTop: 4 , 
+      textAlign: "right",
+    },
+
+    tableCellHeader: {
+        fontSize: 10,
+        fontStyle: "bold",
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+    },
+
+    tableCell: {
+        fontSize: 9,
+        paddingTop: 4 ,
+        borderBottomWidth:1,
+        borderColor: "#a0a4ac",
+    },
+
+    tableCellnone: {
+      color: "#FFFFFF",
+      fontSize: 9,
+      paddingTop: 4 ,
+      borderBottomWidth:1,
+      borderColor: "#a0a4ac",
+    },
+
+    tableCellnonelast: {
+      color: "#FFFFFF",
+      fontSize: 9,
+      paddingTop: 4 ,
+      borderBottomWidth:1,
+    },
+
+    tableCelltab: {
+      fontSize: 9,
+      paddingTop: 4 ,
+      borderBottomWidth:1,
+      borderColor: "#a0a4ac",
+      paddingLeft: 10,
+    },
+    tableCelltab3: {
+      fontSize: 9,
+      paddingTop: 4 ,
+      borderBottomWidth:1,
+      borderColor: "#a0a4ac",
+      paddingLeft: 20,
+    },
+
+    tableCelllast: {
+      fontSize: 9,
+      paddingTop: 4 ,
+      borderBottomWidth:1,
+    },
+
+    tableCellBold: {
+      fontSize: 10,
+      paddingTop: 4 ,
+      fontStyle: "bold",
+      paddingBottom: 10 ,
+    },
+
+    image: {
+        width: 90,
+        marginLeft: "9%",
+        marginRight: "9%",
+    },
+
+    address: {
+        textAlign: "right",
+        fontSize: 10,
+        marginBottom: 30,
+        marginLeft: "9%",
+        marginRight: "9%",
+    },
+    address2: {
+        textAlign: "right",
+        fontSize: 10,
+        marginLeft: "9%",
+        marginRight: "9%",
+    },
+});
+
+  const MyDocument = ({ data }) => (
+    <Document>
+                <Page size="A4">
+                <View style={styles.titleContainer}>
+                    <View style={styles.spaceBetween}>
+                <Image src={Utranslogo2} style={styles.image} />
+                    <Text style={styles.title}>Balance Sheet</Text>
+                    </View>
+                </View>
+                    <Text style={styles.dateTime}>
+                        {new Date().toLocaleString()}
+                    </Text>
+                    <Text style={styles.address2}>Kec. Batam kota,</Text>
+                    <Text style={styles.address2}>Belian,</Text>
+                    <Text style={styles.address}>Unnamed Road</Text>
+                    <View style={styles.table}>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableColHeader}>
+                                <Text style={styles.tableCellHeader}>ASSETS</Text>
+                            </View>
+                            <View style={[styles.tableColHeader2]}>
+                                <Text style={styles.tableCellHeader}>Rp 2.394.000.000,00</Text>
+                            </View>
+                        </View>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableCol}>
+                                <Text style={styles.tableCell}>Current Assets</Text>
+                                <Text style={styles.tableCelltab}>Bank And Cash Accounts</Text>
+                                <Text style={styles.tableCelltab3}>001.0001 Kas Kecil (IDR)</Text>
+                                <Text style={styles.tableCelltab}>Receivables</Text>
+                                <Text style={styles.tableCelltab3}>002.0002 Account Receivable (IDR)</Text>
+                                <Text style={styles.tableCelltab}>Current Assets</Text>
+                                <Text style={styles.tableCelltab3}>1000011 Bank Suspense Account</Text>
+                                <Text style={styles.tableCelltab3}>1000012 Outstanding Receipts</Text>
+                                <Text style={styles.tableCelltab3}>1000013 Good in Transit</Text>
+                                <Text style={styles.tableCelltab3}>003.0001 Persediaan Barang</Text>
+                                <Text style={styles.tableCell}>Plus fixed Assets</Text>
+                                <Text style={styles.tableCelllast}>Plus Non-current Assets</Text>
+                                <Text style={styles.tableCellBold}>Total Assets</Text>
+
+                            </View>
+                            <View style={styles.tableCol2}>
+                                <Text style={styles.tableCellnone}>-</Text>
+                                <Text style={styles.tableCell}>Rp 132.047.000,00</Text>
+                                <Text style={styles.tableCell}>Rp 83.143.000,00</Text>
+                                <Text style={styles.tableCell}>Rp 180.523.000,00</Text>
+                                <Text style={styles.tableCell}>Rp 43.000.000,00</Text>
+                                <Text style={styles.tableCell}>Rp 2.467.431.839,00</Text>
+                                <Text style={styles.tableCell}>Rp 2.394.242.258,00</Text>
+                                <Text style={styles.tableCellnone}>-</Text>
+                                <Text style={styles.tableCell}>Rp -6.286.422.524,25</Text>
+                                <Text style={styles.tableCell}>Rp 6.213.232.943,25</Text>
+                                <Text style={styles.tableCellnone}>-</Text>
+                                <Text style={styles.tableCellnonelast}>-</Text>
+                                <Text style={styles.tableCellBold}>Rp 245.695.940,00</Text>
+                            </View>
+                      </View>
+                </View>
+                <View style={styles.table}>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableColHeader}>
+                                <Text style={styles.tableCellHeader}>LIABILITES</Text>
+                            </View>
+                            <View style={[styles.tableColHeader2]}>
+                                <Text style={styles.tableCellHeader}>Rp 21.216.514,00</Text>
+                            </View>
+                        </View>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableCol}>
+                                <Text style={styles.tableCell}>Current Liabilities</Text>
+                                <Text style={styles.tableCelltab}>Current Liabilities</Text>
+                                <Text style={styles.tableCelltab}>Payables</Text>
+                                <Text style={styles.tableCelltab3}>004.0001 Hutang usaha (IDR)</Text>
+                                <Text style={styles.tableCelllast}>Plus Non-current Liabilities</Text>
+                                <Text style={styles.tableCellBold}>Total Liabilities</Text>
+
+                            </View>
+                            <View style={styles.tableCol2}>
+                                <Text style={styles.tableCell}>Rp 21.216.514,00</Text>
+                                <Text style={styles.tableCellnone}>-</Text>
+                                <Text style={styles.tableCell}>Rp 21.216.514,00</Text>
+                                <Text style={styles.tableCell}>Rp 11.314.501,00</Text>
+                                <Text style={styles.tableCellnonelast}>-</Text>
+                                <Text style={styles.tableCellBold}>Rp 245.695.940,00</Text>
+                            </View>
+                      </View>
+                </View>
+            </Page>
+        </Document>
+    );
+
   return (
     <BalancesheetLayout user={auth.user}>
       <Head title="Balance sheet" />
@@ -71,10 +331,38 @@ export default function Balancesheet({ auth }) {
               </div>
           </div>
           <Card className="h-full w-full overflow-hidden rounded-none inline-flex">
-            <div className="p-4 pt-5 inline-flex">
-              <CalendarDaysIcon className="w-6 h-6 text-black" />
-              <span className="text-black font-bold mx-1">Date :</span>
-              <span className="">Thur Nov 2, 2020</span>
+            <div className="p-4 pt-5 flex justify-between">
+              <div className="flex">
+                <CalendarDaysIcon className="w-6 h-6 text-black" />
+                <span className="text-black font-bold mx-1">Date :</span>
+                <span className="">Thur Nov 2, 2020</span>
+              </div>
+              <div className="md:flex hidden justify-end">
+                <Menu placement="right-start">
+                  <MenuHandler>
+                    <IconButton className="bg-ungukita">
+                      <DocumentTextIcon className="w-5 h-5" />
+                    </IconButton>
+                  </MenuHandler>
+                  <MenuList>
+                    <MenuItem className="flex items-center gap-2">
+                      <DocumentArrowDownIcon className="w-5 h-5" stroke="red" />
+                      <PDFDownloadLink document={<MyDocument/>} fileName="Balance sheet.pdf">
+                        {({ blob, url, loading, error }) =>
+                          loading ? 'Loading document...' : `${Language.export.pdf}`
+                        }
+                      </PDFDownloadLink>
+                    </MenuItem>
+                    <MenuItem className="flex items-center gap-2">
+                      <DocumentChartBarIcon
+                        className="w-5 h-5"
+                        stroke="green"
+                      />
+                      {Language.export.csv}
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </div>
             </div>
           </Card>
           <Card className="h-full w-full overflow-hidden rounded-none">
@@ -105,16 +393,8 @@ export default function Balancesheet({ auth }) {
                   <details className="w-full cursor-default">
                     <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
-                      <span>001.0001 Kas Besar (IDR)</span>
+                      <span>001.0001 Kas Kecil (IDR)</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp 83.143.000,00</span>
-                    </div>
-                    </summary>
-                  </details>
-                  <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>001.0002 Kas Piutang (IDR)</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 48.904.000,00</span>
                     </div>
                     </summary>
                   </details>
@@ -127,14 +407,6 @@ export default function Balancesheet({ auth }) {
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp 180.523.000,00</span>
                     </div>
                   </summary>
-                  <details className="w-full cursor-default">
-                    <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>002.0001 Piutang Usaha (IDR)</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 137.523.000,00</span>
-                    </div>
-                    </summary>
-                  </details>
                   <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
@@ -185,23 +457,6 @@ export default function Balancesheet({ auth }) {
                     </summary>
                   </details>
                 </details>
-                <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsPrepayments}>
-                    <div className="flex">
-                    {isOpenPrepayments ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
-                      <span>Prepayments</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp -2.394.378.821,00</span>
-                    </div>
-                  </summary>
-                  <details className="w-full cursor-default">
-                    <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>001.3902 PPN (IDR)</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp -2.394.378.821,00</span>
-                    </div>
-                    </summary>
-                  </details>
-                </details>
                 <p className="border-b w-full border-gray-400">Plus fixed Assets</p>
                 <p className="border-b w-full border-black">Plus Non-current Assets</p>
                 <div className="flex justify-between">
@@ -241,14 +496,6 @@ export default function Balancesheet({ auth }) {
                     <div className="flex">
                       <span>004.0001 Hutang usaha (IDR)</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp 11.314.501,00</span>
-                    </div>
-                    </summary>
-                  </details>
-                  <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>004.0001 Trade Receivable</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 9.902.013,00</span>
                     </div>
                     </summary>
                   </details>
