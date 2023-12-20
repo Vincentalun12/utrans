@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import { Global, css } from "@emotion/react";
+import { Utranslogo2 } from '@/Assets';
 import {
     PDFDownloadLink,
     Document,
@@ -10,6 +11,7 @@ import {
     Text,
     View,
     StyleSheet,
+    Image,
 } from "@react-pdf/renderer";
 import {
     Card,
@@ -165,79 +167,142 @@ export default function Inventory({ auth, products }) {
 
     //print pdf
     const styles = StyleSheet.create({
+        page: {
+            fontSize: 11,
+            paddingTop: 20,
+            paddingLeft: 40,
+            paddingRight: 40,
+            lineHeight: 1.5,
+            flexDirection: 'column' 
+        },
+        
         title: {
-            textAlign: "left",
-            fontSize: 14,
+            fontSize: 16,  
+            textAlign: 'center',
             marginBottom: 5,
             marginLeft: "9%",
             marginRight: "9%",
             marginTop: 10,
         },
         dateTime: {
-            textAlign: "left",
-            fontSize: 14,
+            textAlign: "right",
+            fontSize: 10,
             marginBottom: 30,
             marginLeft: "9%",
             marginRight: "9%",
         },
+        spaceBetween : {
+            flex : 1,
+            flexDirection: 'row',
+            alignItems:'center',
+            justifyContent:'space-between',
+            color: "#3E3E3E" 
+        },
+
+        titleContainer: {
+            flexDirection: 'row',
+            marginTop: 24
+        },
+        
         table: {
             display: "table",
             width: "80%",
             marginLeft: "10%",
             marginRight: "10%",
             borderStyle: "solid",
-            borderWidth: 1,
             borderRightWidth: 0,
             borderBottomWidth: 0,
         },
-        table: {
-            width: "80%",
-            marginLeft: "10%",
-            marginRight: "10%",
-            borderWidth: 1,
-        },
+        
         tableRow: {
             flexDirection: "row",
             justifyContent: "space-between",
+            width:'100%',
         },
         tableColHeader: {
             flex: 1,
             backgroundColor: "#f8f4f4",
-            borderWidth: 1,
-            padding: 3,
+            paddingTop: 4 , paddingLeft: 7 ,
+            borderColor : 'whitesmoke',
+            backgroundColor : '#DEDEDE',
+            borderRightWidth:1, borderBottomWidth:1
         },
         tableCol: {
             flex: 1,
             borderWidth: 1,
-            padding: 3,
+            paddingTop: 4 , paddingLeft: 7 ,
+            borderColor : 'whitesmoke',
+            borderRightWidth:1, borderBottomWidth:1
+        },
+
+        tableColHeader2: {
+            flex:2, 
+            borderRightWidth:0, 
+            borderBottomWidth:1,
+            backgroundColor : '#DEDEDE',
+        },
+
+        tableCol2: {
+            flex:2, 
+            borderRightWidth:0, 
+            borderBottomWidth:1,
         },
 
         tableCellHeader: {
-            margin: "auto",
-            marginTop: 5,
-            fontSize: 9,
-            fontWeight: "bold",
+            fontSize: 10,
+            fontStyle: "bold",
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
         },
+
         tableCell: {
-            margin: "auto",
-            marginTop: 5,
+            paddingTop: 4 , paddingLeft: 7 ,
             fontSize: 9,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+        },
+        image: {
+            width: 90,
+            marginLeft: "9%",
+            marginRight: "9%",
+        },
+
+        address: {
+            textAlign: "right",
+            fontSize: 10,
+            marginBottom: 30,
+            marginLeft: "9%",
+            marginRight: "9%",
+        },
+        address2: {
+            textAlign: "right",
+            fontSize: 10,
+            marginLeft: "9%",
+            marginRight: "9%",
         },
     });
 
     const MyDocument = ({ data }) => (
         <Document>
-            <Page>
-                <Text style={styles.title}>Report : Products Report</Text>
+            <Page size="A4" orientation="landscape">
+            <View style={styles.titleContainer}>
+                <View style={styles.spaceBetween}>
+            <Image src={Utranslogo2} style={styles.image} />
+                <Text style={styles.title}>Products Report</Text>
+                </View>
+            </View>
                 <Text style={styles.dateTime}>
-                    Date : {new Date().toLocaleString()}
+                    {new Date().toLocaleString()}
                 </Text>
+                <Text style={styles.address2}>Kec. Batam kota,</Text>
+                <Text style={styles.address2}>Belian,</Text>
+                <Text style={styles.address}>Unnamed Road</Text>
                 <View style={styles.table}>
                     <View style={styles.tableRow}>
-                        <View style={styles.tableColHeader}>
+                        <View style={[styles.tableColHeader, styles.tableColHeader2 ]}>
                             <Text style={styles.tableCellHeader}>SKU</Text>
                         </View>
-                        <View style={styles.tableColHeader}>
+                        <View style={[styles.tableCol, styles.tableColHeader2]}>
                             <Text style={styles.tableCellHeader}>Name</Text>
                         </View>
                         <View style={styles.tableColHeader}>
@@ -257,12 +322,12 @@ export default function Inventory({ auth, products }) {
 
                     {data.map((products, index) => (
                         <View style={styles.tableRow} key={index}>
-                            <View style={styles.tableCol}>
+                            <View style={[styles.tableCol, styles.tableCol2]}>
                                 <Text style={styles.tableCell}>
                                     {products.code}
                                 </Text>
                             </View>
-                            <View style={styles.tableCol}>
+                            <View style={[styles.tableCol, styles.tableCol2]}>
                                 <Text style={styles.tableCell}>
                                     {products.name}
                                 </Text>

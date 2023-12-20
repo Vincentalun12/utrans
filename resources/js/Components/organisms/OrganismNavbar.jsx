@@ -14,7 +14,7 @@ import { UserCircleIcon } from "@heroicons/react/24/solid";
 
 export function OrganismNavbar({ user }) {
     return (
-        <nav className="w-full max-w-auto bg-white sticky sm:fixed top-0 z-20">
+        <nav className="w-full h-[68px] max-w-auto bg-white sticky sm:fixed top-0 z-20">
             <div className="mx-auto px-6 sm:px-6 lg:px-8">
                 <div className="flex h-20 justify-between shrink-0 items-center">
                     <div className="mb-2 p-2 w-full flex justify-center lg:hidden">

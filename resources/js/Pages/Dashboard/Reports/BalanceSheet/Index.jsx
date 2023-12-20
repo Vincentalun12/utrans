@@ -203,10 +203,16 @@ export default function Balancesheet({ auth }) {
                   </details>
                 </details>
                 <p className="border-b w-full border-gray-400">Plus fixed Assets</p>
-                <p className="border-b w-full border-gray-400">Plus Non-current Assets</p>
-
-
+                <p className="border-b w-full border-black">Plus Non-current Assets</p>
                 <div className="flex justify-between">
+                <Typography variant="h6" color="black" className="w-full pt-1">
+                  Total Assets
+                </Typography>
+                <Typography variant="h6" color="black" className="w-full text-right pt-1">
+                  Rp 245.695.940,00
+                </Typography>
+                </div>
+                <div className="flex justify-between pt-5">
                 <Typography variant="h6" color="black" className="border-b border-black w-full pt-2">
                   LIABILITIES
                 </Typography>
@@ -247,60 +253,14 @@ export default function Balancesheet({ auth }) {
                     </summary>
                   </details>
                 </details>
-                <p className="border-b w-full border-gray-400">Plus Non-current Liabilities</p>
+                <p className="border-b w-full border-black">Plus Non-current Liabilities</p>
               </div>
               <div className="flex justify-between">
-                <Typography variant="h6" color="black" className="border-b border-black w-full pt-2">
-                  EQUITY
+                <Typography variant="h6" color="black" className="w-full pt-1">
+                  Total Liabilities
                 </Typography>
-                <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
+                <Typography variant="h6" color="black" className="w-full text-right pt-1">
                   Rp 245.695.940,00
-                </Typography>
-                </div>
-              <div className="flex-inline justify-between">
-                <div className="border-b w-full border-gray-400">
-                <div className="flex">
-                <p>Unallocated Earnings</p>
-                <p className="flex-1 text-right text-sm text-black pt-1">Rp 12.041.413,00</p>
-                </div>
-                </div>
-                <div className="border-b w-full border-gray-400 pl-6">
-                <div className="flex">
-                <p>Current Year Unallocated Earnings</p>
-                <p className="flex-1 text-right text-sm text-black pt-1">Rp 15.423.875,00</p>
-                </div>
-                </div>
-                <div className="border-b w-full border-gray-400 pl-11">
-                <div className="flex">
-                <p className="text-blue-600">Current Year Earnings</p>
-                <p className="flex-1 text-right text-sm text-black pt-1">Rp 93.133.412,00</p>
-                </div>
-                </div>
-                <div className="border-b w-full border-gray-400 pl-11">
-                <div className="flex">
-                <p>Current Year Allocated Earnings</p>
-                <p className="flex-1 text-right text-sm text-black pt-1">Rp 15.423.875,00</p>
-                </div>
-                </div>
-                <div className="border-b w-full border-gray-400 pl-6">
-                <div className="flex">
-                <p>Previous Year Allocated Earnings</p>
-                <p className="flex-1 text-right text-sm text-black pt-1">Rp 78.124.953,00</p>
-                </div>
-                </div>
-                <div className="border-b w-full border-gray-400">
-                <div className="flex">
-                <p>Retained Earnings</p>
-                <p className="flex-1 text-right text-sm text-black pt-1">Rp 31.548.412,00</p>
-                </div>
-                </div>
-              </div>
-              <div className="flex justify-between">
-                <Typography variant="h6" color="black" className="border-b border-black w-full pt-2">
-                  LIABILITIES + EQUITY
-                </Typography>
-                <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
-                  Rp 266.912.454,00
                 </Typography>
                 </div>
               </div>

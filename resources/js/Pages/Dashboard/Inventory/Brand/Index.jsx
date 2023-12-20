@@ -2,8 +2,8 @@ import BrandLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
-import { PDFDownloadLink, Document, Page, Text, View, StyleSheet} from '@react-pdf/renderer';
-
+import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import { Utranslogo2 } from '@/Assets';
 import { Language } from '@/Languages/Inventory/Brand/BrandIndex';
 
 import {
@@ -169,90 +169,152 @@ export default function Brand({ auth, brands, deleteSuccess }) {
 
 //print pdf
 const styles = StyleSheet.create({
-
+    page: {
+        fontSize: 11,
+        paddingTop: 20,
+        paddingLeft: 40,
+        paddingRight: 40,
+        lineHeight: 1.5,
+        flexDirection: 'column' 
+    },
+    
     title: {
-        textAlign: 'left',
-        fontSize: 14,
+        fontSize: 16,  
+        textAlign: 'center',
         marginBottom: 5,
         marginLeft: "9%",
-        marginRight: "9%", 
+        marginRight: "9%",
         marginTop: 10,
     },
     dateTime: {
-        textAlign: 'left',
-        fontSize: 14,
+        textAlign: "right",
+        fontSize: 10,
         marginBottom: 30,
         marginLeft: "9%",
         marginRight: "9%",
     },
+    spaceBetween : {
+        flex : 1,
+        flexDirection: 'row',
+        alignItems:'center',
+        justifyContent:'space-between',
+        color: "#3E3E3E" 
+    },
+
+    titleContainer: {
+        flexDirection: 'row',
+        marginTop: 24
+    },
+    
     table: {
         display: "table",
         width: "80%",
         marginLeft: "10%",
-        marginRight: "10%", 
+        marginRight: "10%",
         borderStyle: "solid",
-        borderWidth: 1,
         borderRightWidth: 0,
         borderBottomWidth: 0,
-        
-    },
-    tableRow: { 
-        margin: "auto", 
-        flexDirection: "row" 
-    },
-    tableColHeader: { 
-        width: "50%", 
-        backgroundColor: "#f8f4f4",
-        borderStyle: "solid", 
-        borderWidth: 1, 
-        borderLeftWidth: 0, 
-        borderTopWidth: 0,
-        padding: 5,
-    },
-    tableCol: { 
-        width: "50%", 
-        borderStyle: "solid", 
-        borderWidth: 1, 
-        borderLeftWidth: 0, 
-        borderTopWidth: 0,
-        padding: 5,
-        
     },
     
-    tableCellHeader: { 
-        margin: "auto", 
-        marginTop: 5, 
-        fontSize: 12, 
-        fontWeight: "bold"
+    tableRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width:'100%',
     },
-    tableCell: { 
-        margin: "auto", 
-        marginTop: 5, 
-        fontSize: 10 
-    }
+    tableColHeader: {
+        flex: 1,
+        backgroundColor: "#f8f4f4",
+        paddingTop: 4 , paddingLeft: 7 ,
+        borderColor : 'whitesmoke',
+        backgroundColor : '#DEDEDE',
+        borderRightWidth:1, borderBottomWidth:1
+    },
+    tableCol: {
+        flex: 1,
+        borderWidth: 1,
+        paddingTop: 4 , paddingLeft: 7 ,
+        borderColor : 'whitesmoke',
+        borderRightWidth:1, borderBottomWidth:1
+    },
+
+    tableColHeader2: {
+        flex:2, 
+        borderRightWidth:0, 
+        borderBottomWidth:1,
+        backgroundColor : '#DEDEDE',
+    },
+
+    tableCol2: {
+        flex:2, 
+        borderRightWidth:0, 
+        borderBottomWidth:1,
+    },
+
+    tableCellHeader: {
+        fontSize: 10,
+        fontStyle: "bold",
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+    },
+
+    tableCell: {
+        paddingTop: 4 , paddingLeft: 7 ,
+        fontSize: 9,
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+    },
+    image: {
+        width: 90,
+        marginLeft: "9%",
+        marginRight: "9%",
+    },
+
+    address: {
+        textAlign: "right",
+        fontSize: 10,
+        marginBottom: 30,
+        marginLeft: "9%",
+        marginRight: "9%",
+    },
+    address2: {
+        textAlign: "right",
+        fontSize: 10,
+        marginLeft: "9%",
+        marginRight: "9%",
+    },
 });
 
 const MyDocument = ({ data }) => (
-    <Document>
-        <Page>
-            <Text style={styles.title}>Report : Brand Report</Text>
-            <Text style={styles.dateTime}>Date : {new Date().toLocaleString()}</Text>
-            <View style={styles.table}>
-                <View style={styles.tableRow}>
-                    <View style={styles.tableColHeader}>
-                        <Text style={styles.tableCellHeader}>Brand Code</Text>
-                    </View>
-                    <View style={styles.tableColHeader}>
-                        <Text style={styles.tableCellHeader}>Brand Name</Text> 
-                    </View>
+<Document>
+            <Page size="A4" orientation="landscape">
+            <View style={styles.titleContainer}>
+                <View style={styles.spaceBetween}>
+            <Image src={Utranslogo2} style={styles.image} />
+                <Text style={styles.title}>Brand Report</Text>
                 </View>
+            </View>
+                <Text style={styles.dateTime}>
+                    {new Date().toLocaleString()}
+                </Text>
+                <Text style={styles.address2}>Kec. Batam kota,</Text>
+                <Text style={styles.address2}>Belian,</Text>
+                <Text style={styles.address}>Unnamed Road</Text>
+                <View style={styles.table}>
+                    <View style={styles.tableRow}>
+                        <View style={[styles.tableColHeader, styles.tableColHeader2 ]}>
+                            <Text style={styles.tableCellHeader}>Code</Text>
+                        </View>
+                        <View style={[styles.tableCol, styles.tableColHeader2]}>
+                            <Text style={styles.tableCellHeader}>Name</Text>
+                        </View>
+                    </View>
 
                 {data.map((brand, index) => (
                     <View style={styles.tableRow} key={index}>
-                        <View style={styles.tableCol}>
+                        <View style={[styles.tableCol, styles.tableCol2]}>
                             <Text style={styles.tableCell}>{brand.code}</Text>
                         </View>
-                        <View style={styles.tableCol}>
+                        <View style={[styles.tableCol, styles.tableCol2]}>
                             <Text style={styles.tableCell}>{brand.name}</Text> 
                         </View>
                     </View>
