@@ -196,7 +196,7 @@ const paymentoptions = [
     { value: "Inprogress", label: "In Progress" },
 ];
 
-export default function Purchasing({ auth }) {
+export default function Purchasing({ auth, purchaseOrders }) {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
@@ -207,7 +207,7 @@ export default function Purchasing({ auth }) {
     useEffect(() => {
         const start = (currentPage - 1) * itemsPerPage;
         const end = start + itemsPerPage;
-        let sortedItems = [...TABLE_ROWS];
+        let sortedItems = [...purchaseOrders];
 
         if (searchbar) {
             const terms = searchbar.toLowerCase().split(" ");
@@ -261,7 +261,7 @@ export default function Purchasing({ auth }) {
     const handleNext = () => {
         if (
             paginated.length === itemsPerPage &&
-            currentPage < Math.ceil(TABLE_ROWS.length / itemsPerPage)
+            currentPage < Math.ceil(purchaseOrders?.length / itemsPerPage)
         ) {
             setCurrentPage(currentPage + 1);
         }
@@ -724,27 +724,28 @@ export default function Purchasing({ auth }) {
                                 {paginated.map(
                                     (
                                         {
-                                            reference,
-                                            creation,
+                                            id,
+                                            code,
                                             vendor,
-                                            totalitem,
+                                            create_date,
+                                            total_item,
+                                            total_paid,
+                                            total_due,
                                             status,
-                                            total,
-                                            paid,
-                                            payment,
-                                            due,
+                                            payment_status,
                                         },
                                         index
                                     ) => {
                                         const isLast =
-                                            index === TABLE_ROWS.length - 1;
+                                            index ===
+                                            purchaseOrders?.length - 1;
                                         const classes = isLast
                                             ? "p-4"
                                             : "p-4 border-blue-gray-50";
 
                                         return (
                                             <tr
-                                                key={reference}
+                                                key={id}
                                                 className="even:bg-gray-100"
                                             >
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -755,7 +756,7 @@ export default function Purchasing({ auth }) {
                                                                 color="blue-gray"
                                                                 className="font-normal"
                                                             >
-                                                                {reference}
+                                                                {code}
                                                             </Typography>
                                                         </div>
                                                     </div>
@@ -767,7 +768,7 @@ export default function Purchasing({ auth }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {creation}
+                                                            {create_date}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -778,7 +779,7 @@ export default function Purchasing({ auth }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {vendor}
+                                                            {vendor.name}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -788,7 +789,7 @@ export default function Purchasing({ auth }) {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {totalitem}
+                                                        {total_item}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -797,7 +798,7 @@ export default function Purchasing({ auth }) {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {total}
+                                                        {total_paid}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -805,14 +806,14 @@ export default function Purchasing({ auth }) {
                                                         <Typography
                                                             variant="small"
                                                             color={
-                                                                due ===
+                                                                total_due ===
                                                                 "Rp. 0,000.00"
                                                                     ? "blue-gray"
                                                                     : "red"
                                                             }
                                                             className="font-normal"
                                                         >
-                                                            {paid}
+                                                            {total_due}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -844,12 +845,12 @@ export default function Purchasing({ auth }) {
                                                             variant="ghost"
                                                             size="sm"
                                                             value={
-                                                                payment
-                                                                    ? "PAID"
-                                                                    : "DUE"
+                                                                payment_status
+                                                                    ? "paid"
+                                                                    : "due"
                                                             }
                                                             color={
-                                                                payment
+                                                                payment_status
                                                                     ? "green"
                                                                     : "red"
                                                             }
@@ -860,14 +861,14 @@ export default function Purchasing({ auth }) {
                                                     <Typography
                                                         variant="small"
                                                         color={
-                                                            due ===
+                                                            total_due ===
                                                             "Rp. 0,000.00"
                                                                 ? "green"
                                                                 : "red"
                                                         }
                                                         className="font-normal"
                                                     >
-                                                        {due}
+                                                        {total_due}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -882,7 +883,13 @@ export default function Purchasing({ auth }) {
                                                                 </Button>
                                                             </MenuHandler>
                                                             <MenuList>
-                                                                <MenuItem className="flex items-center gap-2" onClick={() => window.location.href = '/purchases/detail'}>
+                                                                <MenuItem
+                                                                    className="flex items-center gap-2"
+                                                                    onClick={() =>
+                                                                        (window.location.href =
+                                                                            "/purchases/detail")
+                                                                    }
+                                                                >
                                                                     <EyeIcon className="w-5 h-5" />
                                                                     Purchase
                                                                     Detail
@@ -1033,12 +1040,12 @@ export default function Purchasing({ auth }) {
                                 >
                                     Page {currentPage} of{" "}
                                     {Math.ceil(
-                                        TABLE_ROWS.length / itemsPerPage
+                                        purchaseOrders?.length / itemsPerPage
                                     )}
                                 </Typography>
                             </div>
                             <div className="flex gap-3">
-                                     <Button
+                                <Button
                                     variant="outlined"
                                     size="sm"
                                     onClick={handlePrevious}

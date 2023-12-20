@@ -20,7 +20,11 @@ class PurchaseController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Dashboard/Orders/Purchases/Index');
+        $data = [
+            'purchaseOrders' => PurchaseOrder::with(['vendor'])->get()
+        ];
+
+        return Inertia::render('Dashboard/Orders/Purchases/Index', $data);
     }
 
     public function detail()
@@ -41,6 +45,15 @@ class PurchaseController extends Controller
     public function store(Request $request)
     {
         $setting = Setting::getSetting();
+
+        if (!$setting) {
+            return redirect()->route('settings')->with([
+                'message' => [
+                    'type' => 'danger',
+                    'content' => 'Please complete required settings first.'
+                ]
+            ]);
+        }
 
         $generateCode = PurchaseOrder::generateCode();
 
@@ -150,12 +163,14 @@ class PurchaseController extends Controller
 
                 ChartOfAccount::updateChartOfAccountBalance($setting->account_payable_id);
                 ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
+                Product::increaseStock($createPurchaseOrderLine->product_id, $createPurchaseOrderLine->quantity);
+                Product::updateStandardPrice($createPurchaseOrderLine->product_id);
             }
 
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th);
+
             throw $th;
         }
         return redirect()->route('purchases')->with([

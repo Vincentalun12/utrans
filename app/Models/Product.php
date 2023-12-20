@@ -41,11 +41,12 @@ class Product extends Model
         }
     }
 
-    public static function updateStandardPrice($productId)
+    public static function getNewStandardPrice($productId)
     {
         // Using AVCO (Average Cost Valuation Method) to calculate standard price
-        $product = self::find($productId);
-        $purchaseOrderLines = PurchaseOrderLine::where('product_id', $productId)->get();
+        $purchaseOrderLines = PurchaseOrderLine::with(['purchaseOrder'])->whereHas('purchaseOrder', function ($query) use ($productId) {
+            $query->where('status', 'posted');
+        })->where('product_id', $productId)->orderBy('id', 'desc')->get();
         $totalQuantity = 0;
         $totalPrice = 0;
 
@@ -56,10 +57,36 @@ class Product extends Model
 
         $standardPrice = $totalPrice / $totalQuantity;
 
+        return $standardPrice;
+    }
+
+    public static function updateStandardPrice($productId)
+    {
+        $product = self::find($productId);
+        $newStandardPrice = self::getNewStandardPrice($productId);
+
         $product->update([
-            'standard_price' => $standardPrice
+            'standard_price' => $newStandardPrice
         ]);
 
-        return $standardPrice;
+        return $product->standard_price;
+    }
+
+    public static function increaseStock($productId, $quantity)
+    {
+        $product = self::find($productId);
+        $product->stock += $quantity;
+        $product->save();
+
+        return $product->stock;
+    }
+
+    public static function decreaseStock($productId, $quantity)
+    {
+        $product = self::find($productId);
+        $product->stock -= $quantity;
+        $product->save();
+
+        return $product->stock;
     }
 }
