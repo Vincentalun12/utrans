@@ -82,6 +82,11 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
         total: "",
     });
 
+    const [stock, setStock] = useState(0);
+    const [price, setPrice] = useState(0);
+    const [discount, setDiscount] = useState(0);
+
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const [date, setDate] = useState(new Date());
     const [vendorOptions, setVendorOptions] = useState([]);
     const [productOptions, setProductOptions] = useState([]);
@@ -105,25 +110,45 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
         );
     }, []);
 
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [listPurchase, setListPurchase] = useState([]);
+    const [listProduct, setListProduct] = useState([]);
 
     useEffect(() => {
         if (selectedProduct) {
-            setListPurchase((prev) => [
-                ...prev,
-                {
-                    order: listPurchase.length,
+            setListProduct([
+                ...listProduct,
+                {   
+                    id: null,
+                    code: selectedProduct.code,
+                    order: listProduct.length,
                     product_id: selectedProduct.value,
                     product_name: selectedProduct.label,
-                    quantity: data.quantity,
-                    price: data.unitprice,
-                    discount: data.disc,
+                    quantity: 0,
+                    price: 0,
+                    discount: 0,
                 },
             ]);
         }
-        setSelectedProduct(null);
     }, [selectedProduct]);
+
+    useEffect(() => {
+        setData("products", listProduct);
+    }, [listProduct]);
+
+    let ProductList = [];
+
+    products.forEach((product) => {
+        ProductList.push({
+            code: product.code,
+            value: product.id,
+            label: product.name,
+        });
+    });
+
+    const mainTotal = listProduct.reduce((sum, product) => {
+        const total = product.stock * product.price - product.discount;
+        return sum + total;
+    }, 0);
+    const formattedMainTotal = isNaN(mainTotal) ? '0' : mainTotal.toLocaleString("de-DE");
 
     return (
         <AdditemLayout user={auth.user}>
@@ -235,7 +260,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                         <div className="sm:col-span-2 w-full">
                             <label className="">Product Name</label>
                             <ReactSelect
-                                options={productOptions}
+                                options={ProductList}
                                 value={selectedProduct}
                                 onChange={(e) => {
                                     setSelectedProduct({
@@ -295,9 +320,14 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {listPurchase.map(({ order }, index) => {
-                                    const isLast =
-                                        index === TABLE_ROWS.length - 1;
+                            {listProduct.map(({ id, code, order, product_id, product_name, quantity, stock, price, discount }, index) => {
+                                const correspondingProduct = ProductList.find(product => product.value === product_id);
+                                const itemcode = correspondingProduct.code;
+
+                                const totalValue = stock * price - discount;
+                                const total = isNaN(totalValue) ? '0' : totalValue.toLocaleString("de-DE");
+
+                                    const isLast = index === TABLE_ROWS.length - 1;
                                     const classes = isLast
                                         ? "p-4"
                                         : "p-4 border-b border-blue-gray-50";
@@ -312,7 +342,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {/* {SKU} */}
+                                                            {itemcode}
                                                         </Typography>
                                                     </div>
                                                 </div>
@@ -324,7 +354,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {/* {item} */}
+                                                        {product_name}
                                                     </Typography>
                                                 </div>
                                             </td>
@@ -339,6 +369,11 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                             type="number"
                                                             id="Quantity"
                                                             class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
+                                                            onChange={(event) => {
+                                                                const newListProduct = [...listProduct];
+                                                                newListProduct[index].stock = Number(event.target.value);
+                                                                setListProduct(newListProduct);
+                                                            }}
                                                         />
                                                     </Typography>
                                                 </div>
@@ -351,8 +386,13 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                 >
                                                     <input
                                                         type="number"
-                                                        id="Quantity"
+                                                        id="UnitPrice"
                                                         class="h-10 w-25 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
+                                                        onChange={(event) => {
+                                                            const newListProduct = [...listProduct];
+                                                            newListProduct[index].price = Number(event.target.value);
+                                                            setListProduct(newListProduct);
+                                                        }}
                                                     />
                                                 </Typography>
                                             </td>
@@ -364,8 +404,13 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                 >
                                                     <input
                                                         type="number"
-                                                        id="Quantity"
+                                                        id="Discount"
                                                         class="h-10 w-16 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
+                                                        onChange={(event) => {
+                                                            const newListProduct = [...listProduct];
+                                                            newListProduct[index].discount = Number(event.target.value);
+                                                            setListProduct(newListProduct);
+                                                        }}
                                                     />
                                                 </Typography>
                                             </td>
@@ -375,24 +420,18 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                     color="blue-gray"
                                                     className="font-normal"
                                                 >
-                                                    {/* {total} */}
+                                                    Rp{total}
                                                 </Typography>
                                             </td>
                                             <td className="p-2 border-b border-gray-200 pl-4">
-                                                <Tooltip content="Orders">
+                                                <Tooltip content="Delete">
                                                     <Button
                                                         size="sm"
                                                         variant="text"
                                                         onClick={() => {
-                                                            const newList =
-                                                                listPurchase.filter(
-                                                                    (item) =>
-                                                                        item.order !==
-                                                                        order
-                                                                );
-                                                            setListPurchase(
-                                                                newList
-                                                            );
+                                                            const newList = listProduct.filter((item) => item.order !== order);
+                                                            setListProduct(newList);
+                                                            setSelectedProduct(null);
                                                         }}
                                                     >
                                                         <TrashIcon className="h-5 w-5 text-red-500" />
@@ -465,7 +504,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                 <tr>
                                     <td className="pl-4">Total</td>
                                     <td className="">:</td>
-                                    <td className="pl-4">Rp. 3,525,000.00</td>
+                                    <td className="pl-4">Rp{formattedMainTotal}</td>
                                 </tr>
                             </table>
                         </div>

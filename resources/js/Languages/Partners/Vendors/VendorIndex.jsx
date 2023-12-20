@@ -48,8 +48,8 @@ let Language = new LocalizedStrings({
     },
 
     en: {
-        "title": "Customers",
-        "subtitle": "Manage your customers information here.",
+        "title": "Vendors",
+        "subtitle": "Manage your vendors information here",
         "addbutton": "Add",
         "searchplaceholder": "Search customers...",
         "tableheader": {
