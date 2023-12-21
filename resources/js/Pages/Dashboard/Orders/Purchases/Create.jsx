@@ -78,9 +78,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
         create_date: format(new Date(), "dd-MM-yyyy"),
     });
 
-    const [stock, setStock] = useState(0);
-    const [price, setPrice] = useState(0);
-    const [discount, setDiscount] = useState(0);
+    
 
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [date, setDate] = useState(new Date());
@@ -141,13 +139,17 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
         });
     });
 
+    const [stock, setStock] = useState(0);
+    const [price, setPrice] = useState(0);
+    const [discount, setDiscount] = useState(0);
+
+    const [total, setTotal] = useState(0);
+
     const mainTotal = listProduct.reduce((sum, product) => {
-        const total = product.stock * product.price - product.discount;
+        const total = product.quantity * product.price - product.discount;
         return sum + total;
     }, 0);
-    const formattedMainTotal = isNaN(mainTotal)
-        ? "0"
-        : mainTotal.toLocaleString("de-DE");
+    const formattedMainTotal = isNaN(mainTotal) ? "0" : mainTotal.toLocaleString("de-DE");
 
     const actionSubmit = (e) => {
         e.preventDefault();
@@ -363,13 +365,8 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                             const itemcode =
                                                 correspondingProduct.code;
 
-                                            const totalValue =
-                                                stock * price - discount;
-                                            const total = isNaN(totalValue)
-                                                ? "0"
-                                                : totalValue.toLocaleString(
-                                                      "de-DE"
-                                                  );
+                                                const totalValue = quantity * price - discount;
+                                                const total = isNaN(totalValue) ? "0" : totalValue.toLocaleString("de-DE");
 
                                             const isLast =
                                                 index === TABLE_ROWS.length - 1;
@@ -447,24 +444,10 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                                 type="number"
                                                                 id="UnitPrice"
                                                                 class="h-10 w-25 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
-                                                                onChange={(
-                                                                    event
-                                                                ) => {
-                                                                    const newListProduct =
-                                                                        [
-                                                                            ...listProduct,
-                                                                        ];
-                                                                    newListProduct[
-                                                                        index
-                                                                    ].price =
-                                                                        Number(
-                                                                            event
-                                                                                .target
-                                                                                .value
-                                                                        );
-                                                                    setListProduct(
-                                                                        newListProduct
-                                                                    );
+                                                                onChange={(event) => {
+                                                                    const newListProduct = [...listProduct,];
+                                                                        newListProduct[index].price = Number(event.target.value);
+                                                                    setListProduct(newListProduct);
                                                                 }}
                                                             />
                                                         </Typography>
