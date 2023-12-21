@@ -96,6 +96,15 @@ class PurchaseOrder extends Model
 
             if (!$isPurchaseOrderLineExist) {
                 JournalItem::create([
+                    'journal_entry_id' => $createReturnPurchaseJournalEntry->id,
+                    'chart_of_account_id' => $setting->account_payable_id,
+                    'label' => $product->name,
+                    'debit' => 0,
+                    'credit' => $purchaseOrderLine->total,
+                    'balance' => -$purchaseOrderLine->total,
+                ]);
+
+                JournalItem::create([
                     'journal_entry_id' => $createReturnStockValuationJournalEntry->id,
                     'chart_of_account_id' => $setting->inventory_account_id,
                     'label' => "Stock Valuation - $product->name",
@@ -104,17 +113,9 @@ class PurchaseOrder extends Model
                     'balance' => $purchaseOrderLine->total,
                 ]);
 
-                JournalItem::create([
-                    'journal_entry_id' => $createReturnStockValuationJournalEntry->id,
-                    'chart_of_account_id' => $setting->account_payable_id,
-                    'label' => $product->name,
-                    'debit' => 0,
-                    'credit' => $purchaseOrderLine->total,
-                    'balance' => -$purchaseOrderLine->total,
-                ]);
-
                 Product::decreaseStock($purchaseOrderLine->product_id, $purchaseOrderLine->quantity);
                 $purchaseOrderLine->delete();
+                Product::updateStandardPrice($product->id);
             }
         }
 

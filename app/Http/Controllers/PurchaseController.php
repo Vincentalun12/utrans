@@ -205,6 +205,7 @@ class PurchaseController extends Controller
 
                 ChartOfAccount::updateChartOfAccountBalance($setting->account_payable_id);
                 ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
+                ChartOfAccount::updatePurchaseChartOfAccountBalance();
                 Product::increaseStock($createPurchaseOrderLine->product_id, $createPurchaseOrderLine->quantity);
                 Product::updateStandardPrice($createPurchaseOrderLine->product_id);
             }
@@ -320,20 +321,11 @@ class PurchaseController extends Controller
                 ]);
             }
 
-            $purchaseOrder->update([
-                'vendor_id' => (int) $request->vendor_id,
-                'create_date' => Date::parse($request->create_date)->format('Y-m-d'),
-                'status' => $request->status,
-                'payment_status' => $request->payment_status,
-                'total_item' => $request->total_item,
-                'total_price' => $request->total_price,
-                'total_due' => $request->total_due,
-            ]);
-
             foreach ($request->products as $listProduct) {
                 $purchaseOrderLine = PurchaseOrderLine::find($listProduct['id']);
-                $purchaseOrderLineQuantity = $purchaseOrderLine->quantity;
                 $product = Product::find($listProduct['product_id']);
+                $oldQuantity = $purchaseOrderLine->quantity;
+                $oldTotalPrice = $purchaseOrderLine->total;
 
                 if (isset($listProduct['id'])) {
                     $purchaseOrderLine->update([
@@ -344,9 +336,14 @@ class PurchaseController extends Controller
                         'total' => $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount']
                     ]);
 
-                    if ($listProduct['quantity'] < $purchaseOrderLineQuantity) {
-                        $quantityDifference = $purchaseOrderLineQuantity - $listProduct['quantity'];
-                        Product::decreaseStock($purchaseOrderLine->product_id, $quantityDifference);
+                    if ($request['total_price'] < $oldTotalPrice) {
+                        $quantityDifference = $oldQuantity - $listProduct['quantity'];
+
+                        if ($quantityDifference > 0) {
+                            Product::increaseStock($purchaseOrderLine->product_id, $quantityDifference);
+                        }
+
+                        $totalPriceDifference = $oldTotalPrice - $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount'];
 
                         JournalItem::create([
                             'journal_entry_id' => $createPurchaseJournalEntry->id,
@@ -355,8 +352,8 @@ class PurchaseController extends Controller
                             'label' => $product->name,
                             'account_id' => $setting->account_payable_id,
                             'debit' => 0,
-                            'credit' => $purchaseOrderLine->total,
-                            'balance' => $purchaseOrderLine->total
+                            'credit' => $totalPriceDifference,
+                            'balance' => $totalPriceDifference
                         ]);
 
                         JournalItem::create([
@@ -366,15 +363,20 @@ class PurchaseController extends Controller
                             'account_id' => $setting->inventory_account_id,
                             'label' => $product->name . " - " . "Stock Valuation",
                             'debit' => 0,
-                            'credit' => $purchaseOrderLine->total,
-                            'balance' => $purchaseOrderLine->total
+                            'credit' => $totalPriceDifference,
+                            'balance' => $totalPriceDifference
                         ]);
 
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_payable_id);
                         ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
-                    } else if ($listProduct['quantity'] > $purchaseOrderLineQuantity) {
-                        $quantityDifference = $listProduct['quantity'] - $purchaseOrderLineQuantity;
-                        Product::increaseStock($purchaseOrderLine->product_id, $quantityDifference);
+                    } else if ($request['total_price'] > $oldTotalPrice) {
+                        $quantityDifference = $listProduct['quantity'] - $oldQuantity;
+
+                        if ($quantityDifference < 0) {
+                            Product::increaseStock($purchaseOrderLine->product_id, $quantityDifference);
+                        }
+
+                        $totalPriceDifference = $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount'] - $oldTotalPrice;
 
                         JournalItem::create([
                             'journal_entry_id' => $createPurchaseJournalEntry->id,
@@ -382,9 +384,9 @@ class PurchaseController extends Controller
                             'purchase_order_line_id' => $purchaseOrderLine->id,
                             'label' => $product->name,
                             'account_id' => $setting->account_payable_id,
-                            'debit' => $purchaseOrderLine->total,
+                            'debit' => $totalPriceDifference,
                             'credit' => 0,
-                            'balance' => $purchaseOrderLine->total
+                            'balance' => $totalPriceDifference
                         ]);
 
                         JournalItem::create([
@@ -393,9 +395,9 @@ class PurchaseController extends Controller
                             'purchase_order_line_id' => $purchaseOrderLine->id,
                             'account_id' => $setting->inventory_account_id,
                             'label' => "Stock Valuation - $product->name",
-                            'debit' => $purchaseOrderLine->total,
+                            'debit' => $totalPriceDifference,
                             'credit' => 0,
-                            'balance' => $purchaseOrderLine->total
+                            'balance' => $totalPriceDifference
                         ]);
 
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_payable_id);
@@ -415,15 +417,17 @@ class PurchaseController extends Controller
 
                     Product::increaseStock($createPurchaseOrderLine->product_id, $createPurchaseOrderLine->quantity);
 
+                    $totalPrice = $createPurchaseOrderLine->total;
+
                     JournalItem::create([
                         'journal_entry_id' => $createPurchaseJournalEntry->id,
                         'chart_of_account_id' => $setting->account_payable_id,
                         'purchase_order_line_id' => $createPurchaseOrderLine->id,
                         'label' => $product->name,
                         'account_id' => $setting->account_payable_id,
-                        'debit' => $createPurchaseOrderLine->total,
+                        'debit' => $totalPrice,
                         'credit' => 0,
-                        'balance' => $createPurchaseOrderLine->total
+                        'balance' => $totalPrice
                     ]);
 
                     JournalItem::create([
@@ -432,9 +436,9 @@ class PurchaseController extends Controller
                         'purchase_order_line_id' => $createPurchaseOrderLine->id,
                         'account_id' => $setting->inventory_account_id,
                         'label' => "Stock Valuation - $product->name",
-                        'debit' => $createPurchaseOrderLine->total,
+                        'debit' => $totalPrice,
                         'credit' => 0,
-                        'balance' => $createPurchaseOrderLine->total
+                        'balance' => $totalPrice
                     ]);
 
                     Product::updateStandardPrice($createPurchaseOrderLine->product_id);
@@ -442,6 +446,16 @@ class PurchaseController extends Controller
                     ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
                 }
             }
+
+            $purchaseOrder->update([
+                'vendor_id' => (int) $request->vendor_id,
+                'create_date' => Date::parse($request->create_date)->format('Y-m-d'),
+                'status' => $request->status,
+                'payment_status' => $request->payment_status,
+                'total_item' => $request->total_item,
+                'total_price' => $request->total_price,
+                'total_due' => $request->total_due,
+            ]);
 
             DB::commit();
         } catch (\Throwable $th) {

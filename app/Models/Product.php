@@ -57,7 +57,7 @@ class Product extends Model
 
         foreach ($purchaseOrderLines as $purchaseOrderLine) {
             $totalQuantity += $purchaseOrderLine->quantity;
-            $totalPrice += $purchaseOrderLine->quantity * $purchaseOrderLine->price;
+            $totalPrice += $purchaseOrderLine->quantity * $purchaseOrderLine->price - $purchaseOrderLine->discount;
         }
 
         $standardPrice = $totalPrice / $totalQuantity;

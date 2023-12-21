@@ -49,4 +49,23 @@ class ChartOfAccount extends Model
 
         return $chartOfAccount->balance;
     }
+
+    public static function updatePurchaseChartOfAccountBalance()
+    {
+        $setting = Setting::first();
+        $purchaseOrderLines = PurchaseOrderLine::with(['purchaseOrder'])->whereHas('purchaseOrder', function ($query) {
+            $query->where('status', '=', 'posted');
+        })->get();
+        $total = 0;
+
+        foreach ($purchaseOrderLines as $purchaseOrderLine) {
+            $total += $purchaseOrderLine->total_price;
+        }
+
+        $chartOfAccount = self::find($setting->purchase_account_id);
+        $chartOfAccount->balance = $total;
+        $chartOfAccount->save();
+
+        return $total;
+    }
 }
