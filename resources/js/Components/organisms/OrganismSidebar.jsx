@@ -40,7 +40,12 @@ export function OrganismSidebar() {
     }, [selectedLanguage]);
 
     const [open, setOpen] = useState(
-        route().current("products") ? 1 : 0 || route().current("brands") ? 1 : 0
+        route().current("products") ? 1 : 0 
+        || route().current("products.create") ? 1 : 0
+        || route().current("products.edit") ? 1 : 0
+        || route().current("brands") ? 1 : 0
+        || route().current("brands.create") ? 1 : 0
+        || route().current("brands.edit") ? 1 : 0
     );
 
     const [openReport, setOpenReport] = useState(
@@ -48,27 +53,36 @@ export function OrganismSidebar() {
     );
 
     const [openOrder, setOpenOrder] = useState(
-        route().current("sales") ? 1 : 0 || route().current("purchases") ? 1 : 0
+        route().current("sales") ? 1 : 0 
+        || route().current("sales.create") ? 1 : 0
+        || route().current("sales.edit") ? 1 : 0
+        || route().current("sales.detail") ? 1 : 0
+        || route().current("purchases.detail") ? 1 : 0
+        || route().current("purchases.create") ? 1 : 0
+        || route().current("purchases.edit") ? 1 : 0
+        || route().current("purchases") ? 1 : 0
     );
 
     const [openPartners, setOpenPartners] = useState(
-        route().current("vendors")
-            ? 1
-            : 0 || route().current("customers")
-            ? 1
-            : 0
+        route().current("vendors") ? 1 : 0 
+        || route().current("customers") ? 1: 0
+        || route().current("vendors.create") ? 1 : 0
+        || route().current("vendors.edit") ? 1 : 0
+        || route().current("customers.create") ? 1 : 0
+        || route().current("customers.edit") ? 1 : 0
     );
 
     const [openAccount, setOpenAccount] = useState(
-        route().current("coa")
-            ? 1
-            : 0 || route().current("journals")
-            ? 1
-            : 0 || route().current("journalentries")
-            ? 1
-            : 0 || route().current("journalitems")
-            ? 1
-            : 0
+        route().current("coa") ? 1 : 0 
+        || route().current("journals") ? 1 : 0 
+        || route().current("journalentries") ? 1: 0 
+        || route().current("journalitems") ? 1 : 0
+        || route().current("coa.create") ? 1 : 0
+        || route().current("coa.edit") ? 1 : 0
+        || route().current("journals.create") ? 1 : 0
+        || route().current("journals.edit") ? 1 : 0
+        || route().current("journalentries.create") ? 1 : 0
+        || route().current("journalentries.edit") ? 1 : 0
     );
 
     const handleOpen = (value) => {
@@ -174,7 +188,7 @@ export function OrganismSidebar() {
                             <Linkactive href={route("products")}>
                                 <ListItem
                                     className={`${
-                                        route().current("products")
+                                        route().current("products") || route().current("products.create") || route().current("products.edit")
                                             ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
                                             : ""
                                     }`}
@@ -191,7 +205,7 @@ export function OrganismSidebar() {
                             <Linkactive href={route("brands")}>
                                 <ListItem
                                     className={`${
-                                        route().current("brands")
+                                        route().current("brands") || route().current("brands.create") || route().current("brands.edit")
                                             ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
                                             : ""
                                     }`}
@@ -238,8 +252,12 @@ export function OrganismSidebar() {
                     <AccordionBody className="py-1">
                         <List className="p-0">
                             <Linkactive href={route("purchases")}>
-                                <ListItem
-                                    className={LinkActiveTheme("purchases")}
+                            <ListItem
+                                    className={`${
+                                        route().current("purchases") || route().current("purchases.create") || route().current("purchases.edit") || route().current("purchases.detail")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
                                 >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
@@ -251,7 +269,13 @@ export function OrganismSidebar() {
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("sales")}>
-                                <ListItem className={LinkActiveTheme("sales")}>
+                            <ListItem
+                                    className={`${
+                                        route().current("sales") || route().current("sales.create") || route().current("sales.edit") || route().current("sales.detail")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
+                                >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
                                             strokeWidth={3}
@@ -294,8 +318,12 @@ export function OrganismSidebar() {
                     <AccordionBody className="py-1">
                         <List className="p-0">
                             <Linkactive href={route("customers")}>
-                                <ListItem
-                                    className={LinkActiveTheme("customers")}
+                            <ListItem
+                                    className={`${
+                                        route().current("customers") || route().current("customers.create") || route().current("customers.edit")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
                                 >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
@@ -307,8 +335,12 @@ export function OrganismSidebar() {
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("vendors")}>
-                                <ListItem
-                                    className={LinkActiveTheme("vendors")}
+                            <ListItem
+                                    className={`${
+                                        route().current("vendors") || route().current("vendors.create") || route().current("vendors.edit")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
                                 >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
@@ -406,7 +438,13 @@ export function OrganismSidebar() {
                     <AccordionBody className="py-1">
                         <List className="p-0">
                             <Linkactive href={route("coa")}>
-                                <ListItem className={LinkActiveTheme("coa")}>
+                            <ListItem
+                                    className={`${
+                                        route().current("coa") || route().current("coa.create") || route().current("coa.edit")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
+                                >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
                                             strokeWidth={3}
@@ -417,8 +455,12 @@ export function OrganismSidebar() {
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("journals")}>
-                                <ListItem
-                                    className={LinkActiveTheme("journals")}
+                            <ListItem
+                                    className={`${
+                                        route().current("journals") || route().current("journals.create") || route().current("journals.edit")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
                                 >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
@@ -430,10 +472,12 @@ export function OrganismSidebar() {
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("journalentries")}>
-                                <ListItem
-                                    className={LinkActiveTheme(
-                                        "journalentries"
-                                    )}
+                            <ListItem
+                                    className={`${
+                                        route().current("journalentries") || route().current("journalentries.create") || route().current("journalentries.edit")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
                                 >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
@@ -445,10 +489,12 @@ export function OrganismSidebar() {
                                 </ListItem>
                             </Linkactive>
                             <Linkactive href={route("journalitems")}>
-                                <ListItem
-                                    className={LinkActiveTheme(
-                                        "journalitems"
-                                    )}
+                            <ListItem
+                                    className={`${
+                                        route().current("journalitems")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
                                 >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
