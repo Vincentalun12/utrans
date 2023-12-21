@@ -15,15 +15,14 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 
             <div className="flex justify-center py-12 max-w-fit mx-auto sm:px-6 lg:px-8 sm:mt-24 lg:ml-[300px]">
                 
-                {/* 
-                <Card className="mx-2 h-40 w-3/12 lg:flex hidden">
+                <Card className="mx-2 h-40 w-auto lg:flex hidden">
                     <List>
                         <ListItem selected>Account</ListItem>
                         <ListItem>Preferences</ListItem>
                         <ListItem>More</ListItem>
                     </List>
                 </Card>
-                */}    
+ 
             
                 <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <UpdateProfileInformationForm
@@ -38,7 +37,7 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 
                     <hr className="my-4" />
 
-                    <DeleteUserForm className="max-w-fit" />
+                    <DeleteUserForm className="max-w-fit"/>
                 </div>
             </div>
         </AuthenticatedLayout>
