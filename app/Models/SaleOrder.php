@@ -25,16 +25,16 @@ class SaleOrder extends Model
 
     public static function generateCode()
     {
-        $lastPurchase = self::withTrashed()->orderBy('id', 'desc')->first();
+        $lastSale = self::withTrashed()->orderBy('id', 'desc')->first();
         $currentYear = date('Y');
 
-        if (!$lastPurchase) {
-            return "PO-$currentYear-0001";
+        if (!$lastSale) {
+            return "SO-$currentYear-0001";
         }
 
-        $code = substr($lastPurchase->code, 6);
+        $code = substr($lastSale->code, 6);
         $code = (int) $code + 1;
-        $code = "PO-$currentYear" . substr('0000', 0, 4 - strlen($code)) . $code;
+        $code = "SO-$currentYear" . substr('0000', 0, 4 - strlen($code)) . $code;
 
         return $code;
     }
