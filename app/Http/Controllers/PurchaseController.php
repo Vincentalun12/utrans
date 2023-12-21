@@ -42,6 +42,39 @@ class PurchaseController extends Controller
         return Inertia::render('Dashboard/Orders/Purchases/Create', $data);
     }
 
+    public function destroy($id)
+        {  
+            $purchasesorder = PurchaseOrder::find($id);
+            
+            $journalEntries = JournalEntries::where('purchase_order_id', $id)->get();
+
+            foreach ($journalEntries as $journalEntry) {
+                $journalitems = JournalItem::where('journal_entry_id', $journalEntry->id)->get();
+                $journalitems->each(function ($journalitem) {
+                    $chartOfAccountId = $journalitem->chart_of_account_id;
+                    $journalitem->delete();
+                    ChartOfAccount::updateChartOfAccountBalance($chartOfAccountId);
+                });
+
+                $journalEntry->delete();
+            }
+
+            $purchaseorderline = PurchaseOrderLine::where('purchase_order_id', $id)->get();
+
+            $purchaseorderline->each(function ($purchaseorderline) {
+                $purchaseorderline->delete();
+            });
+            
+            $purchasesorder->delete();
+
+            return redirect()->route('purchases')->with([
+                'message' => [
+                    'type'  => 'success',
+                    'content' => 'Purchases order deleted successfully'
+                ]
+            ]);
+        }
+
     public function store(Request $request)
     {
         $setting = Setting::getSetting();

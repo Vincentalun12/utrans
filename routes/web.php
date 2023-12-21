@@ -88,6 +88,7 @@ Route::controller(PurchaseController::class)->group(function () {
         Route::get('/purchases/detail', 'detail')->name('purchases.detail');
         Route::get('/purchases/create', 'create')->name('purchases.create');
         Route::post('/purchases/store', 'store')->name('purchases.store');
+        Route::delete('/purchases/destroy/{id}', 'destroy')->name('purchases.destroy');
     });
 });
 

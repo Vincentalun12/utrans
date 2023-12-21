@@ -15,7 +15,7 @@ import {
     DocumentArrowDownIcon,
     DocumentChartBarIcon,
     PlusIcon,
-    XMarkIcon,
+    InformationCircleIcon,
     EyeIcon,
     PlusCircleIcon,
     TrashIcon,
@@ -241,7 +241,7 @@ export default function Purchasing({ auth, purchaseOrders }) {
         }
 
         setpaginated(sortedItems.slice(start, end));
-    }, [currentPage, sorting, sortdirection, searchbar]);
+    }, [currentPage, sorting, sortdirection, searchbar, purchaseOrders]);
 
     const handleSort = (field) => {
         if (field === sorting) {
@@ -267,6 +267,16 @@ export default function Purchasing({ auth, purchaseOrders }) {
         }
     };
 
+    const { flash } = usePage().props;
+    const {
+        data,
+        setData,
+        delete: destroy,
+        processing,
+        errors,
+        reset,
+    } = useForm({});
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(!open);
 
@@ -275,9 +285,57 @@ export default function Purchasing({ auth, purchaseOrders }) {
 
     const [date, setDate] = React.useState(new Date());
 
+    const [deletepurchases, setDeletepurchases] = useState(null);
+    const [deleteOpen, setdeleteOpen] = useState(false);
+
+    const handleDeletePurchases = (id) => {
+        if (id) {
+          setDeletepurchases(id);
+          setdeleteOpen(true);
+        } else {
+          setdeleteOpen(false);
+        }
+      };
+
     return (
         <PurchasingLayout user={auth.user}>
             <Head title="Purchases" />
+            <Dialog open={deleteOpen} size="sm" onClose={handleDeletePurchases}>
+                <DialogHeader>
+                <Typography variant="h5">Notifikasi</Typography>
+                </DialogHeader>
+                <DialogBody divider className="grid place-items-center gap-4">
+                <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                <Typography className="text-red-900" variant="h4">
+                Anda akan menghapus pelanggan ini!
+                </Typography>
+                <Typography className="text-center font-normal">
+                Aksi ini tidak dapat dibatalkan. Namun, kami akan tetap simpan untuk keperluan audit.
+                </Typography>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                <Button
+                    variant="gradient"
+                    color="red"
+                    onClick={async () => {
+                    if (deletepurchases) {
+                        await destroy(route("purchases.destroy", deletepurchases), {
+                        onSuccess: () => {
+                            setIsShowAlert(true);
+                            setDeletepurchases(null);
+                        },
+                        });
+                    }
+                    handleDeletePurchases(null);
+                    }}
+                >
+                    Konfirmasi
+                </Button>
+                <Button variant="outlined" onClick={() => handleDeletePurchases(null)}>
+                Batal
+                </Button>
+                </DialogFooter>
+            </Dialog>
             <Dialog
                 open={openPayment}
                 size="sm"
@@ -742,6 +800,12 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                         const classes = isLast
                                             ? "p-4"
                                             : "p-4 border-blue-gray-50";
+                                        const statusColors = {
+                                                'draft': 'grey',
+                                                'posted': 'green',
+                                                'pending': 'light-blue',
+                                                'canceled': 'red',
+                                              };
 
                                         return (
                                             <tr
@@ -798,7 +862,7 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {total_paid}
+                                                        Rp{total_paid}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -813,7 +877,7 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                             }
                                                             className="font-normal"
                                                         >
-                                                            {total_due}
+                                                            Rp{total_due}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -824,37 +888,23 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                                 className="static"
                                                                 variant="ghost"
                                                                 size="sm"
-                                                                value={
-                                                                    status
-                                                                        ? "Purchased"
-                                                                        : "Cancelled"
-                                                                }
-                                                                color={
-                                                                    status
-                                                                        ? "green"
-                                                                        : "gray"
-                                                                }
+                                                                value={status}
+                                                                color={statusColors[status]}
                                                             />
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
-                                                    <div className="flex items-center">
-                                                        <Chip
-                                                            className="static"
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            value={
-                                                                payment_status
-                                                                    ? "paid"
-                                                                    : "due"
-                                                            }
-                                                            color={
-                                                                payment_status
-                                                                    ? "green"
-                                                                    : "red"
-                                                            }
-                                                        />
+                                                <div className="w-max">
+                                                        <div>
+                                                            <Chip
+                                                                className="static"
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                value={payment_status}
+                                                                color={payment_status === 'paid' ? 'green' : 'red'}
+                                                            />
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -868,7 +918,7 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                         }
                                                         className="font-normal"
                                                     >
-                                                        {total_due}
+                                                        Rp{total_due}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -922,7 +972,9 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                                     <ArrowDownTrayIcon className="w-5 h-5" />
                                                                     Download PDF
                                                                 </MenuItem>
-                                                                <MenuItem className="flex items-center gap-2 !text-white hover:!text-white !bg-red-500 hover:!bg-red-900">
+                                                                <MenuItem className="flex items-center gap-2 !text-white hover:!text-white !bg-red-500 hover:!bg-red-900"
+                                                                    onClick={() => handleDeletePurchases(id)}
+                                                                >
                                                                     <TrashIcon className="w-5 h-5 text-white" />
                                                                     Delete
                                                                     Purchase
