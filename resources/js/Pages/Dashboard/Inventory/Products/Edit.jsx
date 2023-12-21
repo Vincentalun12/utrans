@@ -191,10 +191,15 @@ export default function AddProduct({ auth, brands, product }) {
                                                     "before:content-none after:content-none",
                                             }}
                                         />
+                                        {errors.description && (
+                                            <p className="text-red-500 text-sm">
+                                                {errors.description}
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="grid sm:grid-cols-2 gap-4">
-                                    <div className="sm:col-span-1">
+                                    <div className="col-span-2 lg:col-span-2">
                                         <Typography>Sales Price</Typography>
                                         <div className="w-full text-xs mb-2 text-gray-500">
                                             * Input your Sales Price
