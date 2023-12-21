@@ -20,19 +20,33 @@ import {
 } from "@material-tailwind/react";
 
 import {
-    PencilSquareIcon,
-    TrashIcon,
-    EyeIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-    MagnifyingGlassIcon,
-    EllipsisHorizontalIcon,
+    CalendarDaysIcon,
     ChevronUpDownIcon,
-    InformationCircleIcon,
     PencilIcon,
-    UserPlusIcon,
     DocumentTextIcon,
     PlusIcon,
+    InformationCircleIcon,
+    EyeIcon,
+    PlusCircleIcon,
+    TrashIcon,
+    ArrowDownTrayIcon,
+    CreditCardIcon,
+    EllipsisVerticalIcon,
+    ChevronLeftIcon,
+    PencilSquareIcon,
+    ChevronRightIcon,
+} from "@heroicons/react/24/solid";
+
+import {
+    DocumentArrowDownIcon,
+    DocumentChartBarIcon,
+}
+from "@heroicons/react/24/outline";
+
+import {
+    TrashIcon as TrashIconSolid,
+    PencilIcon as PencilIconSolid,
+    PrinterIcon as PrinterIconSolid,
 } from "@heroicons/react/24/solid";
 
 import { ButtonPrimary } from "@/Components";
@@ -217,6 +231,26 @@ export default function Vendors({ auth, vendors }) {
                                                  {selectedvendors.city}.</div>}
                     </Typography>
                     </div>
+                    <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                {Language.info.createdat}
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                                {selectedvendors && (
+                                    <div>{new Date(selectedvendors.created_at).toLocaleString()}</div>
+                                )}
+                            </Typography>
+                        </div>
+                        <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                {Language.info.editedat}
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                                {selectedvendors && (
+                                    <div>{new Date(selectedvendors.updated_at).toLocaleString()}</div>
+                                )}
+                            </Typography>
+                        </div>
                 </div>
                 </DialogBody>
                 <DialogFooter className="space-x-2">

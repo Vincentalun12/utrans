@@ -42,6 +42,39 @@ class SaleController extends Controller
         return Inertia::render('Dashboard/Orders/Sales/Create', $data);
     }
 
+    public function destroy($id)
+        {  
+            $salesorder = SaleOrder::find($id);
+
+            $journalEntries = JournalEntries::where('sale_order_id', $id)->get();
+
+            foreach ($journalEntries as $journalEntry) {
+                $journalitems = JournalItem::where('journal_entry_id', $journalEntry->id)->get();
+                $journalitems->each(function ($journalitem) {
+                    $chartOfAccountId = $journalitem->chart_of_account_id;
+                    $journalitem->delete();
+                    ChartOfAccount::updateChartOfAccountBalance($chartOfAccountId);
+                });
+
+                $journalEntry->delete();
+            }
+
+            $saleorderline = SaleOrderLine::where('sale_order_id', $id)->get();
+
+            $saleorderline->each(function ($saleorderline) {
+                $saleorderline->delete();
+            });
+
+            $salesorder->delete();
+
+            return redirect()->route('sales')->with([
+                'message' => [
+                    'type'  => 'success',
+                    'content' => 'Sales order deleted successfully'
+                ]
+            ]);
+        }
+
     public function store(Request $request)
     {
         $setting = Setting::getSetting();

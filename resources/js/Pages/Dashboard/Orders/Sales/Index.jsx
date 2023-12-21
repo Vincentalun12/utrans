@@ -12,10 +12,8 @@ import {
     ChevronUpDownIcon,
     PencilIcon,
     DocumentTextIcon,
-    DocumentArrowDownIcon,
-    DocumentChartBarIcon,
     PlusIcon,
-    XMarkIcon,
+    InformationCircleIcon,
     EyeIcon,
     PlusCircleIcon,
     TrashIcon,
@@ -25,6 +23,12 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/solid";
+
+import {
+    DocumentArrowDownIcon,
+    DocumentChartBarIcon,
+}
+from "@heroicons/react/24/outline";
 
 import {
     TrashIcon as TrashIconSolid,
@@ -61,7 +65,7 @@ import {
 const TABLE_HEAD = [
     { display: "Reference", field: "reference" },
     { display: "Creation date", field: "creation" },
-    { display: "customer", field: "customer" },
+    { display: "Customer", field: "customer" },
     { display: "Total item", field: "totalitem" },
     { display: "Total", field: "total" },
     { display: "Paid", field: "paid" },
@@ -139,7 +143,7 @@ export default function Purchasing({ auth, saleOrders }) {
         }
 
         setpaginated(sortedItems.slice(start, end));
-    }, [currentPage, sorting, sortdirection, searchbar]);
+    }, [currentPage, sorting, sortdirection, searchbar, saleOrders]);
 
     const handleSort = (field) => {
         if (field === sorting) {
@@ -165,6 +169,16 @@ export default function Purchasing({ auth, saleOrders }) {
         }
     };
 
+    const { flash } = usePage().props;
+    const {
+        data,
+        setData,
+        delete: destroy,
+        processing,
+        errors,
+        reset,
+    } = useForm({});
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(!open);
 
@@ -173,9 +187,57 @@ export default function Purchasing({ auth, saleOrders }) {
 
     const [date, setDate] = React.useState(new Date());
 
+    const [deletesales, setDeletesales] = useState(null);
+    const [deleteOpen, setdeleteOpen] = useState(false);
+
+    const handleDeleteSales = (id) => {
+        if (id) {
+          setDeletesales(id);
+          setdeleteOpen(true);
+        } else {
+          setdeleteOpen(false);
+        }
+      };
+
     return (
         <PurchasingLayout user={auth.user}>
             <Head title="Sales" />
+            <Dialog open={deleteOpen} size="sm" onClose={handleDeleteSales}>
+                <DialogHeader>
+                <Typography variant="h5">Notifikasi</Typography>
+                </DialogHeader>
+                <DialogBody divider className="grid place-items-center gap-4">
+                <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                <Typography className="text-red-900" variant="h4">
+                Anda akan menghapus pelanggan ini!
+                </Typography>
+                <Typography className="text-center font-normal">
+                Aksi ini tidak dapat dibatalkan. Namun, kami akan tetap simpan untuk keperluan audit.
+                </Typography>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                <Button
+                    variant="gradient"
+                    color="red"
+                    onClick={async () => {
+                    if (deletesales) {
+                        await destroy(route("sales.destroy", deletesales), {
+                        onSuccess: () => {
+                            setIsShowAlert(true);
+                            setDeletesales(null);
+                        },
+                        });
+                    }
+                    handleDeleteSales(null);
+                    }}
+                >
+                    Konfirmasi
+                </Button>
+                <Button variant="outlined" onClick={() => handleDeleteSales(null)}>
+                Batal
+                </Button>
+                </DialogFooter>
+            </Dialog>
             <Dialog
                 open={openPayment}
                 size="sm"
@@ -640,6 +702,12 @@ export default function Purchasing({ auth, saleOrders }) {
                                         const classes = isLast
                                             ? "p-4"
                                             : "p-4 border-blue-gray-50";
+                                        const statusColors = {
+                                            'draft': 'grey',
+                                            'posted': 'green',
+                                            'pending': 'light-blue',
+                                            'canceled': 'red',
+                                        };    
 
                                         return (
                                             <tr
@@ -696,7 +764,7 @@ export default function Purchasing({ auth, saleOrders }) {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {total_paid}
+                                                        Rp{total_paid}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -711,7 +779,7 @@ export default function Purchasing({ auth, saleOrders }) {
                                                             }
                                                             className="font-normal"
                                                         >
-                                                            {total_due}
+                                                            Rp{total_due}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -722,16 +790,8 @@ export default function Purchasing({ auth, saleOrders }) {
                                                                 className="static"
                                                                 variant="ghost"
                                                                 size="sm"
-                                                                value={
-                                                                    status
-                                                                        ? "Purchased"
-                                                                        : "Cancelled"
-                                                                }
-                                                                color={
-                                                                    status
-                                                                        ? "green"
-                                                                        : "gray"
-                                                                }
+                                                                value={status}
+                                                                color={statusColors[status]}
                                                             />
                                                         </div>
                                                     </div>
@@ -742,16 +802,8 @@ export default function Purchasing({ auth, saleOrders }) {
                                                             className="static"
                                                             variant="ghost"
                                                             size="sm"
-                                                            value={
-                                                                payment_status
-                                                                    ? "paid"
-                                                                    : "due"
-                                                            }
-                                                            color={
-                                                                payment_status
-                                                                    ? "green"
-                                                                    : "red"
-                                                            }
+                                                            value={payment_status}
+                                                            color={payment_status === 'paid' ? 'green' : 'red'}
                                                         />
                                                     </div>
                                                 </td>
@@ -766,11 +818,11 @@ export default function Purchasing({ auth, saleOrders }) {
                                                         }
                                                         className="font-normal"
                                                     >
-                                                        {total_due}
+                                                        Rp{total_due}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
-                                                    <Tooltip content="Orders">
+                                                    <Tooltip content="More Detail">
                                                         <Menu placement="left-start">
                                                             <MenuHandler>
                                                                 <Button
@@ -820,7 +872,9 @@ export default function Purchasing({ auth, saleOrders }) {
                                                                     <ArrowDownTrayIcon className="w-5 h-5" />
                                                                     Download PDF
                                                                 </MenuItem>
-                                                                <MenuItem className="flex items-center gap-2 !text-white hover:!text-white !bg-red-500 hover:!bg-red-900">
+                                                                <MenuItem className="flex items-center gap-2 !text-white hover:!text-white !bg-red-500 hover:!bg-red-900"
+                                                                    onClick={() => handleDeleteSales(id)}
+                                                                >
                                                                     <TrashIcon className="w-5 h-5 text-white" />
                                                                     Delete
                                                                     Purchase

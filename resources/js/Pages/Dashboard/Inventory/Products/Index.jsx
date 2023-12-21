@@ -32,21 +32,33 @@ import {
 } from "@material-tailwind/react";
 
 import {
-    PencilSquareIcon,
-    EyeIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-    MagnifyingGlassIcon,
-    EllipsisHorizontalIcon,
+    CalendarDaysIcon,
     ChevronUpDownIcon,
-    InformationCircleIcon,
     PencilIcon,
-    TrashIcon,
     DocumentTextIcon,
-    ArchiveBoxIcon,
     PlusIcon,
+    InformationCircleIcon,
+    EyeIcon,
+    PlusCircleIcon,
+    TrashIcon,
+    ArrowDownTrayIcon,
+    CreditCardIcon,
+    EllipsisVerticalIcon,
+    ChevronLeftIcon,
+    PencilSquareIcon,
+    ChevronRightIcon,
+} from "@heroicons/react/24/solid";
+
+import {
     DocumentArrowDownIcon,
     DocumentChartBarIcon,
+}
+from "@heroicons/react/24/outline";
+
+import {
+    TrashIcon as TrashIconSolid,
+    PencilIcon as PencilIconSolid,
+    PrinterIcon as PrinterIconSolid,
 } from "@heroicons/react/24/solid";
 
 import { ButtonPrimary } from "@/Components";
@@ -445,8 +457,40 @@ export default function Inventory({ auth, products }) {
                                 Rp{" "}
                                 {selectedProducts &&
                                     Intl.NumberFormat("id").format(
-                                        selectedProducts.retail_price
+                                        selectedProducts.sales_price
                                     )}
+                            </Typography>
+                        </div>
+                        <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                Standard price
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                                Rp{" "}
+                                {selectedProducts &&
+                                    Intl.NumberFormat("id").format(
+                                        selectedProducts.standard_price
+                                    )}
+                            </Typography>
+                        </div>
+                        <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                Created at
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                                {selectedProducts && (
+                                    <div>{new Date(selectedProducts.created_at).toLocaleString()}</div>
+                                )}
+                            </Typography>
+                        </div>
+                        <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                Edited at
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                                {selectedProducts && (
+                                    <div>{new Date(selectedProducts.updated_at).toLocaleString()}</div>
+                                )}
                             </Typography>
                         </div>
                     </div>

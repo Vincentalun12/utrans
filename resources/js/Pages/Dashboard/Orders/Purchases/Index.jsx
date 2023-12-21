@@ -12,8 +12,6 @@ import {
     ChevronUpDownIcon,
     PencilIcon,
     DocumentTextIcon,
-    DocumentArrowDownIcon,
-    DocumentChartBarIcon,
     PlusIcon,
     InformationCircleIcon,
     EyeIcon,
@@ -25,6 +23,12 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/solid";
+
+import {
+    DocumentArrowDownIcon,
+    DocumentChartBarIcon,
+}
+from "@heroicons/react/24/outline";
 
 import {
     TrashIcon as TrashIconSolid,
@@ -820,7 +824,7 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
-                                                    <Tooltip content="Orders">
+                                                    <Tooltip content="More Detail">
                                                         <Menu placement="left-start">
                                                             <MenuHandler>
                                                                 <Button
