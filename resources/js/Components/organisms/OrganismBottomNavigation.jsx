@@ -40,54 +40,46 @@ export function OrganismBottomNavigation() {
         <div className="fixed bottom-0 w-full lg:hidden inline-flex justify-between bg-white z-50">
             {isNavVisible && (
                 <div className="grid grid-cols-5 items-center flex-grow">
-                <a href="/dashboard">
                     <Button
                         variant="text"
                         className="inline-flex flex-col items-center justify-center font-medium py-3 px-4 text-ungukita rounded-none"
-                        href="#"
+                        onClick={() => window.location.href='/dashboard'}
                     >
                         <HomeIcon className="w-7 h-7" />
                         <span className="">Home</span>
                     </Button>
-                </a>
-                <a href="/inventorymenu">
                     <Button
                         variant="text"
                         size="xs"
                         className="inline-flex flex-col items-center font-medium text-ungukita py-3 px-4 rounded-none"
-                        href="#"
+                        onClick={() => window.location.href='/products'}
                     >
                         <ArchiveBoxIcon className="w-7 h-7" />
                         <span className="">Inven</span>
                     </Button>
-                </a>
                     <button onClick={handleOpenModal} className="inline-flex flex-col items-center text-xs font-medium text-white py-3 px-6 rounded-none">
                         <div className="absolute bottom-5 p-4 border-4 rounded-full bg-ungukita shadow-md shadow-blue-gray-200">
                             <Squares2X2Icon className="w-7 h-7" />
                         </div>
                     </button>
-                    <a href="/sales">
                     <Button
                         variant="text"
                         size="xs"
                         className="inline-flex flex-col items-center font-medium text-ungukita py-3 px-4 rounded-none"
-                        href="#"
+                        onClick={() => window.location.href='/sales'}
                     >
                         <ChartBarIcon className="w-7 h-7" />
                         <span className="">Order</span>
                     </Button>
-                    </a>
-                    <a href="/customers">
                     <Button
                         variant="text"
                         size="xs"
                         className="inline-flex flex-col items-center font-medium text-ungukita py-3 px-4 rounded-none"
-                        href="#"
+                        onClick={() => window.location.href='/customers'}
                     >
                         <UserGroupIcon className="w-7 h-7" />
                         <span className="">Partner</span>
                     </Button>
-                    </a>
                 </div>
             )}
             {isModalOpen && (
