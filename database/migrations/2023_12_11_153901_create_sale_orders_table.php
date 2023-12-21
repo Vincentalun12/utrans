@@ -13,9 +13,16 @@ return new class extends Migration
     {
         Schema::create('sale_orders', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique();
             $table->foreignId('customer_id')->constrained('customers');
-            $table->string('code');
-            $table->date('date');
+            $table->date('create_date');
+            $table->integer('total_item');
+            $table->decimal('total_price', 65, 2);
+            $table->decimal('total_paid', 65, 2);
+            $table->decimal('total_due', 65, 2);
+            $table->string('status');
+            $table->string('payment_status');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });
