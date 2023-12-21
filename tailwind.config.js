@@ -18,7 +18,7 @@ module.exports = withMT( {
             colors: {
                 transparent: 'transparent',
                 current: 'currentColor',
-               'ungukita': '#32174D',
+               'ungukita': '#005fc1',
                'biru1':'#3c4b64',
                'biru2':'#303c54',
                'backgroundabu':'#eff2f4',

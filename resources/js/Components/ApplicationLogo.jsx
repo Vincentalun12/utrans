@@ -1,8 +1,8 @@
-import { Utranslogo } from '@/Assets';
+import { Batamwater1 } from '@/Assets';
 
 export default function ApplicationLogo(props) {
     return (
-        <img src={Utranslogo} alt="Utrans logo" className="max-h-8" />
+        <img src={Batamwater1} alt="Utrans logo" className="max-h-8" />
     );
 }
 
