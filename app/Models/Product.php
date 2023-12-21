@@ -47,6 +47,11 @@ class Product extends Model
         $purchaseOrderLines = PurchaseOrderLine::with(['purchaseOrder'])->whereHas('purchaseOrder', function ($query) use ($productId) {
             $query->where('status', 'posted');
         })->where('product_id', $productId)->orderBy('id', 'desc')->get();
+
+        if ($purchaseOrderLines->count() == 0) {
+            return 0;
+        }
+
         $totalQuantity = 0;
         $totalPrice = 0;
 
