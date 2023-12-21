@@ -1,5 +1,6 @@
 import InventoryLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from "react";
+import { Language } from "@/Languages/Accounting/JournalEntries/JournalEntriesIndex";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import {
@@ -11,6 +12,10 @@ import {
     Tooltip,
     IconButton,
     Chip,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
 } from "@material-tailwind/react";
 
 import {
@@ -35,17 +40,24 @@ import { ButtonPrimary } from "@/Components";
 import { twMerge } from "tailwind-merge";
 
 const TABLE_HEAD = [
-    { display: "Date", field: "date" },
-    { display: "Number", field: "number" },
+    { display: Language.tableheader.date, field: "date" },
+    { display: Language.tableheader.number, field: "number" },
     // { display: "Customer Name", field: "customername" },
-    { display: "Reference", field: "reference" },
-    { display: "Journal", field: "journal" },
+    { display: Language.tableheader.reference, field: "reference" },
+    { display: Language.tableheader.journal, field: "journal" },
     // { display: "total", field: "total" },
-    { display: "Status", field: "status" },
+    { display: Language.tableheader.status, field: "status" },
     { display: "", field: null },
 ];
 
 export default function Inventory({ auth, journalentries }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
@@ -131,6 +143,18 @@ export default function Inventory({ auth, journalentries }) {
             setCurrentPage(currentPage + 1);
         }
     };
+
+    const [deletejournalentries, setDeletejournalentries] = useState(null);
+    const [deleteOpen, setdeleteOpen] = useState(false);
+
+    const handleDeleteJournalEntries = (id) => {
+        if (id) {
+          setDeletejournalentries(id);
+          setdeleteOpen(true);
+        } else {
+          setdeleteOpen(false);
+        }
+      };
     return (
         <InventoryLayout user={auth.user}>
             <Head title="Journal Entries" />
@@ -142,6 +166,40 @@ export default function Inventory({ auth, journalentries }) {
             >
                 {flash.message?.content}
             </Alert>
+            <Dialog open={deleteOpen} size="sm" onClose={handleDeleteJournalEntries}>
+                <DialogHeader>
+                <Typography variant="h5">{Language.delete.header}</Typography>
+                </DialogHeader>
+                <DialogBody divider className="grid place-items-center gap-4">
+                <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                <Typography className="text-red-900" variant="h4">
+                {Language.delete.title}
+                </Typography>
+                <Typography className="text-center font-normal">
+                {Language.delete.description}
+                </Typography>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                <Button
+                    variant="gradient"
+                    color="red"
+                    onClick={async () => {
+                    if (deletejournalentries) {
+                        await destroy(route("journalentries.destroy", deletejournalentries), {
+                        onSuccess: () => {
+                            setIsShowAlert(true);
+                            setDeletejournalentries(null);
+                        },
+                        });
+                    }
+                    handleDeleteJournalEntries(null);
+                    }}
+                >
+                    {Language.delete.confirmbutton}
+                </Button>
+                <Button variant="outlined" onClick={() => handleDeleteJournalEntries(null)}>{Language.delete.cancelbutton}</Button>
+                </DialogFooter>
+            </Dialog>
             <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
                     <div className="w-full mx-auto pb-5">
@@ -152,10 +210,10 @@ export default function Inventory({ auth, journalentries }) {
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    Journal Entries
+                                    {Language.header.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Manage your Journal Entries
+                                    {Language.header.subtitle}
                                 </Typography>
                             </div>
                         </div>
@@ -164,7 +222,7 @@ export default function Inventory({ auth, journalentries }) {
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
                             <Linkactive href={route("journalentries.create")}>
                                 <Button className="bg-ungukita md:flex hidden">
-                                    Add
+                                    {Language.addbutton}
                                 </Button>
                             </Linkactive>
                             <Linkactive href={route("journalentries.create")}>
@@ -175,7 +233,7 @@ export default function Inventory({ auth, journalentries }) {
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"
-                                    placeholder="Search"
+                                    placeholder={Language.searchplaceholder}
                                     value={searchbar}
                                     onChange={(e) =>
                                         setsearchbar(e.target.value)
@@ -335,59 +393,24 @@ export default function Inventory({ auth, journalentries }) {
                                                     </div>
                                                 </td>
                                                 <td className="p-2 flex">
-                                                    <Tooltip content="View">
-                                                        <Linkactive
-                                                            href={route(
-                                                                "journalentries.detail",
-                                                                id
-                                                            )}
-                                                        >
+                                                    <a href={route("journalentries.detail", id)}>
+                                                    <Tooltip content={Language.tableaction.view}>
                                                             <IconButton variant="text">
                                                                 <EyeIcon className="h-5 w-5 text-blue-800" />
                                                             </IconButton>
-                                                        </Linkactive>
                                                     </Tooltip>
-                                                    <Tooltip content="Edit">
-                                                        <Linkactive
-                                                            href={route(
-                                                                "journalentries.edit",
-                                                                id
-                                                            )}
-                                                        >
+                                                    </a>
+                                                    <a href={route("journalentries.edit",id)}>
+                                                    <Tooltip content={Language.tableaction.edit}>
                                                             <IconButton variant="text">
                                                                 <PencilSquareIcon className="h-5 w-5 text-green-500" />
                                                             </IconButton>
-                                                        </Linkactive>
                                                     </Tooltip>
-                                                    <Tooltip content="Delete">
-                                                        <a
-                                                            onClick={() => {
-                                                                destroy(
-                                                                    route(
-                                                                        "journalentries.destroy",
-                                                                        id
-                                                                    ),
-                                                                    {
-                                                                        onSuccess:
-                                                                            () => {
-                                                                                setIsShowAlert(
-                                                                                    true
-                                                                                );
-                                                                            },
-                                                                        onError:
-                                                                            () => {
-                                                                                setIsShowAlert(
-                                                                                    true
-                                                                                );
-                                                                            },
-                                                                    }
-                                                                );
-                                                            }}
-                                                        >
-                                                            <IconButton variant="text">
+                                                    </a>
+                                                    <Tooltip content={Language.tableaction.delete}>
+                                                            <IconButton variant="text" onClick={() => handleDeleteJournalEntries(id)}>
                                                                 <TrashIcon className="h-5 w-5 text-red-500" />
                                                             </IconButton>
-                                                        </a>
                                                     </Tooltip>
                                                 </td>
                                             </tr>
@@ -405,7 +428,7 @@ export default function Inventory({ auth, journalentries }) {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    Page {currentPage} of{" "}
+                                    {Language.pagination.page} {currentPage} {Language.pagination.of}{" "}
                                     {Math.ceil(
                                         journalentries?.length / itemsPerPage
                                     )}
@@ -418,7 +441,7 @@ export default function Inventory({ auth, journalentries }) {
                                     onClick={handlePrevious}
                                     disabled={currentPage === 1}
                                 >
-                                    Previous
+                                    {Language.pagination.previous}
                                 </Button>
                                 <Button
                                     variant="outlined"
@@ -426,7 +449,7 @@ export default function Inventory({ auth, journalentries }) {
                                     onClick={handleNext}
                                     disabled={paginated.length < itemsPerPage}
                                 >
-                                    Next
+                                    {Language.pagination.next}
                                 </Button>
                             </div>
                         </div>

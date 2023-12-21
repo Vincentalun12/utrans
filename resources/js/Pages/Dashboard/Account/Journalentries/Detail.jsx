@@ -1,5 +1,7 @@
 import Journalentriesdetail from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
+import React, { useState, useEffect } from "react";
+import { Language } from "@/Languages/Accounting/JournalEntries/JournalEntriesDetail";
 import {
     Card,
     Typography,
@@ -20,30 +22,16 @@ import {
     ArrowDownRightIcon,
 } from "@heroicons/react/24/solid";
 
-const TABLE_HEAD = ["Account", "Label", "Debit", "Credit"];
-const TABLE_ROWS = [
-    {
-        account: "BW-CB-001",
-        label: "Carbon Block CTO Kirei 10 inch",
-        debit: "50",
-        credit: "25,000.00",
-    },
-    {
-        account: "BW-CB-001",
-        label: "Carbon Block CTO Kirei 10 inch",
-        debit: "50",
-        credit: "25,000.00",
-    },
-    {
-        account: "BW-CB-001",
-        label: "Carbon Block CTO Kirei 10 inch",
-        debit: "50",
-        credit: "25,000.00",
-    },
-];
+const TABLE_HEAD = [Language.tableheader.account, Language.tableheader.label, Language.tableheader.debit, Language.tableheader.credit];
 
 export default function Purchasingorder({ auth, journalentry }) {
-    console.log(journalentry);
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     return (
         <Journalentriesdetail user={auth.user}>
             <Head title="Add item" />
@@ -56,14 +44,14 @@ export default function Purchasingorder({ auth, journalentry }) {
                                     variant="outlined"
                                     className="w-full h-10 rounded-none"
                                 >
-                                    Edit
+                                    {Language.edit}
                                 </Button>
                             </div>
                         </div>
                     </Card>
                     <Card className="h-full w-full overflow-hidden rounded-none p-6">
                         <Typography variant="h6" color="black">
-                            Journal Entry Detail
+                            {Language.title}
                         </Typography>
                         <div className="inline-flex mx-4">
                             <Typography variant="h4" color="black">
@@ -83,7 +71,7 @@ export default function Purchasingorder({ auth, journalentry }) {
                             </div> */}
                             <div className="inline-flex w-full lg:order-3 order-3">
                                 <Typography color="black" className="font-bold">
-                                    Journal:
+                                    {Language.journal}
                                 </Typography>
                                 <Typography className="ml-6">
                                     {journalentry.journal.journal_name}
@@ -91,7 +79,7 @@ export default function Purchasingorder({ auth, journalentry }) {
                             </div>
                             <div className="inline-flex w-full lg:order-2 order-2">
                                 <Typography color="black" className="font-bold">
-                                    Accounting date:
+                                    {Language.date}
                                 </Typography>
                                 <Typography className="ml-6">
                                     {journalentry.accounting_date}
@@ -99,7 +87,7 @@ export default function Purchasingorder({ auth, journalentry }) {
                             </div>
                             <div className="inline-flex w-full lg:order-4 order-4">
                                 <Typography color="black" className="font-bold">
-                                    Created on:
+                                    {Language.serialnumber}
                                 </Typography>
                                 <Typography className="ml-6">
                                     BW-PU-A-001

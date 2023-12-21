@@ -1,5 +1,6 @@
 import InventoryLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from "react";
+import { Language } from "@/Languages/Accounting/Journal/JournalIndex"
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import {
@@ -10,6 +11,10 @@ import {
     Button,
     IconButton,
     Tooltip,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
 } from "@material-tailwind/react";
 
 import {
@@ -36,20 +41,38 @@ import { twMerge } from "tailwind-merge";
 import { TitleCase } from "@/Utilities";
 
 const TABLE_HEAD = [
-    { display: "Short Code", field: "code" },
-    { display: "Journal Name", field: "journal_name" },
-    { display: "Type", field: "journal_type" },
-    { display: "Account Name", field: "chart_of_account_id" },
-    { display: "View", field: "null" },
+    { display: Language.tableheader.code, field: "code" },
+    { display: Language.tableheader.journalname, field: "journal_name" },
+    { display: Language.tableheader.journaltype, field: "journal_type" },
+    { display: Language.tableheader.Accountname, field: "chart_of_account_id" },
+    { display: Language.tableheader.Action, field: "null" },
 ];
 
 export default function Inventory({ auth, journals }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
     const [sorting, setsorting] = useState(null);
     const [sortdirection, setsortdirection] = useState(null);
     const [searchbar, setsearchbar] = useState("");
+
+    const [selectedJournal, setSelectedJournal] = useState(null);
+    
+    const [opendetail, setOpendetail] = React.useState(false);
+    const handleOpendetail = (id) => {
+        setOpendetail(!opendetail);
+        const journalData = journals.find((journals) => journals.id === id);
+        setSelectedJournal(journalData);
+        console.log(journals);
+        console.log(journalData);
+    };
 
     const { flash } = usePage().props;
 
@@ -129,6 +152,19 @@ export default function Inventory({ auth, journals }) {
             setCurrentPage(currentPage + 1);
         }
     };
+
+    const [deletejournals, setDeletejournals] = useState(null);
+    const [deleteOpen, setdeleteOpen] = useState(false);
+
+    const handleDeleteJournals = (id) => {
+        if (id) {
+          setDeletejournals(id);
+          setdeleteOpen(true);
+        } else {
+          setdeleteOpen(false);
+        }
+      };
+
     return (
         <InventoryLayout user={auth.user}>
             <Head title="Journals" />
@@ -140,6 +176,100 @@ export default function Inventory({ auth, journals }) {
             >
                 {flash.message?.content}
             </Alert>
+            <Dialog open={deleteOpen} size="sm" onClose={handleDeleteJournals}>
+                <DialogHeader>
+                <Typography variant="h5">{Language.delete.header}</Typography>
+                </DialogHeader>
+                <DialogBody divider className="grid place-items-center gap-4">
+                <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                <Typography className="text-red-900" variant="h4">
+                {Language.delete.title}
+                </Typography>
+                <Typography className="text-center font-normal">
+                {Language.delete.description}
+                </Typography>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                <Button
+                    variant="gradient"
+                    color="red"
+                    onClick={async () => {
+                    if (deletejournals) {
+                        await destroy(route("journals.destroy", deletejournals), {
+                        onSuccess: () => {
+                            setIsShowAlert(true);
+                            setDeletejournals(null);
+                        },
+                        });
+                    }
+                    handleDeleteJournals(null);
+                    }}
+                >
+                    {Language.delete.confirmbutton}
+                </Button>
+                <Button variant="outlined" onClick={() => handleDeleteJournals(null)}>{Language.delete.cancelbutton}</Button>
+                </DialogFooter>
+            </Dialog>
+                <Dialog open={opendetail} handler={handleOpendetail} className="overflow-auto max-h-[80vh]">
+                        <DialogHeader>
+                            <Typography variant="h5">{Language.detail.header}</Typography>
+                        </DialogHeader>
+                        <DialogBody divider>
+                        <div className="flex flex-col gap-2">
+                            <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                {Language.detail.code}
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                                {selectedJournal && <div>{selectedJournal.code}</div>}
+                            </Typography>
+                            </div>
+                            <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                {Language.detail.account_name}
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                                {selectedJournal && <div>{selectedJournal.journal_name}</div>}
+                            </Typography>
+                            </div>
+                            <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                {Language.detail.type}
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                                {selectedJournal && (
+                                <div>{TitleCase(selectedJournal.journal_type)}</div>
+                                )}
+                            </Typography>
+                            </div>
+                            <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                {Language.detail.createdat}
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                            {selectedJournal && (<div>{new Date(selectedJournal.created_at).toLocaleString()}</div>)}
+                            </Typography>
+                            </div>
+                            <div className="flex flex-col">
+                            <Typography variant="small" color="blue-gray">
+                                {Language.detail.editedat}
+                            </Typography>
+                            <Typography variant="body" color="blue-gray">
+                            {selectedJournal && (<div>{new Date(selectedJournal.updated_at).toLocaleString()}</div>)}
+                            </Typography>
+                            </div>
+                        </div>
+                        </DialogBody>
+                        <DialogFooter className="space-x-2">
+                        <Button variant="gradient" color="green"
+                        onClick={() => window.location.href = route("journals.edit", selectedJournal.id)}>
+                            {Language.detail.editbutton}
+                        </Button>
+                        <Button variant="outlined" onClick={handleOpendetail}>
+                            <span>{Language.detail.closebutton}</span>
+                        </Button>
+                        </DialogFooter>
+                    </Dialog>
             <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
                     <div className="w-full mx-auto pb-5">
@@ -150,10 +280,10 @@ export default function Inventory({ auth, journals }) {
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    Journals
+                                    {Language.header.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Manage your Journals
+                                    {Language.header.subtitle}
                                 </Typography>
                             </div>
                         </div>
@@ -162,7 +292,7 @@ export default function Inventory({ auth, journals }) {
                         <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
                             <Linkactive href={route("journals.create")}>
                                 <Button className="bg-ungukita md:flex hidden">
-                                    Add
+                                    {Language.addbutton}
                                 </Button>
                             </Linkactive>
                             <Linkactive href={route("journals.create")}>
@@ -173,7 +303,7 @@ export default function Inventory({ auth, journals }) {
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"
-                                    placeholder="Search"
+                                    placeholder={Language.searchplaceholder}
                                     value={searchbar}
                                     onChange={(e) =>
                                         setsearchbar(e.target.value)
@@ -293,47 +423,26 @@ export default function Inventory({ auth, journals }) {
                                                 </td>
                                                 <td className="p-2">
                                                     <Tooltip content="View">
-                                                        <a>
-                                                            <IconButton variant="text">
+                                                            <IconButton variant="text" onClick={() => handleOpendetail(id)}>
                                                                 <EyeIcon className="h-5 w-5 text-blue-800" />
                                                             </IconButton>
-                                                        </a>
                                                     </Tooltip>
-                                                    <Tooltip content="Edit">
-                                                        <a
+                                                    <a
                                                             href={route(
                                                                 "journals.edit",
                                                                 id
                                                             )}
                                                         >
+                                                    <Tooltip content="Edit">
                                                             <IconButton variant="text">
                                                                 <PencilSquareIcon className="h-5 w-5 text-green-500" />
-                                                            </IconButton>
-                                                        </a>
+                                                            </IconButton>   
                                                     </Tooltip>
+                                                    </a>
                                                     <Tooltip content="Delete">
-                                                        <a
-                                                            onClick={() => {
-                                                                destroy(
-                                                                    route(
-                                                                        "journals.destroy",
-                                                                        id
-                                                                    ),
-                                                                    {
-                                                                        onSuccess:
-                                                                            () => {
-                                                                                setIsShowAlert(
-                                                                                    true
-                                                                                );
-                                                                            },
-                                                                    }
-                                                                );
-                                                            }}
-                                                        >
-                                                            <IconButton variant="text">
+                                                            <IconButton variant="text" onClick={() => handleDeleteJournals(id)}>
                                                                 <TrashIcon className="h-5 w-5 text-red-500" />
                                                             </IconButton>
-                                                        </a>
                                                     </Tooltip>
                                                 </td>
                                             </tr>
@@ -351,7 +460,7 @@ export default function Inventory({ auth, journals }) {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    Page {currentPage} of{" "}
+                                    {Language.pagination.page} {currentPage} {Language.pagination.of} {" "}
                                     {Math.ceil(journals.length / itemsPerPage)}
                                 </Typography>
                             </div>
@@ -362,7 +471,7 @@ export default function Inventory({ auth, journals }) {
                                     onClick={handlePrevious}
                                     disabled={currentPage === 1}
                                 >
-                                    Previous
+                                    {Language.pagination.previous}
                                 </Button>
                                 <Button
                                     variant="outlined"
@@ -370,7 +479,7 @@ export default function Inventory({ auth, journals }) {
                                     onClick={handleNext}
                                     disabled={paginated.length < itemsPerPage}
                                 >
-                                    Next
+                                    {Language.pagination.next}
                                 </Button>
                             </div>
                         </div>

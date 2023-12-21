@@ -1,7 +1,8 @@
 import AdditemLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ReactSelect from "react-select";
+import { Language } from "@/Languages/Accounting/JournalEntries/JournalEntriesCreate";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { format, parse, set } from "date-fns";
 import { DayPicker } from "react-day-picker";
@@ -49,9 +50,23 @@ import {
     PlusIcon,
 } from "@heroicons/react/24/solid";
 
-const TABLE_HEAD = ["Account", "Label", "Debit", "Credit", ""];
+
+const TABLE_HEAD = [
+    Language.table.account, 
+    Language.table.label, 
+    Language.table.debit, 
+    Language.table.credit,
+    ""
+];
 
 export default function CreateJournalEntries({ auth, accounts, journals }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const [date, setDate] = useState(new Date());
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [journalItems, setJournalItems] = useState([]);
@@ -123,10 +138,10 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                         className="text-ungukita"
                                         textGradient
                                     >
-                                        Journal Entries
+                                        {Language.header.title}
                                     </Typography>
                                     <Typography variant="paragraph">
-                                        Add Journal Entries here
+                                        {Language.header.subtitle}
                                     </Typography>
                                 </div>
                             </div>
@@ -134,7 +149,10 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
 
                         <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2">
                             <div className="sm:col-span-1">
-                                <label className="">Journal</label>
+                                <label className="">{Language.journal.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.journal.description}
+                                </div>
                                 <ReactSelect
                                     options={journalOptions}
                                     value={{
@@ -156,7 +174,7 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                         DropdownIndicator: () => null,
                                         IndicatorSeparator: () => null,
                                     }}
-                                    placeholder={"Search"}
+                                    placeholder="Select Journal"
                                     styles={{
                                         control: (base, state) => ({
                                             ...base,
@@ -185,11 +203,14 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                 <div></div>
                             </div>
                             <div className="sm:col-span-1">
-                                <label className="">Reference</label>
+                                <label className="">{Language.reference.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.reference.description}
+                                </div>
                                 <Input
                                     type="input"
                                     value={data.reference}
-                                    onChange={() =>
+                                    onChange={(e) =>
                                         setData("reference", e.target.value)
                                     }
                                     placeholder="Reference"
@@ -201,7 +222,10 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                 />
                             </div>
                             <div className="sm:col-span-1">
-                                <label className="">Status</label>
+                                <label className="">{Language.status.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.status.description}
+                                </div>
                                 <div className="w-full">
                                     <Select
                                         value={data.status}
@@ -220,7 +244,10 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                 </div>
                             </div>
                             <div className="sm:col-span-1">
-                                <label className="">Accounting Date</label>
+                                <label className="">{Language.date.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.date.description}
+                                </div>
                                 <Popover placement="bottom" trigger="click">
                                     <PopoverHandler>
                                         <Input
@@ -326,7 +353,10 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                         </div>
                         <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
                             <div className="sm:col-span-2 w-full">
-                                <label className="">Account</label>
+                                <label className="">{Language.account.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.account.description}
+                                </div>
                                 <ReactSelect
                                     options={accountOptions}
                                     value={selectedAccount}
@@ -550,7 +580,7 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                                                         </Typography>
                                                     </td>
                                                     <td className="p-2 border-b border-gray-200 pl-4">
-                                                        <Tooltip content="Orders">
+                                                        <Tooltip content={Language.table.deletetooltip}>
                                                             <Button
                                                                 size="sm"
                                                                 variant="text"
@@ -583,20 +613,22 @@ export default function CreateJournalEntries({ auth, accounts, journals }) {
                         <Card className="h-full w-full overflow-hidden rounded-none p-6 items-end">
                             <div className="pt-6 pr-5">
                                 <Button
+                                    disabled={data.journal_items.length === 0 || data.journal_id === null} 
                                     type="submit"
                                     color="green"
                                     ripple="light"
                                 >
-                                    Submit
+                                    {Language.submitbutton}
                                 </Button>
-                                <Link
+                                <a href="/journalentries">
+                                <Button
                                     color="red"
                                     ripple="dark"
                                     className="ml-4"
-                                    href={route("journalentries")}
                                 >
-                                    Cancel
-                                </Link>
+                                    {Language.cancelbutton}
+                                </Button>
+                                </a>
                             </div>
                         </Card>
                     </form>

@@ -1,6 +1,7 @@
 import AdditemLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Language } from "@/Languages/Accounting/JournalEntries/JournalEntriesEdit";
 import ReactSelect from "react-select";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { format, parse, set } from "date-fns";
@@ -51,12 +52,14 @@ import {
 
 const TABLE_HEAD = ["Account", "Label", "Debit", "Credit", ""];
 
-export default function EditJournalEntries({
-    auth,
-    accounts,
-    journals,
-    journalentry,
-}) {
+export default function EditJournalEntries({ auth, accounts, journals, journalentry,}) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const [date, setDate] = useState(new Date());
     const [selectedAccount, setSelectedAccount] = useState(null);
     const [journalItems, setJournalItems] = useState([]);
@@ -148,10 +151,10 @@ export default function EditJournalEntries({
                                         className="text-ungukita"
                                         textGradient
                                     >
-                                        Journal Entries
+                                        {Language.header.title}
                                     </Typography>
                                     <Typography variant="paragraph">
-                                        Edit Journal Entries here
+                                        {Language.header.subtitle}
                                     </Typography>
                                 </div>
                             </div>
@@ -159,7 +162,10 @@ export default function EditJournalEntries({
 
                         <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2">
                             <div className="sm:col-span-1">
-                                <label className="">Journal</label>
+                                <label className="">{Language.journal.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.journal.description}
+                                </div>
                                 <ReactSelect
                                     options={journalOptions}
                                     value={{
@@ -210,7 +216,10 @@ export default function EditJournalEntries({
                                 <div></div>
                             </div>
                             <div className="sm:col-span-1">
-                                <label className="">Reference</label>
+                                <label className="">{Language.reference.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.reference.description}
+                                </div>
                                 <Input
                                     type="input"
                                     value={data.reference}
@@ -226,7 +235,10 @@ export default function EditJournalEntries({
                                 />
                             </div>
                             <div className="sm:col-span-1">
-                                <label className="">Status</label>
+                                <label className="">{Language.status.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.status.description}
+                                </div>
                                 <div className="w-full">
                                     <Select
                                         value={data.status}
@@ -245,7 +257,10 @@ export default function EditJournalEntries({
                                 </div>
                             </div>
                             <div className="sm:col-span-1">
-                                <label className="">Accounting Date</label>
+                                <label className="">{Language.date.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.date.description}
+                                </div>
                                 <Popover placement="bottom" trigger="click">
                                     <PopoverHandler>
                                         <Input
@@ -351,7 +366,10 @@ export default function EditJournalEntries({
                         </div>
                         <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
                             <div className="sm:col-span-2 w-full">
-                                <label className="">Account</label>
+                                <label className="">{Language.account.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.account.description}
+                                </div>
                                 <ReactSelect
                                     options={accountOptions}
                                     value={selectedAccount}
@@ -572,7 +590,7 @@ export default function EditJournalEntries({
                                                         </Typography>
                                                     </td>
                                                     <td className="p-2 border-b border-gray-200 pl-4">
-                                                        <Tooltip content="Orders">
+                                                        <Tooltip content={Language.table.deletetooltip}>
                                                             <Button
                                                                 size="sm"
                                                                 variant="text"
@@ -608,7 +626,7 @@ export default function EditJournalEntries({
                                     color="green"
                                     ripple="light"
                                 >
-                                    Submit
+                                    {Language.submitbutton}
                                 </Button>
                                 <Link
                                     color="red"
@@ -616,7 +634,7 @@ export default function EditJournalEntries({
                                     className="ml-4"
                                     href={route("journalentries")}
                                 >
-                                    Cancel
+                                    {Language.cancelbutton}
                                 </Link>
                             </div>
                         </Card>

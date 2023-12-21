@@ -2,48 +2,153 @@ import LocalizedStrings from "react-localization";
 
 let Language = new LocalizedStrings({
     id: {
-        title: "Pengaturan",
-        subtitle: "Ubah pengaturan akun Anda",
+        "header": {
+            "title": "Pengaturan",
+            "subtitle": "Ubah pengaturan dan preferensi anda di sini",
+        },
 
-        accountsettingstitle: "Pengaturan Akun",
-        salesaccount: "Akun Penjualan",
-        purchaseaccount: "Akun Pembelian",   
-        assetsaccount: "Akun Aset",
-        currentassetsaccount: "Akun Aset Lancar",
-        fixedassetsaccount: "Akun Aset Tetap",
-        costofgoodsoldaccount: "Akun Harga Pokok Penjualan",
+        "titles": {
+            "accountsettings": "Pengaturan Akun",
+            "journalsettings": "Pengaturan Jurnal",
+            "appearancesettings": "Pengaturan Tampilan",
+        },
 
-        journalsettingstitle: "Pengaturan Jurnal",
-        stockvaluationjournal: "Jurnal Penilaian Persediaan",
-        salesjournal: "Jurnal Penjualan",
-        purchasejournal: "Jurnal Pembelian",
+        "salesaccount": {
+            "title": "Akun Penjualan",
+            "description": "* Description Coming Soon.",
+        },
 
-        appearancesettingstitle: "Pengaturan Tampilan",
-        language: "Bahasa",
-        theme: "Tema",
+        "inventoryaccount": {
+            "title": "Akun Persediaan",
+            "description": "* Description Coming Soon.",
+        },
+
+        "costofgoodsoldaccount": {
+            "title": "Akun Harga Pokok Penjualan",
+            "description": "* Description Coming Soon.",
+        },
+
+        "accountpayable": {
+            "title": "Akun Hutang",
+            "description": "* Description Coming Soon.",
+        },
+
+        "purchaseaccount": {
+            "title": "Akun Pembelian",
+            "description": "* Description Coming Soon.",
+        },
+
+        "fixedassetsaccount": {
+            "title": "Akun Aset Tetap",
+            "description": "* Description Coming Soon.",
+        },
+
+        "accountreceivable": {
+            "title": "Akun Piutang",
+            "description": "* Description Coming Soon.",
+        },
+
+        "stockvaluationjournal": {
+            "title": "Jurnal Penilaian Persediaan",
+            "description": "* Description Coming Soon.",
+        },
+
+        "Sales Journal": {
+            "title": "Jurnal Penjualan",
+            "description": "* Description Coming Soon.",
+        },
+
+        "Purchase Journal": {
+            "title": "Jurnal Pembelian",
+            "description": "* Description Coming Soon.",
+        },
+
+        "language": {
+            "title": "Bahasa",
+            "description": "* Ubah bahasa yang anda inginkan di sini, saat ini hanya tersedia Inggris dan Indonesia.",
+        },
+
+        "theme": {
+            "title": "Tema",
+            "description": "* Tema saat ini belum tersedia.",
+            "light": "Terang",
+        },
 
         savebutton: "Simpan",
     },
     en: {
-        title: "Settings",
-        subtitle: "Change your account settings",
+        
+        "header": {
+            "title": "Settings",
+            "subtitle": "Edit your settings and preferences here",
+        },
 
-        accountsettingstitle: "Account Settings",
-        salesaccount: "Sales Account",
-        purchaseaccount: "Purchase Account",    
-        assetsaccount: "Assets Account",
-        currentassetsaccount: "Current Assets Account",
-        fixedassetsaccount: "Fixed Assets Account",
-        costofgoodsoldaccount: "Cost of Goods Sold Account",
+        "titles": {
+            "accountsettings": "Account Settings",
+            "journalsettings": "Journal Settings",
+            "appearancesettings": "Appearance Settings",
+        },
 
-        journalsettingstitle: "Journal Settings",
-        stockvaluationjournal: "Stock Valuation Journal",
-        salesjournal: "Sales Journal",
-        purchasejournal: "Purchase Journal",
+        "salesaccount": {
+            "title": "Sales Account",
+            "description": "* Description Coming Soon.",
+        },
 
-        appearancesettingstitle: "Appearance Settings",
-        language: "Language",
-        theme: "Theme",
+        "inventoryaccount": {
+            "title": "Inventory Account",
+            "description": "* Description Coming Soon.",
+        },
+
+        "costofgoodsoldaccount": {
+            "title": "Cost Of Good Sold Account",
+            "description": "* Description Coming Soon.",
+        },
+
+        "accountpayable": {
+            "title": "Account Payable",
+            "description": "* Description Coming Soon.",
+        },
+
+        "purchaseaccount": {
+            "title": "Purchase Account",
+            "description": "* Description Coming Soon.",
+        },
+
+        "fixedassetsaccount": {
+            "title": "Fixed Assets Account",
+            "description": "* Description Coming Soon.",
+        },
+
+        "accountreceivable": {
+            "title": "Account Receivable",
+            "description": "* Description Coming Soon.",
+        },
+
+        "stockvaluationjournal": {
+            "title": "Stock Valuation Journal",
+            "description": "* Description Coming Soon.",
+        },
+
+        "Sales Journal": {
+            "title": "Sales Journal",
+            "description": "* Description Coming Soon.",
+        },
+
+        "Purchase Journal": {
+            "title": "Purchase Journal",
+            "description": "* Description Coming Soon.",
+        },
+
+        "language": {
+            "title": "Language",
+            "description": "* Change your preferred language here, currently only English and Indonesian are available.",
+        },
+
+        "theme": {
+            "title": "Theme",
+            "description": "* Theme is not yet available.",
+            "light": "Light Mode",
+        },
 
         savebutton: "Save",
     },

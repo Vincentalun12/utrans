@@ -1,5 +1,6 @@
 import InventoryLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from "react";
+import { Language } from "@/Languages/Accounting/JournalItems/JournalItems";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link } from "@inertiajs/react";
 import {
@@ -34,17 +35,22 @@ import { ButtonPrimary } from "@/Components";
 import { twMerge } from "tailwind-merge";
 
 const TABLE_HEAD = [
-    { display: "Journal Entry", field: "journal_entry" },
-    { display: "Account", field: "account" },
-    { display: "Number", field: "label" },
-    { display: "Debit", field: "debit" },
-    { display: "Credit", field: "credit" },
-    { display: "Balance", field: "balance" },
+    { display: Language.tableheader.journalentry, field: "journal_entry" },
+    { display: Language.tableheader.account, field: "account" },
+    { display: Language.tableheader.number, field: "label" },
+    { display: Language.tableheader.debit, field: "debit" },
+    { display: Language.tableheader.credit, field: "credit" },
+    { display: Language.tableheader.balance, field: "balance" },
 ];
 
-const TABLE_ROWS = [];
-
 export default function JournalItems({ auth, journalitems }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
@@ -127,10 +133,10 @@ export default function JournalItems({ auth, journalitems }) {
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    Journal Items
+                                    {Language.header.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Manage your Journal Items
+                                    {Language.header.subtitle}
                                 </Typography>
                             </div>
                         </div>
@@ -140,7 +146,7 @@ export default function JournalItems({ auth, journalitems }) {
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"
-                                    placeholder="Search"
+                                    placeholder={Language.searchplaceholder}
                                     value={searchbar}
                                     onChange={(e) =>
                                         setsearchbar(e.target.value)
@@ -258,7 +264,7 @@ export default function JournalItems({ auth, journalitems }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {debit}
+                                                            Rp {debit}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -269,7 +275,7 @@ export default function JournalItems({ auth, journalitems }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {credit}
+                                                            Rp {credit}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -280,7 +286,7 @@ export default function JournalItems({ auth, journalitems }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {balance}
+                                                            Rp {balance}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -299,7 +305,7 @@ export default function JournalItems({ auth, journalitems }) {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    Page {currentPage} of{" "}
+                                    {Language.pagination.page} {currentPage} {Language.pagination.of}{" "}
                                     {Math.ceil(
                                         journalitems?.length / itemsPerPage
                                     )}
@@ -312,7 +318,7 @@ export default function JournalItems({ auth, journalitems }) {
                                     onClick={handlePrevious}
                                     disabled={currentPage === 1}
                                 >
-                                    Previous
+                                    {Language.pagination.previous}
                                 </Button>
                                 <Button
                                     variant="outlined"
@@ -320,7 +326,7 @@ export default function JournalItems({ auth, journalitems }) {
                                     onClick={handleNext}
                                     disabled={paginated.length < itemsPerPage}
                                 >
-                                    Next
+                                    {Language.pagination.next}
                                 </Button>
                             </div>
                         </div>

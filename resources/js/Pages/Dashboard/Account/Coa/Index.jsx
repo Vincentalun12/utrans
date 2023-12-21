@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { Global, css } from "@emotion/react";
+import { Language } from "@/Languages/Accounting/COA/COAIndex";
 import {
   Card,
   Typography,
@@ -49,6 +50,13 @@ const TABLE_HEAD = [
 ];
 
 export default function Inventory({ auth, coa }) {
+
+  const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [paginated, setpaginated] = useState([]);
@@ -158,13 +166,13 @@ export default function Inventory({ auth, coa }) {
       <Head title="COA" />
       <Dialog open={opendetail} handler={handleOpendetail} className="overflow-auto max-h-[80vh]">
         <DialogHeader>
-            <Typography variant="h5">Chart of Account Detail</Typography>
+            <Typography variant="h5">{Language.detail.header}</Typography>
         </DialogHeader>
         <DialogBody divider>
           <div className="flex flex-col gap-2">
             <div className="flex flex-col">
               <Typography variant="small" color="blue-gray">
-                Code
+                {Language.detail.code}
               </Typography>
               <Typography variant="body" color="blue-gray">
                 {selectedCoa && <div>{selectedCoa.code}</div>}
@@ -172,7 +180,7 @@ export default function Inventory({ auth, coa }) {
             </div>
             <div className="flex flex-col">
               <Typography variant="small" color="blue-gray">
-                Account Name
+                {Language.detail.account_name}
               </Typography>
               <Typography variant="body" color="blue-gray">
                 {selectedCoa && <div>{selectedCoa.account_name}</div>}
@@ -180,7 +188,7 @@ export default function Inventory({ auth, coa }) {
             </div>
             <div className="flex flex-col">
               <Typography variant="small" color="blue-gray">
-                Type
+                {Language.detail.account_type}
               </Typography>
               <Typography variant="body" color="blue-gray">
                 {selectedCoa && (
@@ -190,36 +198,51 @@ export default function Inventory({ auth, coa }) {
             </div>
             <div className="flex flex-col">
               <Typography variant="small" color="blue-gray">
-                Balance
+                {Language.detail.balance}
               </Typography>
               <Typography variant="body" color="blue-gray">
                 Rp {selectedCoa && Intl.NumberFormat("id").format(selectedCoa.balance)}
               </Typography>
             </div>
+            <div className="flex flex-col">
+                <Typography variant="small" color="blue-gray">
+                    {Language.detail.createdat}
+                </Typography>
+                 <Typography variant="body" color="blue-gray">
+              {selectedCoa && (<div>{new Date(selectedCoa.created_at).toLocaleString()}</div>)}
+           </Typography>
+          </div>
+          <div className="flex flex-col">
+                <Typography variant="small" color="blue-gray">
+                    {Language.detail.editedat}
+                </Typography>
+                 <Typography variant="body" color="blue-gray">
+              {selectedCoa && (<div>{new Date(selectedCoa.edited_at).toLocaleString()}</div>)}
+           </Typography>
+          </div>
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2">
         <Button variant="gradient" color="green"
         onClick={() => window.location.href = route("coa.edit", selectedCoa.id)}>
-            Edit Detail
+            {Language.detail.editbutton}
           </Button>
           <Button variant="outlined" onClick={handleOpendetail}>
-            <span>Close</span>
+            {Language.detail.closebutton}
           </Button>
         </DialogFooter>
       </Dialog>
       <Dialog open={open} size="sm" onClose={handleOpen}>
         <DialogHeader>
-          <Typography variant="h5">Notification</Typography>
+          <Typography variant="h5">{Language.delete.header}</Typography>
         </DialogHeader>
         <DialogBody divider className="grid place-items-center gap-4">
           <InformationCircleIcon className="w-20 h-20 text-red-400" />
           <Typography className="text-red-900" variant="h4">
-            You're about to delete this item!
+            {Language.delete.title}
           </Typography>
           <Typography className="text-center font-normal">
-            This action cannot be undone. However, we will keep your data for
-            audit purposes.
+            {Language.delete.description}
           </Typography>
         </DialogBody>
         <DialogFooter className="space-x-2">
@@ -238,10 +261,10 @@ export default function Inventory({ auth, coa }) {
               handleOpen(null);
             }}
           >
-            Delete
+            {Language.delete.confirmbutton}
           </Button>
           <Button variant="outlined" onClick={handleOpen}>
-            Cancel
+            {Language.delete.cancelbutton}
           </Button>
         </DialogFooter>
       </Dialog>
@@ -259,10 +282,10 @@ export default function Inventory({ auth, coa }) {
             <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
               <div className="p-6 text-gray-900">
                 <Typography variant="h4" className="text-ungukita" textGradient>
-                  Chart of Accounts
+                  {Language.header.title}
                 </Typography>
                 <Typography variant="paragraph">
-                  Manage your Chart of Accounts here
+                  {Language.header.subtitle}
                 </Typography>
               </div>
             </div>
@@ -270,7 +293,7 @@ export default function Inventory({ auth, coa }) {
           <div className="bg-white rounded-tl-lg rounded-tr-lg overflow-hidden shadow-md h-20 py-2">
             <div className="flex w-full gap-2 justify-center md:justify-between px-10 py-2">
               <Linkactive href={route("coa.create")}>
-                <Button className="bg-ungukita md:flex hidden">Add</Button>
+                <Button className="bg-ungukita md:flex hidden">{Language.addbutton}</Button>
               </Linkactive>
               <Linkactive href={route("coa.create")}>
                 <IconButton className="bg-ungukita flex md:hidden">
@@ -280,7 +303,7 @@ export default function Inventory({ auth, coa }) {
               <div className="inline-flex items-center">
                 <Input
                   type="search"
-                  placeholder="Search"
+                  placeholder={Language.searchplaceholder}
                   value={searchbar}
                   onChange={(e) => setsearchbar(e.target.value)}
                   className=" focus:!border-ungukita focus:ring-ungukita placeholder:opacity-100 !border-t-blue-gray-200"
@@ -500,7 +523,7 @@ export default function Inventory({ auth, coa }) {
                   color="blue-gray"
                   className="font-normal"
                 >
-                  Page {currentPage} of {Math.ceil(coa.length / itemsPerPage)}
+                  {Language.pagination.page} {currentPage} {Language.pagination.of} {Math.ceil(coa.length / itemsPerPage)}
                 </Typography>
               </div>
               <div className="flex gap-3">
@@ -510,7 +533,7 @@ export default function Inventory({ auth, coa }) {
                   onClick={handlePrevious}
                   disabled={currentPage === 1}
                 >
-                  Previous
+                  {Language.pagination.previous}
                 </Button>
                 <Button
                   variant="outlined"
@@ -518,7 +541,7 @@ export default function Inventory({ auth, coa }) {
                   onClick={handleNext}
                   disabled={paginated.length < itemsPerPage}
                 >
-                  Next
+                  {Language.pagination.next}
                 </Button>
               </div>
             </div>

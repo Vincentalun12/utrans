@@ -152,25 +152,28 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    {Language.title}
+                                    {Language.header.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    {Language.subtitle}
+                                    {Language.header.subtitle}
                                 </Typography>
                             </div>
                         </div>
                     </div>
                     <div className="bg-white overflow-hidden shadow-md rounded-md h-full py-2 border-b border-gray-200">
-                        <div className="px-6  m-3">
-                            <Typography className="col-span-2" variant="h4">
-                                Account Settings
+                        <div className="px-6 gap-5 m-3">
+                            <Typography className="col-span-2 pb-5" variant="h4">
+                                {Language.titles.accountsettings}
                             </Typography>
                             <form
                                 onSubmit={actionSubmit}
                                 className="grid grid-cols-2 gap-5"
                             >
                                 <div className="grid-span-1">
-                                    <Typography>Sales Account</Typography>
+                                    <Typography>{Language.salesaccount.title}</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.salesaccount.description}
+                                    </div>
                                     <Select
                                         value={{
                                             value: data.sales_account_id,
@@ -222,7 +225,10 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                     />
                                 </div>
                                 <div className="grid-span-1">
-                                    <Typography>Purchase Account</Typography>
+                                    <Typography>{Language.purchaseaccount.title}</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.purchaseaccount.description}
+                                    </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
@@ -277,7 +283,10 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                     />
                                 </div>
                                 <div className="col-span-1">
-                                    <Typography>Inventory Account</Typography>
+                                    <Typography>{Language.inventoryaccount.title}</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.inventoryaccount.description}
+                                    </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
@@ -333,8 +342,11 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 </div>
                                 <div className="col-span-1">
                                     <Typography>
-                                        Fixed Assets Account
+                                    {Language.fixedassetsaccount.title}
                                     </Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.fixedassetsaccount.description}
+                                    </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
@@ -390,8 +402,11 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 </div>
                                 <div className="col-span-1">
                                     <Typography>
-                                        Cost Of Goods Sold Account
+                                    {Language.costofgoodsoldaccount.title}
                                     </Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.costofgoodsoldaccount.description}
+                                    </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
@@ -446,7 +461,10 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                     />
                                 </div>
                                 <div className="col-span-1">
-                                    <Typography>Account Receivable</Typography>
+                                    <Typography>{Language.accountreceivable.title}</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.accountreceivable.description}
+                                    </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
@@ -501,7 +519,10 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                     />
                                 </div>
                                 <div className="col-span-1">
-                                    <Typography>Account Payable</Typography>
+                                    <Typography>{Language.accountpayable.title}</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.accountpayable.description}
+                                    </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
@@ -557,12 +578,15 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 </div>
                                 <hr className="w-full col-span-2"></hr>
                                 <Typography className="col-span-2" variant="h4">
-                                    Journal Settings
+                                {Language.titles.journalsettings}
                                 </Typography>
                                 <div className="col-span-2">
                                     <Typography>
-                                        Stock Valuation Journal
+                                    {Language.stockvaluationjournal.title}
                                     </Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.stockvaluationjournal.description}
+                                    </div>
                                     <Select
                                         options={journalOptions}
                                         value={{
@@ -611,7 +635,10 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                     />
                                 </div>
                                 <div className="col-span-1">
-                                    <Typography>Sales Journal</Typography>
+                                    <Typography>{Language["Sales Journal"].title}</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language["Sales Journal"].description}
+                                    </div>
                                     <Select
                                         options={journalOptions}
                                         value={{
@@ -658,7 +685,10 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                     />
                                 </div>
                                 <div className="col-span-1 mb-4">
-                                    <Typography>Purchase Journal</Typography>
+                                    <Typography>{Language["Purchase Journal"].title}</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language["Purchase Journal"].description}
+                                    </div>
                                     <Select
                                         options={journalOptions}
                                         value={{
@@ -712,7 +742,7 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                         className="bg-ungukita w-full"
                                         type="submit"
                                     >
-                                        Save
+                                        {Language.savebutton}
                                     </Button>
                                 </div>
                             </form>
@@ -722,19 +752,26 @@ export default function Settings({ auth, accounts, journals, setting }) {
                         <form>
                             <div className="grid grid-cols-2 gap-5 m-3 px-6">
                                 <Typography className="col-span-2" variant="h4">
-                                    Appearance Settings
+                                {Language.titles.appearancesettings}
                                 </Typography>
                                 <div className="grid-span-1">
-                                    <Typography>Language</Typography>
+                                    <Typography>{Language.language.title}</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.language.description}
+                                    </div>
                                     <LanguageSwitcher
                                         onLanguageChange={handleLanguageChange}
                                     />
                                 </div>
                                 <div className="grid-span-1">
-                                    <Typography>Theme</Typography>
+                                    <Typography>{Language.theme.title}</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                            {Language.theme.description}
+                                    </div>
                                     <Select
+                                        isDisabled={true}
                                         options={modeoptions}
-                                        placeholder={"Select..."}
+                                        placeholder={Language.theme.light}
                                         menuPosition={"fixed"}
                                         styles={{
                                             control: (base, state) => ({
@@ -763,15 +800,6 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                             }),
                                         }}
                                     />
-                                </div>
-                                <div className="col-span-2 mb-4">
-                                    <Button
-                                        className="bg-ungukita w-full"
-                                        type="submit"
-                                        onClick={handleSave}
-                                    >
-                                        Save
-                                    </Button>
                                 </div>
                             </div>
                         </form>
