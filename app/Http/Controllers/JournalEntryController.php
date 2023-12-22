@@ -57,7 +57,6 @@ class JournalEntryController extends Controller
             'code' => 'required',
             'status' => 'required',
             'accounting_date' => 'required',
-            'journal_id' => 'required',
         ]);
 
         try {
@@ -148,7 +147,6 @@ class JournalEntryController extends Controller
             'code' => 'required',
             'status' => 'required',
             'accounting_date' => 'required',
-            'journal_id' => 'required',
         ]);
 
         try {

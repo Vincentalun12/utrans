@@ -78,7 +78,6 @@ class PaymentController extends Controller
                 $purchaseOrder->payment_status = 'paid';
                 $purchaseOrder->save();
             } else {
-
                 if ($purchaseOrder->total_paid + $request->amount == 0) {
                     $purchaseOrder->payment_status = 'paid';
                 } else {
@@ -96,7 +95,6 @@ class PaymentController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th);
             return redirect()->back()->with('error', $th->getMessage());
         }
 
