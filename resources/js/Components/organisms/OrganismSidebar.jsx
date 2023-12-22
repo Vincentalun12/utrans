@@ -132,10 +132,10 @@ export function OrganismSidebar() {
             </div>
             <hr className="my-2 border-gray-200" />
             <List>
-                <Linkactive href={route("dashboard")}>
+                <Linkactive href={route("home")}>
                     <ListItem
                         className={`${
-                            route().current("dashboard")
+                            route().current("home")
                                 ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
                                 : ""
                         }`}
