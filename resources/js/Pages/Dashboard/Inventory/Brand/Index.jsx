@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import { Utranslogo2 } from '@/Assets';
+import { Batamwater } from '@/Assets';
 import { Language } from '@/Languages/Inventory/Brand/BrandIndex';
 
 import {
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     image: {
-        width: 90,
+        width: 180,
         marginLeft: "9%",
         marginRight: "9%",
     },
@@ -300,7 +300,7 @@ const MyDocument = ({ data }) => (
             <Page size="A4" orientation="landscape">
             <View style={styles.titleContainer}>
                 <View style={styles.spaceBetween}>
-            <Image src={Utranslogo2} style={styles.image} />
+            <Image src={Batamwater} style={styles.image} />
                 <Text style={styles.title}>Brand Report</Text>
                 </View>
             </View>

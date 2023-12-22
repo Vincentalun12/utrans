@@ -16,7 +16,7 @@ import {
 } from "@material-tailwind/react";
 
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import { Utranslogo2 } from '@/Assets';
+import { Batamwater } from '@/Assets';
 import { Language } from '@/Languages/Inventory/Brand/BrandIndex';
 
 import {
@@ -200,7 +200,7 @@ export default function Balancesheet({ auth }) {
     },
 
     image: {
-        width: 90,
+        width: 180,
         marginLeft: "9%",
         marginRight: "9%",
     },
@@ -225,7 +225,7 @@ export default function Balancesheet({ auth }) {
                 <Page size="A4">
                 <View style={styles.titleContainer}>
                     <View style={styles.spaceBetween}>
-                <Image src={Utranslogo2} style={styles.image} />
+                <Image src={Batamwater} style={styles.image} />
                     <Text style={styles.title}>Balance Sheet</Text>
                     </View>
                 </View>

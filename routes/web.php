@@ -7,12 +7,14 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\BalanceSheetController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\JournalsController;
 use App\Http\Controllers\JournalEntryController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\InventorymenuController;
 use App\Http\Controllers\JournalItemsController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\COAController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -157,17 +159,21 @@ Route::controller(JournalItemsController::class)->group(function () {
     });
 });
 
+Route::controller(BalanceSheetController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/balancesheet', 'index')->name('balancesheet');
+    });
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/Index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/balancesheet', function () {
-    return Inertia::render('Dashboard/Reports/BalanceSheet/Index');
-})->middleware(['auth', 'verified'])->name('balancesheet');
-
-Route::get('/pos', function () {
-    return Inertia::render('Dashboard/Pos/Index');
-})->middleware(['auth', 'verified'])->name('pos');
+Route::controller(HomeController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/home', 'index')->name('home');
+    });
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
