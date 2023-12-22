@@ -39,7 +39,7 @@ import { ButtonPrimary } from "@/Components";
 
 import { twMerge } from "tailwind-merge";
 import { Backdrop } from "@mui/material";
-import { TitleCase } from "@/Utilities/titleCase";
+import { TitleCase } from "@/Utilities/TitleCase";
 
 const TABLE_HEAD = [
   { display: "Code", field: "code" },
@@ -53,9 +53,9 @@ export default function Inventory({ auth, coa }) {
 
   const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
 
-    useEffect(() => {
-        Language.setLanguage(selectedLanguage);
-    }, [selectedLanguage]);
+  useEffect(() => {
+    Language.setLanguage(selectedLanguage);
+  }, [selectedLanguage]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -166,7 +166,7 @@ export default function Inventory({ auth, coa }) {
       <Head title="COA" />
       <Dialog open={opendetail} handler={handleOpendetail} className="overflow-auto max-h-[80vh]">
         <DialogHeader>
-            <Typography variant="h5">{Language.detail.header}</Typography>
+          <Typography variant="h5">{Language.detail.header}</Typography>
         </DialogHeader>
         <DialogBody divider>
           <div className="flex flex-col gap-2">
@@ -205,26 +205,26 @@ export default function Inventory({ auth, coa }) {
               </Typography>
             </div>
             <div className="flex flex-col">
-                <Typography variant="small" color="blue-gray">
-                    {Language.detail.createdat}
-                </Typography>
-                 <Typography variant="body" color="blue-gray">
-              {selectedCoa && (<div>{new Date(selectedCoa.created_at).toLocaleString()}</div>)}
-           </Typography>
-          </div>
-          <div className="flex flex-col">
-                <Typography variant="small" color="blue-gray">
-                    {Language.detail.editedat}
-                </Typography>
-                 <Typography variant="body" color="blue-gray">
-              {selectedCoa && (<div>{new Date(selectedCoa.edited_at).toLocaleString()}</div>)}
-           </Typography>
-          </div>
+              <Typography variant="small" color="blue-gray">
+                {Language.detail.createdat}
+              </Typography>
+              <Typography variant="body" color="blue-gray">
+                {selectedCoa && (<div>{new Date(selectedCoa.created_at).toLocaleString()}</div>)}
+              </Typography>
+            </div>
+            <div className="flex flex-col">
+              <Typography variant="small" color="blue-gray">
+                {Language.detail.editedat}
+              </Typography>
+              <Typography variant="body" color="blue-gray">
+                {selectedCoa && (<div>{new Date(selectedCoa.edited_at).toLocaleString()}</div>)}
+              </Typography>
+            </div>
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2">
-        <Button variant="gradient" color="green"
-        onClick={() => window.location.href = route("coa.edit", selectedCoa.id)}>
+          <Button variant="gradient" color="green"
+            onClick={() => window.location.href = route("coa.edit", selectedCoa.id)}>
             {Language.detail.editbutton}
           </Button>
           <Button variant="outlined" onClick={handleOpendetail}>
@@ -272,7 +272,7 @@ export default function Inventory({ auth, coa }) {
         className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
         color={flash.message?.type == "success" ? "green" : "red"}
         open={isShowAlert}
-        // icon={<Icon />}
+      // icon={<Icon />}
       >
         {flash.message?.content}
       </Alert>
