@@ -292,9 +292,14 @@ class PurchaseController extends Controller
                         }
                     }
 
-                    if ($isDifferencePurchaseOrderLine) {
+                    if ($product['id'] == null) {
+                        $isDifferencePurchaseOrderLine = true;
                         break;
                     }
+                }
+
+                if ($isDifferencePurchaseOrderLine) {
+                    break;
                 }
             }
 
@@ -329,12 +334,12 @@ class PurchaseController extends Controller
             foreach ($request->products as $listProduct) {
                 $purchaseOrderLine = PurchaseOrderLine::find($listProduct['id']);
                 $product = Product::find($listProduct['product_id']);
-                $oldQuantity = $purchaseOrderLine->quantity;
-                $oldTotalPrice = $purchaseOrderLine->total;
-                $currentQuantity = $listProduct['quantity'];
-                $currentTotalPrice = $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount'];
 
                 if (isset($listProduct['id'])) {
+                    $oldQuantity = $purchaseOrderLine->quantity;
+                    $oldTotalPrice = $purchaseOrderLine->total;
+                    $currentQuantity = $listProduct['quantity'];
+                    $currentTotalPrice = $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount'];
                     if ($currentTotalPrice < $oldTotalPrice) {
                         if ($oldQuantity > $listProduct['quantity']) {
                             $quantityDifference = $oldQuantity - $listProduct['quantity'];
@@ -421,25 +426,25 @@ class PurchaseController extends Controller
 
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_payable_id);
                         ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
-                    }
+                    } else if ($currentTotalPrice == $oldTotalPrice) {
+                        if ($oldQuantity > $currentQuantity) {
+                            $quantityDifference = $oldQuantity - $currentQuantity;
+                            Product::decreaseStock($purchaseOrderLine->product_id, $quantityDifference);
+                        } else if ($oldQuantity < $currentQuantity) {
+                            $quantityDifference = $currentQuantity - $oldQuantity;
+                            Product::increaseStock($purchaseOrderLine->product_id, $quantityDifference);
+                        }
 
-                    Product::updateStandardPrice($purchaseOrderLine->product_id);
-                } else if ($currentTotalPrice == $oldTotalPrice) {
-                    if ($oldQuantity > $currentQuantity) {
-                        $quantityDifference = $oldQuantity - $currentQuantity;
-                        Product::decreaseStock($purchaseOrderLine->product_id, $quantityDifference);
-                    } else if ($oldQuantity < $currentQuantity) {
-                        $quantityDifference = $currentQuantity - $oldQuantity;
-                        Product::increaseStock($purchaseOrderLine->product_id, $quantityDifference);
-                    }
+                        $purchaseOrderLine->update([
+                            'product_id' => $listProduct['product_id'],
+                            'quantity' => $listProduct['quantity'],
+                            'price' => $listProduct['price'],
+                            'discount' => $listProduct['discount'],
+                            'total' => $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount']
+                        ]);
 
-                    $purchaseOrderLine->update([
-                        'product_id' => $listProduct['product_id'],
-                        'quantity' => $listProduct['quantity'],
-                        'price' => $listProduct['price'],
-                        'discount' => $listProduct['discount'],
-                        'total' => $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount']
-                    ]);
+                        Product::updateStandardPrice($purchaseOrderLine->product_id);
+                    }
 
                     Product::updateStandardPrice($purchaseOrderLine->product_id);
                 } else {
@@ -449,7 +454,7 @@ class PurchaseController extends Controller
                         'quantity' => $listProduct['quantity'],
                         'price' => $listProduct['price'],
                         'discount' => $listProduct['discount'],
-                        'total' => $request->total_price
+                        'total' => $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount']
                     ]);
 
                     Product::increaseStock($createPurchaseOrderLine->product_id, $createPurchaseOrderLine->quantity);
