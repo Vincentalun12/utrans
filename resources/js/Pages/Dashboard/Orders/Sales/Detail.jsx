@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Typography,
@@ -19,8 +20,8 @@ import {
   PlusCircleIcon,
   ArrowDownRightIcon
 } from "@heroicons/react/24/solid";
+const TABLE_HEAD = ["SKU", "Item Name", "Quantity", "Unit Price", "Discount", "Total"];
 
-const TABLE_HEAD = ["SKU", "Item", "Quantity", "Unit price", "Disc", "Total"];
 
 const TABLE_ROWS = [
   {
@@ -49,7 +50,8 @@ const TABLE_ROWS = [
   },
 ];
 
-export default function Salesorder({ auth }) {
+export default function Salesorder({ auth, saleOrder }) {
+
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Add item" />
@@ -58,7 +60,7 @@ export default function Salesorder({ auth }) {
           <Card className="h-full w-full overflow-hidden rounded-none border-b items-end flex">
             <div className="inline-flex">
               <div>
-                <Button variant="outlined" className="w-full h-10 rounded-none border-r-0">Add Product</Button>
+                <Button variant="outlined" className="w-full h-10 rounded-none border-r-0" onClick={() => window.location.href = route("sales.edit", saleOrder.id)}>Add Product</Button>
               </div>
               <div>
                 <Button variant="outlined" className="w-full h-10 rounded-none">Create Invoice</Button>
@@ -70,14 +72,14 @@ export default function Salesorder({ auth }) {
               variant="h6"
               color="black"
             >
-              Sales order
+              SALES ORDER
             </Typography>
             <div className="inline-flex mx-4">
               <Typography
                 variant="h4"
                 color="black"
               >
-                BWSL4032
+                {saleOrder.code}
               </Typography>
             </div>
           </Card>
@@ -85,56 +87,56 @@ export default function Salesorder({ auth }) {
             <div className="grid lg:gap-8 grid-cols-1 lg:grid-cols-2 gap-4 p-6">
               <div className="grid grid-cols-1">
                 <div className="inline-flex w-full order-1">
-                  <Typography>
+                  <Typography color="black" className="font-bold">
                     Customer:
                   </Typography>
                   <Typography className="ml-6">
-                    Acuang pinang<br />
-                    Jln Hang nadim 3, blok 1<br />
-                    Jakarta Selatan, 12345<br />
-                    Indonesia
+                    {saleOrder.customer.name},<br />
+                    {saleOrder.customer.address},<br />
+                    {saleOrder.customer.district},<br />
+                    {saleOrder.customer.city}.<br />
                   </Typography>
                 </div>
                 <div className="inline-flex w-full order-2">
-                  <Typography className="font-bold">
+                  <Typography color="black" className="font-bold">
                     Order Date:
                   </Typography>
                   <Typography className="ml-6">
-                    10/30/2023
+                    {saleOrder.create_date}
                   </Typography>
                 </div>
               </div>
               <div className="grid grid-cols-1">
                 <div className="inline-flex w-full order-3">
                   <Typography color="black" className="font-bold">
-                    Delivery Address:
+                    Customer Phone Number: 
                   </Typography >
                   <Typography className="ml-4">
-                    Acuang pinang
+                    {saleOrder.customer.phone}<br />
                   </Typography>
                 </div>
                 <div className="inline-flex w-full order-4">
                   <Typography color="black" className="font-bold">
-                    Invoice Address:
+                    Customer Email Address
                   </Typography>
                   <Typography className="ml-6">
-                    Acuang pinang
+                    {saleOrder.customer.email}
                   </Typography>
                 </div>
                 <div className="inline-flex w-full order-5">
-                  <Typography color="black">
-                    Customer reference:
+                  <Typography color="black" className="font-bold">
+                    Customer Reference:
                   </Typography >
                   <Typography className="ml-4">
-                    BWSL4032
+                    {saleOrder.customer.code}
                   </Typography>
                 </div>
                 <div className="inline-flex w-full order-6">
-                  <Typography>
-                    Total item:
+                  <Typography color="black" className="font-bold">
+                    Order Quantity:
                   </Typography>
                   <Typography className="ml-6">
-                    146 Units
+                    {saleOrder.total_item}
                   </Typography>
                 </div>
               </div>
@@ -158,16 +160,16 @@ export default function Salesorder({ auth }) {
                 </tr>
               </thead>
               <tbody>
-                {TABLE_ROWS.map(({ SKU, item, quantity, unitprice, disc, total }) => (
-                  <tr key={SKU} className="even:bg-gray-100 border-y border-gray-400">
+                {saleOrder.sale_order_lines.map(({ id, sale_order_line, product, quantity, total, price, discount }) => (
+                  <tr key={id} className="even:bg-gray-100 border-y border-gray-400">
                     <td className="pl-4 py-2">
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {SKU}
+                        {product ? product.code : 'Product not found'}
                       </Typography>
                     </td>
                     <td className="pl-4 py-2">
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {item}
+                        {product ? product.name : 'Product not found'}
                       </Typography>
                     </td>
                     <td className="pl-4 py-2">
@@ -177,17 +179,17 @@ export default function Salesorder({ auth }) {
                     </td>
                     <td className="pl-4 py-2">
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {unitprice}
+                        Rp{price ? Number(price).toLocaleString('id-ID') : '0'}
                       </Typography>
                     </td>
                     <td className="pl-4 py-2">
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {disc}
+                        Rp{discount ? Number(discount).toLocaleString('id-ID') : '0'}
                       </Typography>
                     </td>
                     <td className="pl-4 py-2">
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {total}
+                      Rp{total ? Number(total).toLocaleString('id-ID') : '0'}
                       </Typography>
                     </td>
                   </tr>
@@ -196,24 +198,24 @@ export default function Salesorder({ auth }) {
             </table>
           </Card>
           <Card className="h-full w-full overflow-hidden rounded-none p-6 items-end">
-            <table className="border-gray-300 border-t">
-              <tr>
-                <td className="pl-4">Discount</td>
-                <td className="">:</td>
-                <td className="pl-4">0%</td>
-              </tr>
-              <tr>
-                <td className="pl-4">Change</td>
-                <td className="">:</td>
-                <td className="pl-4">0</td>
-              </tr>
-              <tr>
-                <td className="pl-4">Total</td>
-                <td className="">:</td>
-                <td className="pl-4">Rp. 34,573,000.00</td>
-              </tr>
-
-            </table>
+          <table>
+                <tr>
+                    <td className="pl-4">Total</td>
+                    <td className="">:</td>
+                    <td className="pl-4">Rp{saleOrder.total_price ? Number(saleOrder.total_price).toLocaleString('id-ID') : '0'}</td>
+                </tr>
+                <tr>
+                    <td className="pl-4 border-b-2">Paid</td>
+                    <td className="border-b-2">:</td>
+                    <td className="pl-4 border-b-2">Rp{saleOrder.total_paid ? Number(saleOrder.total_paid).toLocaleString('id-ID') : '0'}</td>
+                </tr>
+                <tr>
+                    <td className="pl-4 font-extrabold">Due Now</td>
+                    <td className="">:</td>
+                    <td className="pl-4 font-extrabold">Rp{saleOrder.total_price && saleOrder.total_paid  ? Number(saleOrder.total_price - saleOrder.total_paid).toLocaleString('id-ID') : '0'}
+                </td>
+                </tr>
+          </table>
 
           </Card>
 

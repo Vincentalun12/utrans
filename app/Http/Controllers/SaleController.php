@@ -27,9 +27,18 @@ class SaleController extends Controller
         return Inertia::render('Dashboard/Orders/Sales/Index', $data);
     }
 
-    public function detail()
+    public function saleOrderLines()
+        {
+            return $this->hasMany(SaleOrderLine::class, 'sale_order_id');
+        }
+
+    public function detail($id)
     {
-        return Inertia::render('Dashboard/Orders/Sales/Detail');
+        $data = [
+            'saleOrder' => SaleOrder::with(['customer', 'saleOrderLines.product'])->find($id),
+        ];
+
+        return Inertia::render('Dashboard/Orders/Sales/Detail', $data);
     }
 
     public function create()
