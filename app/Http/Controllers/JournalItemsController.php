@@ -15,6 +15,6 @@ class JournalItemsController extends Controller
             'journalitems' => JournalItem::with(['journalEntry', 'chartOfAccount'])->get(),
         ];
 
-        return Inertia::render('Dashboard/Account/Journalitems/Index', $data);
+        return Inertia::render('Dashboard/Account/JournalItems/Index', $data);
     }
 }

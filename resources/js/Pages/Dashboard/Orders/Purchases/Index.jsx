@@ -405,32 +405,6 @@ export default function Purchasing({ auth, purchaseOrders }) {
                             </div>
                         </div>
                         <div className="2xl:col-span-2 col-span-2">
-                            <label className="">Received Amount</label>
-                            <div className="w-full text-xs mb-2 text-gray-500">
-                                * Input your received amount
-                            </div>
-                            <div className="flex">
-                                <Button
-                                    ripple={false}
-                                    variant="text"
-                                    color="blue-gray"
-                                    className="normal-case text-bold h-10 flex items-center rounded-r-none border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 px-3"
-                                >
-                                    Rp
-                                </Button>
-                                <div className="relative flex-grow">
-                                    <Input
-                                        type="number"
-                                        className="placeholder:text-gray-600 rounded-tl-none rounded-bl-none placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                                        labelProps={{
-                                            className:
-                                                "before:content-none after:content-none",
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="2xl:col-span-2 col-span-2">
                             <label className="">Reference</label>
                             <div className="w-full text-xs mb-2 text-gray-500">
                                 * Create your own reference. Ex: INV/2023/11/001
@@ -674,12 +648,12 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                     {display}{" "}
                                                     {index !==
                                                         TABLE_HEAD.length -
-                                                            1 && (
-                                                        <ChevronUpDownIcon
-                                                            strokeWidth={2}
-                                                            className="h-4 w-4"
-                                                        />
-                                                    )}
+                                                        1 && (
+                                                            <ChevronUpDownIcon
+                                                                strokeWidth={2}
+                                                                className="h-4 w-4"
+                                                            />
+                                                        )}
                                                 </Typography>
                                             </th>
                                         )
@@ -779,7 +753,7 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                             variant="small"
                                                             color={
                                                                 total_due ===
-                                                                "Rp. 0,000.00"
+                                                                    "Rp. 0,000.00"
                                                                     ? "blue-gray"
                                                                     : "red"
                                                             }
@@ -799,7 +773,7 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                                 value={status}
                                                                 color={
                                                                     statusColors[
-                                                                        status
+                                                                    status
                                                                     ]
                                                                 }
                                                             />
@@ -818,7 +792,7 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                                 }
                                                                 color={
                                                                     payment_status ===
-                                                                    "paid"
+                                                                        "paid"
                                                                         ? "green"
                                                                         : "red"
                                                                 }
@@ -831,7 +805,7 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                         variant="small"
                                                         color={
                                                             total_due ===
-                                                            "Rp. 0,000.00"
+                                                                "Rp. 0,000.00"
                                                                 ? "green"
                                                                 : "red"
                                                         }
@@ -855,11 +829,11 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                                 <MenuItem
                                                                     className="flex items-center gap-2"
                                                                     onClick={() =>
-                                                                        (window.location.href =
-                                                                            route(
-                                                                                "purchases.detail",
-                                                                                id
-                                                                            ))
+                                                                    (window.location.href =
+                                                                        route(
+                                                                            "purchases.detail",
+                                                                            id
+                                                                        ))
                                                                     }
                                                                 >
                                                                     <EyeIcon className="w-5 h-5" />
@@ -869,11 +843,11 @@ export default function Purchasing({ auth, purchaseOrders }) {
                                                                 <MenuItem
                                                                     className="flex items-center gap-2"
                                                                     onClick={() =>
-                                                                        (window.location.href =
-                                                                            route(
-                                                                                "purchases.edit",
-                                                                                id
-                                                                            ))
+                                                                    (window.location.href =
+                                                                        route(
+                                                                            "purchases.edit",
+                                                                            id
+                                                                        ))
                                                                     }
                                                                 >
                                                                     <PencilIcon className="w-5 h-5" />

@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
             $table->foreignId('journal_id')->constrained('journals');
-            $table->string('type');
-            $table->string('status');
-            $table->string('amount');
+            $table->foreignId('sale_order_id')->nullable()->constrained('sale_orders');
+            $table->foreignId('purchase_order_id')->nullable()->constrained('purchase_orders');
             $table->date('date');
+            $table->string('reference')->nullable();
+            $table->string('notes')->nullable();
+            $table->string('amount');
             $table->timestamps();
             $table->softDeletes();
         });
