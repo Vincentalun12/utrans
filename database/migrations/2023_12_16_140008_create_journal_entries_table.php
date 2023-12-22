@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('status');
             $table->date('accounting_date');
             $table->string('reference')->nullable();
-            $table->foreignId('journal_id')->constrained('journals');
+            $table->foreignId('journal_id')->nullable()->constrained('journals');
             $table->foreignId('sale_order_id')->nullable()->constrained('sale_orders');
             $table->foreignId('purchase_order_id')->nullable()->constrained('purchase_orders');
             $table->timestamps();

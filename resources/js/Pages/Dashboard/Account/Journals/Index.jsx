@@ -1,6 +1,6 @@
 import InventoryLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from "react";
-import { Language } from "@/Languages/Accounting/Journal/JournalIndex"
+import { Language } from "@/Languages/Accounting/Journal/JournalIndex";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import {
@@ -49,8 +49,9 @@ const TABLE_HEAD = [
 ];
 
 export default function Inventory({ auth, journals }) {
-
-    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+    const [selectedLanguage, setSelectedLanguage] = useState(
+        localStorage.getItem("language") || "en"
+    );
 
     useEffect(() => {
         Language.setLanguage(selectedLanguage);
@@ -64,7 +65,7 @@ export default function Inventory({ auth, journals }) {
     const [searchbar, setsearchbar] = useState("");
 
     const [selectedJournal, setSelectedJournal] = useState(null);
-    
+
     const [opendetail, setOpendetail] = React.useState(false);
     const handleOpendetail = (id) => {
         setOpendetail(!opendetail);
@@ -158,12 +159,12 @@ export default function Inventory({ auth, journals }) {
 
     const handleDeleteJournals = (id) => {
         if (id) {
-          setDeletejournals(id);
-          setdeleteOpen(true);
+            setDeletejournals(id);
+            setdeleteOpen(true);
         } else {
-          setdeleteOpen(false);
+            setdeleteOpen(false);
         }
-      };
+    };
 
     return (
         <InventoryLayout user={auth.user}>
@@ -178,98 +179,142 @@ export default function Inventory({ auth, journals }) {
             </Alert>
             <Dialog open={deleteOpen} size="sm" onClose={handleDeleteJournals}>
                 <DialogHeader>
-                <Typography variant="h5">{Language.delete.header}</Typography>
+                    <Typography variant="h5">
+                        {Language.delete.header}
+                    </Typography>
                 </DialogHeader>
                 <DialogBody divider className="grid place-items-center gap-4">
-                <InformationCircleIcon className="w-20 h-20 text-red-400" />
-                <Typography className="text-red-900" variant="h4">
-                {Language.delete.title}
-                </Typography>
-                <Typography className="text-center font-normal">
-                {Language.delete.description}
-                </Typography>
+                    <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                    <Typography className="text-red-900" variant="h4">
+                        {Language.delete.title}
+                    </Typography>
+                    <Typography className="text-center font-normal">
+                        {Language.delete.description}
+                    </Typography>
                 </DialogBody>
                 <DialogFooter className="space-x-2">
-                <Button
-                    variant="gradient"
-                    color="red"
-                    onClick={async () => {
-                    if (deletejournals) {
-                        await destroy(route("journals.destroy", deletejournals), {
-                        onSuccess: () => {
-                            setIsShowAlert(true);
-                            setDeletejournals(null);
-                        },
-                        });
-                    }
-                    handleDeleteJournals(null);
-                    }}
-                >
-                    {Language.delete.confirmbutton}
-                </Button>
-                <Button variant="outlined" onClick={() => handleDeleteJournals(null)}>{Language.delete.cancelbutton}</Button>
+                    <Button
+                        variant="gradient"
+                        color="red"
+                        onClick={async () => {
+                            if (deletejournals) {
+                                await destroy(
+                                    route("journals.destroy", deletejournals),
+                                    {
+                                        onSuccess: () => {
+                                            setIsShowAlert(true);
+                                            setDeletejournals(null);
+                                        },
+                                    }
+                                );
+                            }
+                            handleDeleteJournals(null);
+                        }}
+                    >
+                        {Language.delete.confirmbutton}
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={() => handleDeleteJournals(null)}
+                    >
+                        {Language.delete.cancelbutton}
+                    </Button>
                 </DialogFooter>
             </Dialog>
-                <Dialog open={opendetail} handler={handleOpendetail} className="overflow-auto max-h-[80vh]">
-                        <DialogHeader>
-                            <Typography variant="h5">{Language.detail.header}</Typography>
-                        </DialogHeader>
-                        <DialogBody divider>
-                        <div className="flex flex-col gap-2">
-                            <div className="flex flex-col">
+            <Dialog
+                open={opendetail}
+                handler={handleOpendetail}
+                className="overflow-auto max-h-[80vh]"
+            >
+                <DialogHeader>
+                    <Typography variant="h5">
+                        {Language.detail.header}
+                    </Typography>
+                </DialogHeader>
+                <DialogBody divider>
+                    <div className="flex flex-col gap-2">
+                        <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
                                 {Language.detail.code}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
-                                {selectedJournal && <div>{selectedJournal.code}</div>}
+                                {selectedJournal && (
+                                    <div>{selectedJournal.code}</div>
+                                )}
                             </Typography>
-                            </div>
-                            <div className="flex flex-col">
+                        </div>
+                        <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
                                 {Language.detail.account_name}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
-                                {selectedJournal && <div>{selectedJournal.journal_name}</div>}
+                                {selectedJournal && (
+                                    <div>{selectedJournal.journal_name}</div>
+                                )}
                             </Typography>
-                            </div>
-                            <div className="flex flex-col">
+                        </div>
+                        <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
                                 {Language.detail.type}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 {selectedJournal && (
-                                <div>{TitleCase(selectedJournal.journal_type)}</div>
+                                    <div>
+                                        {TitleCase(
+                                            selectedJournal.journal_type
+                                        )}
+                                    </div>
                                 )}
                             </Typography>
-                            </div>
-                            <div className="flex flex-col">
+                        </div>
+                        <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
                                 {Language.detail.createdat}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
-                            {selectedJournal && (<div>{new Date(selectedJournal.created_at).toLocaleString()}</div>)}
+                                {selectedJournal && (
+                                    <div>
+                                        {new Date(
+                                            selectedJournal.created_at
+                                        ).toLocaleString()}
+                                    </div>
+                                )}
                             </Typography>
-                            </div>
-                            <div className="flex flex-col">
+                        </div>
+                        <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
                                 {Language.detail.editedat}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
-                            {selectedJournal && (<div>{new Date(selectedJournal.updated_at).toLocaleString()}</div>)}
+                                {selectedJournal && (
+                                    <div>
+                                        {new Date(
+                                            selectedJournal.updated_at
+                                        ).toLocaleString()}
+                                    </div>
+                                )}
                             </Typography>
-                            </div>
                         </div>
-                        </DialogBody>
-                        <DialogFooter className="space-x-2">
-                        <Button variant="gradient" color="green"
-                        onClick={() => window.location.href = route("journals.edit", selectedJournal.id)}>
-                            {Language.detail.editbutton}
-                        </Button>
-                        <Button variant="outlined" onClick={handleOpendetail}>
-                            <span>{Language.detail.closebutton}</span>
-                        </Button>
-                        </DialogFooter>
-                    </Dialog>
+                    </div>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                    <Button
+                        variant="gradient"
+                        color="green"
+                        onClick={() =>
+                            (window.location.href = route(
+                                "journals.edit",
+                                selectedJournal.id
+                            ))
+                        }
+                    >
+                        {Language.detail.editbutton}
+                    </Button>
+                    <Button variant="outlined" onClick={handleOpendetail}>
+                        <span>{Language.detail.closebutton}</span>
+                    </Button>
+                </DialogFooter>
+            </Dialog>
             <div className="sm:mt-18 sm:mb-20 mt-4 mb-0 justify-center ml-0 lg:ml-[300px] sm:mr-1">
                 <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
                     <div className="w-full mx-auto pb-5">
@@ -417,32 +462,48 @@ export default function Inventory({ auth, journals }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {`${chart_of_account?.code} ${chart_of_account?.account_name}`}
+                                                            {chart_of_account
+                                                                ? `${chart_of_account?.code} ${chart_of_account?.account_name}`
+                                                                : ""}
                                                         </Typography>
                                                     </div>
                                                 </td>
                                                 <td className="p-2">
                                                     <Tooltip content="View">
-                                                            <IconButton variant="text" onClick={() => handleOpendetail(id)}>
-                                                                <EyeIcon className="h-5 w-5 text-blue-800" />
-                                                            </IconButton>
+                                                        <IconButton
+                                                            variant="text"
+                                                            onClick={() =>
+                                                                handleOpendetail(
+                                                                    id
+                                                                )
+                                                            }
+                                                        >
+                                                            <EyeIcon className="h-5 w-5 text-blue-800" />
+                                                        </IconButton>
                                                     </Tooltip>
                                                     <a
-                                                            href={route(
-                                                                "journals.edit",
-                                                                id
-                                                            )}
-                                                        >
-                                                    <Tooltip content="Edit">
+                                                        href={route(
+                                                            "journals.edit",
+                                                            id
+                                                        )}
+                                                    >
+                                                        <Tooltip content="Edit">
                                                             <IconButton variant="text">
                                                                 <PencilSquareIcon className="h-5 w-5 text-green-500" />
-                                                            </IconButton>   
-                                                    </Tooltip>
+                                                            </IconButton>
+                                                        </Tooltip>
                                                     </a>
                                                     <Tooltip content="Delete">
-                                                            <IconButton variant="text" onClick={() => handleDeleteJournals(id)}>
-                                                                <TrashIcon className="h-5 w-5 text-red-500" />
-                                                            </IconButton>
+                                                        <IconButton
+                                                            variant="text"
+                                                            onClick={() =>
+                                                                handleDeleteJournals(
+                                                                    id
+                                                                )
+                                                            }
+                                                        >
+                                                            <TrashIcon className="h-5 w-5 text-red-500" />
+                                                        </IconButton>
                                                     </Tooltip>
                                                 </td>
                                             </tr>
@@ -460,12 +521,13 @@ export default function Inventory({ auth, journals }) {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    {Language.pagination.page} {currentPage} {Language.pagination.of} {" "}
+                                    {Language.pagination.page} {currentPage}{" "}
+                                    {Language.pagination.of}{" "}
                                     {Math.ceil(journals.length / itemsPerPage)}
                                 </Typography>
                             </div>
                             <div className="flex gap-3">
-                                     <Button
+                                <Button
                                     variant="outlined"
                                     size="sm"
                                     onClick={handlePrevious}

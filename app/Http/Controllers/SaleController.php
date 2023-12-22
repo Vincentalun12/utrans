@@ -28,9 +28,9 @@ class SaleController extends Controller
     }
 
     public function saleOrderLines()
-        {
-            return $this->hasMany(SaleOrderLine::class, 'sale_order_id');
-        }
+    {
+        return $this->hasMany(SaleOrderLine::class, 'sale_order_id');
+    }
 
     public function detail($id)
     {
@@ -52,37 +52,37 @@ class SaleController extends Controller
     }
 
     public function destroy($id)
-        {  
-            $salesorder = SaleOrder::find($id);
+    {
+        $salesorder = SaleOrder::find($id);
 
-            $journalEntries = JournalEntries::where('sale_order_id', $id)->get();
+        $journalEntries = JournalEntries::where('sale_order_id', $id)->get();
 
-            foreach ($journalEntries as $journalEntry) {
-                $journalitems = JournalItem::where('journal_entry_id', $journalEntry->id)->get();
-                $journalitems->each(function ($journalitem) {
-                    $chartOfAccountId = $journalitem->chart_of_account_id;
-                    $journalitem->delete();
-                    ChartOfAccount::updateChartOfAccountBalance($chartOfAccountId);
-                });
-
-                $journalEntry->delete();
-            }
-
-            $saleorderline = SaleOrderLine::where('sale_order_id', $id)->get();
-
-            $saleorderline->each(function ($saleorderline) {
-                $saleorderline->delete();
+        foreach ($journalEntries as $journalEntry) {
+            $journalitems = JournalItem::where('journal_entry_id', $journalEntry->id)->get();
+            $journalitems->each(function ($journalitem) {
+                $chartOfAccountId = $journalitem->chart_of_account_id;
+                $journalitem->delete();
+                ChartOfAccount::updateChartOfAccountBalance($chartOfAccountId);
             });
 
-            $salesorder->delete();
-
-            return redirect()->route('sales')->with([
-                'message' => [
-                    'type'  => 'success',
-                    'content' => 'Sales order deleted successfully'
-                ]
-            ]);
+            $journalEntry->delete();
         }
+
+        $saleorderline = SaleOrderLine::where('sale_order_id', $id)->get();
+
+        $saleorderline->each(function ($saleorderline) {
+            $saleorderline->delete();
+        });
+
+        $salesorder->delete();
+
+        return redirect()->route('sales')->with([
+            'message' => [
+                'type'  => 'success',
+                'content' => 'Sales order deleted successfully'
+            ]
+        ]);
+    }
 
     public function store(Request $request)
     {
@@ -138,7 +138,7 @@ class SaleController extends Controller
                 'create_date' => Date::parse($request->create_date)->format('Y-m-d'),
                 'status' => $request->status,
                 'payment_status' => $request->payment_status,
-                'user_id' => $request->user_id,
+                'user_id' => auth()->user()->id,
                 'total_item' => $request->total_item,
                 'total_price' => $request->total_price,
                 'total_paid' => $request->total_paid,
@@ -183,10 +183,9 @@ class SaleController extends Controller
 
                 JournalItem::create([
                     'journal_entry_id' => $createSaleJournalEntry->id,
-                    'chart_of_account_id' => $setting->account_payable_id,
+                    'chart_of_account_id' => $setting->account_receivable_id,
                     'sale_order_line_id' => $createSaleOrderLine->id,
                     'label' => $product['product_name'],
-                    'account_id' => $setting->account_payable_id,
                     'debit' => $createSaleOrderLine->total,
                     'credit' => 0,
                     'balance' => $createSaleOrderLine->total
@@ -198,15 +197,14 @@ class SaleController extends Controller
                     'sale_order_line_id' => $createSaleOrderLine->id,
                     'account_id' => $setting->inventory_account_id,
                     'label' => $product['product_name'] . " - " . "Stock Valuation",
-                    'debit' => $createSaleOrderLine->total,
-                    'credit' => 0,
+                    'debit' => 0,
+                    'credit' => $createSaleOrderLine->total,
                     'balance' => $createSaleOrderLine->total
                 ]);
 
-                ChartOfAccount::updateChartOfAccountBalance($setting->account_payable_id);
+                ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
                 ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
-                Product::increaseStock($createSaleOrderLine->product_id, $createSaleOrderLine->quantity);
-                Product::updateStandardPrice($createSaleOrderLine->product_id);
+                Product::decreaseStock($createSaleOrderLine->product_id, $createSaleOrderLine->quantity);
             }
 
             DB::commit();

@@ -66,5 +66,14 @@ class JournalSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('journals')->insert([
+            'code' => 'OPRJL',
+            'journal_name' => 'Opening Journal',
+            'journal_type' => 'general',
+            'chart_of_account_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }
