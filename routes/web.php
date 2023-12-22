@@ -87,7 +87,7 @@ Route::controller(CustomerController::class)->group(function () {
 Route::controller(PurchaseController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/purchases', 'index')->name('purchases');
-        Route::get('/purchases/detail', 'detail')->name('purchases.detail');
+        Route::get('/purchases/detail/{id}', 'detail')->name('purchases.detail');
         Route::get('/purchases/create', 'create')->name('purchases.create');
         Route::post('/purchases/store', 'store')->name('purchases.store');
         Route::get('/purchases/edit/{id}', 'edit')->name('purchases.edit');

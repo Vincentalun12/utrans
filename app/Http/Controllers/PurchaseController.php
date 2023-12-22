@@ -27,9 +27,18 @@ class PurchaseController extends Controller
         return Inertia::render('Dashboard/Orders/Purchases/Index', $data);
     }
 
-    public function detail()
-    {
-        return Inertia::render('Dashboard/Orders/Purchases/Detail');
+    public function purchaseOrderLines()
+        {
+            return $this->hasMany(PurchaseOrderLine::class, 'purchase_order_id');
+        }
+
+    public function detail($id)
+    {   
+        $data = [
+            'purchaseOrders' => PurchaseOrder::with(['vendor', 'purchaseOrderLines.product'])->find($id),
+        ];
+
+        return Inertia::render('Dashboard/Orders/Purchases/Detail', $data);
     }
 
     public function create()
