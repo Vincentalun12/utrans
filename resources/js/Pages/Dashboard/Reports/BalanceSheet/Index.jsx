@@ -37,16 +37,59 @@ import {
 
 export default function Balancesheet({ auth, coa }) {
 
-  const accountNames = coa.map(account => account.account_type);
-
   const currentAssetsAccountNames = coa
   .filter(account => account.account_type === 'current_assets')
-  .map(account => account.account_name);
+  .map(account => ({code: account.code ,name: account.account_name, balance: account.balance }));
+
+  const liabilityAccountNames = coa
+  .filter(account => account.account_type === 'liability')
+  .map(account => ({code: account.code ,name: account.account_name, balance: account.balance }));
+
+  const IncomeAccountNames = coa
+  .filter(account => account.account_type === 'income')
+  .map(account => ({code: account.code ,name: account.account_name, balance: account.balance }));
+
+  const BankAndCashAccountNames = coa
+  .filter(account => account.account_type === 'bank_and_cash')
+  .map(account => ({code: account.code ,name: account.account_name, balance: account.balance }));
 
   const inventoryAccount = Array.isArray(coa)
   ? coa.find((coa) => coa.account_type === "Inventory Account")
   : null;
+  
+  const totalBalance = currentAssetsAccountNames.reduce((total, account) => {
+    const balance = parseFloat(account.balance);
+    return isNaN(balance) ? total : total + balance;
+  }, 0);
 
+  const totalBalance1 = IncomeAccountNames.reduce((total, account) => {
+    const balance = parseFloat(account.balance);
+    return isNaN(balance) ? total : total + balance;
+  }, 0);
+
+  const totalBalance2 = BankAndCashAccountNames.reduce((total, account) => {
+    const balance = parseFloat(account.balance);
+    return isNaN(balance) ? total : total + balance;
+  }, 0);
+
+  const totalBalance3 = liabilityAccountNames.reduce((total, account) => {
+    const balance = parseFloat(account.balance);
+    return isNaN(balance) ? total : total + balance;
+  }, 0);
+
+  const balances3 = totalBalance3.toLocaleString('id-ID');
+
+  const balances2 = totalBalance2.toLocaleString('id-ID');
+
+  const balances1 = totalBalance1.toLocaleString('id-ID');
+
+  const balances = totalBalance.toLocaleString('id-ID');
+
+  const grandTotalBalance = totalBalance + totalBalance1 + totalBalance2;
+
+  const grandTotalBalance2 = totalBalance3;
+  const grandTotalBalanceFormatted2 = grandTotalBalance2.toLocaleString('id-ID');
+  const grandTotalBalanceFormatted = grandTotalBalance.toLocaleString('id-ID');
   const inventoryAccountBalance = inventoryAccount ? parseFloat(inventoryAccount.balance) : 0;
   const inventoryAccountBalanceFormatted = inventoryAccountBalance.toLocaleString('id-ID');
 
@@ -256,21 +299,30 @@ export default function Balancesheet({ auth, coa }) {
                                 <Text style={styles.tableCellHeader}>ASSETS</Text>
                             </View>
                             <View style={[styles.tableColHeader2]}>
-                                <Text style={styles.tableCellHeader}>Rp 2.394.000.000,00</Text>
+                                <Text style={styles.tableCellHeader}>{grandTotalBalanceFormatted}.00</Text>
                             </View>
                         </View>
                         <View style={styles.tableRow}>
                             <View style={styles.tableCol}>
                                 <Text style={styles.tableCell}>Current Assets</Text>
                                 <Text style={styles.tableCelltab}>Bank And Cash Accounts</Text>
-                                <Text style={styles.tableCelltab3}>001.0001 Kas Kecil (IDR)</Text>
-                                <Text style={styles.tableCelltab}>Receivables</Text>
-                                <Text style={styles.tableCelltab3}>002.0002 Account Receivable (IDR)</Text>
+                                {BankAndCashAccountNames.map((account, index) => (
+                                <View key={index}>
+                                    <Text style={styles.tableCelltab3}>{account.code} {account.name}</Text>
+                                </View>
+                            ))}
                                 <Text style={styles.tableCelltab}>Current Assets</Text>
-                                <Text style={styles.tableCelltab3}>1000011 Bank Suspense Account</Text>
-                                <Text style={styles.tableCelltab3}>1000012 Outstanding Receipts</Text>
-                                <Text style={styles.tableCelltab3}>1000013 Good in Transit</Text>
-                                <Text style={styles.tableCelltab3}>003.0001 Persediaan Barang</Text>
+                                {currentAssetsAccountNames.map((account, index) => (
+                                <View key={index}>
+                                    <Text style={styles.tableCelltab3}>{account.code} {account.name}</Text>
+                                </View>
+                            ))}
+                                <Text style={styles.tableCelltab}>Revenue</Text>
+                                {IncomeAccountNames.map((account, index) => (
+                                <View key={index}>
+                                    <Text style={styles.tableCelltab3}>{account.code} {account.name}</Text>
+                                </View>
+                            ))}
                                 <Text style={styles.tableCell}>Plus fixed Assets</Text>
                                 <Text style={styles.tableCelllast}>Plus Non-current Assets</Text>
                                 <Text style={styles.tableCellBold}>Total Assets</Text>
@@ -278,18 +330,27 @@ export default function Balancesheet({ auth, coa }) {
                             </View>
                             <View style={styles.tableCol2}>
                                 <Text style={styles.tableCellnone}>-</Text>
-                                <Text style={styles.tableCell}>Rp 132.047.000,00</Text>
-                                <Text style={styles.tableCell}>Rp 83.143.000,00</Text>
-                                <Text style={styles.tableCell}>Rp 180.523.000,00</Text>
-                                <Text style={styles.tableCell}>Rp 43.000.000,00</Text>
-                                <Text style={styles.tableCell}>Rp 2.467.431.839,00</Text>
-                                <Text style={styles.tableCell}>Rp 2.394.242.258,00</Text>
-                                <Text style={styles.tableCellnone}>-</Text>
-                                <Text style={styles.tableCell}>Rp -6.286.422.524,25</Text>
-                                <Text style={styles.tableCell}>Rp 6.213.232.943,25</Text>
+                                <Text style={styles.tableCell}>Rp {balances2}.00</Text>
+                                {BankAndCashAccountNames.map((account, index) => (
+                                <View key={index}>
+                                    <Text style={styles.tableCell}>Rp {account.balance}</Text>
+                                </View>
+                            ))}
+                                <Text style={styles.tableCell}>Rp {balances}.00</Text>
+                                {currentAssetsAccountNames.map((account, index) => (
+                                <View key={index}>
+                                    <Text style={styles.tableCell}>Rp {account.balance}</Text>
+                                </View>
+                            ))}
+                                <Text style={styles.tableCell}>Rp {balances1}.00</Text>
+                                {IncomeAccountNames.map((account, index) => (
+                                <View key={index}>
+                                    <Text style={styles.tableCell}>Rp {account.balance}</Text>
+                                </View>
+                            ))}
                                 <Text style={styles.tableCellnone}>-</Text>
                                 <Text style={styles.tableCellnonelast}>-</Text>
-                                <Text style={styles.tableCellBold}>Rp 245.695.940,00</Text>
+                                <Text style={styles.tableCellBold}>Rp {grandTotalBalanceFormatted}.00</Text>
                             </View>
                       </View>
                 </View>
@@ -299,7 +360,7 @@ export default function Balancesheet({ auth, coa }) {
                                 <Text style={styles.tableCellHeader}>LIABILITES</Text>
                             </View>
                             <View style={[styles.tableColHeader2]}>
-                                <Text style={styles.tableCellHeader}>Rp 21.216.514,00</Text>
+                                <Text style={styles.tableCellHeader}>Rp {grandTotalBalanceFormatted2}00</Text>
                             </View>
                         </View>
                         <View style={styles.tableRow}>
@@ -307,18 +368,26 @@ export default function Balancesheet({ auth, coa }) {
                                 <Text style={styles.tableCell}>Current Liabilities</Text>
                                 <Text style={styles.tableCelltab}>Current Liabilities</Text>
                                 <Text style={styles.tableCelltab}>Payables</Text>
-                                <Text style={styles.tableCelltab3}>004.0001 Hutang usaha (IDR)</Text>
+                                {liabilityAccountNames.map((account, index) => (
+                                <View key={index}>
+                                    <Text style={styles.tableCelltab3}>{account.code} {account.name}</Text>
+                                </View>
+                            ))}
                                 <Text style={styles.tableCelllast}>Plus Non-current Liabilities</Text>
                                 <Text style={styles.tableCellBold}>Total Liabilities</Text>
 
                             </View>
                             <View style={styles.tableCol2}>
-                                <Text style={styles.tableCell}>Rp 21.216.514,00</Text>
+                                <Text style={styles.tableCell}>Rp {balances3}.00</Text>
                                 <Text style={styles.tableCellnone}>-</Text>
-                                <Text style={styles.tableCell}>Rp 21.216.514,00</Text>
-                                <Text style={styles.tableCell}>Rp 11.314.501,00</Text>
+                                <Text style={styles.tableCell}>Rp {balances3}.00</Text>
+                                {liabilityAccountNames.map((account, index) => (
+                                <View key={index}>
+                                    <Text style={styles.tableCell}>Rp {account.balance}</Text>
+                                </View>
+                            ))}
                                 <Text style={styles.tableCellnonelast}>-</Text>
-                                <Text style={styles.tableCellBold}>Rp 245.695.940,00</Text>
+                                <Text style={styles.tableCellBold}>Rp {grandTotalBalanceFormatted2}00</Text>
                             </View>
                       </View>
                 </View>
@@ -392,7 +461,7 @@ export default function Balancesheet({ auth, coa }) {
                   ASSETS
                 </Typography>
                 <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
-                  Rp 2.394.000.000,00
+                  Rp {grandTotalBalanceFormatted}.00
                 </Typography>
               </div>
               <div className="flex-inline justify-between">
@@ -402,61 +471,57 @@ export default function Balancesheet({ auth, coa }) {
                     <div className="flex">
                       {isOpenBank ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Bank and Cash Accounts</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 132.047.000,00</span>
+                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances2}.00</span>
                     </div>
                   </summary>
-                  <details className="w-full cursor-default">
-                    <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>001.0001 Kas Kecil (IDR)</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 83.143.000,00</span>
-                    </div>
-                    </summary>
-                  </details>
-                </details>
-                <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsReceivables}>
-                    <div className="flex">
-                      {isOpenReceivables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
-                      <span>Receivables</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 180.523.000,00</span>
-                    </div>
-                  </summary>
-                  <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>002.0002 Account Receivable (IDR)</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 43.000.000,00</span>
-                    </div>
-                    </summary>
-                  </details>
+                  {BankAndCashAccountNames.map((account, index) => (
+                      <details key={index} className="w-full cursor-default">
+                      <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
+                        <div className="flex">
+                          <span>{account.code} {account.name}</span>
+                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance.toLocaleString('id-ID')}</span>
+                        </div>
+                        </summary>
+                      </details>
+                  ))}
                 </details>
                 <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsCurrentAssets}>
                     <div className="flex">
                       {isOpenCurrentAssets ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Current Assets</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 2.467.431.839,00</span>
+                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances}.00</span>
                     </div>
                   </summary>
-                  {currentAssetsAccountNames.map((name, index) => (
+                  {currentAssetsAccountNames.map((account, index) => (
                       <details key={index} className="w-full cursor-default">
                       <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                         <div className="flex">
-                          <span>{name}</span>
-                          <span className="flex-1 text-right text-sm text-black pt-1">Rp 1.000.000</span>
+                          <span>{account.code} {account.name}</span>
+                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance}</span>
                         </div>
                         </summary>
                       </details>
                   ))}
-                  <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
+                </details>
+                <details className="w-full cursor-default">
+                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsBank}>
                     <div className="flex">
-                      <span></span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">asdadadadadasd</span>
+                      {isOpenBank ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
+                      <span>Revenue</span>
+                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances1}.00</span>
                     </div>
-                    </summary>
-                  </details>
+                  </summary>
+                  {IncomeAccountNames.map((account, index) => (
+                      <details key={index} className="w-full cursor-default">
+                      <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
+                        <div className="flex">
+                          <span>{account.code} {account.name}</span>
+                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance}</span>
+                        </div>
+                        </summary>
+                      </details>
+                  ))}
                 </details>
                 <p className="border-b w-full border-gray-400">Plus fixed Assets</p>
                 <p className="border-b w-full border-black">Plus Non-current Assets</p>
@@ -465,7 +530,7 @@ export default function Balancesheet({ auth, coa }) {
                   Total Assets
                 </Typography>
                 <Typography variant="h6" color="black" className="w-full text-right pt-1">
-                  Rp 245.695.940,00
+                  Rp {grandTotalBalanceFormatted}.00
                 </Typography>
                 </div>
                 <div className="flex justify-between pt-5">
@@ -473,14 +538,14 @@ export default function Balancesheet({ auth, coa }) {
                   LIABILITIES
                 </Typography>
                 <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
-                Rp 21.216.514,00
+                Rp {grandTotalBalanceFormatted2}00
                 </Typography>
                 </div>
               <div className="flex-inline justify-between">
                 <div className="border-b w-full border-gray-400">
                 <div className="flex">
                 <p>Current Liabilities</p>
-                <p className="flex-1 text-right text-sm text-black pt-1">Rp 21.216.514,00</p>
+                <p className="flex-1 text-right text-sm text-black pt-1">Rp {balances3}.00</p>
                 </div>
                 </div>
                 <p className="border-b w-full border-gray-400 pl-6">Current Liabilities</p>
@@ -489,17 +554,19 @@ export default function Balancesheet({ auth, coa }) {
                     <div className="flex">
                       {isOpenPayables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Payables</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 21.216.514,00</span>
+                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances3}.00</span>
                     </div>
                   </summary>
-                  <details className="w-full cursor-default">
-                    <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>004.0001 Hutang usaha (IDR)</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 11.314.501,00</span>
-                    </div>
-                    </summary>
-                  </details>
+                  {liabilityAccountNames.map((account, index) => (
+                      <details key={index} className="w-full cursor-default">
+                      <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
+                        <div className="flex">
+                          <span>{account.code} {account.name}</span>
+                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance}</span>
+                        </div>
+                        </summary>
+                      </details>
+                  ))}
                 </details>
                 <p className="border-b w-full border-black">Plus Non-current Liabilities</p>
               </div>
@@ -508,7 +575,7 @@ export default function Balancesheet({ auth, coa }) {
                   Total Liabilities
                 </Typography>
                 <Typography variant="h6" color="black" className="w-full text-right pt-1">
-                  Rp 245.695.940,00
+                  Rp {grandTotalBalanceFormatted2}00
                 </Typography>
                 </div>
               </div>
