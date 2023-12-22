@@ -64,8 +64,8 @@ let Language = new LocalizedStrings({
         "pagination": {
             "previous": "Previous",
             "next": "Next",
-            "page": "Halaman",
-            "of": "dari",
+            "page": "Page",
+            "of": "of",
         },
         "export": {
             "pdf": "Export to PDF",

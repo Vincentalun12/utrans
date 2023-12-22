@@ -2,6 +2,7 @@ import DashboardLayout from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
 import Chart from "react-apexcharts";
 import { React, useEffect, useState } from "react";
+import { Language } from "@/Languages/Home/Dashboard";
 import Linkactive from "@/Components/Linkactive";
 
 import {
@@ -14,6 +15,7 @@ import {
     ArrowUpIcon,
     PencilIcon,
     PencilSquareIcon,
+    CubeIcon,
 } from "@heroicons/react/24/solid";
 
 import {
@@ -21,6 +23,8 @@ import {
     BuildingOfficeIcon,
     DocumentIcon,
     DocumentTextIcon,
+    FolderArrowDownIcon,
+    ChartBarIcon,
 } from "@heroicons/react/24/solid";
 
 import { twMerge } from "tailwind-merge";
@@ -126,47 +130,17 @@ const chartConfig = {
     },
 };
 
-const TABLE_HEAD = ["No", "Nama Produk", "Stok", "Harga Retail", ""];
-
-const TABLE_ROWS = [
-    {
-        no: "1", //Testing aj ntar hapus
-        name: "Filter Kolon 10 Mikron 10 inch",
-        email: "SKU-TEST-001",
-        stok: "100",
-        retail: "Rp10.000",
-    },
-    {
-        no: "2", //Testing aj ntar hapus
-        name: "Filter Kolon 10 Mikron 10 inch",
-        email: "SKU-TEST-001",
-        stok: "100",
-        retail: "Rp10.000",
-    },
-    {
-        no: "3", //Testing aj ntar hapus
-        name: "Filter Kolon 10 Mikron 10 inch",
-        email: "SKU-TEST-001",
-        stok: "100",
-        retail: "Rp10.000",
-    },
-    {
-        no: "4", //Testing aj ntar hapus
-        name: "Filter Kolon 10 Mikron 10 inch",
-        email: "SKU-TEST-001",
-        stok: "100",
-        retail: "Rp10.000",
-    },
-    {
-        no: "5", //Testing aj ntar hapus
-        name: "Filter Kolon 10 Mikron 10 inch",
-        email: "SKU-TEST-001",
-        stok: "100",
-        retail: "Rp100.000",
-    },
-];
+const TABLE_HEAD = [Language.tableheader.no, Language.tableheader.name, Language.tableheader.stock, Language.tableheader.price, ""];
 
 export default function Dashboard({ auth, customers, vendors, products, brands, purchase_orders, sale_orders, users, chart_of_accounts}) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+    
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
+    console.log(sale_orders)
 
     const sortedProducts = products.sort((a, b) => b.id - a.id);
     const newestProducts = sortedProducts.slice(0, 5);
@@ -175,6 +149,19 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
     const yesterday = new Date(today);
     today.setHours(0, 0, 0, 0);
     yesterday.setDate(yesterday.getDate() - 1);
+
+    const todaySales = sale_orders.filter(order => new Date(order.create_date).setHours(0,0,0,0) === today.getTime());
+    const yesterdaySales = sale_orders.filter(order => new Date(order.create_date).setHours(0,0,0,0) === yesterday.getTime());
+
+    const todayTotalSales = todaySales.reduce((total, order) => total + parseFloat(order.total_price), 0);
+    const yesterdayTotalSales = yesterdaySales.reduce((total, order) => total + parseFloat(order.total_price), 0);
+
+    let salesPercentage = 0;
+        if (yesterdayTotalSales > 0) {
+            salesPercentage = ((todayTotalSales - yesterdayTotalSales) / yesterdayTotalSales) * 100;
+        } else if (todayTotalSales > 0) {
+            salesPercentage = 100;
+        }
 
     const productsToday = products.filter(product => new Date(product.created_at).setHours(0,0,0,0) === today.getTime());
 
@@ -187,9 +174,9 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
     let purchasePercentage = 0;
     if (yesterdayTotalPurchases > 0) {
         purchasePercentage = ((todayTotalPurchases - yesterdayTotalPurchases) / yesterdayTotalPurchases) * 100;
-    } else if (todayTotalPurchases > 0) {
-        purchasePercentage = 100;
-}
+            } else if (todayTotalPurchases > 0) {
+                purchasePercentage = 100;
+        }
 
     const todayOrders = sale_orders.filter(order => new Date(order.create_date).setHours(0,0,0,0) === today.setHours(0,0,0,0));
     const yesterdayOrders = sale_orders.filter(order => new Date(order.create_date).setHours(0,0,0,0) === yesterday.setHours(0,0,0,0));
@@ -263,7 +250,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                         color="gray"
                                         className="max-w-sm font-normal"
                                     >
-                                        Purchases Due
+                                        {Language.purchasesdue}
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -291,7 +278,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                         color="gray"
                                         className="max-w-sm font-normal"
                                     >
-                                        Sales Due
+                                        {Language.salesdue}
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -302,28 +289,46 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                 floated={false}
                                 shadow={false}
                                 color="transparent"
-                                className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
+                                className="flex flex-col gap-4 rounded-none md:flex-row md:items-center md:justify-between"
                             >
-                                <div className="w-max rounded-lg bg-red-900 p-4 text-white cursor-pointer">
-                                    <ArrowUpOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
+                                <div className="flex flex-col gap-4 md:flex-row md:items-center cursor-pointer">
+                                    <div className="w-max rounded-lg bg-red-900 p-4 text-white">
+                                        <DocumentIcon className="h-6 w-6 hover:scale-150 duration-300" />
+                                    </div>
+                                    <div>
+                                        <Typography
+                                            className="text-md font-bold"
+                                            color="blue-gray"
+                                        >
+                                            Rp{formattedSalesBalance}
+                                        </Typography>
+                                        <Typography
+                                            variant="small"
+                                            color="gray"
+                                            className="max-w-sm font-normal"
+                                        >
+                                            {Language.salesvalue}
+                                        </Typography>
+                                    </div>
                                 </div>
-                                <div>
-                                    <Typography
-                                        className="text-md font-bold"
-                                        color="blue-gray"
-                                    >
-                                        Rp{formattedSalesBalance}
-                                    </Typography>
-                                    <Typography
-                                        variant="small"
-                                        color="gray"
-                                        className="max-w-sm font-normal"
-                                    >
-                                        Sales Amount
-                                    </Typography>
+                                <div className="flex items-center">
+                                    {salesPercentage < 0 ? (
+                                        <>
+                                            <ArrowDownIcon className="h-5 w-5 text-red-500" />
+                                            <Typography variant="body2" color="red">
+                                                {Math.abs(salesPercentage)}%
+                                            </Typography>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <ArrowUpIcon className="h-5 w-5 text-green-500" />
+                                            <Typography variant="body2" color="green">
+                                                {salesPercentage}%
+                                            </Typography>
+                                        </>
+                                    )}
                                 </div>
                             </CardHeader>
-                            <CardBody className="px-2 pb-0"></CardBody>
                         </Card>
                         <Card>
                             <CardHeader
@@ -333,7 +338,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                 className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                             >
                                 <div className="w-max rounded-lg bg-blue-600 p-4 text-white cursor-pointer">
-                                    <ArrowDownOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
+                                    <CubeIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                 </div>
                                 <div>
                                     <Typography
@@ -347,7 +352,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                         color="gray"
                                         className="max-w-sm font-normal"
                                     >
-                                        Inventory Value
+                                        {Language.inventoryvalue}
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -375,7 +380,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                         color="gray"
                                         className="max-w-sm font-normal"
                                     >
-                                        Customers
+                                        {Language.customers}
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -403,7 +408,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                         color="gray"
                                         className="max-w-sm font-normal"
                                     >
-                                        Vendors
+                                        {Language.vendors}
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -418,7 +423,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                             >
                                 <div className="flex flex-col gap-4 md:flex-row md:items-center cursor-pointer">
                                     <div className="w-max rounded-lg bg-blue-900 p-4 text-white">
-                                        <DocumentIcon className="h-6 w-6 hover:scale-150 duration-300" />
+                                        <FolderArrowDownIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                     </div>
                                     <div>
                                         <Typography
@@ -432,7 +437,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                             color="gray"
                                             className="max-w-sm font-normal"
                                         >
-                                            Purchase Invoices
+                                            {Language.purchaseinvoices}
                                         </Typography>
                                     </div>
                                 </div>
@@ -478,7 +483,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                             color="gray"
                                             className="max-w-sm font-normal"
                                         >
-                                            Sales Invoices
+                                            {Language.salesinvoices}
                                         </Typography>
                                     </div>
                                 </div>
@@ -511,21 +516,21 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                 className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
                             >
                                 <div className="w-max rounded-lg bg-green-900 p-4 text-white cursor-pointer">
-                                    <DocumentTextIcon className="h-6 w-6 hover:scale-150 duration-300" />
+                                    <ChartBarIcon className="h-6 w-6 hover:scale-150 duration-300" />
                                 </div>
                                 <div>
                                     <Typography
                                         className="xl font-bold sm:text-sm"
                                         color="blue-gray"
                                     >
-                                        Purchases & Sales
+                                        {Language.graph.title}
                                     </Typography>
                                     <Typography
                                         variant="small"
                                         color="gray"
                                         className=" font-normal"
                                     >
-                                        In this page, you'll able to see how many purchases & sales you've made.
+                                        {Language.graph.description}
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -550,14 +555,14 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                             className="xl font-bold sm:text-sm"
                                             color="blue-gray"
                                         >
-                                            Recently added Products
+                                            {Language.products.title}
                                         </Typography>
                                         <Typography
                                             variant="small"
                                             color="gray"
                                             className="max-w-sm font-normal"
                                         >
-                                            Top 5 Products added recently to your inventory.
+                                            {Language.products.description}
                                         </Typography>
                                     </div>
                                 </div>
@@ -567,7 +572,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                         className="flex-grow"
                                         variant="outlined"
                                     >
-                                        View
+                                        {Language.products.view}
                                     </Button>
                                 </a>
                                 </div>
@@ -660,7 +665,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    Total Product: <b>{products.length}</b>
+                                    {Language.products.totalproduct} <b>{products.length}</b>
                                 </Typography>
                                 <div className="flex gap-2">
                                 <Typography
@@ -668,7 +673,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    New Product Today: <b>{productsToday.length}</b>
+                                   {Language.products.newproduct} <b>{productsToday.length}</b>
                                 </Typography>
                                 </div>
                             </CardFooter>
