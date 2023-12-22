@@ -8,6 +8,7 @@ use App\Models\Vendor;
 use App\Models\Product;
 use App\Models\JournalEntries;
 use App\Models\JournalItem;
+use App\Models\Journal;
 use App\Models\Setting;
 use App\Models\ChartOfAccount;
 
@@ -21,7 +22,8 @@ class PurchaseController extends Controller
     public function index()
     {
         $data = [
-            'purchaseOrders' => PurchaseOrder::with(['vendor'])->get()
+            'purchaseOrders' => PurchaseOrder::with(['vendor'])->get(),
+            'journals' => Journal::all(),
         ];
 
         return Inertia::render('Dashboard/Orders/Purchases/Index', $data);
@@ -187,9 +189,9 @@ class PurchaseController extends Controller
                     'purchase_order_line_id' => $createPurchaseOrderLine->id,
                     'label' => $product['product_name'],
                     'account_id' => $setting->account_payable_id,
-                    'debit' => $createPurchaseOrderLine->total,
-                    'credit' => 0,
-                    'balance' => $createPurchaseOrderLine->total
+                    'debit' => 0,
+                    'credit' => $createPurchaseOrderLine->total,
+                    'balance' => 0 - $createPurchaseOrderLine->total
                 ]);
 
                 JournalItem::create([

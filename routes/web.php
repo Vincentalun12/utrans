@@ -16,6 +16,7 @@ use App\Http\Controllers\InventorymenuController;
 use App\Http\Controllers\JournalItemsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\COAController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -93,6 +94,12 @@ Route::controller(PurchaseController::class)->group(function () {
         Route::get('/purchases/edit/{id}', 'edit')->name('purchases.edit');
         Route::patch('/purchases/update/{id}', 'update')->name('purchases.update');
         Route::delete('/purchases/destroy/{id}', 'destroy')->name('purchases.destroy');
+    });
+});
+
+Route::controller(PaymentController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::post('/payment/purchase-register-payment', 'purchaseRegisterPayment')->name('payment.purchase-register-payment');
     });
 });
 
