@@ -35,7 +35,8 @@ import {
   DocumentChartBarIcon,
 } from "@heroicons/react/24/solid";
 
-export default function Balancesheet({ auth }) {
+export default function Balancesheet({ auth, coa }) {
+  console.log(coa);
   const [isOpenBank, setIsOpenBank] = useState(false);
   const [isOpenReceivables, setIsOpenReceivables] = useState(false);
   const [isOpenCurrentAssets, setIsOpenCurrentAssets] = useState(false);
