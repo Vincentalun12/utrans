@@ -796,12 +796,7 @@ export default function Inventory({ auth, products }) {
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip content="Edit Item">
-                                                        <a
-                                                            href={route(
-                                                                "products.edit",
-                                                                id
-                                                            )}
-                                                        >
+                                                        <a href={route("products.edit",id)}>
                                                             <IconButton variant="text">
                                                                 <PencilSquareIcon className="h-5 w-5 text-green-500" />
                                                             </IconButton>

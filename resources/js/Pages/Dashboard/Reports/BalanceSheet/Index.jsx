@@ -36,7 +36,21 @@ import {
 } from "@heroicons/react/24/solid";
 
 export default function Balancesheet({ auth, coa }) {
-  console.log(coa);
+
+  const accountNames = coa.map(account => account.account_type);
+
+  const currentAssetsAccountNames = coa
+  .filter(account => account.account_type === 'current_assets')
+  .map(account => account.account_name);
+
+  const inventoryAccount = Array.isArray(coa)
+  ? coa.find((coa) => coa.account_type === "Inventory Account")
+  : null;
+
+  const inventoryAccountBalance = inventoryAccount ? parseFloat(inventoryAccount.balance) : 0;
+  const inventoryAccountBalanceFormatted = inventoryAccountBalance.toLocaleString('id-ID');
+
+  console.log(inventoryAccountBalanceFormatted)
   const [isOpenBank, setIsOpenBank] = useState(false);
   const [isOpenReceivables, setIsOpenReceivables] = useState(false);
   const [isOpenCurrentAssets, setIsOpenCurrentAssets] = useState(false);
@@ -425,35 +439,21 @@ export default function Balancesheet({ auth, coa }) {
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp 2.467.431.839,00</span>
                     </div>
                   </summary>
-                  <details className="w-full cursor-default">
-                    <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>1000011 Bank Suspense Account</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 2.394.242.258,00</span>
-                    </div>
-                    </summary>
-                  </details>
-                  <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>1000012 Outstanding Receipts</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1"></span>
-                    </div>
-                    </summary>
-                  </details>
+                  {currentAssetsAccountNames.map((name, index) => (
+                      <details key={index} className="w-full cursor-default">
+                      <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
+                        <div className="flex">
+                          <span>{name}</span>
+                          <span className="flex-1 text-right text-sm text-black pt-1">Rp 1.000.000</span>
+                        </div>
+                        </summary>
+                      </details>
+                  ))}
                   <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                     <div className="flex">
-                      <span>1000013 Good in Transit</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp -6.286.422.524,25</span>
-                    </div>
-                    </summary>
-                  </details>
-                  <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                    <div className="flex">
-                      <span>003.0001 Persediaan Barang</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp 6.213.232.943,25</span>
+                      <span></span>
+                      <span className="flex-1 text-right text-sm text-black pt-1">asdadadadadasd</span>
                     </div>
                     </summary>
                   </details>

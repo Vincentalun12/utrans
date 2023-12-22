@@ -166,7 +166,63 @@ const TABLE_ROWS = [
     },
 ];
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, customers, vendors, products, brands, purchase_orders, sale_orders, users, chart_of_accounts}) {
+
+    const sortedProducts = products.sort((a, b) => b.id - a.id);
+    const newestProducts = sortedProducts.slice(0, 5);
+
+    const today = new Date();
+    const yesterday = new Date(today);
+    today.setHours(0, 0, 0, 0);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const productsToday = products.filter(product => new Date(product.created_at).setHours(0,0,0,0) === today.getTime());
+
+    const todayPurchases = purchase_orders.filter(order => new Date(order.create_date).setHours(0,0,0,0) === today.setHours(0,0,0,0));
+    const yesterdayPurchases = purchase_orders.filter(order => new Date(order.create_date).setHours(0,0,0,0) === yesterday.setHours(0,0,0,0));
+
+    const todayTotalPurchases = todayPurchases.reduce((total, order) => total + parseFloat(order.total_price), 0);
+    const yesterdayTotalPurchases = yesterdayPurchases.reduce((total, order) => total + parseFloat(order.total_price), 0);
+
+    let purchasePercentage = 0;
+    if (yesterdayTotalPurchases > 0) {
+        purchasePercentage = ((todayTotalPurchases - yesterdayTotalPurchases) / yesterdayTotalPurchases) * 100;
+    } else if (todayTotalPurchases > 0) {
+        purchasePercentage = 100;
+}
+
+    const todayOrders = sale_orders.filter(order => new Date(order.create_date).setHours(0,0,0,0) === today.setHours(0,0,0,0));
+    const yesterdayOrders = sale_orders.filter(order => new Date(order.create_date).setHours(0,0,0,0) === yesterday.setHours(0,0,0,0));
+
+    const todayTotal = todayOrders.reduce((total, order) => total + parseFloat(order.total_price), 0);
+    const yesterdayTotal = yesterdayOrders.reduce((total, order) => total + parseFloat(order.total_price), 0);
+
+    const profitPercentage = ((todayTotal - yesterdayTotal) / yesterdayTotal) * 100;
+
+    const totalSalesDue = Array.isArray(sale_orders) 
+    ? sale_orders.reduce((total, order) => total + parseFloat(order.total_due), 0): 0;
+
+    const formattedTotalSalesDue = totalSalesDue.toLocaleString('id-ID');
+
+    const totalPurchasesDue = Array.isArray(purchase_orders) 
+    ? purchase_orders.reduce((total, order) => total + parseFloat(order.total_due), 0): 0;
+
+    const formattedTotalPurchasesDue = totalPurchasesDue.toLocaleString('id-ID');
+
+    const inventoryAccount = Array.isArray(chart_of_accounts) 
+    ? chart_of_accounts.find(account => account.account_name === 'Inventory Account')
+    : null;
+
+    const inventoryBalance = inventoryAccount ? parseFloat(inventoryAccount.balance): 0;
+    const formattedInventoryBalance = inventoryBalance.toLocaleString('id-ID');
+
+    const sales = Array.isArray(chart_of_accounts) 
+    ? chart_of_accounts.find(account => account.account_name === 'Sales')
+    : null;
+
+    const salesBalance = sales ? parseFloat(sales.balance) : 0;
+    const formattedSalesBalance = salesBalance.toLocaleString('id-ID');
+
     return (
         <DashboardLayout
             user={auth.user}
@@ -198,9 +254,9 @@ export default function Dashboard({ auth }) {
                                 <div>
                                     <Typography
                                         className="text-md font-bold"
-                                        color="blue-gray"
+                                        color="red"
                                     >
-                                        Rp122.000.000
+                                        Rp{formattedTotalPurchasesDue}
                                     </Typography>
                                     <Typography
                                         variant="small"
@@ -226,9 +282,9 @@ export default function Dashboard({ auth }) {
                                 <div>
                                     <Typography
                                         className="text-md font-bold"
-                                        color="blue-gray"
+                                        color="red"
                                     >
-                                        Rp122.000.000
+                                        Rp{formattedTotalSalesDue}
                                     </Typography>
                                     <Typography
                                         variant="small"
@@ -236,34 +292,6 @@ export default function Dashboard({ auth }) {
                                         className="max-w-sm font-normal"
                                     >
                                         Sales Due
-                                    </Typography>
-                                </div>
-                            </CardHeader>
-                            <CardBody className="px-2 pb-0"></CardBody>
-                        </Card>
-                        <Card>
-                            <CardHeader
-                                floated={false}
-                                shadow={false}
-                                color="transparent"
-                                className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
-                            >
-                                <div className="w-max rounded-lg bg-blue-600 p-4 text-white cursor-pointer">
-                                    <ArrowDownOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
-                                </div>
-                                <div>
-                                    <Typography
-                                        className="text-md font-bold"
-                                        color="blue-gray"
-                                    >
-                                        Rp45.000.000
-                                    </Typography>
-                                    <Typography
-                                        variant="small"
-                                        color="gray"
-                                        className="max-w-sm font-normal"
-                                    >
-                                        Sales Amount
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -284,7 +312,7 @@ export default function Dashboard({ auth }) {
                                         className="text-md font-bold"
                                         color="blue-gray"
                                     >
-                                        Rp2.000.000
+                                        Rp{formattedSalesBalance}
                                     </Typography>
                                     <Typography
                                         variant="small"
@@ -292,6 +320,34 @@ export default function Dashboard({ auth }) {
                                         className="max-w-sm font-normal"
                                     >
                                         Sales Amount
+                                    </Typography>
+                                </div>
+                            </CardHeader>
+                            <CardBody className="px-2 pb-0"></CardBody>
+                        </Card>
+                        <Card>
+                            <CardHeader
+                                floated={false}
+                                shadow={false}
+                                color="transparent"
+                                className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
+                            >
+                                <div className="w-max rounded-lg bg-blue-600 p-4 text-white cursor-pointer">
+                                    <ArrowDownOnSquareStackIcon className="h-6 w-6 hover:scale-150 duration-300" />
+                                </div>
+                                <div>
+                                    <Typography
+                                        className="text-md font-bold"
+                                        color="blue-gray"
+                                    >
+                                        Rp{formattedInventoryBalance}
+                                    </Typography>
+                                    <Typography
+                                        variant="small"
+                                        color="gray"
+                                        className="max-w-sm font-normal"
+                                    >
+                                        Inventory Value
                                     </Typography>
                                 </div>
                             </CardHeader>
@@ -312,7 +368,7 @@ export default function Dashboard({ auth }) {
                                         className="text-md font-bold"
                                         color="blue-gray"
                                     >
-                                        242
+                                        {Array.isArray(customers) ? customers.length : 0}
                                     </Typography>
                                     <Typography
                                         variant="small"
@@ -340,7 +396,7 @@ export default function Dashboard({ auth }) {
                                         className="text-md font-bold"
                                         color="blue-gray"
                                     >
-                                        242
+                                        {Array.isArray(vendors) ? vendors.length : 0}
                                     </Typography>
                                     <Typography
                                         variant="small"
@@ -358,28 +414,46 @@ export default function Dashboard({ auth }) {
                                 floated={false}
                                 shadow={false}
                                 color="transparent"
-                                className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
+                                className="flex flex-col gap-4 rounded-none md:flex-row md:items-center md:justify-between"
                             >
-                                <div className="w-max rounded-lg bg-blue-900 p-4 text-white cursor-pointer">
-                                    <DocumentIcon className="h-6 w-6 hover:scale-150 duration-300" />
+                                <div className="flex flex-col gap-4 md:flex-row md:items-center cursor-pointer">
+                                    <div className="w-max rounded-lg bg-blue-900 p-4 text-white">
+                                        <DocumentIcon className="h-6 w-6 hover:scale-150 duration-300" />
+                                    </div>
+                                    <div>
+                                        <Typography
+                                            className="text-md font-bold"
+                                            color="blue-gray"
+                                        >
+                                            {Array.isArray(purchase_orders) ? purchase_orders.length : 0}
+                                        </Typography>
+                                        <Typography
+                                            variant="small"
+                                            color="gray"
+                                            className="max-w-sm font-normal"
+                                        >
+                                            Purchase Invoices
+                                        </Typography>
+                                    </div>
                                 </div>
-                                <div>
-                                    <Typography
-                                        className="text-md font-bold"
-                                        color="blue-gray"
-                                    >
-                                        1.093
-                                    </Typography>
-                                    <Typography
-                                        variant="small"
-                                        color="gray"
-                                        className="max-w-sm font-normal"
-                                    >
-                                        Purchase Invoices
-                                    </Typography>
+                                <div className="flex items-center">
+                                    {purchasePercentage < 0 ? (
+                                        <>
+                                            <ArrowDownIcon className="h-5 w-5 text-red-500" />
+                                            <Typography variant="body2" color="red">
+                                                {Math.abs(purchasePercentage)}%
+                                            </Typography>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <ArrowUpIcon className="h-5 w-5 text-green-500" />
+                                            <Typography variant="body2" color="green">
+                                                {purchasePercentage}%
+                                            </Typography>
+                                        </>
+                                    )}
                                 </div>
                             </CardHeader>
-                            <CardBody className="px-2 pb-0"></CardBody>
                         </Card>
                         <Card>
                             <CardHeader
@@ -397,7 +471,7 @@ export default function Dashboard({ auth }) {
                                             className="text-md font-bold"
                                             color="blue-gray"
                                         >
-                                            1.136
+                                            {Array.isArray(sale_orders) ? sale_orders.length : 0}
                                         </Typography>
                                         <Typography
                                             variant="small"
@@ -408,24 +482,22 @@ export default function Dashboard({ auth }) {
                                         </Typography>
                                     </div>
                                 </div>
-                                <div className="flex flex-col">
-                                    <div className="flex items-center">
-                                        <ArrowUpIcon className="h-5 w-5 text-green-500" />
-                                        <Typography
-                                            variant="body2"
-                                            color="green"
-                                        >
-                                            95.4%
-                                        </Typography>
-                                    </div>
-                                    {/* 
-                                        <div className="flex items-center">
+                                <div className="flex items-center">
+                                    {profitPercentage < 0 ? (
+                                        <>
                                             <ArrowDownIcon className="h-5 w-5 text-red-500" />
                                             <Typography variant="body2" color="red">
-                                            20%
+                                                {Math.abs(profitPercentage)}%
                                             </Typography>
-                                        </div>
-                                        */}
+                                        </>
+                                    ) : (
+                                        <>
+                                            <ArrowUpIcon className="h-5 w-5 text-green-500" />
+                                            <Typography variant="body2" color="green">
+                                                {profitPercentage}%
+                                            </Typography>
+                                        </>
+                                    )}
                                 </div>
                             </CardHeader>
                         </Card>
@@ -485,7 +557,7 @@ export default function Dashboard({ auth }) {
                                             color="gray"
                                             className="max-w-sm font-normal"
                                         >
-                                            Newest products
+                                            Top 5 Products added recently to your inventory.
                                         </Typography>
                                     </div>
                                 </div>
@@ -521,31 +593,13 @@ export default function Dashboard({ auth }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {TABLE_ROWS.map(
-                                            (
-                                                {   
-                                                    no,
-                                                    name,
-                                                    email,
-                                                    stok,
-                                                    retail,
-                                                },
-                                                index
-                                            ) => {
-                                                const isLast =
-                                                    index ===
-                                                    TABLE_ROWS.length - 1;
-                                                const classes = isLast
-                                                    ? "p-4"
-                                                    : "p-4 border-b border-blue-gray-50";
+                                            {newestProducts.map((product, index) => {
+                                               const isLast = index === newestProducts.length - 1;
+                                               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
                                                 return (
-                                                    <tr key={name}>
-                                                        <td
-                                                            className={classes}
-                                                        >
-                                                            {no}
-                                                        </td>
+                                                    <tr key={product.id}>
+                                                        <td className={classes}>{index + 1}</td>
                                                         <td className={classes}>
                                                             <div className="flex items-center gap-3">
                                                                 <div className="flex flex-col">
@@ -554,14 +608,14 @@ export default function Dashboard({ auth }) {
                                                                         color="blue-gray"
                                                                         className="font-normal"
                                                                     >
-                                                                        {name}
+                                                                        {product.name}
                                                                     </Typography>
                                                                     <Typography
                                                                         variant="small"
                                                                         color="blue-gray"
                                                                         className="font-normal opacity-70"
                                                                     >
-                                                                        {email}
+                                                                        {product.code}
                                                                     </Typography>
                                                                 </div>
                                                             </div>
@@ -572,7 +626,7 @@ export default function Dashboard({ auth }) {
                                                                 color="blue-gray"
                                                                 className="font-normal"
                                                             >
-                                                                {stok}
+                                                                {product.stock}
                                                             </Typography>
                                                         </td>
                                                         <td className={classes}>
@@ -581,15 +635,17 @@ export default function Dashboard({ auth }) {
                                                                 color="blue-gray"
                                                                 className="font-normal"
                                                             >
-                                                                {retail}
+                                                                Rp{product.sales_price}
                                                             </Typography>
                                                         </td>
                                                         <td className={classes}>
+                                                            <a href={route("products.edit", product.id)}>
                                                             <Tooltip content="Edit Item">
                                                                 <IconButton variant="text">
                                                                     <PencilIcon className="h-4 w-4" />
                                                                 </IconButton>
                                                             </Tooltip>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 );
@@ -604,15 +660,16 @@ export default function Dashboard({ auth }) {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    Page 1 of 10
+                                    Total Product: <b>{products.length}</b>
                                 </Typography>
                                 <div className="flex gap-2">
-                                    <Button variant="outlined" size="sm">
-                                        Previous
-                                    </Button>
-                                    <Button variant="outlined" size="sm">
-                                        Next
-                                    </Button>
+                                <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                >
+                                    New Product Today: <b>{productsToday.length}</b>
+                                </Typography>
                                 </div>
                             </CardFooter>
                         </Card>
