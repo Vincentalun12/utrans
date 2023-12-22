@@ -419,7 +419,7 @@ export default function Balancesheet({ auth, coa }) {
               <div className="flex">
                 <CalendarDaysIcon className="w-6 h-6 text-black" />
                 <span className="text-black font-bold mx-1">Date :</span>
-                <span className="">Thur Nov 2, 2020</span>
+                <span className="">{new Date().toLocaleDateString()}</span>
               </div>
               <div className="md:flex hidden justify-end">
                 <Menu placement="right-start">
@@ -505,9 +505,9 @@ export default function Balancesheet({ auth, coa }) {
                   ))}
                 </details>
                 <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsBank}>
+                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsReceivables}>
                     <div className="flex">
-                      {isOpenBank ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
+                      {isOpenReceivables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Revenue</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances1}.00</span>
                     </div>
