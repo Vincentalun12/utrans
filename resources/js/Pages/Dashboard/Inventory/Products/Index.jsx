@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import { Global, css } from "@emotion/react";
-import { Utranslogo2 } from '@/Assets';
+import { Batamwater } from '@/Assets';
 import {
     PDFDownloadLink,
     Document,
@@ -274,7 +274,7 @@ export default function Inventory({ auth, products }) {
             overflow: 'hidden',
         },
         image: {
-            width: 90,
+            width: 180,
             marginLeft: "9%",
             marginRight: "9%",
         },
@@ -299,7 +299,7 @@ export default function Inventory({ auth, products }) {
             <Page size="A4" orientation="landscape">
             <View style={styles.titleContainer}>
                 <View style={styles.spaceBetween}>
-            <Image src={Utranslogo2} style={styles.image} />
+            <Image src={Batamwater} style={styles.image} />
                 <Text style={styles.title}>Products Report</Text>
                 </View>
             </View>
