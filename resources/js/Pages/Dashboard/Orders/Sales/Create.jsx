@@ -78,8 +78,6 @@ export default function CreateSaleOrder({ auth, products, customers }) {
         create_date: format(new Date(), "dd-MM-yyyy"),
     });
 
-    
-
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [date, setDate] = useState(new Date());
     const [customerOptions, setCustomerOptions] = useState([]);
@@ -117,7 +115,7 @@ export default function CreateSaleOrder({ auth, products, customers }) {
                     product_id: selectedProduct.value,
                     product_name: selectedProduct.label,
                     quantity: 0,
-                    price: 0,
+                    price: selectedProduct.price,
                     discount: 0,
                 },
             ]);
@@ -136,6 +134,7 @@ export default function CreateSaleOrder({ auth, products, customers }) {
             code: product.code,
             value: product.id,
             label: product.name,
+            price: product.sales_price,
         });
     });
 
@@ -149,7 +148,9 @@ export default function CreateSaleOrder({ auth, products, customers }) {
         const total = product.quantity * product.price - product.discount;
         return sum + total;
     }, 0);
-    const formattedMainTotal = isNaN(mainTotal) ? "0" : mainTotal.toLocaleString("de-DE");
+    const formattedMainTotal = isNaN(mainTotal)
+        ? "0"
+        : mainTotal.toLocaleString("de-DE");
 
     const actionSubmit = (e) => {
         e.preventDefault();
@@ -287,6 +288,7 @@ export default function CreateSaleOrder({ auth, products, customers }) {
                                         setSelectedProduct({
                                             value: e.value,
                                             label: e.label,
+                                            price: e.price,
                                         });
                                     }}
                                     components={{
@@ -365,8 +367,13 @@ export default function CreateSaleOrder({ auth, products, customers }) {
                                             const itemcode =
                                                 correspondingProduct.code;
 
-                                                const totalValue = quantity * price - discount;
-                                                const total = isNaN(totalValue) ? "0" : totalValue.toLocaleString("de-DE");
+                                            const totalValue =
+                                                quantity * price - discount;
+                                            const total = isNaN(totalValue)
+                                                ? "0"
+                                                : totalValue.toLocaleString(
+                                                      "de-DE"
+                                                  );
 
                                             const isLast =
                                                 index === TABLE_ROWS.length - 1;
@@ -443,11 +450,26 @@ export default function CreateSaleOrder({ auth, products, customers }) {
                                                             <input
                                                                 type="number"
                                                                 id="UnitPrice"
+                                                                value={price}
                                                                 class="h-10 w-25 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
-                                                                onChange={(event) => {
-                                                                    const newListProduct = [...listProduct,];
-                                                                        newListProduct[index].price = Number(event.target.value);
-                                                                    setListProduct(newListProduct);
+                                                                onChange={(
+                                                                    event
+                                                                ) => {
+                                                                    const newListProduct =
+                                                                        [
+                                                                            ...listProduct,
+                                                                        ];
+                                                                    newListProduct[
+                                                                        index
+                                                                    ].price =
+                                                                        Number(
+                                                                            event
+                                                                                .target
+                                                                                .value
+                                                                        );
+                                                                    setListProduct(
+                                                                        newListProduct
+                                                                    );
                                                                 }}
                                                             />
                                                         </Typography>
