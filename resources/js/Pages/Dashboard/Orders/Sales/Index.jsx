@@ -837,17 +837,20 @@ export default function Purchasing({ auth, saleOrders }) {
                                                                     className="flex items-center gap-2"
                                                                     onClick={() =>
                                                                         (window.location.href =
-                                                                            "/purchases/detail")
-                                                                    }
+                                                                            route(
+                                                                                "sales.detail",
+                                                                                id
+                                                                            ))
+                                                                        }
                                                                 >
                                                                     <EyeIcon className="w-5 h-5" />
-                                                                    Purchase
+                                                                    Sales
                                                                     Detail
                                                                 </MenuItem>
                                                                 <MenuItem className="flex items-center gap-2">
                                                                     <PencilIcon className="w-5 h-5" />
                                                                     Edit
-                                                                    Purchase
+                                                                    Sales
                                                                 </MenuItem>
                                                                 <MenuItem
                                                                     onClick={

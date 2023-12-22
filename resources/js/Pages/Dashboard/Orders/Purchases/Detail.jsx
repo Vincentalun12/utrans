@@ -77,7 +77,7 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
             variant="h6"
             color="black"
             >
-            Purchase order
+            PURCHASE ORDER
             </Typography>
             <div className="inline-flex mx-4">
             <Typography
