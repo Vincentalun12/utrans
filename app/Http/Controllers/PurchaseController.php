@@ -341,6 +341,8 @@ class PurchaseController extends Controller
 
                         if ($quantityDifference > 0) {
                             Product::increaseStock($purchaseOrderLine->product_id, $quantityDifference);
+                        } else if ($quantityDifference < 0) {
+                            Product::decreaseStock($purchaseOrderLine->product_id, $quantityDifference);
                         }
 
                         $totalPriceDifference = $oldTotalPrice - $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount'];
@@ -374,6 +376,8 @@ class PurchaseController extends Controller
 
                         if ($quantityDifference < 0) {
                             Product::increaseStock($purchaseOrderLine->product_id, $quantityDifference);
+                        } else if ($quantityDifference > 0) {
+                            Product::decreaseStock($purchaseOrderLine->product_id, $quantityDifference);
                         }
 
                         $totalPriceDifference = $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount'] - $oldTotalPrice;
