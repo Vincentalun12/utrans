@@ -26,12 +26,12 @@ let Language = new LocalizedStrings({
         "title": "Create Chart of Account",
         "description": "Create your chart of account data. Please do not change the data if it is not necessary.",
         "journaltype": {
-            "name": "Journal Type",
+            "name": "Account Type",
             "description": "Select the journal type from below",
             "placeholder": "Select Journal Type",
         },
         "journalname": {
-            "name": "Journal Name",
+            "name": "Account Name",
             "description": "* Provide the journal name",
             "placeholder": "Name",
         },
