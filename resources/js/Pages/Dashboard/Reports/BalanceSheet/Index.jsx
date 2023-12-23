@@ -37,32 +37,35 @@ import {
 
 export default function Balancesheet({ auth, coa }) {
 
-  const currentAssetsAccountNames = coa
+const currentAssetsAccountNames = coa
   .filter(account => account.account_type === 'current_assets')
-  .map(account => ({code: account.code ,name: account.account_name, balance: account.balance }));
+  .map(account => ({
+    code: account.code,
+    name: account.account_name,
+    balance: parseFloat(account.balance)
+  }));
 
   const liabilityAccountNames = coa
   .filter(account => account.account_type === 'liability')
-  .map(account => ({code: account.code ,name: account.account_name, balance: account.balance }));
-
-  const IncomeAccountNames = coa
-  .filter(account => account.account_type === 'income')
-  .map(account => ({code: account.code ,name: account.account_name, balance: account.balance }));
+  .map(account => ({
+    code: account.code,
+    name: account.account_name,
+    balance: parseFloat(account.balance)
+  }));
 
   const BankAndCashAccountNames = coa
   .filter(account => account.account_type === 'bank_and_cash')
-  .map(account => ({code: account.code ,name: account.account_name, balance: account.balance }));
+  .map(account => ({
+    code: account.code,
+    name: account.account_name,
+    balance: parseFloat(account.balance)
+  }));
 
   const inventoryAccount = Array.isArray(coa)
   ? coa.find((coa) => coa.account_type === "Inventory Account")
   : null;
   
   const totalBalance = currentAssetsAccountNames.reduce((total, account) => {
-    const balance = parseFloat(account.balance);
-    return isNaN(balance) ? total : total + balance;
-  }, 0);
-
-  const totalBalance1 = IncomeAccountNames.reduce((total, account) => {
     const balance = parseFloat(account.balance);
     return isNaN(balance) ? total : total + balance;
   }, 0);
@@ -81,11 +84,9 @@ export default function Balancesheet({ auth, coa }) {
 
   const balances2 = totalBalance2.toLocaleString('id-ID');
 
-  const balances1 = totalBalance1.toLocaleString('id-ID');
-
   const balances = totalBalance.toLocaleString('id-ID');
 
-  const grandTotalBalance = totalBalance + totalBalance1 + totalBalance2;
+  const grandTotalBalance = totalBalance + totalBalance2;
 
   const grandTotalBalance2 = totalBalance3;
   const grandTotalBalanceFormatted2 = grandTotalBalance2.toLocaleString('id-ID');
@@ -299,7 +300,7 @@ export default function Balancesheet({ auth, coa }) {
                                 <Text style={styles.tableCellHeader}>ASSETS</Text>
                             </View>
                             <View style={[styles.tableColHeader2]}>
-                                <Text style={styles.tableCellHeader}>{grandTotalBalanceFormatted}.00</Text>
+                                <Text style={styles.tableCellHeader}>{grandTotalBalanceFormatted},00</Text>
                             </View>
                         </View>
                         <View style={styles.tableRow}>
@@ -317,12 +318,6 @@ export default function Balancesheet({ auth, coa }) {
                                     <Text style={styles.tableCelltab3}>{account.code} {account.name}</Text>
                                 </View>
                             ))}
-                                <Text style={styles.tableCelltab}>Revenue</Text>
-                                {IncomeAccountNames.map((account, index) => (
-                                <View key={index}>
-                                    <Text style={styles.tableCelltab3}>{account.code} {account.name}</Text>
-                                </View>
-                            ))}
                                 <Text style={styles.tableCell}>Plus fixed Assets</Text>
                                 <Text style={styles.tableCelllast}>Plus Non-current Assets</Text>
                                 <Text style={styles.tableCellBold}>Total Assets</Text>
@@ -330,27 +325,21 @@ export default function Balancesheet({ auth, coa }) {
                             </View>
                             <View style={styles.tableCol2}>
                                 <Text style={styles.tableCellnone}>-</Text>
-                                <Text style={styles.tableCell}>Rp {balances2}.00</Text>
+                                <Text style={styles.tableCell}>Rp {balances2},00</Text>
                                 {BankAndCashAccountNames.map((account, index) => (
                                 <View key={index}>
-                                    <Text style={styles.tableCell}>Rp {account.balance}</Text>
+                                    <Text style={styles.tableCell}>Rp {account.balance.toLocaleString('id-ID')},00</Text>
                                 </View>
                             ))}
-                                <Text style={styles.tableCell}>Rp {balances}.00</Text>
+                                <Text style={styles.tableCell}>Rp {balances},00</Text>
                                 {currentAssetsAccountNames.map((account, index) => (
                                 <View key={index}>
-                                    <Text style={styles.tableCell}>Rp {account.balance}</Text>
-                                </View>
-                            ))}
-                                <Text style={styles.tableCell}>Rp {balances1}.00</Text>
-                                {IncomeAccountNames.map((account, index) => (
-                                <View key={index}>
-                                    <Text style={styles.tableCell}>Rp {account.balance}</Text>
+                                    <Text style={styles.tableCell}>Rp {account.balance.toLocaleString('id-ID')},00</Text>
                                 </View>
                             ))}
                                 <Text style={styles.tableCellnone}>-</Text>
                                 <Text style={styles.tableCellnonelast}>-</Text>
-                                <Text style={styles.tableCellBold}>Rp {grandTotalBalanceFormatted}.00</Text>
+                                <Text style={styles.tableCellBold}>Rp {grandTotalBalanceFormatted},00</Text>
                             </View>
                       </View>
                 </View>
@@ -360,7 +349,7 @@ export default function Balancesheet({ auth, coa }) {
                                 <Text style={styles.tableCellHeader}>LIABILITES</Text>
                             </View>
                             <View style={[styles.tableColHeader2]}>
-                                <Text style={styles.tableCellHeader}>Rp {grandTotalBalanceFormatted2}00</Text>
+                                <Text style={styles.tableCellHeader}>Rp {grandTotalBalanceFormatted2},00</Text>
                             </View>
                         </View>
                         <View style={styles.tableRow}>
@@ -378,16 +367,16 @@ export default function Balancesheet({ auth, coa }) {
 
                             </View>
                             <View style={styles.tableCol2}>
-                                <Text style={styles.tableCell}>Rp {balances3}.00</Text>
+                                <Text style={styles.tableCell}>Rp {balances3},00</Text>
                                 <Text style={styles.tableCellnone}>-</Text>
-                                <Text style={styles.tableCell}>Rp {balances3}.00</Text>
+                                <Text style={styles.tableCell}>Rp {balances3},00</Text>
                                 {liabilityAccountNames.map((account, index) => (
                                 <View key={index}>
-                                    <Text style={styles.tableCell}>Rp {account.balance}</Text>
+                                    <Text style={styles.tableCell}>Rp {account.balance.toLocaleString('id-ID')},00</Text>
                                 </View>
                             ))}
                                 <Text style={styles.tableCellnonelast}>-</Text>
-                                <Text style={styles.tableCellBold}>Rp {grandTotalBalanceFormatted2}00</Text>
+                                <Text style={styles.tableCellBold}>Rp {grandTotalBalanceFormatted2},00</Text>
                             </View>
                       </View>
                 </View>
@@ -419,7 +408,7 @@ export default function Balancesheet({ auth, coa }) {
               <div className="flex">
                 <CalendarDaysIcon className="w-6 h-6 text-black" />
                 <span className="text-black font-bold mx-1">Date :</span>
-                <span className="">Thur Nov 2, 2020</span>
+                <span className="">{new Date().toLocaleDateString()}</span>
               </div>
               <div className="md:flex hidden justify-end">
                 <Menu placement="right-start">
@@ -461,7 +450,7 @@ export default function Balancesheet({ auth, coa }) {
                   ASSETS
                 </Typography>
                 <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
-                  Rp {grandTotalBalanceFormatted}.00
+                  Rp {grandTotalBalanceFormatted},00
                 </Typography>
               </div>
               <div className="flex-inline justify-between">
@@ -471,7 +460,7 @@ export default function Balancesheet({ auth, coa }) {
                     <div className="flex">
                       {isOpenBank ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Bank and Cash Accounts</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances2}.00</span>
+                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances2},00</span>
                     </div>
                   </summary>
                   {BankAndCashAccountNames.map((account, index) => (
@@ -479,7 +468,7 @@ export default function Balancesheet({ auth, coa }) {
                       <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                         <div className="flex">
                           <span>{account.code} {account.name}</span>
-                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance.toLocaleString('id-ID')}</span>
+                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance.toLocaleString('id-ID')},00</span>
                         </div>
                         </summary>
                       </details>
@@ -490,7 +479,7 @@ export default function Balancesheet({ auth, coa }) {
                     <div className="flex">
                       {isOpenCurrentAssets ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Current Assets</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances}.00</span>
+                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances},00</span>
                     </div>
                   </summary>
                   {currentAssetsAccountNames.map((account, index) => (
@@ -498,26 +487,7 @@ export default function Balancesheet({ auth, coa }) {
                       <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                         <div className="flex">
                           <span>{account.code} {account.name}</span>
-                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance}</span>
-                        </div>
-                        </summary>
-                      </details>
-                  ))}
-                </details>
-                <details className="w-full cursor-default">
-                  <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsBank}>
-                    <div className="flex">
-                      {isOpenBank ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
-                      <span>Revenue</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances1}.00</span>
-                    </div>
-                  </summary>
-                  {IncomeAccountNames.map((account, index) => (
-                      <details key={index} className="w-full cursor-default">
-                      <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
-                        <div className="flex">
-                          <span>{account.code} {account.name}</span>
-                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance}</span>
+                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance.toLocaleString('id-ID')},00</span>
                         </div>
                         </summary>
                       </details>
@@ -530,7 +500,7 @@ export default function Balancesheet({ auth, coa }) {
                   Total Assets
                 </Typography>
                 <Typography variant="h6" color="black" className="w-full text-right pt-1">
-                  Rp {grandTotalBalanceFormatted}.00
+                  Rp {grandTotalBalanceFormatted},00
                 </Typography>
                 </div>
                 <div className="flex justify-between pt-5">
@@ -538,14 +508,14 @@ export default function Balancesheet({ auth, coa }) {
                   LIABILITIES
                 </Typography>
                 <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
-                Rp {grandTotalBalanceFormatted2}00
+                Rp {grandTotalBalanceFormatted2},00
                 </Typography>
                 </div>
               <div className="flex-inline justify-between">
                 <div className="border-b w-full border-gray-400">
                 <div className="flex">
                 <p>Current Liabilities</p>
-                <p className="flex-1 text-right text-sm text-black pt-1">Rp {balances3}.00</p>
+                <p className="flex-1 text-right text-sm text-black pt-1">Rp {balances3},00</p>
                 </div>
                 </div>
                 <p className="border-b w-full border-gray-400 pl-6">Current Liabilities</p>
@@ -554,7 +524,7 @@ export default function Balancesheet({ auth, coa }) {
                     <div className="flex">
                       {isOpenPayables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                       <span>Payables</span>
-                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances3}.00</span>
+                      <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances3},00</span>
                     </div>
                   </summary>
                   {liabilityAccountNames.map((account, index) => (
@@ -562,7 +532,7 @@ export default function Balancesheet({ auth, coa }) {
                       <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
                         <div className="flex">
                           <span>{account.code} {account.name}</span>
-                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance}</span>
+                          <span className="flex-1 text-right text-sm text-black pt-1">Rp {account.balance.toLocaleString('id-ID')},00</span>
                         </div>
                         </summary>
                       </details>
@@ -575,7 +545,7 @@ export default function Balancesheet({ auth, coa }) {
                   Total Liabilities
                 </Typography>
                 <Typography variant="h6" color="black" className="w-full text-right pt-1">
-                  Rp {grandTotalBalanceFormatted2}00
+                  Rp {grandTotalBalanceFormatted2},00
                 </Typography>
                 </div>
               </div>

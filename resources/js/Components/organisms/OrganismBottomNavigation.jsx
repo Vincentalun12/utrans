@@ -43,7 +43,7 @@ export function OrganismBottomNavigation() {
                     <Button
                         variant="text"
                         className="inline-flex flex-col items-center justify-center font-medium py-3 px-4 text-ungukita rounded-none"
-                        onClick={() => window.location.href='/dashboard'}
+                        onClick={() => window.location.href='/home'}
                     >
                         <HomeIcon className="w-7 h-7" />
                         <span className="">Home</span>

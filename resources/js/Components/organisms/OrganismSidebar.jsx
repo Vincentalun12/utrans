@@ -396,15 +396,6 @@ export function OrganismSidebar() {
                                     {Language.BalanceSheet}
                                 </ListItem>
                             </Linkactive>
-                            <ListItem>
-                                <ListItemPrefix>
-                                    <ChevronRightIcon
-                                        strokeWidth={3}
-                                        className="h-3 w-5"
-                                    />
-                                </ListItemPrefix>
-                                {Language.ProfitandLoss}
-                            </ListItem>
                         </List>
                     </AccordionBody>
                 </Accordion>
