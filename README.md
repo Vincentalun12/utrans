@@ -27,6 +27,8 @@ Utrans, website ERP yang dirancang khusus untuk membantu bisnis kecil dan meneng
 
 ![Screenshot 3](https://media.discordapp.net/attachments/1150374149236195388/1187799291939520542/image.png)
 
+![Balance Sheet Screenshot](https://media.discordapp.net/attachments/1150374149236195388/1188186947466842182/image.png)
+
 
 ## 🧶 Komponen yang dibutuhkan
 
