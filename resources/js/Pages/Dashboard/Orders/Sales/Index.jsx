@@ -27,8 +27,7 @@ import {
 import {
     DocumentArrowDownIcon,
     DocumentChartBarIcon,
-}
-from "@heroicons/react/24/outline";
+} from "@heroicons/react/24/outline";
 
 import {
     TrashIcon as TrashIconSolid,
@@ -192,50 +191,57 @@ export default function Purchasing({ auth, saleOrders }) {
 
     const handleDeleteSales = (id) => {
         if (id) {
-          setDeletesales(id);
-          setdeleteOpen(true);
+            setDeletesales(id);
+            setdeleteOpen(true);
         } else {
-          setdeleteOpen(false);
+            setdeleteOpen(false);
         }
-      };
+    };
 
     return (
         <PurchasingLayout user={auth.user}>
             <Head title="Sales" />
             <Dialog open={deleteOpen} size="sm" onClose={handleDeleteSales}>
                 <DialogHeader>
-                <Typography variant="h5">Notifikasi</Typography>
+                    <Typography variant="h5">Notifikasi</Typography>
                 </DialogHeader>
                 <DialogBody divider className="grid place-items-center gap-4">
-                <InformationCircleIcon className="w-20 h-20 text-red-400" />
-                <Typography className="text-red-900" variant="h4">
-                Anda akan menghapus pelanggan ini!
-                </Typography>
-                <Typography className="text-center font-normal">
-                Aksi ini tidak dapat dibatalkan. Namun, kami akan tetap simpan untuk keperluan audit.
-                </Typography>
+                    <InformationCircleIcon className="w-20 h-20 text-red-400" />
+                    <Typography className="text-red-900" variant="h4">
+                        Anda akan menghapus pelanggan ini!
+                    </Typography>
+                    <Typography className="text-center font-normal">
+                        Aksi ini tidak dapat dibatalkan. Namun, kami akan tetap
+                        simpan untuk keperluan audit.
+                    </Typography>
                 </DialogBody>
                 <DialogFooter className="space-x-2">
-                <Button
-                    variant="gradient"
-                    color="red"
-                    onClick={async () => {
-                    if (deletesales) {
-                        await destroy(route("sales.destroy", deletesales), {
-                        onSuccess: () => {
-                            setIsShowAlert(true);
-                            setDeletesales(null);
-                        },
-                        });
-                    }
-                    handleDeleteSales(null);
-                    }}
-                >
-                    Konfirmasi
-                </Button>
-                <Button variant="outlined" onClick={() => handleDeleteSales(null)}>
-                Batal
-                </Button>
+                    <Button
+                        variant="gradient"
+                        color="red"
+                        onClick={async () => {
+                            if (deletesales) {
+                                await destroy(
+                                    route("sales.destroy", deletesales),
+                                    {
+                                        onSuccess: () => {
+                                            setIsShowAlert(true);
+                                            setDeletesales(null);
+                                        },
+                                    }
+                                );
+                            }
+                            handleDeleteSales(null);
+                        }}
+                    >
+                        Konfirmasi
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={() => handleDeleteSales(null)}
+                    >
+                        Batal
+                    </Button>
                 </DialogFooter>
             </Dialog>
             <Dialog
@@ -697,17 +703,16 @@ export default function Purchasing({ auth, saleOrders }) {
                                         index
                                     ) => {
                                         const isLast =
-                                            index ===
-                                            saleOrders?.length - 1;
+                                            index === saleOrders?.length - 1;
                                         const classes = isLast
                                             ? "p-4"
                                             : "p-4 border-blue-gray-50";
                                         const statusColors = {
-                                            'draft': 'grey',
-                                            'posted': 'green',
-                                            'pending': 'light-blue',
-                                            'canceled': 'red',
-                                        };    
+                                            draft: "grey",
+                                            posted: "green",
+                                            pending: "light-blue",
+                                            canceled: "red",
+                                        };
 
                                         return (
                                             <tr
@@ -791,7 +796,11 @@ export default function Purchasing({ auth, saleOrders }) {
                                                                 variant="ghost"
                                                                 size="sm"
                                                                 value={status}
-                                                                color={statusColors[status]}
+                                                                color={
+                                                                    statusColors[
+                                                                        status
+                                                                    ]
+                                                                }
                                                             />
                                                         </div>
                                                     </div>
@@ -802,8 +811,15 @@ export default function Purchasing({ auth, saleOrders }) {
                                                             className="static"
                                                             variant="ghost"
                                                             size="sm"
-                                                            value={payment_status}
-                                                            color={payment_status === 'paid' ? 'green' : 'red'}
+                                                            value={
+                                                                payment_status
+                                                            }
+                                                            color={
+                                                                payment_status ===
+                                                                "paid"
+                                                                    ? "green"
+                                                                    : "red"
+                                                            }
                                                         />
                                                     </div>
                                                 </td>
@@ -841,16 +857,23 @@ export default function Purchasing({ auth, saleOrders }) {
                                                                                 "sales.detail",
                                                                                 id
                                                                             ))
-                                                                        }
+                                                                    }
                                                                 >
                                                                     <EyeIcon className="w-5 h-5" />
-                                                                    Sales
-                                                                    Detail
+                                                                    Sales Detail
                                                                 </MenuItem>
-                                                                <MenuItem className="flex items-center gap-2">
+                                                                <MenuItem
+                                                                    className="flex items-center gap-2"
+                                                                    onClick={() =>
+                                                                        (window.location.href =
+                                                                            route(
+                                                                                "sales.edit",
+                                                                                id
+                                                                            ))
+                                                                    }
+                                                                >
                                                                     <PencilIcon className="w-5 h-5" />
-                                                                    Edit
-                                                                    Sales
+                                                                    Edit Sales
                                                                 </MenuItem>
                                                                 <MenuItem
                                                                     onClick={
@@ -875,8 +898,13 @@ export default function Purchasing({ auth, saleOrders }) {
                                                                     <ArrowDownTrayIcon className="w-5 h-5" />
                                                                     Download PDF
                                                                 </MenuItem>
-                                                                <MenuItem className="flex items-center gap-2 !text-white hover:!text-white !bg-red-500 hover:!bg-red-900"
-                                                                    onClick={() => handleDeleteSales(id)}
+                                                                <MenuItem
+                                                                    className="flex items-center gap-2 !text-white hover:!text-white !bg-red-500 hover:!bg-red-900"
+                                                                    onClick={() =>
+                                                                        handleDeleteSales(
+                                                                            id
+                                                                        )
+                                                                    }
                                                                 >
                                                                     <TrashIcon className="w-5 h-5 text-white" />
                                                                     Delete

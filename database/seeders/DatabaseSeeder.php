@@ -26,7 +26,9 @@ class DatabaseSeeder extends Seeder
             ChartOfAccountSeeder::class,
             JournalSeeder::class,
             VendorSeeder::class,
+            CustomerSeeder::class,
             BrandSeeder::class,
+            ProductSeeder::class,
             SettingSeeder::class,
         ]);
     }
