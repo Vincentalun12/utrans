@@ -874,17 +874,16 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
                                                     <div className="flex flex-col">
-                                                        <Typography
-                                                            variant="small"
-                                                            color={
-                                                                total_due ===
-                                                                "Rp. 0,000.00"
-                                                                    ? "blue-gray"
-                                                                    : "red"
-                                                            }
-                                                            className="font-normal"
+                                                    <Typography
+                                                        variant="small"
+                                                        color={
+                                                            total_paid === total_price
+                                                            ? "blue-gray"
+                                                            : "red"
+                                                        }
+                                                        className="font-normal"
                                                         >
-                                                            Rp{total_paid}
+                                                        Rp{total_paid}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -926,26 +925,21 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                     </div>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
-                                                    <Typography
-                                                        variant="small"
-                                                        color={
-                                                            total_due ===
-                                                            "Rp. 0,000.00"
-                                                                ? "green"
-                                                                : "red"
-                                                        }
-                                                        className="font-normal"
+                                                <Typography
+                                                    variant="small"
+                                                    color={
+                                                        `Rp ${total_due && Intl.NumberFormat("id").format(total_due)}` === "Rp 0"
+                                                        ? "green"
+                                                        : "red"
+                                                    }
+                                                    className="font-normal"
                                                     >
-                                                        {`
-                                                            Rp ${
-                                                                total_due &&
-                                                                Intl.NumberFormat(
-                                                                    "id"
-                                                                ).format(
-                                                                    total_due
-                                                                )
-                                                            }
-                                                        `}
+                                                    {`
+                                                        Rp ${
+                                                        total_due &&
+                                                        Intl.NumberFormat("id").format(total_due)
+                                                        }
+                                                    `}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">

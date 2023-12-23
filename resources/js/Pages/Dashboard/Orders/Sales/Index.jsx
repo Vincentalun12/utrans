@@ -789,6 +789,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                             customer,
                                             create_date,
                                             total_item,
+                                            total_price,
                                             total_paid,
                                             total_due,
                                             status,
@@ -863,7 +864,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        Rp{total_paid}
+                                                        Rp{total_price}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -878,7 +879,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                                             }
                                                             className="font-normal"
                                                         >
-                                                            Rp{total_due}
+                                                            Rp{total_paid}
                                                         </Typography>
                                                     </div>
                                                 </td>

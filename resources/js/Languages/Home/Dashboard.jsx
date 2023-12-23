@@ -3,7 +3,7 @@ import LocalizedStrings from "react-localization";
 let Language = new LocalizedStrings({
     id: {
         "purchasesdue": "Hutang Pembelian",
-        "salesdue": "Hutang Penjualan",
+        "salesdue": "Piutang Penjualan",
         "salesvalue": "Nilai Penjualan",
         "inventoryvalue": "Nilai Persediaan",
         "customers": "Pelanggan",
