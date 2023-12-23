@@ -25,6 +25,16 @@ class SaleOrder extends Model
         'user_id',
     ];
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function saleOrderLines()
+    {
+        return $this->hasMany(SaleOrderLine::class);
+    }
+
     public static function generateCode()
     {
         $lastSale = self::withTrashed()->orderBy('id', 'desc')->first();
@@ -41,13 +51,76 @@ class SaleOrder extends Model
         return $code;
     }
 
-    public function customer()
+    public static function deleteUnnecessarySaleOrderLine($id, $newItems)
     {
-        return $this->belongsTo(Customer::class);
-    }
+        $saleOrder = SaleOrder::find($id);
+        $saleOrderLines = SaleOrderLine::where('sale_order_id', $id)->get();
+        $setting = Setting::first();
 
-    public function saleOrderLines()
-    {
-        return $this->hasMany(SaleOrderLine::class);
+        $newItemIds = collect($newItems)->pluck('id')->toArray();
+        $oldItemIds = $saleOrderLines->pluck('id')->toArray();
+
+        $deleteItemIds = array_diff($oldItemIds, $newItemIds);
+
+        if (count($deleteItemIds) > 0) {
+            $createReturnSaleJournalEntry = JournalEntries::create([
+                'code' => JournalEntries::generateCode([
+                    'journal_id' => $setting->sales_journal_id,
+                ]),
+                'accounting_date' => date('Y-m-d'),
+                'reference' => "Sale Order - $saleOrder->code",
+                'status' => 'posted',
+                'journal_id' => $setting->sales_journal_id,
+                'purchase_order_id' => $saleOrder->id,
+            ]);
+
+            $createReturnStockValuationJournalEntry = JournalEntries::create([
+                'code' => JournalEntries::generateCode([
+                    'journal_id' => $setting->stock_valuation_journal_id,
+                ]),
+                'accounting_date' => date('Y-m-d'),
+                'reference' => "Stock Valuation - $saleOrder->code",
+                'status' => 'posted',
+                'journal_id' => $setting->stock_valuation_journal_id,
+                'purchase_order_id' => $saleOrder->id,
+            ]);
+        }
+
+        foreach ($saleOrderLines as $saleOrderLine) {
+            $product = Product::find($saleOrderLine->product_id);
+            $isSaleOrderLineExist = false;
+
+            foreach ($newItems as $newItem) {
+                if ($saleOrderLine->id == $newItem['id']) {
+                    $isSaleOrderLineExist = true;
+                }
+            }
+
+            if (!$isSaleOrderLineExist) {
+                JournalItem::create([
+                    'journal_entry_id' => $createReturnSaleJournalEntry->id,
+                    'chart_of_account_id' => $setting->account_receivable_id,
+                    'label' => $product->name,
+                    'debit' => 0,
+                    'credit' => $saleOrderLine->total,
+                    'balance' => -$saleOrderLine->total,
+                ]);
+
+                JournalItem::create([
+                    'journal_entry_id' => $createReturnStockValuationJournalEntry->id,
+                    'chart_of_account_id' => $setting->inventory_account_id,
+                    'label' => "Stock Valuation - $product->name",
+                    'debit' => $saleOrderLine->total,
+                    'credit' => 0,
+                    'balance' => $saleOrderLine->total,
+                ]);
+
+                Product::increaseStock($saleOrderLine->product_id, $saleOrderLine->quantity);
+                $saleOrderLine->delete();
+            }
+        }
+
+        ChartOfAccount::updateChartOfAccountBalance($setting->sales_account_id);
+        ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
     }
 }

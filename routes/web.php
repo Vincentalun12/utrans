@@ -109,6 +109,8 @@ Route::controller(SaleController::class)->group(function () {
         Route::get('/sales/detail/{id}', 'detail')->name('sales.detail');
         Route::get('/sales/create', 'create')->name('sales.create');
         Route::post('/sales/store', 'store')->name('sales.store');
+        Route::get('/sales/edit/{id}', 'edit')->name('sales.edit');
+        Route::patch('/sales/update/{id}', 'update')->name('sales.update');
         Route::delete('/sales/destroy/{id}', 'destroy')->name('sales.destroy');
     });
 });

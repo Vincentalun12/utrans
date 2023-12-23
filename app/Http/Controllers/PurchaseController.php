@@ -30,12 +30,12 @@ class PurchaseController extends Controller
     }
 
     public function purchaseOrderLines()
-        {
-            return $this->hasMany(PurchaseOrderLine::class, 'purchase_order_id');
-        }
+    {
+        return $this->hasMany(PurchaseOrderLine::class, 'purchase_order_id');
+    }
 
     public function detail($id)
-    {   
+    {
         $data = [
             'purchaseOrders' => PurchaseOrder::with(['vendor', 'purchaseOrderLines.product'])->find($id),
         ];
@@ -376,8 +376,8 @@ class PurchaseController extends Controller
                             'purchase_order_line_id' => $purchaseOrderLine->id,
                             'label' => $product->name,
                             'account_id' => $setting->account_payable_id,
-                            'debit' => 0,
-                            'credit' => $totalPriceDifference,
+                            'debit' => $totalPriceDifference,
+                            'credit' => 0,
                             'balance' => $totalPriceDifference
                         ]);
 
@@ -389,7 +389,7 @@ class PurchaseController extends Controller
                             'label' => $product->name . " - " . "Stock Valuation",
                             'debit' => 0,
                             'credit' => $totalPriceDifference,
-                            'balance' => $totalPriceDifference
+                            'balance' => -$totalPriceDifference
                         ]);
 
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_payable_id);
@@ -419,9 +419,9 @@ class PurchaseController extends Controller
                             'purchase_order_line_id' => $purchaseOrderLine->id,
                             'label' => $product->name,
                             'account_id' => $setting->account_payable_id,
-                            'debit' => $totalPriceDifference,
-                            'credit' => 0,
-                            'balance' => $totalPriceDifference
+                            'debit' => 0,
+                            'credit' => $totalPriceDifference,
+                            'balance' => -$totalPriceDifference
                         ]);
 
                         JournalItem::create([
@@ -478,9 +478,9 @@ class PurchaseController extends Controller
                         'purchase_order_line_id' => $createPurchaseOrderLine->id,
                         'label' => $product->name,
                         'account_id' => $setting->account_payable_id,
-                        'debit' => $totalPrice,
-                        'credit' => 0,
-                        'balance' => $totalPrice
+                        'debit' => 0,
+                        'credit' => $totalPrice,
+                        'balance' => -$totalPrice
                     ]);
 
                     JournalItem::create([

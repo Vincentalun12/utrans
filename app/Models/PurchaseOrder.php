@@ -112,7 +112,7 @@ class PurchaseOrder extends Model
                     'label' => "Stock Valuation - $product->name",
                     'debit' => 0,
                     'credit' => $purchaseOrderLine->total,
-                    'balance' => $purchaseOrderLine->total,
+                    'balance' => -$purchaseOrderLine->total,
                 ]);
 
                 Product::decreaseStock($purchaseOrderLine->product_id, $purchaseOrderLine->quantity);
