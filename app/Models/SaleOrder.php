@@ -106,13 +106,15 @@ class SaleOrder extends Model
                     'balance' => -$saleOrderLine->total,
                 ]);
 
+                $standardPrice = $product->standard_price * $saleOrderLine->quantity;
+
                 JournalItem::create([
                     'journal_entry_id' => $createReturnStockValuationJournalEntry->id,
                     'chart_of_account_id' => $setting->inventory_account_id,
                     'label' => "Stock Valuation - $product->name",
-                    'debit' => $saleOrderLine->total,
+                    'debit' => $standardPrice,
                     'credit' => 0,
-                    'balance' => $saleOrderLine->total,
+                    'balance' => $standardPrice,
                 ]);
 
                 Product::increaseStock($saleOrderLine->product_id, $saleOrderLine->quantity);

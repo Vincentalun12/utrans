@@ -77,7 +77,12 @@ export default function EditSaleOrder({
     saleOrder,
 }) {
     const { data, setData, patch, processing, errors, reset } = useForm({
-        customer_id: saleOrder.customer_id,
+        customer_id: {
+            value: saleOrder.customer_id,
+            label: customers.find(
+                (customer) => customer.id === saleOrder.customer_id
+            ).name,
+        },
         reference: saleOrder.reference,
         status: saleOrder.status,
         create_date: format(new Date(saleOrder.create_date), "dd-MM-yyyy"),
@@ -85,28 +90,23 @@ export default function EditSaleOrder({
 
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [date, setDate] = useState(new Date());
-    const [customerOptions, setCustomerOptions] = useState([]);
-    const [productOptions, setProductOptions] = useState([]);
-    console.log(saleOrder);
+    const [customerOptions, setCustomerOptions] = useState(
+        customers.map((customer) => ({
+            value: customer.id,
+            label: customer.name,
+            code: customer.code,
+        }))
+    );
 
-    useEffect(() => {
-        setCustomerOptions(
-            customers.map((customer) => ({
-                value: customer.id,
-                label: customer.name,
-                code: customer.code,
-                quantity: 0,
-                price: customer.price,
-            }))
-        );
-
-        setProductOptions(
-            products.map((product) => ({
-                value: product.id,
-                label: product.name,
-            }))
-        );
-    }, []);
+    const [productOptions, setProductOptions] = useState(
+        products.map((product) => ({
+            value: product.id,
+            label: product.name,
+            code: product.code,
+            quantity: 0,
+            price: product.price,
+        }))
+    );
 
     const [listProduct, setListProduct] = useState(
         saleOrder.sale_order_lines.map((product) => ({
@@ -202,7 +202,10 @@ export default function EditSaleOrder({
                                 <label className="">Customer</label>
                                 <ReactSelect
                                     options={customerOptions}
-                                    value={data.customer_id}
+                                    value={{
+                                        value: data.customer_id.value,
+                                        label: data.customer_id.label,
+                                    }}
                                     onChange={(value) => {
                                         setData("customer_id", value);
                                     }}

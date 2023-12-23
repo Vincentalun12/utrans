@@ -244,6 +244,24 @@ class SaleController extends Controller
 
     public function edit($id)
     {
+        $saleOrder = SaleOrder::find($id);
+
+        if ($saleOrder->total_due == 0) {
+            return redirect()->back()->with([
+                'message' => [
+                    'type' => 'error',
+                    'content' => "You can't edit paid sale order"
+                ]
+            ]);
+        } else if ($saleOrder->total_paid > 0) {
+            return redirect()->back()->with([
+                'message' => [
+                    'type' => 'error',
+                    'content' => "You can't edit sale order that already has payment"
+                ]
+            ]);
+        }
+
         $data = [
             'saleOrder' => SaleOrder::with(['customer', 'saleOrderLines.product'])->find($id),
             'customers' => Customer::all(),
