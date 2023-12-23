@@ -118,6 +118,10 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
 
     const [paymentoptions, setPaymentoptions] = useState([]);
 
+    const handleClosePayment = () => {
+        setOpenPayment(false);
+    };
+
     useEffect(() => {
         setPaymentoptions(
             journals
@@ -562,7 +566,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                         <Button type="submit" variant="gradient" color="green">
                             Submit
                         </Button>
-                        <Button variant="outlined" onClick={handleOpenPayment}>
+                        <Button variant="outlined" onClick={handleClosePayment}>
                             Cancel
                         </Button>
                     </DialogFooter>

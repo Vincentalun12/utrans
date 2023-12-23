@@ -182,6 +182,10 @@ export default function Purchasing({ auth, saleOrders, journals }) {
 
     const { flash } = usePage().props;
 
+    const handleClosePayment = () => {
+        setOpenPayment(false);
+    };
+
     const [isShowAlert, setIsShowAlert] = useState(false);
 
     useEffect(() => {
@@ -558,7 +562,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                         <Button type="submit" variant="gradient" color="green">
                             Submit
                         </Button>
-                        <Button variant="outlined" onClick={handleOpenPayment}>
+                        <Button variant="outlined" onClick={handleClosePayment}>
                             Cancel
                         </Button>
                     </DialogFooter>
