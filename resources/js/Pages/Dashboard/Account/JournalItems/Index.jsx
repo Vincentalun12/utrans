@@ -264,7 +264,7 @@ export default function JournalItems({ auth, journalitems }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            Rp {debit}
+                                                            Rp {parseFloat(debit).toLocaleString('id-ID')}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -275,7 +275,7 @@ export default function JournalItems({ auth, journalitems }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            Rp {credit}
+                                                            Rp {parseFloat(credit).toLocaleString('id-ID')}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -286,7 +286,7 @@ export default function JournalItems({ auth, journalitems }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            Rp {balance}
+                                                            Rp {parseFloat(balance).toLocaleString('id-ID')}
                                                         </Typography>
                                                     </div>
                                                 </td>
