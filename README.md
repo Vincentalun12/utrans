@@ -1,66 +1,109 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://media.discordapp.net/attachments/1150374149236195388/1187767255354843226/Utrans2.png?ex=65981575&is=6585a075&hm=cf0bf1945abf9808fd7467cc4bfbba681c238c505831df9e7a4dcbd0e7381556&=&format=webp&quality=lossless&width=1087&height=249" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# 📦 Apa itu Utrans?
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Utrans, website ERP yang dirancang khusus untuk membantu bisnis kecil dan menengah dalam mengelola operasional mereka dengan lebih efisien. Utrans menyediakan platform yang user-friendly dan terintegrasi untuk mengatasi berbagai aspek bisnis, mulai dari keuangan hingga manajemen inventaris.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🔥 Keunggulan
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Keamanan Data
+- Multi Platform
+- Akuntansi Lengkap + Bisa disesuaikan
+- Ekspor Data & Print
+- Mudah Digunakan
+- Mendukung 2 Bahasa (Inggris & Indonesia)
+- Dashboard Intuitif
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📸 Preview
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+![Screenshot 1](https://media.discordapp.net/attachments/1150374149236195388/1187799656139329628/image.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+![Screenshot 2](https://media.discordapp.net/attachments/1150374149236195388/1187796961194147930/image.png)
 
-## Laravel Sponsors
+![Screenshot 3](https://media.discordapp.net/attachments/1150374149236195388/1187799291939520542/image.png)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+## 🧶 Komponen yang dibutuhkan
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Sistem ini dirancang dengan komposisi 80% React (JavaScript) dan 20% PHP
 
-## Contributing
+- PHP 8.2.0 atau terbaru
+- Git - Agar dapar clone project ini [(https://git-scm.com/downloads)](https://git-scm.com/downloads) - **atau** [GitHub Desktop](https://desktop.github.com/)
+- Localhost Software seperti [XAMPP](https://www.apachefriends.org/download.html) atau [Laragon](https://laragon.org/download/index.html) (Direkomendasikan [Laragon](https://laragon.org/download/index.html) karena kami menggunakannya) 
+- Node.js (v18.18.0+) [(https://nodejs.org/en)](https://nodejs.org/en)
+- Composer (v2.5.4+) [(https://getcomposer.org/download/)](https://getcomposer.org/download/)
+- Code Editor (Direkomendasikan: [Visual Studio Code](https://code.visualstudio.com/download))
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🪛 Petunjuk Instalasi
 
-## Code of Conduct
+Sebelum memulai, pastikan database MySQL & Apache sudah terinstall dan dijalankan.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Jalankan aplikasi localhost (XAMPP, Laragon, dsb). Sesuaikan port database yaitu 3306 dan localhost secara default.
+2. Pergi ke directory yang diinginkan untuk menyimpan project ini.
+3. Ketika sudah berada di folder yang di inginkan, jalankan command dibawah ini:
+```http
+git clone https://github.com/Vincentalun12/utrans.git
+```
+4. Setalah clone berhasil, buka Code Editor dan open folder repository yang telah di clone, lalu buka Terminal.
 
-## Security Vulnerabilities
+Jalankan command dibawah ini untuk menginstall composer yang digunakan di repository:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+LAKUKAN INI TERLEBIH DAHULU JIKA COMPOSER BELUM PERNAH DI INSTALL
+```http
+composer install
+```
+```http
+composer update
+```
 
-## License
+Jalankan 2 command instalasi NPM package untuk menginstall komponen library Javascript yang digunakan di repository:
+```http
+npm update
+```
+```http
+npm install
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Jalankan command untuk melakukan database seeding dan migration untuk melakukan instalasi database ke MySQL
+```http
+php artisan migrate:fresh --seed
+```
+
+5. Ketika semua berhasil, jalankan 2 command dibawah ini dengan 2 terminal yang berbeda:
+
+Terminal 1
+```http
+npm run dev
+```
+
+Terminal 2
+```http
+php artisan serve
+```
+
+6. Jika semua step dilakukan dengan benar, maka anda sudah berhasil untuk menjalankan projek ini
+
+Untuk mengunjungi website localhost bisa langsung ke URL:
+```http
+http://127.0.0.1:8000
+```
+
+7. Selesai! Anda sudah bisa login dengan username dan password default kami yaitu
+
+Username:
+
+
+Password:
+
+## 💎 Kelompok QWER
+
+- [@Vincentalun12](https://github.com/Vincentalun12) - Vincent [Frontend Designer]
+- [@jupitvq](https://github.com/jupitvq) - Jupiter - [Frontend & Backend Programmer]
+- [@Hernando17](https://github.com/Hernando17) - Hernando - [Heavy Backend Programmer]
+- Jonathan
+- Evelyne
