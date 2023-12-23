@@ -23,7 +23,7 @@ class PurchaseController extends Controller
     {
         $data = [
             'purchaseOrders' => PurchaseOrder::with(['vendor'])->get(),
-            'journals' => Journal::all(),
+            'journals' => Journal::with(['chart_of_account'])->get(),
         ];
 
         return Inertia::render('Dashboard/Orders/Purchases/Index', $data);
@@ -58,6 +58,22 @@ class PurchaseController extends Controller
         $purchasesorder = PurchaseOrder::find($id);
         $journalEntries = JournalEntries::where('purchase_order_id', $id)->get();
         $purchaseorderline = PurchaseOrderLine::where('purchase_order_id', $id)->get();
+
+        if ($purchasesorder->total_due == 0) {
+            return redirect()->back()->with([
+                'message' => [
+                    'type' => 'error',
+                    'content' => "Purchase order has been paid!"
+                ]
+            ]);
+        } else if ($purchasesorder->total_paid > 0) {
+            return redirect()->back()->with([
+                'message' => [
+                    'type' => 'error',
+                    'content' => "Purchase order already has payment!"
+                ]
+            ]);
+        }
 
         try {
             DB::beginTransaction();

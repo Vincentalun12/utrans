@@ -28,6 +28,49 @@ class PaymentController extends Controller
 
         try {
             DB::beginTransaction();
+            $paymentJournal = Journal::find($request->journal_id);
+            $paymentAccount = ChartOfAccount::find($paymentJournal->chart_of_account_id);
+
+            $purchaseOrder = PurchaseOrder::find($request->purchase_order_id);
+
+            if ($paymentAccount->balance < $request->amount) {
+                return redirect()->back()->with([
+                    'message' => [
+                        'type' => 'error',
+                        'content' => "$paymentAccount->account_name balance is not enough!"
+                    ]
+                ]);
+            } else if ($purchaseOrder->total_due <= 0) {
+                return redirect()->back()->with([
+                    'message' => [
+                        'type' => 'error',
+                        'content' => 'Purchase order has been paid!'
+                    ]
+                ]);
+            } else if ($request->amount > $purchaseOrder->total_due) {
+                return redirect()->back()->with([
+                    'message' => [
+                        'type' => 'error',
+                        'content' => 'Amount cannot be greater than total due!'
+                    ]
+                ]);
+            } else if ($request->amount >= $purchaseOrder->total_due) {
+                $purchaseOrder->total_paid += $request->amount;
+                $purchaseOrder->total_due -= $request->amount;
+                $purchaseOrder->payment_status = 'paid';
+                $purchaseOrder->save();
+            } else {
+                if ($purchaseOrder->total_paid + $request->amount == 0) {
+                    $purchaseOrder->payment_status = 'paid';
+                } else {
+                    $purchaseOrder->payment_status = 'due';
+                }
+
+                $purchaseOrder->total_paid += $request->amount;
+                $purchaseOrder->total_due -= $request->amount;
+                $purchaseOrder->save();
+            }
+
             $payment = Payment::create([
                 'journal_id' => $request->journal_id,
                 'date' => Date::parse($request->date)->format('Y-m-d'),
@@ -35,8 +78,6 @@ class PaymentController extends Controller
                 'notes' => $request->notes,
                 'amount' => $request->amount,
             ]);
-
-            $paymentJournal = Journal::find($request->journal_id);
 
             $journalEntryGenerateCode = JournalEntries::generateCode([
                 'journal_id' => $request->journal_id,
@@ -70,32 +111,18 @@ class PaymentController extends Controller
                 'balance' => -$request->amount,
             ]);
 
-            $purchaseOrder = PurchaseOrder::find($request->purchase_order_id);
-
-            if ($purchaseOrder->total_due == $request->amount) {
-                $purchaseOrder->total_paid += $request->amount;
-                $purchaseOrder->total_due -= $request->amount;
-                $purchaseOrder->payment_status = 'paid';
-                $purchaseOrder->save();
-            } else {
-                if ($purchaseOrder->total_paid + $request->amount == 0) {
-                    $purchaseOrder->payment_status = 'paid';
-                } else {
-                    $purchaseOrder->payment_status = 'due';
-                }
-
-                $purchaseOrder->total_paid += $request->amount;
-                $purchaseOrder->total_due -= $request->amount;
-                $purchaseOrder->save();
-            }
-
             ChartOfAccount::updateChartOfAccountBalance($setting->account_payable_id);
             ChartOfAccount::updateChartOfAccountBalance($paymentJournal->chart_of_account_id);
 
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with([
+                'message' => [
+                    'type' => 'error',
+                    'content' => 'Failed to register payment!'
+                ]
+            ]);
         }
 
         return redirect()->route('purchases')->with([

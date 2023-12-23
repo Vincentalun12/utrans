@@ -36,6 +36,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 import {
+    Alert,
     Card,
     CardHeader,
     Input,
@@ -99,16 +100,38 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
     const [sortdirection, setsortdirection] = useState(null);
     const [searchbar, setsearchbar] = useState("");
 
+    const { flash } = usePage().props;
+
+    const [isShowAlert, setIsShowAlert] = useState(false);
+
+    const [deleteProductId, setDeleteProductId] = useState(null);
+
+    useEffect(() => {
+        if (flash.message) {
+            setIsShowAlert(true);
+            setTimeout(() => {
+                setIsShowAlert(false);
+                flash.message = null;
+            }, 3000);
+        }
+    }, [isShowAlert]);
+
     const [paymentoptions, setPaymentoptions] = useState([]);
 
     useEffect(() => {
+        console.log(journals);
         setPaymentoptions(
-            journals.map((journal) => ({
-                value: journal.id,
-                label: journal.journal_name,
-            }))
+            journals
+                .filter(
+                    (journal) =>
+                        journal.chart_of_account?.account_type ==
+                        "bank_and_cash"
+                )
+                .map((journal) => ({
+                    value: journal.id,
+                    label: journal.journal_name,
+                }))
         );
-        console.log(paymentoptions);
     }, []);
 
     useEffect(() => {
@@ -174,8 +197,6 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
         }
     };
 
-    const { flash } = usePage().props;
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(!open);
 
@@ -220,6 +241,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                 reset();
                 setOpenPayment(false);
                 setPurchaseId(null);
+                setIsShowAlert(true);
             },
         });
     };
@@ -236,6 +258,14 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
     return (
         <PurchasingLayout user={auth.user}>
             <Head title="Purchases" />
+            <Alert
+                className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
+                color={flash.message?.type == "success" ? "green" : "red"}
+                open={isShowAlert}
+                // icon={<Icon />}
+            >
+                {flash.message?.content}
+            </Alert>
             <Dialog open={deleteOpen} size="sm" onClose={handleDeletePurchases}>
                 <DialogHeader>
                     <Typography variant="h5">Notifikasi</Typography>
@@ -300,6 +330,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                     * Select your payment type
                                 </div>
                                 <Select
+                                    required={true}
                                     options={paymentoptions}
                                     value={{
                                         value: data.journal_id,
@@ -338,6 +369,11 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                         }),
                                     }}
                                 />
+                                {errors.journal_id && (
+                                    <p className="text-red-500 text-sm">
+                                        {errors.journal_id}
+                                    </p>
+                                )}
                             </div>
                             <div className="col-span-2 lg:col-span-1">
                                 <label className="">Payment Date</label>
@@ -347,6 +383,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                 <Popover placement="bottom" trigger="click">
                                     <PopoverHandler>
                                         <Input
+                                            required={true}
                                             type="text"
                                             placeholder="2023-05-12"
                                             icon={<CalendarDaysIcon />}
@@ -367,7 +404,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                             className="  placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                                             labelProps={{
                                                 className:
-                                                    "before:content-none after:content-none",
+                                                    "before:content-none after:content-none hidden",
                                             }}
                                         />
                                     </PopoverHandler>
@@ -433,6 +470,11 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                         />
                                     </PopoverContent>
                                 </Popover>
+                                {errors.date && (
+                                    <p className="text-red-500 text-sm">
+                                        {errors.date}
+                                    </p>
+                                )}
                             </div>
                             <div className="2xl:col-span-2 col-span-2">
                                 <label className="">Paying Amount</label>
@@ -450,6 +492,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                     </Button>
                                     <div className="relative flex-grow">
                                         <Input
+                                            required={true}
                                             type="number"
                                             value={data.amount}
                                             onChange={(e) => {
@@ -461,9 +504,14 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                             className="placeholder:text-gray-600 rounded-tl-none rounded-bl-none placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                                             labelProps={{
                                                 className:
-                                                    "before:content-none after:content-none",
+                                                    "before:content-none after:content-none hidden",
                                             }}
                                         />
+                                        {errors.amount && (
+                                            <p className="text-red-500 text-sm">
+                                                {errors.amount}
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                             </div>
