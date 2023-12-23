@@ -493,13 +493,6 @@ const MyDocument = ({ data }) => (
                                                     }
                                                 </PDFDownloadLink>
                                             </MenuItem>
-                                            <MenuItem className="flex items-center gap-2">
-                                                <DocumentChartBarIcon
-                                                    className="w-5 h-5"
-                                                    stroke="green"
-                                                />
-                                                {Language.export.csv}
-                                            </MenuItem>
                                         </MenuList>
                                     </Menu>
                                 </div>

@@ -31,9 +31,13 @@ import {
   PlusCircleIcon,
   CalendarDaysIcon,
   DocumentTextIcon,
+} from "@heroicons/react/24/solid";
+
+import {
   DocumentArrowDownIcon,
   DocumentChartBarIcon,
-} from "@heroicons/react/24/solid";
+}
+from "@heroicons/react/24/outline";
 
 export default function Balancesheet({ auth, coa }) {
 
@@ -425,13 +429,6 @@ const currentAssetsAccountNames = coa
                           loading ? 'Loading document...' : `${Language.export.pdf}`
                         }
                       </PDFDownloadLink>
-                    </MenuItem>
-                    <MenuItem className="flex items-center gap-2">
-                      <DocumentChartBarIcon
-                        className="w-5 h-5"
-                        stroke="green"
-                      />
-                      {Language.export.csv}
                     </MenuItem>
                   </MenuList>
                 </Menu>

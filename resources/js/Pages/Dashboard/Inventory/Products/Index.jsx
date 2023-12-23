@@ -620,13 +620,6 @@ export default function Inventory({ auth, products }) {
                                                     }
                                                 </PDFDownloadLink>
                                             </MenuItem>
-                                            <MenuItem className="flex items-center gap-2">
-                                                <DocumentChartBarIcon
-                                                    className="w-5 h-5"
-                                                    stroke="green"
-                                                />
-                                                Export as CSV
-                                            </MenuItem>
                                         </MenuList>
                                     </Menu>
                                 </div>
