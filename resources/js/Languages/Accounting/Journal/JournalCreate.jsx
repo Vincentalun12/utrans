@@ -29,11 +29,11 @@ let Language = new LocalizedStrings({
         "title": "Create Custom Journal",
         "description": "Create your custom journal data. Please do not change the data if it is not necessary.",
         "accounttype": {
-            "name": "Account Type",
+            "name": "Journal Type",
             "description": "Select the account type from below",
         },
         "chartofaccounttype": {
-            "name": "Chart of Account Type",
+            "name": "Chart of Account",
             "description": "Select the chart of account type from below",
         },
         "journalname": {

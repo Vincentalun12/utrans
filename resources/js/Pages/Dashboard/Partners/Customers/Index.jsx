@@ -66,7 +66,7 @@ export default function Customer({ auth, customers }) {
         { display: Language.tableheader.name, field: "Name" },
         { display: Language.tableheader.address, field: "Address" },
         { display: Language.tableheader.phone, field: "Phone" },
-        { display: Language.tableheader.action, field: "Action" },
+        { display: Language.tableheader.Action, field: "Action" },
       ];
 
 

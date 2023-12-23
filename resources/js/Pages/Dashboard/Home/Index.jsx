@@ -49,6 +49,7 @@ const chartConfig = {
         {
             name: "Sales",
             data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+            //data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
         },
     ],
     options: {
@@ -499,7 +500,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                         <>
                                             <ArrowUpIcon className="h-5 w-5 text-green-500" />
                                             <Typography variant="body2" color="green">
-                                                {profitPercentage}%
+                                                {isNaN(profitPercentage) ? '0' : profitPercentage}%
                                             </Typography>
                                         </>
                                     )}
