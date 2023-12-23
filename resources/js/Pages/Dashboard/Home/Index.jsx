@@ -42,13 +42,26 @@ import {
     IconButton,
 } from "@material-tailwind/react";
 
+const TABLE_HEAD = [Language.tableheader.no, Language.tableheader.name, Language.tableheader.stock, Language.tableheader.price, ""];
+
+export default function Dashboard({ auth, customers, vendors, products, brands, purchase_orders, sale_orders, users, chart_of_accounts}) {
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const salesByMonth = new Array(12).fill(0);
+
+    sale_orders.forEach((order) => {
+        const month = new Date(order.created_at).getUTCMonth();
+        salesByMonth[month] += 1;
+      });
+    
 const chartConfig = {
     type: "bar",
     height: "450",
     series: [
         {
             name: "Sales",
-            data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+            data: salesByMonth,
             //data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
         },
     ],
@@ -73,31 +86,21 @@ const chartConfig = {
         },
         xaxis: {
             axisTicks: {
-                show: false,
+              show: false,
             },
             axisBorder: {
-                show: false,
+              show: false,
             },
             labels: {
-                style: {
-                    colors: "#616161",
-                    fontSize: "12px",
-                    fontFamily: "inherit",
-                    fontWeight: 400,
-                },
+              style: {
+                colors: "#616161",
+                fontSize: "12px",
+                fontFamily: "inherit",
+                fontWeight: 400,
+              },
             },
-            categories: [
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-            ],
-        },
+            categories: months, // corrected line
+          },
         yaxis: {
             labels: {
                 style: {
@@ -131,17 +134,12 @@ const chartConfig = {
     },
 };
 
-const TABLE_HEAD = [Language.tableheader.no, Language.tableheader.name, Language.tableheader.stock, Language.tableheader.price, ""];
-
-export default function Dashboard({ auth, customers, vendors, products, brands, purchase_orders, sale_orders, users, chart_of_accounts}) {
 
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
     
     useEffect(() => {
         Language.setLanguage(selectedLanguage);
     }, [selectedLanguage]);
-
-    console.log(sale_orders)
 
     const sortedProducts = products.sort((a, b) => b.id - a.id);
     const newestProducts = sortedProducts.slice(0, 5);
@@ -157,12 +155,17 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
     const todayTotalSales = todaySales.reduce((total, order) => total + parseFloat(order.total_price), 0);
     const yesterdayTotalSales = yesterdaySales.reduce((total, order) => total + parseFloat(order.total_price), 0);
 
-    let salesPercentage = 0;
-        if (yesterdayTotalSales > 0) {
-            salesPercentage = ((todayTotalSales - yesterdayTotalSales) / yesterdayTotalSales) * 100;
-        } else if (todayTotalSales > 0) {
-            salesPercentage = 100;
+    let salesPercentage;
+
+
+    if (yesterdayTotalSales === 0) {
+        salesPercentage = todayTotalSales > 0 ? 100 : 0;
+      } else {
+        salesPercentage = ((todayTotalSales - yesterdayTotalSales) / yesterdayTotalSales) * 100;
+        if (!isFinite(salesPercentage)) {
+          salesPercentage = 100;
         }
+      }
 
     const productsToday = products.filter(product => new Date(product.created_at).setHours(0,0,0,0) === today.getTime());
 
@@ -313,20 +316,20 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                     </div>
                                 </div>
                                 <div className="flex items-center">
-                                    {salesPercentage < 0 ? (
-                                        <>
-                                            <ArrowDownIcon className="h-5 w-5 text-red-500" />
-                                            <Typography variant="body2" color="red">
-                                                {Math.abs(salesPercentage)}%
-                                            </Typography>
-                                        </>
+                                {salesPercentage < 0 ? (
+                                    <>
+                                        <ArrowDownIcon className="h-5 w-5 text-red-500" />
+                                        <Typography variant="body2" color="red">
+                                        {Math.round(Math.abs(salesPercentage))}%
+                                        </Typography>
+                                    </>
                                     ) : (
-                                        <>
-                                            <ArrowUpIcon className="h-5 w-5 text-green-500" />
-                                            <Typography variant="body2" color="green">
-                                                {salesPercentage}%
-                                            </Typography>
-                                        </>
+                                    <>
+                                        <ArrowUpIcon className="h-5 w-5 text-green-500" />
+                                        <Typography variant="body2" color="green">
+                                        {Math.round(salesPercentage)}%
+                                        </Typography>
+                                    </>
                                     )}
                                 </div>
                             </CardHeader>
@@ -443,20 +446,20 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                     </div>
                                 </div>
                                 <div className="flex items-center">
-                                    {purchasePercentage < 0 ? (
-                                        <>
-                                            <ArrowDownIcon className="h-5 w-5 text-red-500" />
-                                            <Typography variant="body2" color="red">
-                                                {Math.abs(purchasePercentage)}%
-                                            </Typography>
-                                        </>
+                                {purchasePercentage < 0 ? (
+                                    <>
+                                        <ArrowDownIcon className="h-5 w-5 text-red-500" />
+                                        <Typography variant="body2" color="red">
+                                        {Math.round(Math.abs(purchasePercentage))}%
+                                        </Typography>
+                                    </>
                                     ) : (
-                                        <>
-                                            <ArrowUpIcon className="h-5 w-5 text-green-500" />
-                                            <Typography variant="body2" color="green">
-                                                {purchasePercentage}%
-                                            </Typography>
-                                        </>
+                                    <>
+                                        <ArrowUpIcon className="h-5 w-5 text-green-500" />
+                                        <Typography variant="body2" color="green">
+                                        {Math.round(purchasePercentage)}%
+                                        </Typography>
+                                    </>
                                     )}
                                 </div>
                             </CardHeader>
@@ -489,21 +492,21 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                     </div>
                                 </div>
                                 <div className="flex items-center">
-                                    {profitPercentage < 0 ? (
+                                {profitPercentage < 0 ? (
                                         <>
                                             <ArrowDownIcon className="h-5 w-5 text-red-500" />
                                             <Typography variant="body2" color="red">
-                                                {Math.abs(profitPercentage)}%
+                                            {Math.round(Math.abs(profitPercentage))}%
                                             </Typography>
                                         </>
-                                    ) : (
+                                        ) : (
                                         <>
                                             <ArrowUpIcon className="h-5 w-5 text-green-500" />
                                             <Typography variant="body2" color="green">
-                                                {isNaN(profitPercentage) ? '0' : profitPercentage}%
+                                            {Math.round(profitPercentage)}%
                                             </Typography>
                                         </>
-                                    )}
+                                        )}
                                 </div>
                             </CardHeader>
                         </Card>
@@ -536,7 +539,7 @@ export default function Dashboard({ auth, customers, vendors, products, brands, 
                                 </div>
                             </CardHeader>
                             <CardBody className="px-2 pb-0">
-                                <Chart {...chartConfig} />
+                                <Chart options={chartConfig.options} series={chartConfig.series} type="bar" height={350} />
                             </CardBody>
                         </Card>
 
