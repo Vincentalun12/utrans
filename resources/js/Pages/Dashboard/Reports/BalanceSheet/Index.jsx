@@ -1,6 +1,7 @@
-import { useState } from "react";
 import BalancesheetLayout from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
+import { Language } from "@/Languages/Reports/BalanceSheet";
+import React, {useEffect, useState} from "react";
 import {
   Card,
   Typography,
@@ -17,7 +18,6 @@ import {
 
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { Batamwater } from '@/Assets';
-import { Language } from '@/Languages/Inventory/Brand/BrandIndex';
 
 import {
   PencilSquareIcon,
@@ -40,6 +40,12 @@ import {
 from "@heroicons/react/24/outline";
 
 export default function Balancesheet({ auth, coa }) {
+
+  const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
 
 const currentAssetsAccountNames = coa
   .filter(account => account.account_type === 'current_assets')
@@ -289,7 +295,7 @@ const currentAssetsAccountNames = coa
                 <View style={styles.titleContainer}>
                     <View style={styles.spaceBetween}>
                 <Image src={Batamwater} style={styles.image} />
-                    <Text style={styles.title}>Balance Sheet</Text>
+                    <Text style={styles.title}>{Language.header.title}</Text>
                     </View>
                 </View>
                     <Text style={styles.dateTime}>
@@ -301,7 +307,7 @@ const currentAssetsAccountNames = coa
                     <View style={styles.table}>
                         <View style={styles.tableRow}>
                             <View style={styles.tableColHeader}>
-                                <Text style={styles.tableCellHeader}>ASSETS</Text>
+                                <Text style={styles.tableCellHeader}>{Language.assets.title}</Text>
                             </View>
                             <View style={[styles.tableColHeader2]}>
                                 <Text style={styles.tableCellHeader}>{grandTotalBalanceFormatted},00</Text>
@@ -309,22 +315,22 @@ const currentAssetsAccountNames = coa
                         </View>
                         <View style={styles.tableRow}>
                             <View style={styles.tableCol}>
-                                <Text style={styles.tableCell}>Current Assets</Text>
-                                <Text style={styles.tableCelltab}>Bank And Cash Accounts</Text>
+                                <Text style={styles.tableCell}>{Language.assets.title}</Text>
+                                <Text style={styles.tableCelltab}>{Language.assets.bankandcashaccounts}</Text>
                                 {BankAndCashAccountNames.map((account, index) => (
                                 <View key={index}>
                                     <Text style={styles.tableCelltab3}>{account.code} {account.name}</Text>
                                 </View>
                             ))}
-                                <Text style={styles.tableCelltab}>Current Assets</Text>
+                                <Text style={styles.tableCelltab}>{Language.assets.currentassets}</Text>
                                 {currentAssetsAccountNames.map((account, index) => (
                                 <View key={index}>
                                     <Text style={styles.tableCelltab3}>{account.code} {account.name}</Text>
                                 </View>
                             ))}
-                                <Text style={styles.tableCell}>Plus fixed Assets</Text>
-                                <Text style={styles.tableCelllast}>Plus Non-current Assets</Text>
-                                <Text style={styles.tableCellBold}>Total Assets</Text>
+                                <Text style={styles.tableCell}>{Language.assets.plusfixedassets}</Text>
+                                <Text style={styles.tableCelllast}>{Language.assets.plusnoncurrentassets}</Text>
+                                <Text style={styles.tableCellBold}>{Language.assets.totalassets}</Text>
 
                             </View>
                             <View style={styles.tableCol2}>
@@ -350,7 +356,7 @@ const currentAssetsAccountNames = coa
                 <View style={styles.table}>
                         <View style={styles.tableRow}>
                             <View style={styles.tableColHeader}>
-                                <Text style={styles.tableCellHeader}>LIABILITES</Text>
+                                <Text style={styles.tableCellHeader}>{Language.liabilities.title}</Text>
                             </View>
                             <View style={[styles.tableColHeader2]}>
                                 <Text style={styles.tableCellHeader}>Rp {grandTotalBalanceFormatted2},00</Text>
@@ -358,16 +364,16 @@ const currentAssetsAccountNames = coa
                         </View>
                         <View style={styles.tableRow}>
                             <View style={styles.tableCol}>
-                                <Text style={styles.tableCell}>Current Liabilities</Text>
-                                <Text style={styles.tableCelltab}>Current Liabilities</Text>
-                                <Text style={styles.tableCelltab}>Payables</Text>
+                                <Text style={styles.tableCell}>{Language.liabilities.currentliabilities}s</Text>
+                                <Text style={styles.tableCelltab}>{Language.liabilities.currentliabilities}</Text>
+                                <Text style={styles.tableCelltab}>{Language.liabilities.payables}</Text>
                                 {liabilityAccountNames.map((account, index) => (
                                 <View key={index}>
                                     <Text style={styles.tableCelltab3}>{account.code} {account.name}</Text>
                                 </View>
                             ))}
-                                <Text style={styles.tableCelllast}>Plus Non-current Liabilities</Text>
-                                <Text style={styles.tableCellBold}>Total Liabilities</Text>
+                                <Text style={styles.tableCelllast}>{Language.liabilities.plusnoncurrentliabilities}</Text>
+                                <Text style={styles.tableCellBold}>{Language.liabilities.totalliabilities}</Text>
 
                             </View>
                             <View style={styles.tableCol2}>
@@ -399,10 +405,10 @@ const currentAssetsAccountNames = coa
               <div className="bg-white overflow-hidden shadow-sm rounded-lg sm:rounded-lg">
                 <div className="p-6 text-gray-900">
                   <Typography variant="h4" className="text-ungukita" textGradient>
-                    Balance Sheet
+                    {Language.header.title}
                   </Typography>
                   <Typography variant="paragraph">
-                    Manage your balance sheet reports here
+                    {Language.header.subtitle}
                   </Typography>
                 </div>
               </div>
@@ -411,7 +417,7 @@ const currentAssetsAccountNames = coa
             <div className="p-4 pt-5 flex justify-between">
               <div className="flex">
                 <CalendarDaysIcon className="w-6 h-6 text-black" />
-                <span className="text-black font-bold mx-1">Date :</span>
+                <span className="text-black font-bold mx-1">{Language.date}: </span>
                 <span className="">{new Date().toLocaleDateString()}</span>
               </div>
               <div className="md:flex hidden justify-end">
@@ -439,24 +445,24 @@ const currentAssetsAccountNames = coa
             <div className="p-4">
               <div className="flex justify-between">
                 <Typography variant="small" color="black" className="w-full text-right">
-                  Balance
+                  {Language.balance}
                 </Typography>
               </div>
               <div className="flex justify-between">
                 <Typography variant="h6" color="black" className="border-b border-black w-full pt-2">
-                  ASSETS
+                  {Language.assets.title}
                 </Typography>
                 <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
                   Rp {grandTotalBalanceFormatted},00
                 </Typography>
               </div>
               <div className="flex-inline justify-between">
-                <p className="border-b w-full border-gray-400">Current Assets</p>
+                <p className="border-b w-full border-gray-400">{Language.assets.currentassets}</p>
                 <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsBank}>
                     <div className="flex">
                       {isOpenBank ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
-                      <span>Bank and Cash Accounts</span>
+                      <span>{Language.assets.bankandcashaccounts}</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances2},00</span>
                     </div>
                   </summary>
@@ -475,7 +481,7 @@ const currentAssetsAccountNames = coa
                   <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsCurrentAssets}>
                     <div className="flex">
                       {isOpenCurrentAssets ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
-                      <span>Current Assets</span>
+                      <span>{Language.assets.currentassets}</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances},00</span>
                     </div>
                   </summary>
@@ -490,8 +496,8 @@ const currentAssetsAccountNames = coa
                       </details>
                   ))}
                 </details>
-                <p className="border-b w-full border-gray-400">Plus fixed Assets</p>
-                <p className="border-b w-full border-black">Plus Non-current Assets</p>
+                <p className="border-b w-full border-gray-400">{Language.assets.plusfixedassets}</p>
+                <p className="border-b w-full border-black">{Language.assets.plusnoncurrentassets}</p>
                 <div className="flex justify-between">
                 <Typography variant="h6" color="black" className="w-full pt-1">
                   Total Assets
@@ -511,16 +517,16 @@ const currentAssetsAccountNames = coa
               <div className="flex-inline justify-between">
                 <div className="border-b w-full border-gray-400">
                 <div className="flex">
-                <p>Current Liabilities</p>
+                <p>{Language.liabilities.currentliabilities}</p>
                 <p className="flex-1 text-right text-sm text-black pt-1">Rp {balances3},00</p>
                 </div>
                 </div>
-                <p className="border-b w-full border-gray-400 pl-6">Current Liabilities</p>
+                <p className="border-b w-full border-gray-400 pl-6">{Language.liabilities.currentliabilities}</p>
                 <details className="w-full cursor-default">
                   <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsPayables}>
                     <div className="flex">
                       {isOpenPayables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
-                      <span>Payables</span>
+                      <span>{Language.liabilities.payables}</span>
                       <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances3},00</span>
                     </div>
                   </summary>
@@ -535,11 +541,11 @@ const currentAssetsAccountNames = coa
                       </details>
                   ))}
                 </details>
-                <p className="border-b w-full border-black">Plus Non-current Liabilities</p>
+                <p className="border-b w-full border-black">{Language.liabilities.plusnoncurrentliabilities}</p>
               </div>
               <div className="flex justify-between">
                 <Typography variant="h6" color="black" className="w-full pt-1">
-                  Total Liabilities
+                  {Language.liabilities.totalliabilities}
                 </Typography>
                 <Typography variant="h6" color="black" className="w-full text-right pt-1">
                   Rp {grandTotalBalanceFormatted2},00

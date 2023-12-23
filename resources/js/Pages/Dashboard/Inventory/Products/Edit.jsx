@@ -1,6 +1,8 @@
 import AdditemLayout from "@/Layouts/NavigationLayout";
 import { Head, useForm } from "@inertiajs/react";
 import Select from "react-select";
+import React, { useState, useEffect } from "react";
+import { Language } from "@/Languages/Inventory/Products/ProductEdit";
 import {
     Card,
     Typography,
@@ -22,7 +24,6 @@ import {
     EllipsisHorizontalIcon,
     PlusCircleIcon,
 } from "@heroicons/react/24/solid";
-import { useEffect } from "react";
 
 const options = [
     { value: "1", label: "Test1" },
@@ -30,6 +31,12 @@ const options = [
 ];
 
 export default function AddProduct({ auth, brands, product }) {
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const { data, setData, patch, processing, errors, reset } = useForm({
         name: product.name,
         brand_id: product.brand?.id,
@@ -55,10 +62,10 @@ export default function AddProduct({ auth, brands, product }) {
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    Edit Products
+                                    {Language.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Edit your registered products
+                                    {Language.subtitle}
                                 </Typography>
                             </div>
                         </div>
@@ -68,10 +75,9 @@ export default function AddProduct({ auth, brands, product }) {
                         <form onSubmit={actionSubmit}>
                             <div className="grid lg:gap-8 grid-cols-1 gap-4 p-4 mx-4 mt-5">
                                 <div className="sm:col-span-1">
-                                    <Typography>Product Name</Typography>
+                                    <Typography>{Language.name.name}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                        *Provide the name of your brands that is
-                                        suitable for the item you are selling.
+                                        {Language.name.description}
                                     </div>
                                     <Input
                                         type="input"
@@ -93,17 +99,9 @@ export default function AddProduct({ auth, brands, product }) {
                                     )}
                                 </div>
                                 <div className="sm:col-span-1">
-                                    <Typography>Brand</Typography>
+                                    <Typography>{Language.brand.name}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                        *Pick up the brand of your product, if
-                                        you haven't added any brand, you can add
-                                        it{" "}
-                                        <a
-                                            href="/brand/"
-                                            className="text-blue-500"
-                                        >
-                                            here
-                                        </a>
+                                        {Language.brand.description}{" "}
                                     </div>
                                     <Select
                                         value={
@@ -132,7 +130,7 @@ export default function AddProduct({ auth, brands, product }) {
                                             label: brand?.name,
                                         }))}
                                         placeholder={
-                                            "Select brands from the following.."
+                                            Language.brand.placeholder
                                         }
                                         styles={{
                                             control: (base, state) => ({
@@ -169,15 +167,14 @@ export default function AddProduct({ auth, brands, product }) {
                                 </div>
                                 <div>
                                     <div className="sm:col-span-1">
-                                        <Typography>Description</Typography>
+                                        <Typography>{Language.description.name}</Typography>
                                         <div className="w-full text-xs mb-2 text-gray-500">
-                                            *Provide the description or notes
-                                            you want to added on the product
+                                            {Language.description.description}
                                         </div>
                                         <Textarea
                                             type="input"
                                             size="md"
-                                            placeholder="Description"
+                                            placeholder={Language.description.placeholder}
                                             value={data.description}
                                             onChange={(e) => {
                                                 setData(
@@ -200,9 +197,9 @@ export default function AddProduct({ auth, brands, product }) {
                                 </div>
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     <div className="col-span-2 lg:col-span-2">
-                                        <Typography>Sales Price</Typography>
+                                        <Typography>{Language.salesprice.name}</Typography>
                                         <div className="w-full text-xs mb-2 text-gray-500">
-                                            * Input your Sales Price
+                                            {Language.salesprice.description}
                                         </div>
                                         <div className="flex">
                                             <Button
@@ -244,7 +241,7 @@ export default function AddProduct({ auth, brands, product }) {
                                             className="bg-ungukita"
                                             disabled={!data.name}
                                         >
-                                            Save
+                                            {Language.savebutton}
                                         </Button>
                                     </div>
                                 </div>

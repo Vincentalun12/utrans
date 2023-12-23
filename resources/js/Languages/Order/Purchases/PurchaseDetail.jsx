@@ -2,15 +2,18 @@ import LocalizedStrings from "react-localization";
 
 let Language = new LocalizedStrings({
     id: {
-        "title": "Pemesanan Pembelian",
-        "vendor": "Referensi Vendor",
+        "title": "PEMESANAN PEMBELIAN",
+        "vendor":  "Vendor/Supplier",
+        "vendorreference": "Referensi Vendor",
         "creationdate": "Tanggal Pembuatan",
         "expectedarrival": "Tanggal Tiba",
         "currency": "Mata Uang",
         "total": "Total Item",
         "createbill": "Buat Tagihan",
+        "status": "Status",
+        "paymentstatus": "Status Pembayaran",
         "tableheader": {
-            "sku": "SKU",
+            "reference": "Reference",
             "item": "Nama Item",
             "quantity": "Kuantitas",
             "unitprice": "Unit Price",
@@ -18,22 +21,25 @@ let Language = new LocalizedStrings({
             "total": "Total",
         },
         "calculation": {
-            "discount": "Diskon",
-            "shipping": "Pengiriman",
+            "paid": "Dibayarkan",
+            "due": "Sisa Pembayaran",
             "total": "Total",
         }
     },
 
     en: {
-        "title": "Purchase Order",
-        "vendor": "Vendor reference",
+        "title": "PURCHASE ORDER",
+        "vendor": "Vendor",
+        "status": "Status",
+        "paymentstatus": "Payment Status",
+        "vendorreference": "Referensi Vendor",
         "creationdate": "Creation Date",
         "expectedarrival": "Expected Arrival",
         "currency": "Currency",
         "total": "Total Item",
         "createbill": "Create Bill",
         "tableheader": {
-            "sku": "SKU",
+            "reference": "Reference",
             "item": "Item Name",
             "quantity": "Quantity",
             "unitprice": "Unit Price",
@@ -41,8 +47,8 @@ let Language = new LocalizedStrings({
             "total": "Total",
         },
         "calculation": {
-            "discount": "Discount",
-            "shipping": "Shipping",
+            "paid": "Paid",
+            "due": "Due Now",
             "total": "Total",
         }
     },

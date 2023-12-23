@@ -6,6 +6,9 @@ let Language = new LocalizedStrings({
         "customer": "Pelanggan",
         "creationdate": "Tanggal Pembuatan",
         "expectedarrival": "Tanggal Tiba",
+        "customerphonenumber": "Nomor Telepon Pelanggan",
+        "customeremail": "Email Pelanggan",
+        "customerreference": "Referensi Pelanggan",
         "currency": "Mata Uang",
         "total": "Total Item",
         "createbill": "Buat Tagihan",
@@ -18,17 +21,20 @@ let Language = new LocalizedStrings({
             "total": "Total",
         },
         "calculation": {
-            "discount": "Diskon",
-            "shipping": "Pengiriman",
+            "duenow": "Sisa Pembayaran",
+            "paid": "Dibayarkan",
             "total": "Total",
         }
     },
 
     en: {
-        "title": "Sales Order",
+        "title": "SALES ORDER",
         "customer": "Customer",
         "creationdate": "Creation Date",
         "expectedarrival": "Expected Arrival",
+        "customerphonenumber": "Customer Phone Number",
+        "customeremail": "Customer Email",
+        "customerreference": "Customer Reference",
         "currency": "Currency",
         "total": "Total Item",
         "createbill": "Create Bill",
@@ -41,8 +47,8 @@ let Language = new LocalizedStrings({
             "total": "Total",
         },
         "calculation": {
-            "discount": "Discount",
-            "shipping": "Shipping",
+            "duenow": "Due Now",
+            "paid": "Paid",
             "total": "Total",
         }
     },

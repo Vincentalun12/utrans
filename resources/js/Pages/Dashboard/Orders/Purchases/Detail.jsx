@@ -1,6 +1,7 @@
 import PurchasingorderLayout from "@/Layouts/NavigationLayout";
 import React, { useState, useEffect } from "react";
 import { Head } from "@inertiajs/react";
+import { Language } from "@/Languages/Order/Purchases/PurchaseDetail";
 import {
   Card,
   Typography,
@@ -21,7 +22,7 @@ import {
   ArrowDownRightIcon
 } from "@heroicons/react/24/solid";
 
-const TABLE_HEAD = ["SKU", "Item Name", "Quantity", "Unit Price", "Discount", "Total"];
+const TABLE_HEAD = [Language.tableheader.reference, Language.tableheader.item, Language.tableheader.quantity, Language.tableheader.unitprice, Language.tableheader.discount, Language.tableheader.total];
  
 const TABLE_ROWS = [
   {
@@ -52,6 +53,12 @@ const TABLE_ROWS = [
 
 export default function Purchasingorder({ auth, purchaseOrders }) {
 
+  const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
   const statusMap = {
     'draft': 'Draft',
     'posted': 'Posted',
@@ -74,7 +81,7 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
             variant="h6"
             color="black"
             >
-            PURCHASE ORDER
+            {Language.title}
             </Typography>
             <div className="inline-flex mx-4">
             <Typography
@@ -89,7 +96,7 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
             <div className="grid lg:gap-8 grid-cols-1 lg:grid-cols-2 gap-4 p-6">
             <div className="inline-flex w-full lg:order-1 order-1">
             <Typography>
-                Vendor: 
+                {Language.vendor}
             </Typography>
             <Typography className="ml-6" color="blue">
                 {purchaseOrders.vendor.name}
@@ -97,7 +104,7 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
             </div>
             <div className="inline-flex w-full lg:order-2 order-4">
             <Typography>
-                Creation date: 
+                {Language.creationdate}
             </Typography>
             <Typography className="ml-6">
                 {purchaseOrders.create_date}
@@ -105,7 +112,7 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
             </div>
             <div className="inline-flex w-full lg:order-3 order-2">
             <Typography color="black" className="font-bold">
-                Vendor reference: 
+                {Language.vendorreference}
             </Typography>
             <Typography className="ml-6">
               {purchaseOrders.code}
@@ -113,7 +120,7 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
             </div>
             <div className="inline-flex w-full lg:order-5 order-3">
             <Typography>
-                Status:
+                {Language.status}
             </Typography>
             <Typography className="ml-6" color="blue">
               {statusMap[purchaseOrders.status]}
@@ -121,7 +128,7 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
             </div>
             <div className="inline-flex w-full lg:order-6 order-6">
             <Typography>
-                Total item: 
+                {Language.total} 
             </Typography>
             <Typography className="ml-6">
                 {purchaseOrders.total_item}
@@ -129,7 +136,7 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
             </div>
             <div className="inline-flex w-full lg:order-6 order-6">
             <Typography>
-                Payment Status:
+                {Language.paymentstatus}
             </Typography>
             <Typography className="ml-6">
               {purchaseOrders.payment_status === 'due' ? 'Due' : 'Paid'}
@@ -200,12 +207,12 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
             <td className="pl-4">Rp{purchaseOrders.total_price ? Number(purchaseOrders.total_price).toLocaleString('id-ID') : '0'}</td>
             </tr>
             <tr>
-            <td className="pl-4 border-b-2">Paid</td>
+            <td className="pl-4 border-b-2">{Language.calculation.paid}</td>
             <td className="border-b-2">:</td>
             <td className="pl-4 border-b-2">Rp{purchaseOrders.total_paid ? Number(purchaseOrders.total_paid).toLocaleString('id-ID') : '0'}</td>
             </tr>
             <tr>
-                <td className="pl-4 font-extrabold">Due Now</td>
+                <td className="pl-4 font-extrabold">{Language.calculation.due}</td>
                 <td className="">:</td>
                 <td className="pl-4 font-extrabold">Rp{purchaseOrders.total_price && purchaseOrders.total_paid  ? Number(purchaseOrders.total_price - purchaseOrders.total_paid).toLocaleString('id-ID') : '0'}
             </td>

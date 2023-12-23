@@ -3,7 +3,7 @@ import LocalizedStrings from "react-localization";
 let Language = new LocalizedStrings({
     id: {
         "title": "Buat Data Produk",
-        "description": "Buat data produk anda. Mohon jangan mengubah data jika tidak perlu.",
+        "subtitle": "Buat data produk anda. Mohon jangan mengubah data jika tidak perlu.",
         "name": {
             "name": "Nama Produk",
             "description": "* Silahkan isi nama produk",
@@ -11,7 +11,7 @@ let Language = new LocalizedStrings({
         },
         "brand": {
             "name": "Merek",
-            "description": "* Pilih merek produk ini. Jika Anda belum menambahkan merek apa pun, Anda dapat menambahkannya <a href='/brand'>di sini</a>.",
+            "description": "* Pilih merek produk ini.",
             "placeholder": "Pilih...",
         },
         "description": {
@@ -29,7 +29,7 @@ let Language = new LocalizedStrings({
 
     en: {
         "title": "Create Product Data",
-        "description": "Create your product data. Please do not change the data if it is not necessary.",
+        "subtitle": "Create your product data. Please do not change the data if it is not necessary.",
         "name": {
             "name": "Product Name",
             "description": "* Provide the product name",
@@ -37,7 +37,7 @@ let Language = new LocalizedStrings({
         },
         "brand": {
             "name": "Brand",
-            "description": "* Pick up the brand of this product. If you haven't added any brand, you can add it <a href='/brand'>here</a>.",
+            "description": "* Pick up the brand of this product.",
             "placeholder": "Select...",
         },
         "description": {

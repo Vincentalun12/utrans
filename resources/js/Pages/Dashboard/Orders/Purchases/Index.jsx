@@ -7,6 +7,8 @@ import Select from "react-select";
 import { format, parse } from "date-fns";
 import { DayPicker } from "react-day-picker";
 
+import { Language } from "@/Languages/Order/Purchases/PurchaseIndex";
+
 import {
     CalendarDaysIcon,
     ChevronUpDownIcon,
@@ -93,6 +95,13 @@ const TABLE_ROWS_SHOW_PAYMENT = [
 ];
 
 export default function Purchasing({ auth, purchaseOrders, journals }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
@@ -271,16 +280,15 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
             </Alert>
             <Dialog open={deleteOpen} size="sm" onClose={handleDeletePurchases}>
                 <DialogHeader>
-                    <Typography variant="h5">Notifikasi</Typography>
+                    <Typography variant="h5">{Language.delete.header}</Typography>
                 </DialogHeader>
                 <DialogBody divider className="grid place-items-center gap-4">
                     <InformationCircleIcon className="w-20 h-20 text-red-400" />
                     <Typography className="text-red-900" variant="h4">
-                        Anda akan menghapus pelanggan ini!
+                        {Language.delete.title}
                     </Typography>
                     <Typography className="text-center font-normal">
-                        Aksi ini tidak dapat dibatalkan. Namun, kami akan tetap
-                        simpan untuk keperluan audit.
+                        {Language.delete.description}
                     </Typography>
                 </DialogBody>
                 <DialogFooter className="space-x-2">
@@ -302,13 +310,13 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                             handleDeletePurchases(null);
                         }}
                     >
-                        Konfirmasi
+                        {Language.delete.confirmbutton}
                     </Button>
                     <Button
                         variant="outlined"
                         onClick={() => handleDeletePurchases(null)}
                     >
-                        Batal
+                        {Language.delete.cancelbutton}
                     </Button>
                 </DialogFooter>
             </Dialog>
@@ -320,7 +328,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
             >
                 <form onSubmit={purchaseRegisterPayment}>
                     <DialogHeader>
-                        <Typography variant="h5">Create Payment</Typography>
+                        <Typography variant="h5">{Language.createpayment.header}</Typography>
                     </DialogHeader>
                     <DialogBody
                         divider
@@ -328,9 +336,9 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                     >
                         <div className="w-full gap-2 md:justify-between px-4 pb-4 bg-white grid grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2">
                             <div className="col-span-2 lg:col-span-1">
-                                <label className="">Payment Type</label>
+                                <label className="">{Language.createpayment.paymenttype.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Select your payment type
+                                    {Language.createpayment.paymenttype.description}
                                 </div>
                                 <Select
                                     required={true}
@@ -379,9 +387,9 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                 )}
                             </div>
                             <div className="col-span-2 lg:col-span-1">
-                                <label className="">Payment Date</label>
+                                <label className="">{Language.createpayment.paymentdate.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Pick your payment date
+                                    {Language.createpayment.paymentdate.description}
                                 </div>
                                 <Popover placement="bottom" trigger="click">
                                     <PopoverHandler>
@@ -480,9 +488,9 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                 )}
                             </div>
                             <div className="2xl:col-span-2 col-span-2">
-                                <label className="">Paying Amount</label>
+                                <label className="">{Language.createpayment.payingamount.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Input your payment amount
+                                    {Language.createpayment.payingamount.description}
                                 </div>
                                 <div className="flex">
                                     <Button
@@ -519,10 +527,9 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                 </div>
                             </div>
                             <div className="2xl:col-span-2 col-span-2">
-                                <label className="">Reference</label>
+                                <label className="">{Language.createpayment.reference.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Create your own reference. Ex:
-                                    INV/2023/11/001
+                                    {Language.createpayment.reference.description}
                                 </div>
                                 <Input
                                     type="input"
@@ -539,9 +546,9 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                 />
                             </div>
                             <div className="col-span-2 lg:col-span-2">
-                                <label className="">Additional Notes</label>
+                                <label className="">{Language.createpayment.additionalnote.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Set your some notes
+                                    {Language.createpayment.additionalnote.description}
                                 </div>
                                 <div className="flex">
                                     <Textarea
@@ -564,17 +571,17 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                     </DialogBody>
                     <DialogFooter className="space-x-2">
                         <Button type="submit" variant="gradient" color="green">
-                            Submit
+                            {Language.createpayment.submitbutton}
                         </Button>
                         <Button variant="outlined" onClick={handleClosePayment}>
-                            Cancel
+                            {Language.createpayment.closebutton}
                         </Button>
                     </DialogFooter>
                 </form>
             </Dialog>
             <Dialog open={open} size="md" onClose={handleOpen}>
                 <DialogHeader>
-                    <Typography variant="h5">Show Payments</Typography>
+                    <Typography variant="h5">{Language.showpayment.header}</Typography>
                 </DialogHeader>
                 <DialogBody
                     divider
@@ -674,7 +681,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                 </DialogBody>
                 <DialogFooter className="space-x-2">
                     <Button variant="outlined" onClick={handleOpen}>
-                        Close
+                        {Language.showpayment.closebutton}
                     </Button>
                 </DialogFooter>
             </Dialog>
@@ -688,10 +695,10 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    Purchases
+                                    {Language.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Manage your order purchases here
+                                    {Language.subtitle}
                                 </Typography>
                             </div>
                         </div>
@@ -701,7 +708,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                             <div className="flex gap-3">
                                 <Linkactive href={route("purchases.create")}>
                                     <Button className="bg-ungukita md:flex hidden">
-                                        Create
+                                        {Language.addbutton}
                                     </Button>
                                 </Linkactive>
                                 <div className="md:flex hidden">
@@ -737,7 +744,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"
-                                    placeholder="Search"
+                                    placeholder={Language.searchplaceholder}
                                     value={searchbar}
                                     onChange={(e) =>
                                         setsearchbar(e.target.value)
@@ -869,7 +876,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        Rp{total_price}
+                                                        Rp{Number(total_price).toLocaleString("id-ID")}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -883,7 +890,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                         }
                                                         className="font-normal"
                                                         >
-                                                        Rp{total_paid}
+                                                        Rp{Number(total_paid).toLocaleString("id-ID")}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -965,8 +972,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                                     }
                                                                 >
                                                                     <EyeIcon className="w-5 h-5" />
-                                                                    Purchase
-                                                                    Detail
+                                                                    {Language.action.purchasedetail}
                                                                 </MenuItem>
                                                                 <MenuItem
                                                                     className="flex items-center gap-2"
@@ -979,8 +985,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                                     }
                                                                 >
                                                                     <PencilIcon className="w-5 h-5" />
-                                                                    Edit
-                                                                    Purchase
+                                                                    {Language.action.editpurchase}
                                                                 </MenuItem>
                                                                 <MenuItem
                                                                     onClick={() => {
@@ -991,8 +996,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                                     className="flex items-center gap-2"
                                                                 >
                                                                     <PlusCircleIcon className="w-5 h-5" />
-                                                                    Create
-                                                                    Payment
+                                                                    {Language.action.createpayment}
                                                                 </MenuItem>
                                                                 {/* <MenuItem
                                                                     onClick={
@@ -1016,8 +1020,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                                     }
                                                                 >
                                                                     <TrashIcon className="w-5 h-5 text-white" />
-                                                                    Delete
-                                                                    Purchase
+                                                                    {Language.action.deletepurchase}
                                                                 </MenuItem>
                                                             </MenuList>
                                                         </Menu>
@@ -1130,7 +1133,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    Page {currentPage} of{" "}
+                                    {Language.pagination.page} {currentPage} {Language.pagination.of}{" "}
                                     {Math.ceil(
                                         purchaseOrders?.length / itemsPerPage
                                     )}
@@ -1143,7 +1146,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                     onClick={handlePrevious}
                                     disabled={currentPage === 1}
                                 >
-                                    Previous
+                                    {Language.pagination.previous}
                                 </Button>
                                 <Button
                                     variant="outlined"
@@ -1151,7 +1154,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                     onClick={handleNext}
                                     disabled={paginated.length < itemsPerPage}
                                 >
-                                    Next
+                                    {Language.pagination.next}
                                 </Button>
                             </div>
                         </div>

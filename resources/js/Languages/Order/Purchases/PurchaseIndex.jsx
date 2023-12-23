@@ -17,9 +17,13 @@ let Language = new LocalizedStrings({
             "payment": "Status Pembayaran",
             "Action": "Aksi",
         },
+        "showpayment": {
+            "header": "Detail Pembayaran",
+            "closebutton": "Tutup",
+        },
         "action": {
             "purchasedetail": "Detail Pembelian",
-            "editpurchase": "Ubah Pembelian",
+            "editpurchase": "Ubah Data Pembelian",
             "createpayment": "Buat Pembayaran",
             "showpayment": "Lihat Pembayaran",
             "downloadpdf": "Unduh PDF",
@@ -43,7 +47,7 @@ let Language = new LocalizedStrings({
             },
             "paymentdate": {
                 "title": "Tanggal Pembayaran",
-                "description": "* Tanggal pembayaran akan otomatis terisi dengan tanggal hari ini.",
+                "description": "* Pilih tanggal pembayaran",
             },
             "payingamount": {
                 "title": "Jumlah Pembayaran",
@@ -88,6 +92,10 @@ let Language = new LocalizedStrings({
             "status": "Status",
             "payment": "Payment",
             "Action": "Action",
+        },
+        "showpayment": {
+            "header": "Payment Detail",
+            "closebutton": "Close",
         },
         "action": {
             "purchasedetail": "Purchase Detail",

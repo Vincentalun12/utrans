@@ -5,7 +5,9 @@ import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import { Global, css } from "@emotion/react";
 import Select from "react-select";
 import { format, parse } from "date-fns";
-import { DayPicker } from "react-day-picker";
+import { DayPicker } from "react-day-picker"
+
+import { Language } from "@/Languages/Order/Sales/SalesIndex";
 
 import {
     CalendarDaysIcon,
@@ -93,6 +95,13 @@ const TABLE_ROWS_SHOW_PAYMENT = [
 ];
 
 export default function Purchasing({ auth, saleOrders, journals }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const [paymentoptions, setPaymentoptions] = useState([]);
 
     useEffect(() => {
@@ -268,16 +277,15 @@ export default function Purchasing({ auth, saleOrders, journals }) {
             </Alert>
             <Dialog open={deleteOpen} size="sm" onClose={handleDeleteSales}>
                 <DialogHeader>
-                    <Typography variant="h5">Notifikasi</Typography>
+                    <Typography variant="h5">{Language.delete.header}</Typography>
                 </DialogHeader>
                 <DialogBody divider className="grid place-items-center gap-4">
                     <InformationCircleIcon className="w-20 h-20 text-red-400" />
                     <Typography className="text-red-900" variant="h4">
-                        Anda akan menghapus pelanggan ini!
+                        {Language.delete.title}
                     </Typography>
                     <Typography className="text-center font-normal">
-                        Aksi ini tidak dapat dibatalkan. Namun, kami akan tetap
-                        simpan untuk keperluan audit.
+                        {Language.delete.description}
                     </Typography>
                 </DialogBody>
                 <DialogFooter className="space-x-2">
@@ -299,13 +307,13 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                             handleDeleteSales(null);
                         }}
                     >
-                        Konfirmasi
+                        {Language.delete.confirmbutton}
                     </Button>
                     <Button
                         variant="outlined"
                         onClick={() => handleDeleteSales(null)}
                     >
-                        Batal
+                        {Language.delete.cancelbutton}
                     </Button>
                 </DialogFooter>
             </Dialog>
@@ -317,7 +325,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
             >
                 <form onSubmit={saleRegisterPayment}>
                     <DialogHeader>
-                        <Typography variant="h5">Create Payment</Typography>
+                        <Typography variant="h5">{Language.createpayment.header}</Typography>
                     </DialogHeader>
                     <DialogBody
                         divider
@@ -325,9 +333,9 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                     >
                         <div className="w-full gap-2 md:justify-between px-4 pb-4 bg-white grid grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2">
                             <div className="col-span-2 lg:col-span-1">
-                                <label className="">Payment Type</label>
+                                <label className="">{Language.createpayment.paymenttype.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Select your payment type
+                                    {Language.createpayment.paymenttype.description}
                                 </div>
                                 <Select
                                     required={true}
@@ -375,9 +383,9 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                 )}
                             </div>
                             <div className="col-span-2 lg:col-span-1">
-                                <label className="">Payment Date</label>
+                                <label className="">{Language.createpayment.paymentdate.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Pick your payment date
+                                    {Language.createpayment.paymentdate.description}
                                 </div>
                                 <Popover placement="bottom" trigger="click">
                                     <PopoverHandler>
@@ -476,9 +484,9 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                 )}
                             </div>
                             <div className="2xl:col-span-2 col-span-2">
-                                <label className="">Paying Amount</label>
+                                <label className="">{Language.createpayment.payingamount.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Input your payment amount
+                                    {Language.createpayment.payingamount.description}
                                 </div>
                                 <div className="flex">
                                     <Button
@@ -515,10 +523,9 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                 </div>
                             </div>
                             <div className="2xl:col-span-2 col-span-2">
-                                <label className="">Reference</label>
+                                <label className="">{Language.createpayment.reference.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Create your own reference. Ex:
-                                    INV/2023/11/001
+                                    {Language.createpayment.reference.description}
                                 </div>
                                 <Input
                                     type="input"
@@ -535,9 +542,9 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                 />
                             </div>
                             <div className="col-span-2 lg:col-span-2">
-                                <label className="">Additional Notes</label>
+                                <label className="">{Language.createpayment.additionalnote.title}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                    * Set your some notes
+                                    {Language.createpayment.additionalnote.description}
                                 </div>
                                 <div className="flex">
                                     <Textarea
@@ -560,17 +567,17 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                     </DialogBody>
                     <DialogFooter className="space-x-2">
                         <Button type="submit" variant="gradient" color="green">
-                            Submit
+                            {Language.createpayment.submitbutton}
                         </Button>
                         <Button variant="outlined" onClick={handleClosePayment}>
-                            Cancel
+                            {Language.createpayment.closebutton}
                         </Button>
                     </DialogFooter>
                 </form>
             </Dialog>
             <Dialog open={open} size="md" onClose={handleOpen}>
                 <DialogHeader>
-                    <Typography variant="h5">Show Payments</Typography>
+                    <Typography variant="h5">{Language.action.showpayment}</Typography>
                 </DialogHeader>
                 <DialogBody
                     divider
@@ -684,10 +691,10 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    Sales
+                                    {Language.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Manage your order sales here
+                                    {Language.subtitle}
                                 </Typography>
                             </div>
                         </div>
@@ -697,7 +704,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                             <div className="flex gap-3">
                                 <Linkactive href={route("sales.create")}>
                                     <Button className="bg-ungukita md:flex hidden">
-                                        Create
+                                        {Language.addbutton}
                                     </Button>
                                 </Linkactive>
                                 <div className="md:flex hidden">
@@ -733,7 +740,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"
-                                    placeholder="Search"
+                                    placeholder={Language.searchplaceholder}
                                     value={searchbar}
                                     onChange={(e) =>
                                         setsearchbar(e.target.value)
@@ -859,27 +866,28 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal"
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-normal"
                                                     >
-                                                        Rp{total_price}
+                                                    Rp{Number(total_price).toLocaleString("id-ID")}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
                                                     <div className="flex flex-col">
-                                                        <Typography
-                                                            variant="small"
-                                                            color={
-                                                                total_due ===
-                                                                "Rp. 0,000.00"
-                                                                    ? "blue-gray"
-                                                                    : "red"
-                                                            }
-                                                            className="font-normal"
+                                                    <Typography
+                                                        variant="small"
+                                                        color={
+                                                            total_paid === total_price
+                                                            ? "blue-gray"
+                                                            : total_paid === "Rp0.00"
+                                                            ? "blue-gray"
+                                                            : "red"
+                                                        }
+                                                        className="font-normal"
                                                         >
-                                                            Rp{total_paid}
+                                                        Rp{Number(total_paid).toLocaleString("id-ID")}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -919,17 +927,16 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                                     </div>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
-                                                    <Typography
-                                                        variant="small"
-                                                        color={
-                                                            total_due ===
-                                                            "Rp. 0,000.00"
-                                                                ? "green"
-                                                                : "red"
-                                                        }
-                                                        className="font-normal"
+                                                <Typography
+                                                    variant="small"
+                                                    color={
+                                                        Number(total_due) === 0
+                                                        ? "green"
+                                                        : "red"
+                                                    }
+                                                    className="font-normal"
                                                     >
-                                                        Rp{total_due}
+                                                    Rp{Number(total_due).toLocaleString("id-ID")}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -955,7 +962,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                                                     }
                                                                 >
                                                                     <EyeIcon className="w-5 h-5" />
-                                                                    Sales Detail
+                                                                    {Language.action.salesdetail}
                                                                 </MenuItem>
                                                                 <MenuItem
                                                                     className="flex items-center gap-2"
@@ -968,7 +975,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                                                     }
                                                                 >
                                                                     <PencilIcon className="w-5 h-5" />
-                                                                    Edit Sales
+                                                                    {Language.action.editsales}
                                                                 </MenuItem>
                                                                 <MenuItem
                                                                     onClick={() => {
@@ -979,8 +986,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                                                     className="flex items-center gap-2"
                                                                 >
                                                                     <PlusCircleIcon className="w-5 h-5" />
-                                                                    Create
-                                                                    Payment
+                                                                    {Language.action.createpayment}
                                                                 </MenuItem>
                                                                 {/* <MenuItem
                                                                     onClick={
@@ -1004,8 +1010,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                                                     }
                                                                 >
                                                                     <TrashIcon className="w-5 h-5 text-white" />
-                                                                    Delete
-                                                                    Purchase
+                                                                    {Language.action.deletesales}
                                                                 </MenuItem>
                                                             </MenuList>
                                                         </Menu>
@@ -1118,7 +1123,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    Page {currentPage} of{" "}
+                                    {Language.pagination.page} {currentPage} {Language.pagination.of}{" "}
                                     {Math.ceil(
                                         saleOrders?.length / itemsPerPage
                                     )}
@@ -1131,7 +1136,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                     onClick={handlePrevious}
                                     disabled={currentPage === 1}
                                 >
-                                    Previous
+                                    {Language.pagination.previous}
                                 </Button>
                                 <Button
                                     variant="outlined"
@@ -1139,7 +1144,7 @@ export default function Purchasing({ auth, saleOrders, journals }) {
                                     onClick={handleNext}
                                     disabled={paginated.length < itemsPerPage}
                                 >
-                                    Next
+                                    {Language.pagination.next}
                                 </Button>
                             </div>
                         </div>

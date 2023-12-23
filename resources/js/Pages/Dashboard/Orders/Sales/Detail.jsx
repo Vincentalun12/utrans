@@ -1,6 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
 import React, { useState, useEffect } from "react";
+import { Language } from "@/Languages/Order/Sales/SalesDetail";
 import {
   Card,
   Typography,
@@ -20,7 +21,7 @@ import {
   PlusCircleIcon,
   ArrowDownRightIcon
 } from "@heroicons/react/24/solid";
-const TABLE_HEAD = ["SKU", "Item Name", "Quantity", "Unit Price", "Discount", "Total"];
+const TABLE_HEAD = [Language.tableheader.sku, Language.tableheader.item, Language.tableheader.quantity, Language.tableheader.unitprice, Language.tableheader.discount, Language.tableheader.total];
 
 
 const TABLE_ROWS = [
@@ -52,6 +53,12 @@ const TABLE_ROWS = [
 
 export default function Salesorder({ auth, saleOrder }) {
 
+  const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
   return (
     <AuthenticatedLayout user={auth.user}>
       <Head title="Add item" />
@@ -66,7 +73,7 @@ export default function Salesorder({ auth, saleOrder }) {
               variant="h6"
               color="black"
             >
-              SALES ORDER
+              {Language.title}
             </Typography>
             <div className="inline-flex mx-4">
               <Typography
@@ -82,7 +89,7 @@ export default function Salesorder({ auth, saleOrder }) {
               <div className="grid grid-cols-1">
                 <div className="inline-flex w-full order-1">
                   <Typography color="black" className="font-bold">
-                    Customer:
+                    {Language.customer}:
                   </Typography>
                   <Typography className="ml-6">
                     {saleOrder.customer.name},<br />
@@ -93,7 +100,7 @@ export default function Salesorder({ auth, saleOrder }) {
                 </div>
                 <div className="inline-flex w-full order-2">
                   <Typography color="black" className="font-bold">
-                    Order Date:
+                    {Language.creationdate}:
                   </Typography>
                   <Typography className="ml-6">
                     {saleOrder.create_date}
@@ -103,7 +110,7 @@ export default function Salesorder({ auth, saleOrder }) {
               <div className="grid grid-cols-1">
                 <div className="inline-flex w-full order-3">
                   <Typography color="black" className="font-bold">
-                    Customer Phone Number: 
+                    {Language.customerphonenumber}:
                   </Typography >
                   <Typography className="ml-4">
                     {saleOrder.customer.phone}<br />
@@ -111,7 +118,7 @@ export default function Salesorder({ auth, saleOrder }) {
                 </div>
                 <div className="inline-flex w-full order-4">
                   <Typography color="black" className="font-bold">
-                    Customer Email Address
+                    {Language.customeremail}:
                   </Typography>
                   <Typography className="ml-6">
                     {saleOrder.customer.email}
@@ -119,7 +126,7 @@ export default function Salesorder({ auth, saleOrder }) {
                 </div>
                 <div className="inline-flex w-full order-5">
                   <Typography color="black" className="font-bold">
-                    Customer Reference:
+                    {Language.customerreference}:
                   </Typography >
                   <Typography className="ml-4">
                     {saleOrder.customer.code}
@@ -127,7 +134,7 @@ export default function Salesorder({ auth, saleOrder }) {
                 </div>
                 <div className="inline-flex w-full order-6">
                   <Typography color="black" className="font-bold">
-                    Order Quantity:
+                    {Language.total}:
                   </Typography>
                   <Typography className="ml-6">
                     {saleOrder.total_item}
@@ -194,17 +201,17 @@ export default function Salesorder({ auth, saleOrder }) {
           <Card className="h-full w-full overflow-hidden rounded-none p-6 items-end">
           <table>
                 <tr>
-                    <td className="pl-4">Total</td>
+                    <td className="pl-4">{Language.calculation.total}</td>
                     <td className="">:</td>
                     <td className="pl-4">Rp{saleOrder.total_price ? Number(saleOrder.total_price).toLocaleString('id-ID') : '0'}</td>
                 </tr>
                 <tr>
-                    <td className="pl-4 border-b-2">Paid</td>
+                    <td className="pl-4 border-b-2">{Language.calculation.paid}</td>
                     <td className="border-b-2">:</td>
                     <td className="pl-4 border-b-2">Rp{saleOrder.total_paid ? Number(saleOrder.total_paid).toLocaleString('id-ID') : '0'}</td>
                 </tr>
                 <tr>
-                    <td className="pl-4 font-extrabold">Due Now</td>
+                    <td className="pl-4 font-extrabold">{Language.calculation.duenow}</td>
                     <td className="">:</td>
                     <td className="pl-4 font-extrabold">Rp{saleOrder.total_price && saleOrder.total_paid  ? Number(saleOrder.total_price - saleOrder.total_paid).toLocaleString('id-ID') : '0'}
                 </td>

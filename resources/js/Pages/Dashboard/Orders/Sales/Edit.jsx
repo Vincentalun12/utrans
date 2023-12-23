@@ -1,10 +1,13 @@
 import AdditemLayout from "@/Layouts/NavigationLayout";
 import Linkactive from "@/Components/Linkactive";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ReactSelect from "react-select";
 import { Head, useForm } from "@inertiajs/react";
 import { format, parse } from "date-fns";
 import { DayPicker } from "react-day-picker";
+
+import { Language } from "@/Languages/Order/Sales/SalesEdit";
+
 import {
     Select,
     Option,
@@ -51,12 +54,12 @@ import {
 import { data } from "autoprefixer";
 
 const TABLE_HEAD = [
-    "SKU",
-    "Item",
-    "Quantity",
-    "Unit price",
-    "Disc",
-    "Total",
+    Language.table.SKU,
+    Language.table.item,
+    Language.table.quantity,
+    Language.table.unitprice,
+    Language.table.discount,
+    Language.table.total,
     "",
 ];
 const TABLE_ROWS = [
@@ -74,8 +77,17 @@ export default function EditSaleOrder({
     auth,
     products,
     customers,
-    saleOrder,
-}) {
+    saleOrder,}) 
+    
+    {
+
+
+        const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+        useEffect(() => {
+            Language.setLanguage(selectedLanguage);
+        }, [selectedLanguage]);
+
     const { data, setData, patch, processing, errors, reset } = useForm({
         customer_id: {
             value: saleOrder.customer_id,
@@ -187,10 +199,10 @@ export default function EditSaleOrder({
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    Add Sales
+                                    {Language.header.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Add order sales here
+                                    {Language.header.subtitle}
                                 </Typography>
                             </div>
                         </div>
@@ -199,7 +211,10 @@ export default function EditSaleOrder({
                     <form onSubmit={actionSubmit}>
                         <div className="w-full gap-2 md:justify-between shadow-md px-4 pt-6 pb-4 bg-white grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2">
                             <div className="sm:col-span-1">
-                                <label className="">Customer</label>
+                                <label className="">{Language.customer.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    {Language.customer.description}
+                                </div>
                                 <ReactSelect
                                     options={customerOptions}
                                     value={{
@@ -242,14 +257,17 @@ export default function EditSaleOrder({
                                 <div></div>
                             </div>
                             <div className="sm:col-span-1">
-                                <label className="">Reference</label>
+                                <label className="">{Language.reference.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    {Language.reference.description}
+                                </div>
                                 <Input
                                     type="input"
                                     value={data.reference}
                                     onChange={(e) => {
                                         setData("reference", e.target.value);
                                     }}
-                                    placeholder="Reference"
+                                    placeholder={Language.reference.placeholder}
                                     className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                                     labelProps={{
                                         className:
@@ -258,7 +276,10 @@ export default function EditSaleOrder({
                                 />
                             </div>
                             <div className="sm:col-span-1">
-                                <label className="">Creation Date</label>
+                                <label className="">{Language.date.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    {Language.date.description}
+                                </div>
                                 <Input
                                     type="search"
                                     value={data.create_date}
@@ -275,7 +296,10 @@ export default function EditSaleOrder({
                                 />
                             </div>
                             <div className="sm:col-span-1">
-                                <label className="">Status</label>
+                                <label className="">{Language.status.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    {Language.status.description}
+                                </div>
                                 <div className="w-full">
                                     <Select
                                         labelProps={{
@@ -291,16 +315,17 @@ export default function EditSaleOrder({
                                         <Option value="draft">Draft</Option>
                                         <Option value="posted">Posted</Option>
                                         <Option value="pending">Pending</Option>
-                                        <Option value="canceled">
-                                            Canceled
-                                        </Option>
+                                        <Option value="canceled">Canceled</Option>
                                     </Select>
                                 </div>
                             </div>
                         </div>
                         <div className="lg:flex w-full gap-2 md:justify-between px-4 pt-1 pb-4 bg-white shadow-md">
                             <div className="sm:col-span-2 w-full">
-                                <label className="">Product Name</label>
+                                <label className="">{Language.productname.name}</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    {Language.productname.description}
+                                </div>
                                 <ReactSelect
                                     options={ProductList}
                                     value={selectedProduct}
@@ -542,7 +567,7 @@ export default function EditSaleOrder({
                                                         </Typography>
                                                     </td>
                                                     <td className="p-2 border-b border-gray-200 pl-4">
-                                                        <Tooltip content="Delete">
+                                                        <Tooltip content={Language.table.deletetooltip}>
                                                             <Button
                                                                 size="sm"
                                                                 variant="text"
@@ -647,7 +672,7 @@ export default function EditSaleOrder({
                                     ripple="light"
                                     disabled={!data.status}
                                 >
-                                    Submit
+                                    {Language.submitbutton}
                                 </Button>
                                 <a href="/purchases">
                                     <Button
@@ -655,7 +680,7 @@ export default function EditSaleOrder({
                                         ripple="dark"
                                         className="ml-4"
                                     >
-                                        Cancel
+                                        {Language.cancelbutton}
                                     </Button>
                                 </a>
                             </div>

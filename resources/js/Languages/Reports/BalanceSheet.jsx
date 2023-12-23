@@ -16,12 +16,17 @@ let Language = new LocalizedStrings({
             "totalassets": "Total Aset",
         },
         "liabilities": {
-            "title": "Liabilitas",
+            "title": "LIALIBITAS",
             "currentliabilities": "Liabilitas Saat Ini",
             "plusnoncurrentliabilities": "Plus Liabilitas Tidak Lancar",
             "payables": "Transaksi Kredit",
             "totalliabilities": "Total Liabilitas",
         },
+        "export": {
+            "pdf": "Cetak menjadi PDF",
+        },
+        "date": "Tanggal",
+        "balance": "Saldo",
     },
 
     en: {
@@ -39,12 +44,17 @@ let Language = new LocalizedStrings({
             "totalassets": "Total Assets",
         },
         "liabilities": {
-            "title": "Liabilities",
+            "title": "LIABILITIES",
             "currentliabilities": "Current Liabilities",
             "plusnoncurrentliabilities": "Plus Non-Current Liabilities",
             "payables": "Payables",
             "totalliabilities": "Total Liabilities",
         },
+        "export": {
+            "pdf": "Cetak menjadi PDF",
+        },
+        "date": "Date",
+        "balance": "Balance",
     },
 });
 

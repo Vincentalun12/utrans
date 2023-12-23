@@ -6,12 +6,13 @@ let Language = new LocalizedStrings({
         "subtitle": "Kelola produk Anda di sini",
         "addbutton": "Tambah",
         "searchplaceholder": "Cari produk...",
+        "report": "Laporan Data Produk",
         "tableheader": {
             "SKU": "SKU",
             "Name": "Nama Produk",
             "Brand": "Merek",
             "salesprice": "Harga Jual",
-            "COGS": "COGS",
+            "COGS": "Harga Standar",
             "Stock": "Stok",
             "Action": "Aksi",
         },
@@ -54,6 +55,7 @@ let Language = new LocalizedStrings({
     en: {
         "title": "Products",
         "subtitle": "Manage your products here",
+        "report": "Product Data Report",
         "addbutton": "Add",
         "searchplaceholder": "Search products...",
         "tableheader": {
@@ -61,7 +63,7 @@ let Language = new LocalizedStrings({
             "Name": "Name",
             "Brand": "Brand",
             "salesprice": "Sales Price",
-            "COGS": "COGS",
+            "COGS": "Standard Price",
             "Stock": "Stock",
             "Action": "Action",
         },

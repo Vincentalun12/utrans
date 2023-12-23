@@ -8,7 +8,7 @@ let Language = new LocalizedStrings({
             "subtitle": "Ubah data pembelian anda. Disarankan untuk tidak mengubah data jika tidak perlu",
         },
         "customer": {
-            "name": "Customer",
+            "name": "Pelanggan",
             "description": "* Pilih pelanggan dari bawah ini",
         },
         "reference": {

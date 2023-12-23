@@ -15,11 +15,12 @@ let Language = new LocalizedStrings({
             "paid": "Dibayarkan",
             "status": "Status",
             "payment": "Status Pembayaran",
+            "due": "Sisa Pembayaran",
             "Action": "Aksi",
         },
         "action": {
             "salesdetail": "Detail Penjualan",
-            "editsales": "Ubah Penjualan",
+            "editsales": "Ubah Data Penjualan",
             "createpayment": "Buat Pembayaran",
             "showpayment": "Lihat Pembayaran",
             "downloadpdf": "Unduh PDF",
@@ -43,7 +44,7 @@ let Language = new LocalizedStrings({
             },
             "paymentdate": {
                 "title": "Tanggal Pembayaran",
-                "description": "* Tanggal pembayaran akan otomatis terisi dengan tanggal hari ini.",
+                "description": "* Pilih tanggal pembayaran",
             },
             "payingamount": {
                 "title": "Jumlah Pembayaran",
@@ -87,6 +88,7 @@ let Language = new LocalizedStrings({
             "paid": "Paid",
             "status": "Status",
             "payment": "Payment",
+            "due": "Sisa Pembayaran",
             "Action": "Action",
         },
         "action": {

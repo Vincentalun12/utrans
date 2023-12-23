@@ -4,6 +4,7 @@ import Linkactive from "@/Components/Linkactive";
 import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import { Global, css } from "@emotion/react";
 import { Batamwater } from '@/Assets';
+import { Language } from "@/Languages/Inventory/Products/ProductIndex";
 import {
     PDFDownloadLink,
     Document,
@@ -47,6 +48,7 @@ import {
     ChevronLeftIcon,
     PencilSquareIcon,
     ChevronRightIcon,
+    LanguageIcon,
 } from "@heroicons/react/24/solid";
 
 import {
@@ -76,6 +78,13 @@ const TABLE_HEAD = [
 ];
 
 export default function Inventory({ auth, products }) {
+
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+
+    useEffect(() => {
+        Language.setLanguage(selectedLanguage);
+    }, [selectedLanguage]);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8;
     const [paginated, setpaginated] = useState([]);
@@ -300,7 +309,7 @@ export default function Inventory({ auth, products }) {
             <View style={styles.titleContainer}>
                 <View style={styles.spaceBetween}>
             <Image src={Batamwater} style={styles.image} />
-                <Text style={styles.title}>Products Report</Text>
+                <Text style={styles.title}>{Language.report}</Text>
                 </View>
             </View>
                 <Text style={styles.dateTime}>
@@ -312,22 +321,22 @@ export default function Inventory({ auth, products }) {
                 <View style={styles.table}>
                     <View style={styles.tableRow}>
                         <View style={[styles.tableColHeader, styles.tableColHeader2 ]}>
-                            <Text style={styles.tableCellHeader}>SKU</Text>
+                            <Text style={styles.tableCellHeader}>{Language.tableheader.SKU}</Text>
                         </View>
                         <View style={[styles.tableCol, styles.tableColHeader2]}>
-                            <Text style={styles.tableCellHeader}>Name</Text>
+                            <Text style={styles.tableCellHeader}>{Language.tableheader.Name}</Text>
                         </View>
                         <View style={styles.tableColHeader}>
-                            <Text style={styles.tableCellHeader}>Stock</Text>
+                            <Text style={styles.tableCellHeader}>{Language.tableheader.Stock}</Text>
                         </View>
                         <View style={styles.tableColHeader}>
                             <Text style={styles.tableCellHeader}>
-                                Sales price
+                            {Language.tableheader.salesprice}
                             </Text>
                         </View>
                         <View style={styles.tableColHeader}>
                             <Text style={styles.tableCellHeader}>
-                                Standard price
+                            {Language.tableheader.COGS}
                             </Text>
                         </View>
                     </View>
@@ -405,13 +414,13 @@ export default function Inventory({ auth, products }) {
                 className="overflow-auto max-h-[80vh]"
             >
                 <DialogHeader>
-                    <Typography variant="h5">Products Detail</Typography>
+                    <Typography variant="h5">{Language.info.header}</Typography>
                 </DialogHeader>
                 <DialogBody divider>
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
-                                Code
+                                {Language.info.code}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 {selectedProducts && (
@@ -421,7 +430,7 @@ export default function Inventory({ auth, products }) {
                         </div>
                         <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
-                                Name
+                                {Language.info.name}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 {selectedProducts && (
@@ -431,7 +440,7 @@ export default function Inventory({ auth, products }) {
                         </div>
                         <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
-                                Stock
+                                {Language.info.stock}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 {selectedProducts && (
@@ -441,7 +450,7 @@ export default function Inventory({ auth, products }) {
                         </div>
                         <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
-                                Brand
+                                {Language.info.salesprice}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 {selectedProducts && (
@@ -451,7 +460,7 @@ export default function Inventory({ auth, products }) {
                         </div>
                         <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
-                                Sales price
+                                {Language.info.COGS}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 Rp{" "}
@@ -463,7 +472,7 @@ export default function Inventory({ auth, products }) {
                         </div>
                         <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
-                                Standard price
+                                {Language.info.standardprice}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 Rp{" "}
@@ -475,7 +484,7 @@ export default function Inventory({ auth, products }) {
                         </div>
                         <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
-                                Created at
+                                {Language.info.createdat}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 {selectedProducts && (
@@ -485,7 +494,7 @@ export default function Inventory({ auth, products }) {
                         </div>
                         <div className="flex flex-col">
                             <Typography variant="small" color="blue-gray">
-                                Edited at
+                                {Language.info.editedat}
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 {selectedProducts && (
@@ -506,25 +515,24 @@ export default function Inventory({ auth, products }) {
                             ))
                         }
                     >
-                        Edit Detail
+                        {Language.info.editbutton}
                     </Button>
                     <Button variant="outlined" onClick={handleOpendetail}>
-                        <span>Close</span>
+                        <span>{Language.info.closebutton}</span>
                     </Button>
                 </DialogFooter>
             </Dialog>
             <Dialog open={open} size="sm" onClose={handleOpen}>
                 <DialogHeader>
-                    <Typography variant="h5">Notification</Typography>
+                    <Typography variant="h5">{Language.delete.header}</Typography>
                 </DialogHeader>
                 <DialogBody divider className="grid place-items-center gap-4">
                     <InformationCircleIcon className="w-20 h-20 text-red-400" />
                     <Typography className="text-red-900" variant="h4">
-                        You're about to delete this item!
+                        {Language.delete.title}
                     </Typography>
                     <Typography className="text-center font-normal">
-                        This action cannot be undone. However, we will keep your
-                        data for audit purposes.
+                        {Language.delete.description}
                     </Typography>
                 </DialogBody>
                 <DialogFooter className="space-x-2">
@@ -546,10 +554,10 @@ export default function Inventory({ auth, products }) {
                             handleOpen(null);
                         }}
                     >
-                        Delete
+                        {Language.delete.confirmbutton}
                     </Button>
                     <Button variant="outlined" onClick={handleOpen}>
-                        Cancel
+                        {Language.delete.cancelbutton}
                     </Button>
                 </DialogFooter>
             </Dialog>
@@ -571,10 +579,10 @@ export default function Inventory({ auth, products }) {
                                     className="text-ungukita"
                                     textGradient
                                 >
-                                    Products
+                                    {Language.title}
                                 </Typography>
                                 <Typography variant="paragraph">
-                                    Manage your products here
+                                    {Language.subtitle}
                                 </Typography>
                             </div>
                         </div>
@@ -584,7 +592,7 @@ export default function Inventory({ auth, products }) {
                             <div className="flex gap-3">
                                 <Linkactive href={route("products.create")}>
                                     <Button className="bg-ungukita md:flex hidden">
-                                        Add
+                                        {Language.addbutton}
                                     </Button>
                                 </Linkactive>
                                 <div className="md:flex hidden">
@@ -632,7 +640,7 @@ export default function Inventory({ auth, products }) {
                             <div className="inline-flex items-center">
                                 <Input
                                     type="search"
-                                    placeholder="Search"
+                                    placeholder={Language.searchplaceholder}
                                     value={searchbar}
                                     onChange={(e) =>
                                         setsearchbar(e.target.value)
@@ -776,7 +784,7 @@ export default function Inventory({ auth, products }) {
                                                 </td>
 
                                                 <td className="p-2 flex">
-                                                    <Tooltip content="View Item">
+                                                    <Tooltip content={Language.tableaction.view}>
                                                         <IconButton
                                                             variant="text"
                                                             onClick={() =>
@@ -788,14 +796,14 @@ export default function Inventory({ auth, products }) {
                                                             <EyeIcon className="h-5 w-5 text-blue-800" />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip content="Edit Item">
+                                                    <Tooltip content={Language.tableaction.edit}>
                                                         <a href={route("products.edit",id)}>
                                                             <IconButton variant="text">
                                                                 <PencilSquareIcon className="h-5 w-5 text-green-500" />
                                                             </IconButton>
                                                         </a>
                                                     </Tooltip>
-                                                    <Tooltip content="Delete Item">
+                                                    <Tooltip content={Language.tableaction.delete}>
                                                         <a
                                                             as="button"
                                                             onClick={() =>
@@ -823,7 +831,7 @@ export default function Inventory({ auth, products }) {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    Page {currentPage} of{" "}
+                                    {Language.pagination.page} {currentPage} {Language.pagination.of}{" "}
                                     {Math.ceil(products.length / itemsPerPage)}
                                 </Typography>
                             </div>
@@ -834,7 +842,7 @@ export default function Inventory({ auth, products }) {
                                     onClick={handlePrevious}
                                     disabled={currentPage === 1}
                                 >
-                                    Previous
+                                    {Language.pagination.previous}
                                 </Button>
                                 <Button
                                     variant="outlined"
@@ -842,7 +850,7 @@ export default function Inventory({ auth, products }) {
                                     onClick={handleNext}
                                     disabled={paginated.length < itemsPerPage}
                                 >
-                                    Next
+                                    {Language.pagination.next}
                                 </Button>
                             </div>
                         </div>
