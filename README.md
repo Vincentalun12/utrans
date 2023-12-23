@@ -19,7 +19,7 @@ Utrans, website ERP yang dirancang khusus untuk membantu bisnis kecil dan meneng
 - 📱 Dashboard Intuitif
 
 
-# 📸 Preview
+# 📸 Preview (Batam Water version)
 
 ![Screenshot 1](https://media.discordapp.net/attachments/1150374149236195388/1187799656139329628/image.png)
 
