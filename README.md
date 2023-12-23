@@ -8,18 +8,18 @@
 
 Utrans, website ERP yang dirancang khusus untuk membantu bisnis kecil dan menengah dalam mengelola operasional mereka dengan lebih efisien. Utrans menyediakan platform yang user-friendly dan terintegrasi untuk mengatasi berbagai aspek bisnis, mulai dari keuangan hingga manajemen inventaris.
 
-## 🔥 Keunggulan
+# 🔥 Keunggulan
 
-- Keamanan Data
-- Multi Platform
-- Akuntansi Lengkap + Bisa disesuaikan
-- Ekspor Data & Print
-- Mudah Digunakan
-- Mendukung 2 Bahasa (Inggris & Indonesia)
-- Dashboard Intuitif
+- 🛡️ Keamanan Data
+- 🤳 Multi Platform
+- 📈 Akuntansi Lengkap + Bisa disesuaikan
+- 🖨️ Ekspor Data & Print
+- ✨ Mudah Digunakan
+- 🌏 Mendukung 2 Bahasa (Inggris & Indonesia)
+- 📱 Dashboard Intuitif
 
 
-## 📸 Preview
+# 📸 Preview
 
 ![Screenshot 1](https://media.discordapp.net/attachments/1150374149236195388/1187799656139329628/image.png)
 
@@ -30,9 +30,9 @@ Utrans, website ERP yang dirancang khusus untuk membantu bisnis kecil dan meneng
 
 ## 🧶 Komponen yang dibutuhkan
 
-Sistem ini dirancang dengan komposisi 80% React (JavaScript) dan 20% PHP
+💻 Sistem ini dirancang dengan komposisi 80% React (JavaScript) dan 20% PHP
 
-- PHP 8.2.0 atau terbaru
+- PHP 8.2.0 atau terbaru [(https://www.php.net/downloads.php)](https://www.php.net/downloads.php)
 - Git - Agar dapar clone project ini [(https://git-scm.com/downloads)](https://git-scm.com/downloads) - **atau** [GitHub Desktop](https://desktop.github.com/)
 - Localhost Software seperti [XAMPP](https://www.apachefriends.org/download.html) atau [Laragon](https://laragon.org/download/index.html) (Direkomendasikan [Laragon](https://laragon.org/download/index.html) karena kami menggunakannya) 
 - Node.js (v18.18.0+) [(https://nodejs.org/en)](https://nodejs.org/en)
@@ -41,22 +41,22 @@ Sistem ini dirancang dengan komposisi 80% React (JavaScript) dan 20% PHP
 
 ## 🪛 Petunjuk Instalasi
 
-Sebelum memulai, pastikan database MySQL & Apache sudah terinstall dan dijalankan.
+#### ⚠️ Sebelum memulai, pastikan database MySQL & Apache sudah terinstall dan dijalankan. ⚠️
 
-1. Jalankan aplikasi localhost (XAMPP, Laragon, dsb). Sesuaikan port database yaitu 3306 dan localhost secara default.
-2. Pergi ke directory yang diinginkan untuk menyimpan project ini.
-3. Ketika sudah berada di folder yang di inginkan, jalankan command dibawah ini:
+#### 1. Jalankan aplikasi localhost (XAMPP, Laragon, dsb). Sesuaikan port database yaitu 3306 dan localhost secara default.
+#### 2. Pergi ke directory yang diinginkan untuk menyimpan project ini.
+#### 3. Ketika sudah berada di folder yang di inginkan, jalankan command dibawah ini:
 ```http
 git clone https://github.com/Vincentalun12/utrans.git
 ```
-4. Setalah clone berhasil, buka Code Editor dan open folder repository yang telah di clone, lalu buka Terminal.
+#### 4. Setalah clone berhasil, buka Code Editor dan open folder repository yang telah di clone, lalu buka Terminal.
 
-Jalankan command dibawah ini untuk menginstall composer yang digunakan di repository:
 
-LAKUKAN INI TERLEBIH DAHULU JIKA COMPOSER BELUM PERNAH DI INSTALL
+Jalankan composer install jika composer sudah di download namun belum terinstall.
 ```http
 composer install
 ```
+Jalankan command dibawah ini untuk menginstall composer yang digunakan di repository:
 ```http
 composer update
 ```
@@ -74,36 +74,37 @@ Jalankan command untuk melakukan database seeding dan migration untuk melakukan 
 php artisan migrate:fresh --seed
 ```
 
-5. Ketika semua berhasil, jalankan 2 command dibawah ini dengan 2 terminal yang berbeda:
+#### 5. Ketika semua berhasil, jalankan 2 command dibawah ini dengan 2 terminal yang berbeda:
 
-Terminal 1
+**Terminal 1**
 ```http
 npm run dev
 ```
 
-Terminal 2
+**Terminal 2**
 ```http
 php artisan serve
 ```
 
-6. Jika semua step dilakukan dengan benar, maka anda sudah berhasil untuk menjalankan projek ini
+Pastikan kedua terminal dijalankan secara bersamaan.
+
+#### 6. Jika semua step dilakukan dengan benar, maka anda sudah berhasil untuk menjalankan projek ini
 
 Untuk mengunjungi website localhost bisa langsung ke URL:
 ```http
 http://127.0.0.1:8000
 ```
 
-7. Selesai! Anda sudah bisa login dengan username dan password default kami yaitu
+#### 7. Selesai! Anda sudah bisa login dengan username dan password default kami yaitu:
 
-Username:
+Username: `admin@email.com`
 
-
-Password:
+Password: `admin`
 
 ## 💎 Kelompok QWER
 
 - [@Vincentalun12](https://github.com/Vincentalun12) - Vincent [Frontend Designer]
-- [@jupitvq](https://github.com/jupitvq) - Jupiter - [Frontend & Backend Programmer]
+- [@jupitvq](https://github.com/jupitvq) - Jupiter - [Frontend & API Programmer]
 - [@Hernando17](https://github.com/Hernando17) - Hernando - [Heavy Backend Programmer]
 - Jonathan
 - Evelyne
