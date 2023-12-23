@@ -67,9 +67,6 @@ export default function Purchasingorder({ auth, purchaseOrders }) {
 
           <Card className="h-full w-full overflow-hidden rounded-none border-b items-end flex">
             <div className="inline-flex">
-            <div>
-            <Button variant="outlined"  className="w-full h-10 rounded-none">Create bill</Button>
-            </div>
             </div>
           </Card>
           <Card className="h-full w-full overflow-hidden rounded-none p-6">

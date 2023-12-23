@@ -59,12 +59,6 @@ export default function Salesorder({ auth, saleOrder }) {
           <div className="mx-auto px-4 sm:px-6 lg:px-6 w-full sm:mt-28">
           <Card className="h-full w-full overflow-hidden rounded-none border-b items-end flex">
             <div className="inline-flex">
-              <div>
-                <Button variant="outlined" className="w-full h-10 rounded-none border-r-0" onClick={() => window.location.href = route("sales.edit", saleOrder.id)}>Add Product</Button>
-              </div>
-              <div>
-                <Button variant="outlined" className="w-full h-10 rounded-none">Create Invoice</Button>
-              </div>
             </div>
           </Card>
           <Card className="h-full w-full overflow-hidden rounded-none p-6">
