@@ -157,6 +157,7 @@ const chartConfig = {
 
     let salesPercentage;
 
+
     if (yesterdayTotalSales === 0) {
         salesPercentage = todayTotalSales > 0 ? 100 : 0;
       } else {
@@ -315,20 +316,20 @@ const chartConfig = {
                                     </div>
                                 </div>
                                 <div className="flex items-center">
-                                    {salesPercentage < 0 ? (
-                                        <>
-                                            <ArrowDownIcon className="h-5 w-5 text-red-500" />
-                                            <Typography variant="body2" color="red">
-                                                {Math.abs(salesPercentage)}%
-                                            </Typography>
-                                        </>
+                                {salesPercentage < 0 ? (
+                                    <>
+                                        <ArrowDownIcon className="h-5 w-5 text-red-500" />
+                                        <Typography variant="body2" color="red">
+                                        {Math.round(Math.abs(salesPercentage))}%
+                                        </Typography>
+                                    </>
                                     ) : (
-                                        <>
-                                            <ArrowUpIcon className="h-5 w-5 text-green-500" />
-                                            <Typography variant="body2" color="green">
-                                                {salesPercentage}%
-                                            </Typography>
-                                        </>
+                                    <>
+                                        <ArrowUpIcon className="h-5 w-5 text-green-500" />
+                                        <Typography variant="body2" color="green">
+                                        {Math.round(salesPercentage)}%
+                                        </Typography>
+                                    </>
                                     )}
                                 </div>
                             </CardHeader>
@@ -445,20 +446,20 @@ const chartConfig = {
                                     </div>
                                 </div>
                                 <div className="flex items-center">
-                                    {purchasePercentage < 0 ? (
-                                        <>
-                                            <ArrowDownIcon className="h-5 w-5 text-red-500" />
-                                            <Typography variant="body2" color="red">
-                                                {Math.abs(purchasePercentage)}%
-                                            </Typography>
-                                        </>
+                                {purchasePercentage < 0 ? (
+                                    <>
+                                        <ArrowDownIcon className="h-5 w-5 text-red-500" />
+                                        <Typography variant="body2" color="red">
+                                        {Math.round(Math.abs(purchasePercentage))}%
+                                        </Typography>
+                                    </>
                                     ) : (
-                                        <>
-                                            <ArrowUpIcon className="h-5 w-5 text-green-500" />
-                                            <Typography variant="body2" color="green">
-                                                {purchasePercentage}%
-                                            </Typography>
-                                        </>
+                                    <>
+                                        <ArrowUpIcon className="h-5 w-5 text-green-500" />
+                                        <Typography variant="body2" color="green">
+                                        {Math.round(purchasePercentage)}%
+                                        </Typography>
+                                    </>
                                     )}
                                 </div>
                             </CardHeader>
@@ -491,21 +492,21 @@ const chartConfig = {
                                     </div>
                                 </div>
                                 <div className="flex items-center">
-                                    {profitPercentage < 0 ? (
+                                {profitPercentage < 0 ? (
                                         <>
                                             <ArrowDownIcon className="h-5 w-5 text-red-500" />
                                             <Typography variant="body2" color="red">
-                                                {Math.abs(profitPercentage)}%
+                                            {Math.round(Math.abs(profitPercentage))}%
                                             </Typography>
                                         </>
-                                    ) : (
+                                        ) : (
                                         <>
                                             <ArrowUpIcon className="h-5 w-5 text-green-500" />
                                             <Typography variant="body2" color="green">
-                                                {isNaN(profitPercentage) ? '0' : profitPercentage}%
+                                            {Math.round(profitPercentage)}%
                                             </Typography>
                                         </>
-                                    )}
+                                        )}
                                 </div>
                             </CardHeader>
                         </Card>
