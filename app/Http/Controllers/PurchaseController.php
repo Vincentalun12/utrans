@@ -161,7 +161,7 @@ class PurchaseController extends Controller
             DB::beginTransaction();
             $createPurchaseOrder = PurchaseOrder::create([
                 'code' => $request->code,
-                'vendor_id' => (int) $request->vendor_id,
+                'vendor_id' => (int) $request->vendor_id['value'],
                 'create_date' => Date::parse($request->create_date)->format('Y-m-d'),
                 'status' => $request->status,
                 'payment_status' => $request->payment_status,
@@ -517,7 +517,7 @@ class PurchaseController extends Controller
             }
 
             $purchaseOrder->update([
-                'vendor_id' => (int) $request->vendor_id,
+                'vendor_id' => (int) $request->vendor_id['value'],
                 'create_date' => Date::parse($request->create_date)->format('Y-m-d'),
                 'status' => $request->status,
                 'payment_status' => $request->payment_status,

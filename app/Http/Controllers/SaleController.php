@@ -85,7 +85,6 @@ class SaleController extends Controller
             $saleOrderLines->each(function ($saleOrderLine) {
                 $productId = $saleOrderLine->product_id;
                 $saleOrderLine->delete();
-                Product::updateStandardPrice($productId);
                 Product::increaseStock($productId, $saleOrderLine->quantity);
             });
 
@@ -154,7 +153,7 @@ class SaleController extends Controller
             DB::beginTransaction();
             $createSaleOrder = SaleOrder::create([
                 'code' => $request->code,
-                'customer_id' => (int) $request->customer_id,
+                'customer_id' => (int) $request->customer_id['value'],
                 'create_date' => Date::parse($request->create_date)->format('Y-m-d'),
                 'status' => $request->status,
                 'payment_status' => $request->payment_status,
@@ -464,11 +463,15 @@ class SaleController extends Controller
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
                         ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
                     } else if ($currentTotalPrice == $oldTotalPrice) {
+                        $oldTotalProductStandardPrice = $product->standard_price * $oldQuantity;
+                        $currentTotalProductStandardPrice = $product->standard_price * $currentQuantity;
                         if ($oldQuantity > $currentQuantity) {
                             $quantityDifference = $oldQuantity - $currentQuantity;
+                            $totalProductStandardPriceDifference = $oldTotalProductStandardPrice - $currentTotalProductStandardPrice;
                             Product::decreaseStock($saleOrderLine->product_id, $quantityDifference);
                         } else if ($oldQuantity < $currentQuantity) {
                             $quantityDifference = $currentQuantity - $oldQuantity;
+                            $totalProductStandardPriceDifference = $currentTotalProductStandardPrice - $oldTotalProductStandardPrice;
                             Product::increaseStock($saleOrderLine->product_id, $quantityDifference);
                         }
 
@@ -479,14 +482,9 @@ class SaleController extends Controller
                             'discount' => $listProduct['discount'],
                             'total' => $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount']
                         ]);
-
-                        Product::updateStandardPrice($saleOrderLine->product_id);
                     }
-
-                    Product::updateStandardPrice($saleOrderLine->product_id);
                 } else {
                     $productStandardPrice = Product::find($product['product_id'])->standard_price * $product['quantity'];
-
 
                     $createSaleOrderLine = SaleOrderLine::create([
                         'sale_order_id' => $saleOrder->id,
@@ -521,14 +519,13 @@ class SaleController extends Controller
                         'balance' => $productStandardPrice
                     ]);
 
-                    Product::updateStandardPrice($createSaleOrderLine->product_id);
                     ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
                     ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
                 }
             }
 
             $saleOrder->update([
-                'customer_id' => (int) $request->customer_id,
+                'customer_id' => (int) $request->customer_id['value'],
                 'create_date' => Date::parse($request->create_date)->format('Y-m-d'),
                 'status' => $request->status,
                 'payment_status' => $request->payment_status,
