@@ -246,7 +246,7 @@ class SaleController extends Controller
     {
         $saleOrder = SaleOrder::find($id);
 
-        if ($saleOrder->total_due == 0) {
+        if ($saleOrder->total_due == 0 and $saleOrder->payment_status == 'paid') {
             return redirect()->back()->with([
                 'message' => [
                     'type' => 'error',

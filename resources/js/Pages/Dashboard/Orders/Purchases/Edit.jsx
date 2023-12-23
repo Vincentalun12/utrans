@@ -77,7 +77,10 @@ export default function EditPurchaseOrder({
     purchaseOrder,
 }) {
     const { data, setData, patch, processing, errors, reset } = useForm({
-        vendor_id: purchaseOrder.vendor_id,
+        vendor_id: {
+            value: purchaseOrder.vendor_id,
+            label: purchaseOrder.name,
+        },
         reference: purchaseOrder.reference,
         status: purchaseOrder.status,
         create_date: format(new Date(purchaseOrder.create_date), "dd-MM-yyyy"),
@@ -206,10 +209,10 @@ export default function EditPurchaseOrder({
                                 <ReactSelect
                                     options={vendorOptions}
                                     value={{
-                                        value: data.vendor_id,
+                                        value: data.vendor_id.value,
                                         label: vendorOptions.find((vendor) => {
                                             return (
-                                                vendor.value === data.vendor_id
+                                                vendor.value === data.vendor_id.value
                                             );
                                         })?.label,
                                     }}
@@ -398,8 +401,8 @@ export default function EditPurchaseOrder({
                                             const total = isNaN(totalValue)
                                                 ? "0"
                                                 : totalValue.toLocaleString(
-                                                      "de-DE"
-                                                  );
+                                                    "de-DE"
+                                                );
 
                                             const isLast =
                                                 index === TABLE_ROWS.length - 1;

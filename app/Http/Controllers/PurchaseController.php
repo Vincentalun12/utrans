@@ -253,6 +253,24 @@ class PurchaseController extends Controller
 
     public function edit($id)
     {
+        $purchaseOrder = PurchaseOrder::find($id);
+
+        if ($purchaseOrder->total_due == 0 and $purchaseOrder->payment_status == 'paid') {
+            return redirect()->back()->with([
+                'message' => [
+                    'type' => 'error',
+                    'content' => "You can't edit paid sale order"
+                ]
+            ]);
+        } else if ($purchaseOrder->total_paid > 0) {
+            return redirect()->back()->with([
+                'message' => [
+                    'type' => 'error',
+                    'content' => "You can't edit sale order that already has payment"
+                ]
+            ]);
+        }
+
         $data = [
             'purchaseOrder' => PurchaseOrder::with(['vendor', 'purchaseOrderLines'])->find($id),
             'vendors' => Vendor::all(),
