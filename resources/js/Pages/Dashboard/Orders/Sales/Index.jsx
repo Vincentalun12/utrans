@@ -36,6 +36,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 import {
+    Alert,
     Card,
     CardHeader,
     Input,
@@ -91,13 +92,24 @@ const TABLE_ROWS_SHOW_PAYMENT = [
     },
 ];
 
-const paymentoptions = [
-    { value: "Cash", label: "Cash" },
-    { value: "Online", label: "Online" },
-    { value: "Inprogress", label: "In Progress" },
-];
+export default function Purchasing({ auth, saleOrders, journals }) {
+    const [paymentoptions, setPaymentoptions] = useState([]);
 
-export default function Purchasing({ auth, saleOrders }) {
+    useEffect(() => {
+        setPaymentoptions(
+            journals
+                .filter(
+                    (journal) =>
+                        journal.chart_of_account?.account_type ==
+                        "bank_and_cash"
+                )
+                .map((journal) => ({
+                    value: journal.id,
+                    label: journal.journal_name,
+                }))
+        );
+    }, []);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [paginated, setpaginated] = useState([]);
@@ -169,25 +181,66 @@ export default function Purchasing({ auth, saleOrders }) {
     };
 
     const { flash } = usePage().props;
+
+    const [isShowAlert, setIsShowAlert] = useState(false);
+
+    useEffect(() => {
+        if (flash.message) {
+            setIsShowAlert(true);
+            setTimeout(() => {
+                setIsShowAlert(false);
+                flash.message = null;
+            }, 3000);
+        }
+    }, [isShowAlert]);
+
+    const [date, setDate] = React.useState(new Date());
     const {
         data,
         setData,
         delete: destroy,
+        post,
         processing,
         errors,
         reset,
-    } = useForm({});
+    } = useForm({
+        journal_id: null,
+        date: date,
+        reference: null,
+        sale_order_id: null,
+        amount: null,
+        notes: null,
+    });
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(!open);
 
     const [openPayment, setOpenPayment] = React.useState(false);
-    const handleOpenPayment = () => setOpenPayment(!openPayment);
-
-    const [date, setDate] = React.useState(new Date());
+    const handleOpenPayment = (id) => {
+        if (id) {
+            setData("sale_order_id", id);
+            setOpenPayment(true);
+        } else {
+            setOpenPayment(false);
+        }
+    };
 
     const [deletesales, setDeletesales] = useState(null);
     const [deleteOpen, setdeleteOpen] = useState(false);
+
+    const [saleId, setSaleId] = useState(null);
+
+    const saleRegisterPayment = (e) => {
+        e.preventDefault();
+        post(route("payment.sale-register-payment"), {
+            onSuccess: () => {
+                reset();
+                setOpenPayment(false);
+                setSaleId(null);
+                setIsShowAlert(true);
+            },
+        });
+    };
 
     const handleDeleteSales = (id) => {
         if (id) {
@@ -201,6 +254,14 @@ export default function Purchasing({ auth, saleOrders }) {
     return (
         <PurchasingLayout user={auth.user}>
             <Head title="Sales" />
+            <Alert
+                className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
+                color={flash.message?.type == "success" ? "green" : "red"}
+                open={isShowAlert}
+                // icon={<Icon />}
+            >
+                {flash.message?.content}
+            </Alert>
             <Dialog open={deleteOpen} size="sm" onClose={handleDeleteSales}>
                 <DialogHeader>
                     <Typography variant="h5">Notifikasi</Typography>
@@ -250,211 +311,218 @@ export default function Purchasing({ auth, saleOrders }) {
                 onClose={handleOpenPayment}
                 className="overflow-auto max-h-[80vh]"
             >
-                <DialogHeader>
-                    <Typography variant="h5">Create Payment</Typography>
-                </DialogHeader>
-                <DialogBody divider className="grid place-items-center gap-4">
-                    <div className="w-full gap-2 md:justify-between px-4 pb-4 bg-white grid grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2">
-                        <div className="col-span-2 lg:col-span-1">
-                            <label className="">Payment Type</label>
-                            <div className="w-full text-xs mb-2 text-gray-500">
-                                * Select your payment type
-                            </div>
-                            <Select
-                                options={paymentoptions}
-                                placeholder={"Select..."}
-                                styles={{
-                                    control: (base, state) => ({
-                                        ...base,
-                                        boxShadow: state.isFocused ? 0 : 0,
-                                        borderColor: state.isFocused
-                                            ? "#1A202C"
-                                            : base.borderColor,
-                                        borderWidth: state.isFocused
-                                            ? "2px"
-                                            : "1px",
-                                        "&:hover": {
+                <form onSubmit={saleRegisterPayment}>
+                    <DialogHeader>
+                        <Typography variant="h5">Create Payment</Typography>
+                    </DialogHeader>
+                    <DialogBody
+                        divider
+                        className="grid place-items-center gap-4"
+                    >
+                        <div className="w-full gap-2 md:justify-between px-4 pb-4 bg-white grid grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2">
+                            <div className="col-span-2 lg:col-span-1">
+                                <label className="">Payment Type</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    * Select your payment type
+                                </div>
+                                <Select
+                                    required={true}
+                                    options={paymentoptions}
+                                    value={{
+                                        value: data.journal_id,
+                                        label: journals.find(
+                                            (journal) =>
+                                                journal.id === data.journal_id
+                                        )?.journal_name,
+                                    }}
+                                    onChange={(e) => {
+                                        setData("journal_id", e.value);
+                                    }}
+                                    placeholder={"Select..."}
+                                    styles={{
+                                        control: (base, state) => ({
+                                            ...base,
+                                            boxShadow: state.isFocused ? 0 : 0,
                                             borderColor: state.isFocused
                                                 ? "#1A202C"
                                                 : base.borderColor,
-                                        },
-                                        borderRadius: "6px",
-                                    }),
-                                    input: (base) => ({
-                                        ...base,
-                                        "input:focus": {
-                                            boxShadow: "none",
-                                        },
-                                    }),
-                                }}
-                            />
-                        </div>
-                        <div className="col-span-2 lg:col-span-1">
-                            <label className="">Payment Date</label>
-                            <div className="w-full text-xs mb-2 text-gray-500">
-                                * Pick your payment date
+                                            borderWidth: state.isFocused
+                                                ? "2px"
+                                                : "1px",
+                                            "&:hover": {
+                                                borderColor: state.isFocused
+                                                    ? "#1A202C"
+                                                    : base.borderColor,
+                                            },
+                                            borderRadius: "6px",
+                                        }),
+                                        input: (base) => ({
+                                            ...base,
+                                            "input:focus": {
+                                                boxShadow: "none",
+                                            },
+                                        }),
+                                    }}
+                                />
+                                {errors.journal_id && (
+                                    <p className="text-red-500 text-sm">
+                                        {errors.journal_id}
+                                    </p>
+                                )}
                             </div>
-                            <Popover placement="bottom" trigger="click">
-                                <PopoverHandler>
-                                    <Input
-                                        type="text"
-                                        placeholder="2023-05-12"
-                                        icon={<CalendarDaysIcon />}
-                                        value={format(date, "dd-MM-yyyy")}
-                                        onChange={(e) => {
-                                            const newDate = parse(
-                                                e.target.value,
-                                                "dd-MM-yyyy",
-                                                new Date()
-                                            );
-                                            if (!isNaN(newDate)) {
-                                                setDate(newDate);
-                                            }
-                                        }}
-                                        className="  placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                                        labelProps={{
-                                            className:
-                                                "before:content-none after:content-none",
-                                        }}
-                                    />
-                                </PopoverHandler>
-                                <PopoverContent className="z-[9999]">
-                                    <DayPicker
-                                        mode="single"
-                                        selected={date}
-                                        onSelect={(selectedDate) => {
-                                            if (selectedDate) {
-                                                setDate(selectedDate);
-                                            }
-                                        }}
-                                        showOutsideDays
-                                        className="border-0 !z-[9999]"
-                                        classNames={{
-                                            caption:
-                                                "flex justify-center py-2 mb-4 relative items-center",
-                                            caption_label:
-                                                "text-sm font-medium text-gray-900",
-                                            nav: "flex items-center",
-                                            nav_button:
-                                                "h-6 w-6 bg-transparent hover:bg-blue-gray-50 p-1 rounded-md transition-colors duration-300",
-                                            nav_button_previous:
-                                                "absolute left-1.5",
-                                            nav_button_next:
-                                                "absolute right-1.5",
-                                            table: "w-full border-collapse",
-                                            head_row:
-                                                "flex font-medium text-gray-900",
-                                            head_cell:
-                                                "m-0.5 w-9 font-normal text-sm",
-                                            row: "flex w-full mt-2",
-                                            cell: "text-gray-600 rounded-md h-9 w-9 text-center text-sm p-0 m-0.5 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-900/20 [&:has([aria-selected].day-outside)]:text-white [&:has([aria-selected])]:bg-gray-900/50 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                                            day: "h-9 w-9 p-0 font-normal",
-                                            day_range_end: "day-range-end",
-                                            day_selected:
-                                                "rounded-md bg-gray-900 text-white hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white",
-                                            day_today:
-                                                "rounded-md bg-gray-200 text-gray-900",
-                                            day_outside:
-                                                "day-outside text-gray-500 opacity-50 aria-selected:bg-gray-500 aria-selected:text-gray-900 aria-selected:bg-opacity-10",
-                                            day_disabled:
-                                                "text-gray-500 opacity-50",
-                                            day_hidden: "invisible",
-                                        }}
-                                        components={{
-                                            IconLeft: ({ ...props }) => (
-                                                <ChevronLeftIcon
-                                                    {...props}
-                                                    className="h-4 w-4 stroke-2"
-                                                />
-                                            ),
-                                            IconRight: ({ ...props }) => (
-                                                <ChevronRightIcon
-                                                    {...props}
-                                                    className="h-4 w-4 stroke-2"
-                                                />
-                                            ),
-                                        }}
-                                    />
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-                        <div className="2xl:col-span-2 col-span-2">
-                            <label className="">Paying Amount</label>
-                            <div className="w-full text-xs mb-2 text-gray-500">
-                                * Input your payment amount
+                            <div className="col-span-2 lg:col-span-1">
+                                <label className="">Payment Date</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    * Pick your payment date
+                                </div>
+                                <Popover placement="bottom" trigger="click">
+                                    <PopoverHandler>
+                                        <Input
+                                            required={true}
+                                            type="text"
+                                            placeholder="2023-05-12"
+                                            icon={<CalendarDaysIcon />}
+                                            value={format(
+                                                data.date,
+                                                "dd-MM-yyyy"
+                                            )}
+                                            onChange={(e) => {
+                                                const newDate = parse(
+                                                    e.target.value,
+                                                    "dd-MM-yyyy",
+                                                    new Date()
+                                                );
+                                                if (!isNaN(newDate)) {
+                                                    setData("date", newDate);
+                                                }
+                                            }}
+                                            className="  placeholder:text-gray-600 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                            labelProps={{
+                                                className:
+                                                    "before:content-none after:content-none hidden",
+                                            }}
+                                        />
+                                    </PopoverHandler>
+                                    <PopoverContent className="z-[9999]">
+                                        <DayPicker
+                                            mode="single"
+                                            selected={data.date}
+                                            onSelect={(selectedDate) => {
+                                                if (selectedDate) {
+                                                    setData(
+                                                        "date",
+                                                        selectedDate
+                                                    );
+                                                }
+                                            }}
+                                            showOutsideDays
+                                            className="border-0 !z-[9999]"
+                                            classNames={{
+                                                caption:
+                                                    "flex justify-center py-2 mb-4 relative items-center",
+                                                caption_label:
+                                                    "text-sm font-medium text-gray-900",
+                                                nav: "flex items-center",
+                                                nav_button:
+                                                    "h-6 w-6 bg-transparent hover:bg-blue-gray-50 p-1 rounded-md transition-colors duration-300",
+                                                nav_button_previous:
+                                                    "absolute left-1.5",
+                                                nav_button_next:
+                                                    "absolute right-1.5",
+                                                table: "w-full border-collapse",
+                                                head_row:
+                                                    "flex font-medium text-gray-900",
+                                                head_cell:
+                                                    "m-0.5 w-9 font-normal text-sm",
+                                                row: "flex w-full mt-2",
+                                                cell: "text-gray-600 rounded-md h-9 w-9 text-center text-sm p-0 m-0.5 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-900/20 [&:has([aria-selected].day-outside)]:text-white [&:has([aria-selected])]:bg-gray-900/50 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                                                day: "h-9 w-9 p-0 font-normal",
+                                                day_range_end: "day-range-end",
+                                                day_selected:
+                                                    "rounded-md bg-gray-900 text-white hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white",
+                                                day_today:
+                                                    "rounded-md bg-gray-200 text-gray-900",
+                                                day_outside:
+                                                    "day-outside text-gray-500 opacity-50 aria-selected:bg-gray-500 aria-selected:text-gray-900 aria-selected:bg-opacity-10",
+                                                day_disabled:
+                                                    "text-gray-500 opacity-50",
+                                                day_hidden: "invisible",
+                                            }}
+                                            components={{
+                                                IconLeft: ({ ...props }) => (
+                                                    <ChevronLeftIcon
+                                                        {...props}
+                                                        className="h-4 w-4 stroke-2"
+                                                    />
+                                                ),
+                                                IconRight: ({ ...props }) => (
+                                                    <ChevronRightIcon
+                                                        {...props}
+                                                        className="h-4 w-4 stroke-2"
+                                                    />
+                                                ),
+                                            }}
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                                {errors.date && (
+                                    <p className="text-red-500 text-sm">
+                                        {errors.date}
+                                    </p>
+                                )}
                             </div>
-                            <div className="flex">
-                                <Button
-                                    ripple={false}
-                                    variant="text"
-                                    color="blue-gray"
-                                    className="normal-case text-bold h-10 flex items-center rounded-r-none border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 px-3"
-                                >
-                                    Rp
-                                </Button>
-                                <div className="relative flex-grow">
-                                    <Input
-                                        type="number"
-                                        className="placeholder:text-gray-600 rounded-tl-none rounded-bl-none placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                                        labelProps={{
-                                            className:
-                                                "before:content-none after:content-none",
-                                        }}
-                                    />
+                            <div className="2xl:col-span-2 col-span-2">
+                                <label className="">Paying Amount</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    * Input your payment amount
+                                </div>
+                                <div className="flex">
+                                    <Button
+                                        ripple={false}
+                                        variant="text"
+                                        color="blue-gray"
+                                        className="normal-case text-bold h-10 flex items-center rounded-r-none border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 px-3"
+                                    >
+                                        Rp
+                                    </Button>
+                                    <div className="relative flex-grow">
+                                        <Input
+                                            required={true}
+                                            type="number"
+                                            value={data.amount}
+                                            onChange={(e) => {
+                                                setData(
+                                                    "amount",
+                                                    e.target.value
+                                                );
+                                            }}
+                                            className="placeholder:text-gray-600 rounded-tl-none rounded-bl-none placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                            labelProps={{
+                                                className:
+                                                    "before:content-none after:content-none hidden",
+                                            }}
+                                        />
+                                        {errors.amount && (
+                                            <p className="text-red-500 text-sm">
+                                                {errors.amount}
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="2xl:col-span-2 col-span-2">
-                            <label className="">Received Amount</label>
-                            <div className="w-full text-xs mb-2 text-gray-500">
-                                * Input your received amount
-                            </div>
-                            <div className="flex">
-                                <Button
-                                    ripple={false}
-                                    variant="text"
-                                    color="blue-gray"
-                                    className="normal-case text-bold h-10 flex items-center rounded-r-none border border-r-0 border-blue-gray-200 bg-blue-gray-500/10 px-3"
-                                >
-                                    Rp
-                                </Button>
-                                <div className="relative flex-grow">
-                                    <Input
-                                        type="number"
-                                        className="placeholder:text-gray-600 rounded-tl-none rounded-bl-none placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                                        labelProps={{
-                                            className:
-                                                "before:content-none after:content-none",
-                                        }}
-                                    />
+                            <div className="2xl:col-span-2 col-span-2">
+                                <label className="">Reference</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    * Create your own reference. Ex:
+                                    INV/2023/11/001
                                 </div>
-                            </div>
-                        </div>
-                        <div className="2xl:col-span-2 col-span-2">
-                            <label className="">Reference</label>
-                            <div className="w-full text-xs mb-2 text-gray-500">
-                                * Create your own reference. Ex: INV/2023/11/001
-                            </div>
-                            <Input
-                                type="input"
-                                placeholder="Reference"
-                                className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
-                                labelProps={{
-                                    className:
-                                        "before:content-none after:content-none",
-                                }}
-                            />
-                        </div>
-                        <div className="col-span-2 lg:col-span-2">
-                            <label className="">Additional Notes</label>
-                            <div className="w-full text-xs mb-2 text-gray-500">
-                                * Set your some notes
-                            </div>
-                            <div className="flex">
-                                <Textarea
+                                <Input
                                     type="input"
-                                    size="md"
-                                    placeholder="Notes"
+                                    value={data.reference}
+                                    onChange={(e) => {
+                                        setData("reference", e.target.value);
+                                    }}
+                                    placeholder="Reference"
                                     className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
                                     labelProps={{
                                         className:
@@ -462,17 +530,39 @@ export default function Purchasing({ auth, saleOrders }) {
                                     }}
                                 />
                             </div>
+                            <div className="col-span-2 lg:col-span-2">
+                                <label className="">Additional Notes</label>
+                                <div className="w-full text-xs mb-2 text-gray-500">
+                                    * Set your some notes
+                                </div>
+                                <div className="flex">
+                                    <Textarea
+                                        type="input"
+                                        value={data.notes}
+                                        onChange={(e) => {
+                                            setData("notes", e.target.value);
+                                        }}
+                                        size="md"
+                                        placeholder="Notes"
+                                        className="  placeholder:text-gray-600 placeholder:opacity-100 !border-t-blue-gray-200 focus:!border-ungukita focus:ring-ungukita"
+                                        labelProps={{
+                                            className:
+                                                "before:content-none after:content-none",
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </DialogBody>
-                <DialogFooter className="space-x-2">
-                    <Button variant="gradient" color="green">
-                        Submit
-                    </Button>
-                    <Button variant="outlined" onClick={handleOpenPayment}>
-                        Cancel
-                    </Button>
-                </DialogFooter>
+                    </DialogBody>
+                    <DialogFooter className="space-x-2">
+                        <Button type="submit" variant="gradient" color="green">
+                            Submit
+                        </Button>
+                        <Button variant="outlined" onClick={handleOpenPayment}>
+                            Cancel
+                        </Button>
+                    </DialogFooter>
+                </form>
             </Dialog>
             <Dialog open={open} size="md" onClose={handleOpen}>
                 <DialogHeader>
@@ -607,7 +697,7 @@ export default function Purchasing({ auth, saleOrders }) {
                                     </Button>
                                 </Linkactive>
                                 <div className="md:flex hidden">
-                                    <Menu placement="right-start">
+                                    {/* <Menu placement="right-start">
                                         <MenuHandler>
                                             <IconButton className="bg-ungukita">
                                                 <DocumentTextIcon className="w-5 h-5" />
@@ -629,7 +719,7 @@ export default function Purchasing({ auth, saleOrders }) {
                                                 Export as CSV
                                             </MenuItem>
                                         </MenuList>
-                                    </Menu>
+                                    </Menu> */}
                                 </div>
                                 <IconButton className="bg-ungukita flex md:hidden">
                                     <PlusIcon className="w-5 h-5" />
@@ -876,16 +966,18 @@ export default function Purchasing({ auth, saleOrders }) {
                                                                     Edit Sales
                                                                 </MenuItem>
                                                                 <MenuItem
-                                                                    onClick={
-                                                                        handleOpenPayment
-                                                                    }
+                                                                    onClick={() => {
+                                                                        handleOpenPayment(
+                                                                            id
+                                                                        );
+                                                                    }}
                                                                     className="flex items-center gap-2"
                                                                 >
                                                                     <PlusCircleIcon className="w-5 h-5" />
                                                                     Create
                                                                     Payment
                                                                 </MenuItem>
-                                                                <MenuItem
+                                                                {/* <MenuItem
                                                                     onClick={
                                                                         handleOpen
                                                                     }
@@ -897,7 +989,7 @@ export default function Purchasing({ auth, saleOrders }) {
                                                                 <MenuItem className="flex items-center gap-2">
                                                                     <ArrowDownTrayIcon className="w-5 h-5" />
                                                                     Download PDF
-                                                                </MenuItem>
+                                                                </MenuItem> */}
                                                                 <MenuItem
                                                                     className="flex items-center gap-2 !text-white hover:!text-white !bg-red-500 hover:!bg-red-900"
                                                                     onClick={() =>

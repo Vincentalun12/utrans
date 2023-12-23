@@ -119,7 +119,6 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
     const [paymentoptions, setPaymentoptions] = useState([]);
 
     useEffect(() => {
-        console.log(journals);
         setPaymentoptions(
             journals
                 .filter(
@@ -702,7 +701,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                     </Button>
                                 </Linkactive>
                                 <div className="md:flex hidden">
-                                    <Menu placement="right-start">
+                                    {/* <Menu placement="right-start">
                                         <MenuHandler>
                                             <IconButton className="bg-ungukita">
                                                 <DocumentTextIcon className="w-5 h-5" />
@@ -724,7 +723,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                 Export as CSV
                                             </MenuItem>
                                         </MenuList>
-                                    </Menu>
+                                    </Menu> */}
                                 </div>
                                 <IconButton className="bg-ungukita flex md:hidden">
                                     <PlusIcon className="w-5 h-5" />
@@ -933,7 +932,16 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                         }
                                                         className="font-normal"
                                                     >
-                                                        Rp{total_due}
+                                                        {`
+                                                            Rp ${
+                                                                total_due &&
+                                                                Intl.NumberFormat(
+                                                                    "id"
+                                                                ).format(
+                                                                    total_due
+                                                                )
+                                                            }
+                                                        `}
                                                     </Typography>
                                                 </td>
                                                 <td className="p-2 border-gray-200 pl-4">
@@ -988,7 +996,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                                     Create
                                                                     Payment
                                                                 </MenuItem>
-                                                                <MenuItem
+                                                                {/* <MenuItem
                                                                     onClick={
                                                                         handleOpen
                                                                     }
@@ -1000,7 +1008,7 @@ export default function Purchasing({ auth, purchaseOrders, journals }) {
                                                                 <MenuItem className="flex items-center gap-2">
                                                                     <ArrowDownTrayIcon className="w-5 h-5" />
                                                                     Download PDF
-                                                                </MenuItem>
+                                                                </MenuItem> */}
                                                                 <MenuItem
                                                                     className="flex items-center gap-2 !text-white hover:!text-white !bg-red-500 hover:!bg-red-900"
                                                                     onClick={() =>

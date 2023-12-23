@@ -10,7 +10,7 @@ use App\Models\JournalEntries;
 use App\Models\JournalItem;
 use App\Models\Setting;
 use App\Models\ChartOfAccount;
-
+use App\Models\Journal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Inertia\Inertia;
@@ -21,7 +21,8 @@ class SaleController extends Controller
     public function index()
     {
         $data = [
-            'saleOrders' => SaleOrder::with(['customer'])->get()
+            'saleOrders' => SaleOrder::with(['customer'])->get(),
+            'journals' => Journal::with(['chart_of_account'])->get(),
         ];
 
         return Inertia::render('Dashboard/Orders/Sales/Index', $data);
@@ -51,6 +52,22 @@ class SaleController extends Controller
         $saleOrder = SaleOrder::find($id);
         $journalEntries = JournalEntries::where('sale_order_id', $id)->get();
         $saleOrderLines = SaleOrderLine::where('sale_order_id', $id)->get();
+
+        if ($saleOrder->total_due == 0) {
+            return redirect()->back()->with([
+                'message' => [
+                    'type' => 'error',
+                    'content' => "Sale order has been paid!"
+                ]
+            ]);
+        } else if ($saleOrder->total_paid > 0) {
+            return redirect()->back()->with([
+                'message' => [
+                    'type' => 'error',
+                    'content' => "Sale order already has payment!"
+                ]
+            ]);
+        }
 
         try {
             DB::beginTransaction();
@@ -175,6 +192,8 @@ class SaleController extends Controller
             ]);
 
             foreach ($request->products as $product) {
+                $productStandardPrice = Product::find($product['product_id'])->standard_price * $product['quantity'];
+
                 $createSaleOrderLine = SaleOrderLine::create([
                     'sale_order_id' => $createSaleOrder->id,
                     'product_id' => $product['product_id'],
@@ -201,8 +220,8 @@ class SaleController extends Controller
                     'account_id' => $setting->inventory_account_id,
                     'label' => $product['product_name'] . " - " . "Stock Valuation",
                     'debit' => 0,
-                    'credit' => $createSaleOrderLine->total,
-                    'balance' => -$createSaleOrderLine->total
+                    'credit' => $productStandardPrice,
+                    'balance' => -$productStandardPrice
                 ]);
 
                 ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
@@ -370,15 +389,24 @@ class SaleController extends Controller
                             'balance' => -$totalPriceDifference
                         ]);
 
+                        $oldTotalProductStandardPrice = $product->standard_price * $oldQuantity;
+                        $currentTotalProductStandardPrice = $product->standard_price * $currentQuantity;
+
+                        if ($oldTotalProductStandardPrice > $currentTotalProductStandardPrice) {
+                            $totalProductStandardPriceDifference = $oldTotalProductStandardPrice - $currentTotalProductStandardPrice;
+                        } else {
+                            $totalProductStandardPriceDifference = $currentTotalProductStandardPrice - $oldTotalProductStandardPrice;
+                        }
+
                         JournalItem::create([
                             'journal_entry_id' => $createStockValuationJournalEntry->id,
                             'chart_of_account_id' => $setting->inventory_account_id,
                             'sale_order_line_id' => $saleOrderLine->id,
                             'account_id' => $setting->inventory_account_id,
                             'label' => $product->name . " - " . "Stock Valuation",
-                            'debit' => $totalPriceDifference,
+                            'debit' => $totalProductStandardPriceDifference,
                             'credit' => 0,
-                            'balance' => $totalPriceDifference
+                            'balance' => $totalProductStandardPriceDifference
                         ]);
 
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
@@ -413,15 +441,24 @@ class SaleController extends Controller
                             'balance' => $totalPriceDifference
                         ]);
 
+                        $oldTotalProductStandardPrice = $product->standard_price * $oldQuantity;
+                        $currentTotalProductStandardPrice = $product->standard_price * $currentQuantity;
+
+                        if ($oldTotalProductStandardPrice > $currentTotalProductStandardPrice) {
+                            $totalProductStandardPriceDifference = $oldTotalProductStandardPrice - $currentTotalProductStandardPrice;
+                        } else {
+                            $totalProductStandardPriceDifference = $currentTotalProductStandardPrice - $oldTotalProductStandardPrice;
+                        }
+
                         JournalItem::create([
                             'journal_entry_id' => $createStockValuationJournalEntry->id,
                             'chart_of_account_id' => $setting->inventory_account_id,
                             'sale_order_line_id' => $saleOrderLine->id,
                             'account_id' => $setting->inventory_account_id,
                             'label' => "Stock Valuation - $product->name",
-                            'debit' => $totalPriceDifference,
+                            'debit' => $totalProductStandardPriceDifference,
                             'credit' => 0,
-                            'balance' => $totalPriceDifference
+                            'balance' => $totalProductStandardPriceDifference
                         ]);
 
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
@@ -448,6 +485,9 @@ class SaleController extends Controller
 
                     Product::updateStandardPrice($saleOrderLine->product_id);
                 } else {
+                    $productStandardPrice = Product::find($product['product_id'])->standard_price * $product['quantity'];
+
+
                     $createSaleOrderLine = SaleOrderLine::create([
                         'sale_order_id' => $saleOrder->id,
                         'product_id' => $listProduct['product_id'],
@@ -476,9 +516,9 @@ class SaleController extends Controller
                         'chart_of_account_id' => $setting->inventory_account_id,
                         'sale_order_line_id' => $createSaleOrderLine->id,
                         'label' => "Stock Valuation - $product->name",
-                        'debit' => $totalPrice,
+                        'debit' => $productStandardPrice,
                         'credit' => 0,
-                        'balance' => $totalPrice
+                        'balance' => $productStandardPrice
                     ]);
 
                     Product::updateStandardPrice($createSaleOrderLine->product_id);

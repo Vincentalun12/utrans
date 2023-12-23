@@ -100,6 +100,7 @@ Route::controller(PurchaseController::class)->group(function () {
 Route::controller(PaymentController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/payment/purchase-register-payment', 'purchaseRegisterPayment')->name('payment.purchase-register-payment');
+        Route::post('/payment/sale-register-payment', 'saleRegisterPayment')->name('payment.sale-register-payment');
     });
 });
 
