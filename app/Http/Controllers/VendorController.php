@@ -6,13 +6,26 @@ use App\Models\Vendor;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use GuzzleHttp\Client;
 
 class VendorController extends Controller
 {
+    private $client;
+
+    public function __construct()
+    {
+        $this->client = new Client([
+            'base_uri' => env('UTRANS_API_BASE_URL'),
+        ]);
+    }
+
     public function index()
     {
+        $request = $this->client->get('Vendor');
+        $response = json_decode($request->getBody()->getContents());
+
         $data = [
-            'vendors' => Vendor::all()
+            'vendors' => $response
         ];
 
         return Inertia::render('Dashboard/Partners/Vendors/Index', $data);

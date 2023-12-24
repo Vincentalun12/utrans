@@ -20,7 +20,7 @@ class BrandController extends Controller
 
     public function index()
     {
-        $request = $this->client->request('GET', '/api/Brand');
+        $request = $this->client->get('Brand');
 
         $response = json_decode($request->getBody()->getContents());
 
@@ -47,7 +47,7 @@ class BrandController extends Controller
             'name' => 'required',
         ]);
 
-        $this->client->request('POST', '/api/Brand', [
+        $this->client->request('POST', 'Brand', [
             'json' => [
                 'code' => $request->code,
                 'name' => $request->name,
@@ -67,7 +67,7 @@ class BrandController extends Controller
 
     public function edit($id)
     {
-        $request = $this->client->request('GET', '/api/Brand/' . $id);
+        $request = $this->client->request('GET', 'Brand/' . $id);
 
         $response = json_decode($request->getBody()->getContents());
 
@@ -78,7 +78,7 @@ class BrandController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->client->request('PUT', '/api/Brand/' . $id, [
+        $this->client->request('PUT', 'Brand/' . $id, [
             'json' => [
                 'name' => $request->name,
                 'number' => $request->number,
@@ -97,7 +97,7 @@ class BrandController extends Controller
 
     public function destroy($id)
     {
-        $this->client->request('DELETE', '/api/Brand/' . $id);
+        $this->client->request('DELETE', 'Brand/' . $id);
 
         return redirect()->route('brands')->with([
             'message' => [

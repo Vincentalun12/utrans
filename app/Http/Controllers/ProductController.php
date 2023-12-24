@@ -7,13 +7,26 @@ use App\Models\Brand;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use GuzzleHttp\Client;
 
 class ProductController extends Controller
 {
+    private $client;
+
+    public function __construct()
+    {
+        $this->client = new Client([
+            'base_uri' => env('UTRANS_API_BASE_URL'),
+        ]);
+    }
+
     public function index()
     {
+        $request = $this->client->get('Product');
+        $response = json_decode($request->getBody()->getContents());
+
         $data = [
-            'products' => Product::with(['brand'])->get()
+            'products' => $response
         ];
 
         return Inertia::render('Dashboard/Inventory/Products/Index', $data);
