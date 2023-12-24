@@ -17,7 +17,7 @@ let Language = new LocalizedStrings({
         "products": {
             "title": "Produk Terbaru",
             "description": "Tabel ini menunjukkan 5 produk terbaru yang ditambahkan ke persediaan Anda.",
-            "view": "Lihat Semua",
+            "view": "Lihat",
             "totalproduct": "Total Produk:",
             "newproduct": "Produk Baru Hari Ini:",
         },
@@ -46,7 +46,7 @@ let Language = new LocalizedStrings({
         "products": {
             "title": "Recently Added Products",
             "description": "This table shows newest 5 products added to your inventory.",
-            "view": "View All",
+            "view": "View",
             "totalproduct": "Total Product:",
             "newproduct": "New Product Today:",
         },

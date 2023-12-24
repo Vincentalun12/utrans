@@ -2,7 +2,7 @@ import LocalizedStrings from "react-localization";
 
 let Language = new LocalizedStrings({
     id: {
-        "Dashboard": "Home",
+        "Dashboard": "Dasbor",
         "Inventory": "Gudang",
         "Products": "Produk",
         "Brand": "Merek",
