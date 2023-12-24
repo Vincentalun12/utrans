@@ -5,13 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use GuzzleHttp\Client;
 
 class BrandController extends Controller
 {
+    private $client;
+
+    public function __construct()
+    {
+        $this->client = new Client([
+            'base_uri' => env('UTRANS_API_BASE_URL'),
+        ]);
+    }
+
     public function index()
     {
+        $request = $this->client->request('GET', '/api/Brand');
+
+        $response = json_decode($request->getBody()->getContents());
+
         $data = [
-            'brands' => Brand::all(),
+            'brands' => $response,
         ];
 
         return Inertia::render('Dashboard/Inventory/Brand/Index', $data);
@@ -33,12 +47,14 @@ class BrandController extends Controller
             'name' => 'required',
         ]);
 
-        Brand::create([
-            'code' => $request->code,
-            'name' => $request->name,
-            'number' => $request->number,
-            'email' => $request->email,
-            'website' => $request->website,
+        $this->client->request('POST', '/api/Brand', [
+            'json' => [
+                'code' => $request->code,
+                'name' => $request->name,
+                'number' => $request->number,
+                'email' => $request->email,
+                'website' => $request->website,
+            ]
         ]);
 
         return redirect()->route('brands')->with([
@@ -51,22 +67,24 @@ class BrandController extends Controller
 
     public function edit($id)
     {
-        $brand = Brand::findOrFail($id);
+        $request = $this->client->request('GET', '/api/Brand/' . $id);
+
+        $response = json_decode($request->getBody()->getContents());
 
         return Inertia::render('Dashboard/Inventory/Brand/Edit', [
-            'brand' => $brand,
+            'brand' => $response,
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $brand = Brand::findOrFail($id);
-
-        $brand->update([
-            'name' => $request->name,
-            'number' => $request->number,
-            'email' => $request->email,
-            'website' => $request->website,
+        $this->client->request('PUT', '/api/Brand/' . $id, [
+            'json' => [
+                'name' => $request->name,
+                'number' => $request->number,
+                'email' => $request->email,
+                'website' => $request->website,
+            ]
         ]);
 
         return redirect()->route('brands')->with([
@@ -79,9 +97,7 @@ class BrandController extends Controller
 
     public function destroy($id)
     {
-        $brand = Brand::findOrFail($id);
-
-        $brand->delete();
+        $this->client->request('DELETE', '/api/Brand/' . $id);
 
         return redirect()->route('brands')->with([
             'message' => [
