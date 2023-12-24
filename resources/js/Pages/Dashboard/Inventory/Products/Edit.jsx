@@ -31,7 +31,9 @@ const options = [
 ];
 
 export default function AddProduct({ auth, brands, product }) {
-    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+    const [selectedLanguage, setSelectedLanguage] = useState(
+        localStorage.getItem("language") || "en"
+    );
 
     useEffect(() => {
         Language.setLanguage(selectedLanguage);
@@ -39,7 +41,7 @@ export default function AddProduct({ auth, brands, product }) {
 
     const { data, setData, patch, processing, errors, reset } = useForm({
         name: product.name,
-        brand_id: product.brand?.id,
+        brand_id: product.brand_id,
         description: product.description,
         sales_price: product.sales_price,
     });
@@ -75,7 +77,9 @@ export default function AddProduct({ auth, brands, product }) {
                         <form onSubmit={actionSubmit}>
                             <div className="grid lg:gap-8 grid-cols-1 gap-4 p-4 mx-4 mt-5">
                                 <div className="sm:col-span-1">
-                                    <Typography>{Language.name.name}</Typography>
+                                    <Typography>
+                                        {Language.name.name}
+                                    </Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         {Language.name.description}
                                     </div>
@@ -99,7 +103,9 @@ export default function AddProduct({ auth, brands, product }) {
                                     )}
                                 </div>
                                 <div className="sm:col-span-1">
-                                    <Typography>{Language.brand.name}</Typography>
+                                    <Typography>
+                                        {Language.brand.name}
+                                    </Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
                                         {Language.brand.description}{" "}
                                     </div>
@@ -129,9 +135,7 @@ export default function AddProduct({ auth, brands, product }) {
                                             value: brand?.id,
                                             label: brand?.name,
                                         }))}
-                                        placeholder={
-                                            Language.brand.placeholder
-                                        }
+                                        placeholder={Language.brand.placeholder}
                                         styles={{
                                             control: (base, state) => ({
                                                 ...base,
@@ -167,14 +171,18 @@ export default function AddProduct({ auth, brands, product }) {
                                 </div>
                                 <div>
                                     <div className="sm:col-span-1">
-                                        <Typography>{Language.description.name}</Typography>
+                                        <Typography>
+                                            {Language.description.name}
+                                        </Typography>
                                         <div className="w-full text-xs mb-2 text-gray-500">
                                             {Language.description.description}
                                         </div>
                                         <Textarea
                                             type="input"
                                             size="md"
-                                            placeholder={Language.description.placeholder}
+                                            placeholder={
+                                                Language.description.placeholder
+                                            }
                                             value={data.description}
                                             onChange={(e) => {
                                                 setData(
@@ -197,7 +205,9 @@ export default function AddProduct({ auth, brands, product }) {
                                 </div>
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     <div className="col-span-2 lg:col-span-2">
-                                        <Typography>{Language.salesprice.name}</Typography>
+                                        <Typography>
+                                            {Language.salesprice.name}
+                                        </Typography>
                                         <div className="w-full text-xs mb-2 text-gray-500">
                                             {Language.salesprice.description}
                                         </div>

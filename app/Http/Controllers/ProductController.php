@@ -125,7 +125,9 @@ class ProductController extends Controller
             ];
         }
 
-        $product->update($updateData);
+        $request = $this->client->request('PUT', 'Product/' . $id, [
+            'json' => $updateData
+        ]);
 
         return redirect()->route('products')->with([
             'message' => [
@@ -137,9 +139,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        $product = Product::find($id);
-
-        $product->delete();
+        $request = $this->client->request('DELETE', 'Product/' . $id);
 
         return redirect()->route('products')->with([
             'message' => [

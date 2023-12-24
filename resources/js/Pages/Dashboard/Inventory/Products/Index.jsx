@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Linkactive from "@/Components/Linkactive";
 import { Head, Link, usePage, useForm } from "@inertiajs/react";
 import { Global, css } from "@emotion/react";
-import { Batamwater } from '@/Assets';
+import { Batamwater } from "@/Assets";
 import { Language } from "@/Languages/Inventory/Products/ProductIndex";
 import {
     PDFDownloadLink,
@@ -54,8 +54,7 @@ import {
 import {
     DocumentArrowDownIcon,
     DocumentChartBarIcon,
-}
-from "@heroicons/react/24/outline";
+} from "@heroicons/react/24/outline";
 
 import {
     TrashIcon as TrashIconSolid,
@@ -78,8 +77,9 @@ const TABLE_HEAD = [
 ];
 
 export default function Inventory({ auth, products }) {
-
-    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+    const [selectedLanguage, setSelectedLanguage] = useState(
+        localStorage.getItem("language") || "en"
+    );
 
     useEffect(() => {
         Language.setLanguage(selectedLanguage);
@@ -194,12 +194,12 @@ export default function Inventory({ auth, products }) {
             paddingLeft: 40,
             paddingRight: 40,
             lineHeight: 1.5,
-            flexDirection: 'column' 
+            flexDirection: "column",
         },
-        
+
         title: {
-            fontSize: 16,  
-            textAlign: 'center',
+            fontSize: 16,
+            textAlign: "center",
             marginBottom: 5,
             marginLeft: "9%",
             marginRight: "9%",
@@ -212,19 +212,19 @@ export default function Inventory({ auth, products }) {
             marginLeft: "9%",
             marginRight: "9%",
         },
-        spaceBetween : {
-            flex : 1,
-            flexDirection: 'row',
-            alignItems:'center',
-            justifyContent:'space-between',
-            color: "#3E3E3E" 
+        spaceBetween: {
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            color: "#3E3E3E",
         },
 
         titleContainer: {
-            flexDirection: 'row',
-            marginTop: 24
+            flexDirection: "row",
+            marginTop: 24,
         },
-        
+
         table: {
             display: "table",
             width: "80%",
@@ -234,53 +234,58 @@ export default function Inventory({ auth, products }) {
             borderRightWidth: 0,
             borderBottomWidth: 0,
         },
-        
+
         tableRow: {
             flexDirection: "row",
             justifyContent: "space-between",
-            width:'100%',
+            width: "100%",
         },
         tableColHeader: {
             flex: 1,
             backgroundColor: "#f8f4f4",
-            paddingTop: 4 , paddingLeft: 7 ,
-            borderColor : 'whitesmoke',
-            backgroundColor : '#DEDEDE',
-            borderRightWidth:1, borderBottomWidth:1
+            paddingTop: 4,
+            paddingLeft: 7,
+            borderColor: "whitesmoke",
+            backgroundColor: "#DEDEDE",
+            borderRightWidth: 1,
+            borderBottomWidth: 1,
         },
         tableCol: {
             flex: 1,
             borderWidth: 1,
-            paddingTop: 4 , paddingLeft: 7 ,
-            borderColor : 'whitesmoke',
-            borderRightWidth:1, borderBottomWidth:1
+            paddingTop: 4,
+            paddingLeft: 7,
+            borderColor: "whitesmoke",
+            borderRightWidth: 1,
+            borderBottomWidth: 1,
         },
 
         tableColHeader2: {
-            flex:2, 
-            borderRightWidth:0, 
-            borderBottomWidth:1,
-            backgroundColor : '#DEDEDE',
+            flex: 2,
+            borderRightWidth: 0,
+            borderBottomWidth: 1,
+            backgroundColor: "#DEDEDE",
         },
 
         tableCol2: {
-            flex:2, 
-            borderRightWidth:0, 
-            borderBottomWidth:1,
+            flex: 2,
+            borderRightWidth: 0,
+            borderBottomWidth: 1,
         },
 
         tableCellHeader: {
             fontSize: 10,
             fontStyle: "bold",
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
+            whiteSpace: "nowrap",
+            overflow: "hidden",
         },
 
         tableCell: {
-            paddingTop: 4 , paddingLeft: 7 ,
+            paddingTop: 4,
+            paddingLeft: 7,
             fontSize: 9,
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
+            whiteSpace: "nowrap",
+            overflow: "hidden",
         },
         image: {
             width: 180,
@@ -306,12 +311,12 @@ export default function Inventory({ auth, products }) {
     const MyDocument = ({ data }) => (
         <Document>
             <Page size="A4" orientation="landscape">
-            <View style={styles.titleContainer}>
-                <View style={styles.spaceBetween}>
-            <Image src={Batamwater} style={styles.image} />
-                <Text style={styles.title}>{Language.report}</Text>
+                <View style={styles.titleContainer}>
+                    <View style={styles.spaceBetween}>
+                        <Image src={Batamwater} style={styles.image} />
+                        <Text style={styles.title}>{Language.report}</Text>
+                    </View>
                 </View>
-            </View>
                 <Text style={styles.dateTime}>
                     {new Date().toLocaleString()}
                 </Text>
@@ -320,23 +325,34 @@ export default function Inventory({ auth, products }) {
                 <Text style={styles.address}>Unnamed Road</Text>
                 <View style={styles.table}>
                     <View style={styles.tableRow}>
-                        <View style={[styles.tableColHeader, styles.tableColHeader2 ]}>
-                            <Text style={styles.tableCellHeader}>{Language.tableheader.SKU}</Text>
+                        <View
+                            style={[
+                                styles.tableColHeader,
+                                styles.tableColHeader2,
+                            ]}
+                        >
+                            <Text style={styles.tableCellHeader}>
+                                {Language.tableheader.SKU}
+                            </Text>
                         </View>
                         <View style={[styles.tableCol, styles.tableColHeader2]}>
-                            <Text style={styles.tableCellHeader}>{Language.tableheader.Name}</Text>
-                        </View>
-                        <View style={styles.tableColHeader}>
-                            <Text style={styles.tableCellHeader}>{Language.tableheader.Stock}</Text>
-                        </View>
-                        <View style={styles.tableColHeader}>
                             <Text style={styles.tableCellHeader}>
-                            {Language.tableheader.salesprice}
+                                {Language.tableheader.Name}
                             </Text>
                         </View>
                         <View style={styles.tableColHeader}>
                             <Text style={styles.tableCellHeader}>
-                            {Language.tableheader.COGS}
+                                {Language.tableheader.Stock}
+                            </Text>
+                        </View>
+                        <View style={styles.tableColHeader}>
+                            <Text style={styles.tableCellHeader}>
+                                {Language.tableheader.salesprice}
+                            </Text>
+                        </View>
+                        <View style={styles.tableColHeader}>
+                            <Text style={styles.tableCellHeader}>
+                                {Language.tableheader.COGS}
                             </Text>
                         </View>
                     </View>
@@ -488,7 +504,11 @@ export default function Inventory({ auth, products }) {
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 {selectedProducts && (
-                                    <div>{new Date(selectedProducts.created_at).toLocaleString()}</div>
+                                    <div>
+                                        {new Date(
+                                            selectedProducts.created_at
+                                        ).toLocaleString()}
+                                    </div>
                                 )}
                             </Typography>
                         </div>
@@ -498,7 +518,11 @@ export default function Inventory({ auth, products }) {
                             </Typography>
                             <Typography variant="body" color="blue-gray">
                                 {selectedProducts && (
-                                    <div>{new Date(selectedProducts.updated_at).toLocaleString()}</div>
+                                    <div>
+                                        {new Date(
+                                            selectedProducts.updated_at
+                                        ).toLocaleString()}
+                                    </div>
                                 )}
                             </Typography>
                         </div>
@@ -524,7 +548,9 @@ export default function Inventory({ auth, products }) {
             </Dialog>
             <Dialog open={open} size="sm" onClose={handleOpen}>
                 <DialogHeader>
-                    <Typography variant="h5">{Language.delete.header}</Typography>
+                    <Typography variant="h5">
+                        {Language.delete.header}
+                    </Typography>
                 </DialogHeader>
                 <DialogBody divider className="grid place-items-center gap-4">
                     <InformationCircleIcon className="w-20 h-20 text-red-400" />
@@ -694,7 +720,7 @@ export default function Inventory({ auth, products }) {
                                             id,
                                             code,
                                             name,
-                                            brand,
+                                            brandName,
                                             sales_price,
                                             standard_price,
                                             stock,
@@ -743,7 +769,7 @@ export default function Inventory({ auth, products }) {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {brand?.name}
+                                                            {brandName}
                                                         </Typography>
                                                     </div>
                                                 </td>
@@ -784,7 +810,12 @@ export default function Inventory({ auth, products }) {
                                                 </td>
 
                                                 <td className="p-2 flex">
-                                                    <Tooltip content={Language.tableaction.view}>
+                                                    <Tooltip
+                                                        content={
+                                                            Language.tableaction
+                                                                .view
+                                                        }
+                                                    >
                                                         <IconButton
                                                             variant="text"
                                                             onClick={() =>
@@ -796,14 +827,29 @@ export default function Inventory({ auth, products }) {
                                                             <EyeIcon className="h-5 w-5 text-blue-800" />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip content={Language.tableaction.edit}>
-                                                        <a href={route("products.edit",id)}>
+                                                    <Tooltip
+                                                        content={
+                                                            Language.tableaction
+                                                                .edit
+                                                        }
+                                                    >
+                                                        <a
+                                                            href={route(
+                                                                "products.edit",
+                                                                id
+                                                            )}
+                                                        >
                                                             <IconButton variant="text">
                                                                 <PencilSquareIcon className="h-5 w-5 text-green-500" />
                                                             </IconButton>
                                                         </a>
                                                     </Tooltip>
-                                                    <Tooltip content={Language.tableaction.delete}>
+                                                    <Tooltip
+                                                        content={
+                                                            Language.tableaction
+                                                                .delete
+                                                        }
+                                                    >
                                                         <a
                                                             as="button"
                                                             onClick={() =>
@@ -831,7 +877,8 @@ export default function Inventory({ auth, products }) {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    {Language.pagination.page} {currentPage} {Language.pagination.of}{" "}
+                                    {Language.pagination.page} {currentPage}{" "}
+                                    {Language.pagination.of}{" "}
                                     {Math.ceil(products.length / itemsPerPage)}
                                 </Typography>
                             </div>
