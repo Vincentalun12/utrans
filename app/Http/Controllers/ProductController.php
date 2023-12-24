@@ -54,14 +54,16 @@ class ProductController extends Controller
             'sales_price' => 'required',
         ]);
 
-        Product::create([
-            'brand_id' => $request->brand_id,
-            'code' => $request->code,
-            'name' => $request->name,
-            'description' => $request->description,
-            'sales_price' => $request->sales_price,
-            'standard_price' => 0,
-            'stock' => 0,
+        $request = $this->client->request('POST', 'Product', [
+            'json' => [
+                'brand_id' => $request->brand_id,
+                'code' => $request->code,
+                'name' => $request->name,
+                'description' => $request->description,
+                'sales_price' => $request->sales_price,
+                'standard_price' => 0,
+                'stock' => 0,
+            ]
         ]);
 
         return redirect()->route('products')->with([
@@ -74,9 +76,15 @@ class ProductController extends Controller
 
     public function edit($id)
     {
+        $product = $this->client->request('GET', 'Product/' . $id);
+        $productResponse = json_decode($product->getBody()->getContents());
+
+        $brands = $this->client->request('GET', 'Brand');
+        $brandsResponse = json_decode($brands->getBody()->getContents());
+
         $data = [
-            'product' => Product::with(['brand'])->find($id),
-            'brands' => Brand::all()
+            'product' => $productResponse,
+            'brands' => $brandsResponse
         ];
 
         return Inertia::render('Dashboard/Inventory/Products/Edit', $data);

@@ -94,15 +94,6 @@ class CustomerController extends Controller
             ]
         ]);
 
-        // $customer->update([
-        //     'name' => $request->name,
-        //     'address' => $request->address,
-        //     'district' => $request->district,
-        //     'city' => $request->city,
-        //     'phone' => $request->phone,
-        //     'email' => $request->email,
-        // ]);
-
         return redirect()->route('customers')->with([
             'message' => [
                 'type' => 'success',
@@ -113,9 +104,7 @@ class CustomerController extends Controller
 
     public function destroy($id)
     {
-        $customer = Customer::findOrFail($id);
-
-        $customer->delete();
+        $this->client->request('DELETE', 'Customer/' . $id);
 
         return redirect()->route('customers')->with([
             'message' => [

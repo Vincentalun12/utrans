@@ -44,14 +44,16 @@ class VendorController extends Controller
             'code' => 'required|unique:vendors',
         ]);
 
-        Vendor::create([
-            'code' => $request->code,
-            'name' => $request->name,
-            'address' => $request->address,
-            'district' => $request->district,
-            'city' => $request->city,
-            'phone' => $request->phone,
-            'email' => $request->email,
+        $request = $this->client->post('Vendor', [
+            'json' => [
+                'code' => $request->code,
+                'name' => $request->name,
+                'address' => $request->address,
+                'district' => $request->district,
+                'city' => $request->city,
+                'phone' => $request->phone,
+                'email' => $request->email,
+            ]
         ]);
 
         return redirect()->route('vendors')->with([
@@ -64,10 +66,11 @@ class VendorController extends Controller
 
     public function edit($id)
     {
-        $vendor = Vendor::findOrFail($id);
+        $request = $this->client->get('Vendor/' . $id);
+        $response = json_decode($request->getBody()->getContents());
 
         return Inertia::render('Dashboard/Partners/Vendors/Edit', [
-            'vendor' => $vendor
+            'vendor' => $response
         ]);
     }
 
@@ -79,13 +82,16 @@ class VendorController extends Controller
             'name' => 'required',
         ]);
 
-        $vendor->update([
-            'name' => $request->name,
-            'address' => $request->address,
-            'district' => $request->district,
-            'city' => $request->city,
-            'phone' => $request->phone,
-            'email' => $request->email,
+        $request = $this->client->put('Vendor/' . $id, [
+            'json' => [
+                'code' => $vendor->code,
+                'name' => $request->name,
+                'address' => $request->address,
+                'district' => $request->district,
+                'city' => $request->city,
+                'phone' => $request->phone,
+                'email' => $request->email,
+            ]
         ]);
 
         return redirect()->route('vendors')->with([
