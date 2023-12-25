@@ -45,6 +45,11 @@ Utrans, website ERP yang dirancang khusus untuk membantu bisnis kecil dan meneng
 
 #### ⚠️ Sebelum memulai, pastikan database MySQL & Apache sudah terinstall dan dijalankan. ⚠️
 
+Untuk manajemen Produk, Brand, Vendor dan Customer, kami membuat API sendiri agar sistem dapat *fetch* data secara efisien dan cepat.
+- https://github.com/jupitvq/Utrans-API
+
+Pastikan sistem API terinstall dengan baik dikarenakan kami menggunakan API secara default. Namun, dapat mengubah menjadi sistem legacy dengan menggunakan controller dari PHP.
+
 #### 1. Jalankan aplikasi localhost (XAMPP, Laragon, dsb). Sesuaikan port database yaitu 3306 dan localhost secara default.
 #### 2. Pergi ke directory yang diinginkan untuk menyimpan project ini.
 #### 3. Ketika sudah berada di folder yang di inginkan, jalankan command dibawah ini:
