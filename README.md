@@ -95,6 +95,12 @@ php artisan serve
 
 Pastikan kedua terminal dijalankan secara bersamaan.
 
+
+#### 7. Mengimpelentasikan microservice kedalam website tersebut
+Berikut adalah reponya API
+```
+https://github.com/jupitvq/UTrans-API
+```
 #### 6. Jika semua step dilakukan dengan benar, maka anda sudah berhasil untuk menjalankan projek ini
 
 Untuk mengunjungi website localhost bisa langsung ke URL:
