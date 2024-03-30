@@ -71,7 +71,7 @@ class JournalSeeder extends Seeder
             'code' => 'OPRJL',
             'journal_name' => 'Opening Journal',
             'journal_type' => 'general',
-            'chart_of_account_id' => null,
+            'chart_of_account_id' => 11,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

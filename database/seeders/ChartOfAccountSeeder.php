@@ -67,7 +67,7 @@ class ChartOfAccountSeeder extends Seeder
             [
                 'code' => '2000',
                 'account_name' => 'Account Payable',
-                'account_type' => 'liability',
+                'account_type' => 'payable',
                 'balance' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -108,6 +108,26 @@ class ChartOfAccountSeeder extends Seeder
                 'code' => '7002',
                 'account_name' => 'Bank BNI',
                 'account_type' => 'bank_and_cash',
+                'balance' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+        DB::table('chart_of_accounts')->insert(
+            [
+                'code' => '9999',
+                'account_name' => 'Opening Balance',
+                'account_type' => 'equity',
+                'balance' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+        DB::table('chart_of_accounts')->insert(
+            [
+                'code' => '2900',
+                'account_name' => 'Stock Interim',
+                'account_type' => 'current_liabilities',
                 'balance' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),

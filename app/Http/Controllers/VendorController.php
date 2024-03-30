@@ -6,26 +6,13 @@ use App\Models\Vendor;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use GuzzleHttp\Client;
 
 class VendorController extends Controller
 {
-    private $client;
-
-    public function __construct()
-    {
-        $this->client = new Client([
-            'base_uri' => env('UTRANS_API_BASE_URL'),
-        ]);
-    }
-
     public function index()
     {
-        $request = $this->client->get('Vendor');
-        $response = json_decode($request->getBody()->getContents());
-
         $data = [
-            'vendors' => $response
+            'vendors' => Vendor::all()
         ];
 
         return Inertia::render('Dashboard/Partners/Vendors/Index', $data);
@@ -44,16 +31,14 @@ class VendorController extends Controller
             'code' => 'required|unique:vendors',
         ]);
 
-        $request = $this->client->post('Vendor', [
-            'json' => [
-                'code' => $request->code,
-                'name' => $request->name,
-                'address' => $request->address,
-                'district' => $request->district,
-                'city' => $request->city,
-                'phone' => $request->phone,
-                'email' => $request->email,
-            ]
+        Vendor::create([
+            'code' => $request->code,
+            'name' => $request->name,
+            'address' => $request->address,
+            'district' => $request->district,
+            'city' => $request->city,
+            'phone' => $request->phone,
+            'email' => $request->email,
         ]);
 
         return redirect()->route('vendors')->with([
@@ -66,11 +51,8 @@ class VendorController extends Controller
 
     public function edit($id)
     {
-        $request = $this->client->get('Vendor/' . $id);
-        $response = json_decode($request->getBody()->getContents());
-
         return Inertia::render('Dashboard/Partners/Vendors/Edit', [
-            'vendor' => $response
+            'vendor' => Vendor::find($id),
         ]);
     }
 
@@ -82,16 +64,13 @@ class VendorController extends Controller
             'name' => 'required',
         ]);
 
-        $request = $this->client->put('Vendor/' . $id, [
-            'json' => [
-                'code' => $vendor->code,
-                'name' => $request->name,
-                'address' => $request->address,
-                'district' => $request->district,
-                'city' => $request->city,
-                'phone' => $request->phone,
-                'email' => $request->email,
-            ]
+        Vendor::find($id)->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'district' => $request->district,
+            'city' => $request->city,
+            'phone' => $request->phone,
+            'email' => $request->email,
         ]);
 
         return redirect()->route('vendors')->with([

@@ -24,6 +24,7 @@ class SettingSeeder extends Seeder
             'stock_valuation_journal_id' => 3,
             'sales_journal_id' => 1,
             'purchase_journal_id' => 2,
+            'stock_interim_account_id' => 12,
 
         ];
 

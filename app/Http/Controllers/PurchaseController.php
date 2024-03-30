@@ -199,6 +199,7 @@ class PurchaseController extends Controller
             ]);
 
             foreach ($request->products as $product) {
+                // Create Purchase Order Line
                 $createPurchaseOrderLine = PurchaseOrderLine::create([
                     'purchase_order_id' => $createPurchaseOrder->id,
                     'product_id' => $product['product_id'],
@@ -208,6 +209,7 @@ class PurchaseController extends Controller
                     'total' => $product['quantity'] * $product['price'] - $product['discount']
                 ]);
 
+                // Purchase Journal Items
                 JournalItem::create([
                     'journal_entry_id' => $createPurchaseJournalEntry->id,
                     'chart_of_account_id' => $setting->account_payable_id,
@@ -220,15 +222,38 @@ class PurchaseController extends Controller
                 ]);
 
                 JournalItem::create([
+                    'journal_entry_id' => $createPurchaseJournalEntry->id,
+                    'chart_of_account_id' => $setting->cost_of_goods_sold_account_id,
+                    'purchase_order_line_id' => $createPurchaseOrderLine->id,
+                    'label' => $product['product_name'],
+                    'account_id' => $setting->account_payable_id,
+                    'debit' => $createPurchaseOrderLine->total,
+                    'credit' => 0,
+                    'balance' => $createPurchaseOrderLine->total
+                ]);
+                // End Purchase Journal Items
+
+                // Stock Valuation Journal Items
+                JournalItem::create([
                     'journal_entry_id' => $createStockValuationJournalEntry->id,
                     'chart_of_account_id' => $setting->inventory_account_id,
                     'purchase_order_line_id' => $createPurchaseOrderLine->id,
-                    'account_id' => $setting->inventory_account_id,
                     'label' => $product['product_name'] . " - " . "Stock Valuation",
                     'debit' => $createPurchaseOrderLine->total,
                     'credit' => 0,
                     'balance' => $createPurchaseOrderLine->total
                 ]);
+
+                JournalItem::create([
+                    'journal_entry_id' => $createStockValuationJournalEntry->id,
+                    'chart_of_account_id' => $setting->stock_interem_account_id,
+                    'purchase_order_line_id' => $createPurchaseOrderLine->id,
+                    'label' => $product['product_name'] . " - " . "Stock Valuation",
+                    'debit' => 0,
+                    'credit' => $createPurchaseOrderLine->total,
+                    'balance' => 0 - $createPurchaseOrderLine->total
+                ]);
+                // End Stock Valuation Journal Items
 
                 ChartOfAccount::updateChartOfAccountBalance($setting->account_payable_id);
                 ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);

@@ -63,6 +63,7 @@ export default function Settings({ auth, accounts, journals, setting }) {
         stock_valuation_journal_id: setting?.stock_valuation_journal_id,
         sales_journal_id: setting?.sales_journal_id,
         purchase_journal_id: setting?.purchase_journal_id,
+        stock_interim_account_id: setting?.stock_interim_account_id,
     });
 
     const { flash } = usePage().props;
@@ -138,7 +139,7 @@ export default function Settings({ auth, accounts, journals, setting }) {
                 className="fixed top-4 right-4 z-50 lg:w-1/4 w-1/2"
                 color={flash.message?.type == "success" ? "green" : "red"}
                 open={isShowAlert}
-                // icon={<Icon />}
+            // icon={<Icon />}
             >
                 {flash.message?.content}
             </Alert>
@@ -172,24 +173,22 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 <div className="grid-span-1">
                                     <Typography>{Language.salesaccount.title}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.salesaccount.description}
+                                        {Language.salesaccount.description}
                                     </div>
                                     <Select
                                         value={{
                                             value: data.sales_account_id,
-                                            label: `${
-                                                accounts?.find(
-                                                    (account) =>
-                                                        account.id ===
-                                                        data.sales_account_id
-                                                )?.code || ""
-                                            } ${
-                                                accounts?.find(
+                                            label: `${accounts?.find(
+                                                (account) =>
+                                                    account.id ===
+                                                    data.sales_account_id
+                                            )?.code || ""
+                                                } ${accounts?.find(
                                                     (account) =>
                                                         account.id ===
                                                         data.sales_account_id
                                                 )?.account_name || ""
-                                            }`,
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData("sales_account_id", e.value)
@@ -227,25 +226,23 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 <div className="grid-span-1">
                                     <Typography>{Language.purchaseaccount.title}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.purchaseaccount.description}
+                                        {Language.purchaseaccount.description}
                                     </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
                                             value: data.purchase_account_id,
-                                            label: `${
-                                                accounts?.find(
-                                                    (account) =>
-                                                        account.id ===
-                                                        data.purchase_account_id
-                                                )?.code || ""
-                                            } ${
-                                                accounts?.find(
+                                            label: `${accounts?.find(
+                                                (account) =>
+                                                    account.id ===
+                                                    data.purchase_account_id
+                                            )?.code || ""
+                                                } ${accounts?.find(
                                                     (account) =>
                                                         account.id ===
                                                         data.purchase_account_id
                                                 )?.account_name || ""
-                                            }`,
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData(
@@ -285,25 +282,23 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 <div className="col-span-1">
                                     <Typography>{Language.inventoryaccount.title}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.inventoryaccount.description}
+                                        {Language.inventoryaccount.description}
                                     </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
                                             value: data.inventory_account_id,
-                                            label: `${
-                                                accounts?.find(
-                                                    (account) =>
-                                                        account.id ===
-                                                        data.inventory_account_id
-                                                )?.code || ""
-                                            } ${
-                                                accounts?.find(
+                                            label: `${accounts?.find(
+                                                (account) =>
+                                                    account.id ===
+                                                    data.inventory_account_id
+                                            )?.code || ""
+                                                } ${accounts?.find(
                                                     (account) =>
                                                         account.id ===
                                                         data.inventory_account_id
                                                 )?.account_name || ""
-                                            }`,
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData(
@@ -342,28 +337,26 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 </div>
                                 <div className="col-span-1">
                                     <Typography>
-                                    {Language.fixedassetsaccount.title}
+                                        {Language.fixedassetsaccount.title}
                                     </Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.fixedassetsaccount.description}
+                                        {Language.fixedassetsaccount.description}
                                     </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
                                             value: data.fixed_assets_account_id,
-                                            label: `${
-                                                accounts?.find(
-                                                    (account) =>
-                                                        account.id ===
-                                                        data.fixed_assets_account_id
-                                                )?.code || ""
-                                            } ${
-                                                accounts?.find(
+                                            label: `${accounts?.find(
+                                                (account) =>
+                                                    account.id ===
+                                                    data.fixed_assets_account_id
+                                            )?.code || ""
+                                                } ${accounts?.find(
                                                     (account) =>
                                                         account.id ===
                                                         data.fixed_assets_account_id
                                                 )?.account_name || ""
-                                            }`,
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData(
@@ -402,28 +395,26 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 </div>
                                 <div className="col-span-1">
                                     <Typography>
-                                    {Language.costofgoodsoldaccount.title}
+                                        {Language.costofgoodsoldaccount.title}
                                     </Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.costofgoodsoldaccount.description}
+                                        {Language.costofgoodsoldaccount.description}
                                     </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
                                             value: data.cost_of_goods_sold_account_id,
-                                            label: `${
-                                                accounts?.find(
-                                                    (account) =>
-                                                        account.id ===
-                                                        data.cost_of_goods_sold_account_id
-                                                )?.code || ""
-                                            } ${
-                                                accounts?.find(
+                                            label: `${accounts?.find(
+                                                (account) =>
+                                                    account.id ===
+                                                    data.cost_of_goods_sold_account_id
+                                            )?.code || ""
+                                                } ${accounts?.find(
                                                     (account) =>
                                                         account.id ===
                                                         data.cost_of_goods_sold_account_id
                                                 )?.account_name || ""
-                                            }`,
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData(
@@ -463,25 +454,23 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 <div className="col-span-1">
                                     <Typography>{Language.accountreceivable.title}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.accountreceivable.description}
+                                        {Language.accountreceivable.description}
                                     </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
                                             value: data.account_receivable_id,
-                                            label: `${
-                                                accounts?.find(
-                                                    (account) =>
-                                                        account.id ===
-                                                        data.account_receivable_id
-                                                )?.code || ""
-                                            } ${
-                                                accounts?.find(
+                                            label: `${accounts?.find(
+                                                (account) =>
+                                                    account.id ===
+                                                    data.account_receivable_id
+                                            )?.code || ""
+                                                } ${accounts?.find(
                                                     (account) =>
                                                         account.id ===
                                                         data.account_receivable_id
                                                 )?.account_name || ""
-                                            }`,
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData(
@@ -521,25 +510,23 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 <div className="col-span-1">
                                     <Typography>{Language.accountpayable.title}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.accountpayable.description}
+                                        {Language.accountpayable.description}
                                     </div>
                                     <Select
                                         options={accountOptions}
                                         value={{
                                             value: data.account_payable_id,
-                                            label: `${
-                                                accounts?.find(
-                                                    (account) =>
-                                                        account.id ===
-                                                        data.account_payable_id
-                                                )?.code || ""
-                                            } ${
-                                                accounts?.find(
+                                            label: `${accounts?.find(
+                                                (account) =>
+                                                    account.id ===
+                                                    data.account_payable_id
+                                            )?.code || ""
+                                                } ${accounts?.find(
                                                     (account) =>
                                                         account.id ===
                                                         data.account_payable_id
                                                 )?.account_name || ""
-                                            }`,
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData(
@@ -576,28 +563,83 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                         }}
                                     />
                                 </div>
+                                <div className="col-span-1">
+                                    <Typography>Stock Interim Account</Typography>
+                                    <div className="w-full text-xs mb-2 text-gray-500">
+                                        {Language.accountpayable.description}
+                                    </div>
+                                    <Select
+                                        options={accountOptions}
+                                        value={{
+                                            value: data.stock_interim_account_id,
+                                            label: `${accounts?.find(
+                                                (account) =>
+                                                    account.id ===
+                                                    data.stock_interim_account_id
+                                            )?.code || ""
+                                                } ${accounts?.find(
+                                                    (account) =>
+                                                        account.id ===
+                                                        data.stock_interim_account_id
+                                                )?.account_name || ""
+                                                }`,
+                                        }}
+                                        onChange={(e) =>
+                                            setData(
+                                                "stock_interim_account_id",
+                                                e.value
+                                            )
+                                        }
+                                        placeholder={"Select..."}
+                                        styles={{
+                                            control: (base, state) => ({
+                                                ...base,
+                                                boxShadow: state.isFocused
+                                                    ? 0
+                                                    : 0,
+                                                borderColor: state.isFocused
+                                                    ? "#1A202C"
+                                                    : base.borderColor,
+                                                borderWidth: state.isFocused
+                                                    ? "2px"
+                                                    : "1px",
+                                                "&:hover": {
+                                                    borderColor: state.isFocused
+                                                        ? "#1A202C"
+                                                        : base.borderColor,
+                                                },
+                                                borderRadius: "6px",
+                                            }),
+                                            input: (base) => ({
+                                                ...base,
+                                                "input:focus": {
+                                                    boxShadow: "none",
+                                                },
+                                            }),
+                                        }}
+                                    />
+                                </div>
                                 <hr className="w-full col-span-2"></hr>
                                 <Typography className="col-span-2" variant="h4">
-                                {Language.titles.journalsettings}
+                                    {Language.titles.journalsettings}
                                 </Typography>
                                 <div className="col-span-2">
                                     <Typography>
-                                    {Language.stockvaluationjournal.title}
+                                        {Language.stockvaluationjournal.title}
                                     </Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.stockvaluationjournal.description}
+                                        {Language.stockvaluationjournal.description}
                                     </div>
                                     <Select
                                         options={journalOptions}
                                         value={{
                                             value: data.stock_valuation_journal_id,
-                                            label: `${
-                                                journals?.find(
-                                                    (journal) =>
-                                                        journal.id ===
-                                                        data.stock_valuation_journal_id
-                                                )?.journal_name || ""
-                                            }`,
+                                            label: `${journals?.find(
+                                                (journal) =>
+                                                    journal.id ===
+                                                    data.stock_valuation_journal_id
+                                            )?.journal_name || ""
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData(
@@ -637,19 +679,18 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 <div className="col-span-1">
                                     <Typography>{Language["Sales Journal"].title}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language["Sales Journal"].description}
+                                        {Language["Sales Journal"].description}
                                     </div>
                                     <Select
                                         options={journalOptions}
                                         value={{
                                             value: data.sales_journal_id,
-                                            label: `${
-                                                journals?.find(
-                                                    (journal) =>
-                                                        journal.id ===
-                                                        data.sales_journal_id
-                                                )?.journal_name || ""
-                                            }`,
+                                            label: `${journals?.find(
+                                                (journal) =>
+                                                    journal.id ===
+                                                    data.sales_journal_id
+                                            )?.journal_name || ""
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData("sales_journal_id", e.value)
@@ -687,19 +728,18 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 <div className="col-span-1 mb-4">
                                     <Typography>{Language["Purchase Journal"].title}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language["Purchase Journal"].description}
+                                        {Language["Purchase Journal"].description}
                                     </div>
                                     <Select
                                         options={journalOptions}
                                         value={{
                                             value: data.purchase_journal_id,
-                                            label: `${
-                                                journals?.find(
-                                                    (journal) =>
-                                                        journal.id ===
-                                                        data.purchase_journal_id
-                                                )?.journal_name || ""
-                                            }`,
+                                            label: `${journals?.find(
+                                                (journal) =>
+                                                    journal.id ===
+                                                    data.purchase_journal_id
+                                            )?.journal_name || ""
+                                                }`,
                                         }}
                                         onChange={(e) =>
                                             setData(
@@ -752,12 +792,12 @@ export default function Settings({ auth, accounts, journals, setting }) {
                         <form>
                             <div className="grid grid-cols-2 gap-5 m-3 px-6">
                                 <Typography className="col-span-2" variant="h4">
-                                {Language.titles.appearancesettings}
+                                    {Language.titles.appearancesettings}
                                 </Typography>
                                 <div className="grid-span-1">
                                     <Typography>{Language.language.title}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.language.description}
+                                        {Language.language.description}
                                     </div>
                                     <LanguageSwitcher
                                         onLanguageChange={handleLanguageChange}
@@ -766,7 +806,7 @@ export default function Settings({ auth, accounts, journals, setting }) {
                                 <div className="grid-span-1">
                                     <Typography>{Language.theme.title}</Typography>
                                     <div className="w-full text-xs mb-2 text-gray-500">
-                                            {Language.theme.description}
+                                        {Language.theme.description}
                                     </div>
                                     <Select
                                         isDisabled={true}

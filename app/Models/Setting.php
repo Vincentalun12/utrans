@@ -20,7 +20,8 @@ class Setting extends Model
         'account_receivable_id',
         'stock_valuation_journal_id',
         'sales_journal_id',
-        'purchase_journal_id'
+        'purchase_journal_id',
+        'stock_interim_account_id'
     ];
 
     public static function getSetting()
@@ -36,8 +37,9 @@ class Setting extends Model
         $stock_valuation_journal_id = $setting?->stock_valuation_journal_id;
         $sales_journal_id = $setting?->sales_journal_id;
         $purchase_journal_id = $setting?->purchase_journal_id;
+        $stock_interim_account_id = $setting?->stock_interim_account_id;
 
-        if (!$sales_account_id || !$purchase_account_id || !$inventory_account_id || !$fixed_assets_account_id || !$cost_of_goods_sold_account_id || !$account_payable_id || !$account_receivable_id || !$stock_valuation_journal_id || !$sales_journal_id || !$purchase_journal_id) {
+        if (!$sales_account_id || !$purchase_account_id || !$inventory_account_id || !$fixed_assets_account_id || !$cost_of_goods_sold_account_id || !$account_payable_id || !$account_receivable_id || !$stock_valuation_journal_id || !$sales_journal_id || !$purchase_journal_id || !$stock_interim_account_id) {
             return false;
         }
 

@@ -40,6 +40,7 @@ class SettingsController extends Controller
                 'stock_valuation_journal_id' => $request->stock_valuation_journal_id,
                 'sales_journal_id' => $request->sales_journal_id,
                 'purchase_journal_id' => $request->purchase_journal_id,
+                'stock_interim_account_id' => $request->stock_interim_account_id,
             ]);
         } else {
             Setting::create([
@@ -54,6 +55,7 @@ class SettingsController extends Controller
                 'stock_valuation_journal_id' => $request->stock_valuation_journal_id,
                 'sales_journal_id' => $request->sales_journal_id,
                 'purchase_journal_id' => $request->purchase_journal_id,
+                'stock_interim_account_id' => $request->stock_interim_account_id,
             ]);
         }
 

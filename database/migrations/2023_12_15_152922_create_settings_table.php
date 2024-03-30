@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('stock_valuation_journal_id')->nullable()->constrained('journals');
             $table->foreignId('sales_journal_id')->nullable()->constrained('journals');
             $table->foreignId('purchase_journal_id')->nullable()->constrained('journals');
+            $table->foreignId('stock_interim_account_id')->nullable()->constrained('chart_of_accounts');
             $table->timestamps();
             $table->softDeletes();
         });

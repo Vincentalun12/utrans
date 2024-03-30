@@ -7,26 +7,13 @@ use App\Models\Brand;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use GuzzleHttp\Client;
 
 class ProductController extends Controller
 {
-    private $client;
-
-    public function __construct()
-    {
-        $this->client = new Client([
-            'base_uri' => env('UTRANS_API_BASE_URL'),
-        ]);
-    }
-
     public function index()
     {
-        $request = $this->client->get('Product');
-        $response = json_decode($request->getBody()->getContents());
-
         $data = [
-            'products' => $response
+            'products' => Product::all()
         ];
 
         return Inertia::render('Dashboard/Inventory/Products/Index', $data);
@@ -54,16 +41,14 @@ class ProductController extends Controller
             'sales_price' => 'required',
         ]);
 
-        $request = $this->client->request('POST', 'Product', [
-            'json' => [
-                'brand_id' => $request->brand_id,
-                'code' => $request->code,
-                'name' => $request->name,
-                'description' => $request->description,
-                'sales_price' => $request->sales_price,
-                'standard_price' => 0,
-                'stock' => 0,
-            ]
+        Product::create([
+            'brand_id' => $request->brand_id,
+            'code' => $request->code,
+            'name' => $request->name,
+            'description' => $request->description,
+            'sales_price' => $request->sales_price,
+            'stock' => 0,
+            'standard_price' => 0,
         ]);
 
         return redirect()->route('products')->with([
@@ -76,15 +61,9 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = $this->client->request('GET', 'Product/' . $id);
-        $productResponse = json_decode($product->getBody()->getContents());
-
-        $brands = $this->client->request('GET', 'Brand');
-        $brandsResponse = json_decode($brands->getBody()->getContents());
-
         $data = [
-            'product' => $productResponse,
-            'brands' => $brandsResponse
+            'product' => Product::find($id),
+            'brands' => Brand::all()
         ];
 
         return Inertia::render('Dashboard/Inventory/Products/Edit', $data);
@@ -125,8 +104,12 @@ class ProductController extends Controller
             ];
         }
 
-        $request = $this->client->request('PUT', 'Product/' . $id, [
-            'json' => $updateData
+        Product::find($id)->update([
+            'brand_id' => $updateData['brand_id'],
+            'code' => $updateData['code'],
+            'name' => $updateData['name'],
+            'description' => $updateData['description'],
+            'sales_price' => $updateData['sales_price'],
         ]);
 
         return redirect()->route('products')->with([
@@ -139,7 +122,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        $request = $this->client->request('DELETE', 'Product/' . $id);
+        Product::destroy($id);
 
         return redirect()->route('products')->with([
             'message' => [
