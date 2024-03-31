@@ -74,6 +74,12 @@ const TABLE_ROWS = [
 export default function CreatePurchaseOrder({ auth, products, vendors }) {
 
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [date, setDate] = useState(new Date());
+    const [vendorOptions, setVendorOptions] = useState([]);
+    const [productOptions, setProductOptions] = useState([]);
+    const [purchaseOrderLines, setPurchaseOrderLine] = useState([]);
+    const [productList, setProductList] = useState([]);
 
     useEffect(() => {
         Language.setLanguage(selectedLanguage);
@@ -85,11 +91,6 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
         status: "posted",
         create_date: format(new Date(), "dd-MM-yyyy"),
     });
-
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [date, setDate] = useState(new Date());
-    const [vendorOptions, setVendorOptions] = useState([]);
-    const [productOptions, setProductOptions] = useState([]);
 
     useEffect(() => {
         setVendorOptions(
@@ -108,18 +109,25 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                 label: product.name,
             }))
         );
+
+        setProductList(
+            products.map((product) => ({
+                code: product.code,
+                value: product.id,
+                label: product.name,
+            }))
+        )
     }, []);
 
-    const [listProduct, setListProduct] = useState([]);
 
     useEffect(() => {
         if (selectedProduct) {
-            setListProduct([
-                ...listProduct,
+            setPurchaseOrderLine([
+                ...purchaseOrderLines,
                 {
                     id: null,
                     code: selectedProduct.code,
-                    order: listProduct.length,
+                    order: purchaseOrderLines.length,
                     product_id: selectedProduct.value,
                     product_name: selectedProduct.label,
                     quantity: 0,
@@ -131,27 +139,21 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
         setSelectedProduct(null);
     }, [selectedProduct]);
 
+
     useEffect(() => {
-        setData("products", listProduct);
-    }, [listProduct]);
+        setData("products", purchaseOrderLines);
+        let product_id_in_order = purchaseOrderLines.map((product) => product.product_id);
 
-    let ProductList = [];
-
-    products.forEach((product) => {
-        ProductList.push({
+        let filteredProducts = products.filter(product => !product_id_in_order.includes(product.id));
+        setProductList(filteredProducts.map(product => ({
             code: product.code,
             value: product.id,
             label: product.name,
-        });
-    });
+        })));
 
-    const [stock, setStock] = useState(0);
-    const [price, setPrice] = useState(0);
-    const [discount, setDiscount] = useState(0);
+    }, [purchaseOrderLines]);
 
-    const [total, setTotal] = useState(0);
-
-    const mainTotal = listProduct.reduce((sum, product) => {
+    const mainTotal = purchaseOrderLines.reduce((sum, product) => {
         const total = product.quantity * product.price - product.discount;
         return sum + total;
     }, 0);
@@ -302,7 +304,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                     {Language.productname.description}
                                 </div>
                                 <ReactSelect
-                                    options={ProductList}
+                                    options={productList}
                                     value={selectedProduct}
                                     onChange={(e) => {
                                         setSelectedProduct({
@@ -362,7 +364,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {listProduct.map(
+                                    {purchaseOrderLines.map(
                                         (
                                             {
                                                 id,
@@ -378,16 +380,16 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                             index
                                         ) => {
                                             const correspondingProduct =
-                                                ProductList.find(
+                                                productList.find(
                                                     (product) =>
                                                         product.value ===
                                                         product_id
                                                 );
                                             const itemcode =
-                                                correspondingProduct.code;
+                                                correspondingProduct?.code;
 
-                                                const totalValue = quantity * price - discount;
-                                                const total = isNaN(totalValue) ? "0" : totalValue.toLocaleString("de-DE");
+                                            const totalValue = quantity * price - discount;
+                                            const total = isNaN(totalValue) ? "0" : totalValue.toLocaleString("de-DE");
 
                                             const isLast =
                                                 index === TABLE_ROWS.length - 1;
@@ -437,7 +439,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                                     ) => {
                                                                         const newListProduct =
                                                                             [
-                                                                                ...listProduct,
+                                                                                ...purchaseOrderLines,
                                                                             ];
                                                                         newListProduct[
                                                                             index
@@ -447,7 +449,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                                                     .target
                                                                                     .value
                                                                             );
-                                                                        setListProduct(
+                                                                        setPurchaseOrderLine(
                                                                             newListProduct
                                                                         );
                                                                     }}
@@ -466,9 +468,9 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                                 id="UnitPrice"
                                                                 class="h-10 w-25 rounded border-gray-200 text-center sm:text-sm focus:border-ungukita"
                                                                 onChange={(event) => {
-                                                                    const newListProduct = [...listProduct,];
-                                                                        newListProduct[index].price = Number(event.target.value);
-                                                                    setListProduct(newListProduct);
+                                                                    const newListProduct = [...purchaseOrderLines,];
+                                                                    newListProduct[index].price = Number(event.target.value);
+                                                                    setPurchaseOrderLine(newListProduct);
                                                                 }}
                                                             />
                                                         </Typography>
@@ -488,7 +490,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                                 ) => {
                                                                     const newListProduct =
                                                                         [
-                                                                            ...listProduct,
+                                                                            ...purchaseOrderLines,
                                                                         ];
                                                                     newListProduct[
                                                                         index
@@ -498,7 +500,7 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                                                 .target
                                                                                 .value
                                                                         );
-                                                                    setListProduct(
+                                                                    setPurchaseOrderLine(
                                                                         newListProduct
                                                                     );
                                                                 }}
@@ -521,14 +523,14 @@ export default function CreatePurchaseOrder({ auth, products, vendors }) {
                                                                 variant="text"
                                                                 onClick={() => {
                                                                     const newList =
-                                                                        listProduct.filter(
+                                                                        purchaseOrderLines.filter(
                                                                             (
                                                                                 item
                                                                             ) =>
                                                                                 item.order !==
                                                                                 order
                                                                         );
-                                                                    setListProduct(
+                                                                    setPurchaseOrderLine(
                                                                         newList
                                                                     );
                                                                     setSelectedProduct(
