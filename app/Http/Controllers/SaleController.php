@@ -420,16 +420,27 @@ class SaleController extends Controller
                             'total' => $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount']
                         ]);
 
+                        // Sale Journal Items
                         JournalItem::create([
                             'journal_entry_id' => $createPurchaseJournalEntry->id,
                             'chart_of_account_id' => $setting->account_receivable_id,
                             'sale_order_line_id' => $saleOrderLine->id,
                             'label' => $product->name,
-                            'account_id' => $setting->account_receivable_id,
                             'debit' => 0,
                             'credit' => $totalPriceDifference,
                             'balance' => -$totalPriceDifference
                         ]);
+
+                        JournalItem::create([
+                            'journal_entry_id' => $createPurchaseJournalEntry->id,
+                            'chart_of_account_id' => $setting->sales_account_id,
+                            'sale_order_line_id' => $saleOrderLine->id,
+                            'label' => $product->name,
+                            'debit' => $totalPriceDifference,
+                            'credit' => 0,
+                            'balance' => $totalPriceDifference
+                        ]);
+                        // End Sale Journal Items
 
                         $oldTotalProductStandardPrice = $product->standard_price * $oldQuantity;
                         $currentTotalProductStandardPrice = $product->standard_price * $currentQuantity;
@@ -440,19 +451,31 @@ class SaleController extends Controller
                             $totalProductStandardPriceDifference = $currentTotalProductStandardPrice - $oldTotalProductStandardPrice;
                         }
 
+                        // Stock Valuation Journal Items
                         JournalItem::create([
                             'journal_entry_id' => $createStockValuationJournalEntry->id,
                             'chart_of_account_id' => $setting->inventory_account_id,
                             'sale_order_line_id' => $saleOrderLine->id,
-                            'account_id' => $setting->inventory_account_id,
                             'label' => $product->name . " - " . "Stock Valuation",
                             'debit' => $totalProductStandardPriceDifference,
                             'credit' => 0,
                             'balance' => $totalProductStandardPriceDifference
                         ]);
 
+                        JournalItem::create([
+                            'journal_entry_id' => $createStockValuationJournalEntry->id,
+                            'chart_of_account_id' => $setting->stock_interim_account_id,
+                            'sale_order_line_id' => $saleOrderLine->id,
+                            'label' => $product->name . " - " . "Stock Valuation",
+                            'debit' => 0,
+                            'credit' => $totalProductStandardPriceDifference,
+                            'balance' => -$totalProductStandardPriceDifference
+                        ]);
+                        // End Stock Valuation Journal Items
+
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
                         ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
+                        ChartOfAccount::updateChartOfAccountBalance($setting->stock_interim_account_id);
                     } else if ($currentTotalPrice > $oldTotalPrice) {
                         if ($oldQuantity > $listProduct['quantity']) {
                             $quantityDifference = $oldQuantity - $listProduct['quantity'];
@@ -472,16 +495,27 @@ class SaleController extends Controller
                             'total' => $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount']
                         ]);
 
+                        // Sale Journal Items
                         JournalItem::create([
                             'journal_entry_id' => $createPurchaseJournalEntry->id,
                             'chart_of_account_id' => $setting->account_receivable_id,
                             'sale_order_line_id' => $saleOrderLine->id,
                             'label' => $product->name,
-                            'account_id' => $setting->account_receivable_id,
                             'debit' => $totalPriceDifference,
                             'credit' => 0,
                             'balance' => $totalPriceDifference
                         ]);
+
+                        JournalItem::create([
+                            'journal_entry_id' => $createPurchaseJournalEntry->id,
+                            'chart_of_account_id' => $setting->sales_account_id,
+                            'sale_order_line_id' => $saleOrderLine->id,
+                            'label' => $product->name,
+                            'debit' => 0,
+                            'credit' => $totalPriceDifference,
+                            'balance' => -$totalPriceDifference
+                        ]);
+                        // End Sale Journal Items
 
                         $oldTotalProductStandardPrice = $product->standard_price * $oldQuantity;
                         $currentTotalProductStandardPrice = $product->standard_price * $currentQuantity;
@@ -492,6 +526,7 @@ class SaleController extends Controller
                             $totalProductStandardPriceDifference = $currentTotalProductStandardPrice - $oldTotalProductStandardPrice;
                         }
 
+                        // Stock Valuation Journal Items
                         JournalItem::create([
                             'journal_entry_id' => $createStockValuationJournalEntry->id,
                             'chart_of_account_id' => $setting->inventory_account_id,
@@ -503,8 +538,21 @@ class SaleController extends Controller
                             'balance' => $totalProductStandardPriceDifference
                         ]);
 
+                        JournalItem::create([
+                            'journal_entry_id' => $createStockValuationJournalEntry->id,
+                            'chart_of_account_id' => $setting->stock_interim_account_id,
+                            'sale_order_line_id' => $saleOrderLine->id,
+                            'account_id' => $setting->inventory_account_id,
+                            'label' => "Stock Valuation - $product->name",
+                            'debit' => 0,
+                            'credit' => $totalProductStandardPriceDifference,
+                            'balance' => -$totalProductStandardPriceDifference
+                        ]);
+                        // End Stock Valuation Journal Items
+
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
                         ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
+                        ChartOfAccount::updateChartOfAccountBalance($setting->stock_interim_account_id);
                     } else if ($currentTotalPrice == $oldTotalPrice) {
                         $oldTotalProductStandardPrice = $product->standard_price * $oldQuantity;
                         $currentTotalProductStandardPrice = $product->standard_price * $currentQuantity;
@@ -542,6 +590,7 @@ class SaleController extends Controller
 
                     $totalPrice = $createSaleOrderLine->total;
 
+                    // Sale Journal Items
                     JournalItem::create([
                         'journal_entry_id' => $createPurchaseJournalEntry->id,
                         'chart_of_account_id' => $setting->account_receivable_id,
@@ -553,6 +602,18 @@ class SaleController extends Controller
                     ]);
 
                     JournalItem::create([
+                        'journal_entry_id' => $createPurchaseJournalEntry->id,
+                        'chart_of_account_id' => $setting->sales_account_id,
+                        'sale_order_line_id' => $createSaleOrderLine->id,
+                        'label' => $product->name,
+                        'debit' => 0,
+                        'credit' => $totalPrice,
+                        'balance' => -$totalPrice
+                    ]);
+                    // End Sale Journal Items
+
+                    // Stock Valuation Journal Items
+                    JournalItem::create([
                         'journal_entry_id' => $createStockValuationJournalEntry->id,
                         'chart_of_account_id' => $setting->inventory_account_id,
                         'sale_order_line_id' => $createSaleOrderLine->id,
@@ -562,8 +623,20 @@ class SaleController extends Controller
                         'balance' => $productStandardPrice
                     ]);
 
+                    JournalItem::create([
+                        'journal_entry_id' => $createStockValuationJournalEntry->id,
+                        'chart_of_account_id' => $setting->stock_interim_account_id,
+                        'sale_order_line_id' => $createSaleOrderLine->id,
+                        'label' => "Stock Valuation - $product->name",
+                        'debit' => 0,
+                        'credit' => $productStandardPrice,
+                        'balance' => -$productStandardPrice
+                    ]);
+                    // End Stock Valuation Journal Items
+
                     ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
                     ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
+                    ChartOfAccount::updateChartOfAccountBalance($setting->stock_interim_account_id);
                 }
             }
 

@@ -87,6 +87,14 @@ export default function Balancesheet({ auth, coa }) {
             balance: parseFloat(account.balance)
         }));
 
+    const incomeAccountNames = coa
+        .filter(account => account.account_type === 'income')
+        .map(account => ({
+            code: account.code,
+            name: account.account_name,
+            balance: parseFloat(account.balance)
+        }));
+
     const BankAndCashAccountNames = coa
         .filter(account => account.account_type === 'bank_and_cash')
         .map(account => ({
@@ -119,6 +127,11 @@ export default function Balancesheet({ auth, coa }) {
         return isNaN(balance) ? total : total + balance;
     }, 0);
 
+    const totalIncome = incomeAccountNames.reduce((total, account) => {
+        const balance = parseFloat(account.balance);
+        return isNaN(balance) ? total : total + balance;
+    }, 0);
+
     const totalReceivables = receivableAccountNames.reduce((total, account) => {
         const balance = parseFloat(account.balance);
         return isNaN(balance) ? total : total + balance;
@@ -129,11 +142,14 @@ export default function Balancesheet({ auth, coa }) {
         return isNaN(balance) ? total : total + balance;
     }, 0);
 
+
     const balanceCurrentLiabilitesFormatted = totalCurrentLiabilites.toLocaleString('id-ID');
 
     const balanceReceivableFormatted = totalReceivables.toLocaleString('id-ID');
 
     const balanceEquityFormatted = totalEquity.toLocaleString('id-ID');
+
+    const balanceIncomeFormatted = totalIncome.toLocaleString('id-ID');
 
     const balancePayableFormatted = totalPayables.toLocaleString('id-ID');
 
@@ -141,9 +157,9 @@ export default function Balancesheet({ auth, coa }) {
 
     const currentAssetsFormatted = totalCurrentAssets.toLocaleString('id-ID');
 
-    const grandTotalAssets = totalCurrentAssets + totalBankAndCash;
+    const grandTotalAssets = totalCurrentAssets + totalBankAndCash + totalReceivables;
 
-    const grandTotalLiabilitesAndEquity = (totalPayables + totalCurrentLiabilites) + totalEquity;
+    const grandTotalLiabilitesAndEquity = (totalPayables + totalCurrentLiabilites) + (totalEquity + totalIncome);
 
     const grandTotalLiabilities = totalPayables + totalCurrentLiabilites;
     const grandTotalEquity = totalEquity;
@@ -657,6 +673,12 @@ export default function Balancesheet({ auth, coa }) {
                                     <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
                                         Rp {grandTotalEquityFormatted},00
                                     </Typography>
+                                </div>
+                                <div className="border-b w-full border-gray-400 mt-4">
+                                    <div className="flex">
+                                        <p>Unallocated Earning</p>
+                                        <p className="flex-1 text-right text-sm text-black pt-1">Rp {balanceIncomeFormatted},00</p>
+                                    </div>
                                 </div>
                                 <div className="flex-inline justify-between">
                                     <details className="w-full cursor-default">
