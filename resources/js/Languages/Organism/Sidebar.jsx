@@ -37,7 +37,7 @@ let Language = new LocalizedStrings({
         "BalanceSheet": "Balance Sheet",
         "ProfitandLoss": "Profit and Loss",
         "Accounting": "Accounting",
-        "COA": "COA",
+        "COA": "Chart Of Account",
         "Journals": "Journals",
         "JournalEntries": "Journal Entries",
         "JournalItems": "Journal Items",

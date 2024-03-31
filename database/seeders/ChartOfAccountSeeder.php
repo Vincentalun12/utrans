@@ -77,7 +77,7 @@ class ChartOfAccountSeeder extends Seeder
             [
                 'code' => '3000',
                 'account_name' => 'Account Receivable',
-                'account_type' => 'current_assets',
+                'account_type' => 'receivable',
                 'balance' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -71,6 +71,14 @@ export default function Balancesheet({ auth, coa }) {
             balance: parseFloat(account.balance)
         }));
 
+    const currentLiabilitiesAccountNames = coa
+        .filter(account => account.account_type === 'current_liabilities')
+        .map(account => ({
+            code: account.code,
+            name: account.account_name,
+            balance: parseFloat(account.balance)
+        }));
+
     const equityAccountNames = coa
         .filter(account => account.account_type === 'equity')
         .map(account => ({
@@ -91,53 +99,60 @@ export default function Balancesheet({ auth, coa }) {
         ? coa.find((coa) => coa.account_type === "Inventory Account")
         : null;
 
-    const totalBalance = currentAssetsAccountNames.reduce((total, account) => {
+    const totalCurrentAssets = currentAssetsAccountNames.reduce((total, account) => {
         const balance = parseFloat(account.balance);
         return isNaN(balance) ? total : total + balance;
     }, 0);
 
-    const totalBalance2 = BankAndCashAccountNames.reduce((total, account) => {
+    const totalBankAndCash = BankAndCashAccountNames.reduce((total, account) => {
         const balance = parseFloat(account.balance);
         return isNaN(balance) ? total : total + balance;
     }, 0);
 
-    const totalBalance3 = payableAccountNames.reduce((total, account) => {
+    const totalPayables = payableAccountNames.reduce((total, account) => {
         const balance = parseFloat(account.balance);
         return isNaN(balance) ? total : total + balance;
     }, 0);
 
-    const totalBalance4 = equityAccountNames.reduce((total, account) => {
+    const totalEquity = equityAccountNames.reduce((total, account) => {
         const balance = parseFloat(account.balance);
         return isNaN(balance) ? total : total + balance;
     }, 0);
 
-    const totalBalance5 = receivableAccountNames.reduce((total, account) => {
+    const totalReceivables = receivableAccountNames.reduce((total, account) => {
         const balance = parseFloat(account.balance);
         return isNaN(balance) ? total : total + balance;
     }, 0);
 
-    const balance5 = totalBalance5.toLocaleString('id-ID');
+    const totalCurrentLiabilites = currentLiabilitiesAccountNames.reduce((total, account) => {
+        const balance = parseFloat(account.balance);
+        return isNaN(balance) ? total : total + balance;
+    }, 0);
 
-    const balances4 = totalBalance4.toLocaleString('id-ID');
+    const balanceCurrentLiabilitesFormatted = totalCurrentLiabilites.toLocaleString('id-ID');
 
-    const balances3 = totalBalance3.toLocaleString('id-ID');
+    const balanceReceivableFormatted = totalReceivables.toLocaleString('id-ID');
 
-    const balances2 = totalBalance2.toLocaleString('id-ID');
+    const balanceEquityFormatted = totalEquity.toLocaleString('id-ID');
 
-    const balances = totalBalance.toLocaleString('id-ID');
+    const balancePayableFormatted = totalPayables.toLocaleString('id-ID');
 
-    const grandTotalBalance = totalBalance + totalBalance2;
+    const bankAndCashFormatted = totalBankAndCash.toLocaleString('id-ID');
 
-    const grandTotalEquityLiabilites = totalBalance3 + totalBalance4;
+    const currentAssetsFormatted = totalCurrentAssets.toLocaleString('id-ID');
 
-    const grandTotalBalance2 = totalBalance3;
-    const grandTotalBalance3 = totalBalance4;
-    const grandTotalBalance4 = totalBalance5;
-    const grandTotalBalanceFormatted2 = grandTotalBalance2.toLocaleString('id-ID');
-    const grandTotalBalanceFormatted = grandTotalBalance.toLocaleString('id-ID');
-    const grandTotalBalanceFormatted3 = grandTotalBalance3.toLocaleString('id-ID');
-    const grandTotalBalanceFormatted4 = grandTotalEquityLiabilites.toLocaleString('id-ID');
-    const grandTotalBalanceFormatted5 = grandTotalBalance4.toLocaleString('id-ID');
+    const grandTotalAssets = totalCurrentAssets + totalBankAndCash;
+
+    const grandTotalLiabilitesAndEquity = (totalPayables + totalCurrentLiabilites) + totalEquity;
+
+    const grandTotalLiabilities = totalPayables + totalCurrentLiabilites;
+    const grandTotalEquity = totalEquity;
+    const grandTotalReceivable = totalReceivables;
+    const grandTotalLiabilitiesFormatted = grandTotalLiabilities.toLocaleString('id-ID');
+    const grandTotalAssetsFormatted = grandTotalAssets.toLocaleString('id-ID');
+    const grandTotalEquityFormatted = grandTotalEquity.toLocaleString('id-ID');
+    const grandTotalLiabilitiesAndEquityFormatted = grandTotalLiabilitesAndEquity.toLocaleString('id-ID');
+    const grandTotalReceivableFormatted = grandTotalReceivable.toLocaleString('id-ID');
 
     const inventoryAccountBalance = inventoryAccount ? parseFloat(inventoryAccount.balance) : 0;
     const inventoryAccountBalanceFormatted = inventoryAccountBalance.toLocaleString('id-ID');
@@ -149,6 +164,7 @@ export default function Balancesheet({ auth, coa }) {
     const [isOpenPrepayments, setIsOpenPrepayments] = useState(false);
     const [isOpenPayables, setIsOpenPayables] = useState(false);
     const [isOpenEquities, setIsOpenEquities] = useState(false);
+    const [isOpenCurrentLiabilites, setIsOpenCurrentLiabilites] = useState(false);
 
 
     const toggleDetailsBank = () => {
@@ -169,6 +185,10 @@ export default function Balancesheet({ auth, coa }) {
 
     const toggleDetailsPayables = () => {
         setIsOpenPayables(!isOpenPayables);
+    };
+
+    const toggleDetailsCurrentLiabilites = () => {
+        setIsOpenCurrentLiabilites(!isOpenCurrentLiabilites);
     };
 
     const toggleDetailsEquities = () => {
@@ -353,7 +373,7 @@ export default function Balancesheet({ auth, coa }) {
                             <Text style={styles.tableCellHeader}>{Language.assets.title}</Text>
                         </View>
                         <View style={[styles.tableColHeader2]}>
-                            <Text style={styles.tableCellHeader}>{grandTotalBalanceFormatted},00</Text>
+                            <Text style={styles.tableCellHeader}>{grandTotalAssetsFormatted},00</Text>
                         </View>
                     </View>
                     <View style={styles.tableRow}>
@@ -378,13 +398,13 @@ export default function Balancesheet({ auth, coa }) {
                         </View>
                         <View style={styles.tableCol2}>
                             <Text style={styles.tableCellnone}>-</Text>
-                            <Text style={styles.tableCell}>Rp {balances2},00</Text>
+                            <Text style={styles.tableCell}>Rp {bankAndCashFormatted},00</Text>
                             {BankAndCashAccountNames.map((account, index) => (
                                 <View key={index}>
                                     <Text style={styles.tableCell}>Rp {account.balance.toLocaleString('id-ID')},00</Text>
                                 </View>
                             ))}
-                            <Text style={styles.tableCell}>Rp {balances},00</Text>
+                            <Text style={styles.tableCell}>Rp {currentAssetsFormatted},00</Text>
                             {currentAssetsAccountNames.map((account, index) => (
                                 <View key={index}>
                                     <Text style={styles.tableCell}>Rp {account.balance.toLocaleString('id-ID')},00</Text>
@@ -392,7 +412,7 @@ export default function Balancesheet({ auth, coa }) {
                             ))}
                             <Text style={styles.tableCellnone}>-</Text>
                             <Text style={styles.tableCellnonelast}>-</Text>
-                            <Text style={styles.tableCellBold}>Rp {grandTotalBalanceFormatted},00</Text>
+                            <Text style={styles.tableCellBold}>Rp {grandTotalAssetsFormatted},00</Text>
                         </View>
                     </View>
                 </View>
@@ -402,7 +422,7 @@ export default function Balancesheet({ auth, coa }) {
                             <Text style={styles.tableCellHeader}>{Language.liabilities.title}</Text>
                         </View>
                         <View style={[styles.tableColHeader2]}>
-                            <Text style={styles.tableCellHeader}>Rp {grandTotalBalanceFormatted2},00</Text>
+                            <Text style={styles.tableCellHeader}>Rp {grandTotalLiabilitiesFormatted},00</Text>
                         </View>
                     </View>
                     <View style={styles.tableRow}>
@@ -420,16 +440,16 @@ export default function Balancesheet({ auth, coa }) {
 
                         </View>
                         <View style={styles.tableCol2}>
-                            <Text style={styles.tableCell}>Rp {balances3},00</Text>
+                            <Text style={styles.tableCell}>Rp {balancePayableFormatted},00</Text>
                             <Text style={styles.tableCellnone}>-</Text>
-                            <Text style={styles.tableCell}>Rp {balances3},00</Text>
+                            <Text style={styles.tableCell}>Rp {balancePayableFormatted},00</Text>
                             {payableAccountNames.map((account, index) => (
                                 <View key={index}>
                                     <Text style={styles.tableCell}>Rp {account.balance.toLocaleString('id-ID')},00</Text>
                                 </View>
                             ))}
                             <Text style={styles.tableCellnonelast}>-</Text>
-                            <Text style={styles.tableCellBold}>Rp {grandTotalBalanceFormatted2},00</Text>
+                            <Text style={styles.tableCellBold}>Rp {grandTotalLiabilitiesFormatted},00</Text>
                         </View>
                     </View>
                 </View>
@@ -496,17 +516,16 @@ export default function Balancesheet({ auth, coa }) {
                                     {Language.assets.title}
                                 </Typography>
                                 <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
-                                    Rp {grandTotalBalanceFormatted},00
+                                    Rp {grandTotalAssetsFormatted},00
                                 </Typography>
                             </div>
                             <div className="flex-inline justify-between">
-                                <p className="border-b w-full border-gray-400">{Language.assets.currentassets}</p>
                                 <details className="w-full cursor-default">
                                     <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsBank}>
                                         <div className="flex">
                                             {isOpenBank ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                                             <span>{Language.assets.bankandcashaccounts}</span>
-                                            <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances2},00</span>
+                                            <span className="flex-1 text-right text-sm text-black pt-1">Rp {bankAndCashFormatted},00</span>
                                         </div>
                                     </summary>
                                     {BankAndCashAccountNames.map((account, index) => (
@@ -521,11 +540,11 @@ export default function Balancesheet({ auth, coa }) {
                                     ))}
                                 </details>
                                 <details className="w-full cursor-default">
-                                    <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsCurrentAssets}>
+                                    <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsReceivables}>
                                         <div className="flex">
                                             {isOpenReceivables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                                             <span>Receivables</span>
-                                            <span className="flex-1 text-right text-sm text-black pt-1">Rp {balance5},00</span>
+                                            <span className="flex-1 text-right text-sm text-black pt-1">Rp {balanceReceivableFormatted},00</span>
                                         </div>
                                     </summary>
                                     {receivableAccountNames.map((account, index) => (
@@ -544,7 +563,7 @@ export default function Balancesheet({ auth, coa }) {
                                         <div className="flex">
                                             {isOpenCurrentAssets ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                                             <span>{Language.assets.currentassets}</span>
-                                            <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances},00</span>
+                                            <span className="flex-1 text-right text-sm text-black pt-1">Rp {currentAssetsFormatted},00</span>
                                         </div>
                                     </summary>
                                     {currentAssetsAccountNames.map((account, index) => (
@@ -558,14 +577,14 @@ export default function Balancesheet({ auth, coa }) {
                                         </details>
                                     ))}
                                 </details>
-                                <p className="border-b w-full border-gray-400">{Language.assets.plusfixedassets}</p>
-                                <p className="border-b w-full border-black">{Language.assets.plusnoncurrentassets}</p>
+                                {/* <p className="border-b w-full border-gray-400">{Language.assets.plusfixedassets}</p>
+                                <p className="border-b w-full border-black">{Language.assets.plusnoncurrentassets}</p> */}
                                 <div className="flex justify-between">
                                     <Typography variant="h6" color="black" className="w-full pt-1">
                                         Total Assets
                                     </Typography>
                                     <Typography variant="h6" color="black" className="w-full text-right pt-1">
-                                        Rp {grandTotalBalanceFormatted},00
+                                        Rp {grandTotalAssetsFormatted},00
                                     </Typography>
                                 </div>
                                 <div className="flex justify-between pt-5">
@@ -573,23 +592,35 @@ export default function Balancesheet({ auth, coa }) {
                                         LIABILITIES
                                     </Typography>
                                     <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
-                                        Rp {grandTotalBalanceFormatted2},00
+                                        Rp {grandTotalLiabilitiesFormatted},00
                                     </Typography>
                                 </div>
                                 <div className="flex-inline justify-between">
-                                    <div className="border-b w-full border-gray-400">
-                                        <div className="flex">
-                                            <p>{Language.liabilities.currentliabilities}</p>
-                                            <p className="flex-1 text-right text-sm text-black pt-1">Rp {balances3},00</p>
-                                        </div>
-                                    </div>
-                                    <p className="border-b w-full border-gray-400 pl-6">{Language.liabilities.currentliabilities}</p>
+                                    <details className="w-full cursor-default">
+                                        <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsCurrentLiabilites}>
+                                            <div className="flex">
+                                                {isOpenPayables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
+                                                <span>{Language.liabilities.currentliabilities}</span>
+                                                <span className="flex-1 text-right text-sm text-black pt-1">Rp {balanceCurrentLiabilitesFormatted},00</span>
+                                            </div>
+                                        </summary>
+                                        {currentLiabilitiesAccountNames.map((account, index) => (
+                                            <details key={index} className="w-full cursor-default">
+                                                <summary className="border-b w-full border-gray-400 block pl-11 text-blue-600">
+                                                    <div className="flex">
+                                                        <span>{account.code} {account.name}</span>
+                                                        <span className="flex-1 text-right text-sm text-black pt-1">Rp {balanceCurrentLiabilitesFormatted},00</span>
+                                                    </div>
+                                                </summary>
+                                            </details>
+                                        ))}
+                                    </details>
                                     <details className="w-full cursor-default">
                                         <summary className="border-b w-full border-gray-400 block cursor-pointer" onClick={toggleDetailsPayables}>
                                             <div className="flex">
                                                 {isOpenPayables ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                                                 <span>{Language.liabilities.payables}</span>
-                                                <span className="flex-1 text-right text-sm text-black pt-1">Rp {balances3},00</span>
+                                                <span className="flex-1 text-right text-sm text-black pt-1">Rp {balancePayableFormatted},00</span>
                                             </div>
                                         </summary>
                                         {payableAccountNames.map((account, index) => (
@@ -603,14 +634,14 @@ export default function Balancesheet({ auth, coa }) {
                                             </details>
                                         ))}
                                     </details>
-                                    <p className="border-b w-full border-black">{Language.liabilities.plusnoncurrentliabilities}</p>
+                                    {/* <p className="border-b w-full border-black">{Language.liabilities.plusnoncurrentliabilities}</p> */}
                                 </div>
                                 <div className="flex justify-between">
                                     <Typography variant="h6" color="black" className="w-full pt-1">
                                         {Language.liabilities.totalliabilities}
                                     </Typography>
                                     <Typography variant="h6" color="black" className="w-full text-right pt-1">
-                                        Rp {grandTotalBalanceFormatted2},00
+                                        Rp {grandTotalLiabilitiesFormatted},00
                                     </Typography>
                                 </div>
                             </div>
@@ -624,7 +655,7 @@ export default function Balancesheet({ auth, coa }) {
                                         Equity
                                     </Typography>
                                     <Typography variant="small" color="black" className="border-b border-black w-full text-right pt-3">
-                                        Rp {grandTotalBalanceFormatted3},00
+                                        Rp {grandTotalEquityFormatted},00
                                     </Typography>
                                 </div>
                                 <div className="flex-inline justify-between">
@@ -633,7 +664,7 @@ export default function Balancesheet({ auth, coa }) {
                                             <div className="flex">
                                                 {isOpenEquities ? <ChevronDownIcon className="w-4 h-4 mt-1 mx-1" /> : <ChevronRightIcon className="w-4 h-4 mt-1 mx-1" />}
                                                 <span>Retained Earnings</span>
-                                                <span className="flex-1 text-right text-sm text-black pt-1">Rp {grandTotalBalanceFormatted3},00</span>
+                                                <span className="flex-1 text-right text-sm text-black pt-1">Rp {grandTotalEquityFormatted},00</span>
                                             </div>
                                         </summary>
                                         {equityAccountNames.map((account, index) => (
@@ -653,13 +684,13 @@ export default function Balancesheet({ auth, coa }) {
                                         Total Equity
                                     </Typography>
                                     <Typography variant="h6" color="black" className="w-full text-right pt-1">
-                                        Rp {grandTotalBalanceFormatted3},00
+                                        Rp {grandTotalEquityFormatted},00
                                     </Typography>
                                 </div>
                                 <div className="border-b w-full border-gray-400 mt-4">
                                     <div className="flex">
                                         <p>Equities + Liabilities</p>
-                                        <p className="flex-1 text-right text-sm text-black pt-1">Rp {grandTotalBalanceFormatted4},00</p>
+                                        <p className="flex-1 text-right text-sm text-black pt-1">Rp {grandTotalLiabilitiesAndEquityFormatted},00</p>
                                     </div>
                                 </div>
                             </div>

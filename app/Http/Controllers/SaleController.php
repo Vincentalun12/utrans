@@ -202,6 +202,7 @@ class SaleController extends Controller
                     'total' => $product['quantity'] * $product['price']
                 ]);
 
+                // Sale Journal Items
                 JournalItem::create([
                     'journal_entry_id' => $createSaleJournalEntry->id,
                     'chart_of_account_id' => $setting->account_receivable_id,
@@ -213,18 +214,42 @@ class SaleController extends Controller
                 ]);
 
                 JournalItem::create([
+                    'journal_entry_id' => $createSaleJournalEntry->id,
+                    'chart_of_account_id' => $setting->sales_account_id,
+                    'sale_order_line_id' => $createSaleOrderLine->id,
+                    'label' => $product['product_name'],
+                    'debit' => 0,
+                    'credit' => $createSaleOrderLine->total,
+                    'balance' => -$createSaleOrderLine->total
+                ]);
+                // End Sale Journal Items
+
+                // Stock Valuation Journal Items
+                JournalItem::create([
                     'journal_entry_id' => $createStockValuationJournalEntry->id,
                     'chart_of_account_id' => $setting->inventory_account_id,
                     'sale_order_line_id' => $createSaleOrderLine->id,
-                    'account_id' => $setting->inventory_account_id,
                     'label' => $product['product_name'] . " - " . "Stock Valuation",
                     'debit' => 0,
                     'credit' => $productStandardPrice,
                     'balance' => -$productStandardPrice
                 ]);
 
+                JournalItem::create([
+                    'journal_entry_id' => $createStockValuationJournalEntry->id,
+                    'chart_of_account_id' => $setting->stock_interim_account_id,
+                    'sale_order_line_id' => $createSaleOrderLine->id,
+                    'label' => $product['product_name'] . " - " . "Stock Valuation",
+                    'debit' => $productStandardPrice,
+                    'credit' => 0,
+                    'balance' => $productStandardPrice
+                ]);
+                // End Stock Valuation Journal Items
+
                 ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
+                ChartOfAccount::updateChartOfAccountBalance($setting->sales_account_id);
                 ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
+                ChartOfAccount::updateChartOfAccountBalance($setting->stock_interim_account_id);
                 Product::decreaseStock($createSaleOrderLine->product_id, $createSaleOrderLine->quantity);
             }
 

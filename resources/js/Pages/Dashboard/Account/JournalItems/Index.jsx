@@ -227,7 +227,7 @@ export default function JournalItems({ auth, journalitems }) {
                                                                 className="font-normal"
                                                             >
                                                                 {
-                                                                    journal_entry.code
+                                                                    journal_entry?.code
                                                                 }
                                                             </Typography>
                                                         </div>
@@ -241,7 +241,7 @@ export default function JournalItems({ auth, journalitems }) {
                                                                 color="blue-gray"
                                                                 className="font-normal"
                                                             >
-                                                                {`${chart_of_account.code} ${chart_of_account.account_name}`}
+                                                                {`${chart_of_account?.code} ${chart_of_account?.account_name}`}
                                                             </Typography>
                                                         </div>
                                                     </div>

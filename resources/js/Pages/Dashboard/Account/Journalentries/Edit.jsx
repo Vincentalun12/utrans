@@ -52,7 +52,7 @@ import {
 
 const TABLE_HEAD = ["Account", "Label", "Debit", "Credit", ""];
 
-export default function EditJournalEntries({ auth, accounts, journals, journalentry,}) {
+export default function EditJournalEntries({ auth, accounts, journals, journalentry, }) {
 
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'en');
 
@@ -73,7 +73,7 @@ export default function EditJournalEntries({ auth, accounts, journals, journalen
                 order: newJournalItems.length,
                 id: item.id,
                 chart_of_account_id: item.chart_of_account_id,
-                chart_of_account_name: `${item.chart_of_account.code} ${item.chart_of_account.account_name}`,
+                chart_of_account_name: `${item.chart_of_account?.code} ${item.chart_of_account?.account_name}`,
                 label: item.label,
                 debit: item.debit,
                 credit: item.credit,
@@ -128,7 +128,7 @@ export default function EditJournalEntries({ auth, accounts, journals, journalen
     accounts.forEach((account) => {
         accountOptions.push({
             value: account.id,
-            label: `${account.code} ${account.account_name}`,
+            label: `${account?.code} ${account?.account_name}`,
         });
     });
 
@@ -164,21 +164,20 @@ export default function EditJournalEntries({ auth, accounts, journals, journalen
                             <div className="sm:col-span-1">
                                 <label className="">{Language.journal.name}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                        {Language.journal.description}
+                                    {Language.journal.description}
                                 </div>
                                 <ReactSelect
                                     options={journalOptions}
                                     value={{
                                         value: data.journal_id,
-                                        label: `${
-                                            data.journal_id
-                                                ? journals.find(
-                                                      (journal) =>
-                                                          journal.id ===
-                                                          data.journal_id
-                                                  )?.journal_name
-                                                : ""
-                                        }`,
+                                        label: `${data.journal_id
+                                            ? journals.find(
+                                                (journal) =>
+                                                    journal.id ===
+                                                    data.journal_id
+                                            )?.journal_name
+                                            : ""
+                                            }`,
                                     }}
                                     onChange={(e) =>
                                         setData("journal_id", e.value)
@@ -218,7 +217,7 @@ export default function EditJournalEntries({ auth, accounts, journals, journalen
                             <div className="sm:col-span-1">
                                 <label className="">{Language.reference.name}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                        {Language.reference.description}
+                                    {Language.reference.description}
                                 </div>
                                 <Input
                                     type="input"
@@ -237,7 +236,7 @@ export default function EditJournalEntries({ auth, accounts, journals, journalen
                             <div className="sm:col-span-1">
                                 <label className="">{Language.status.name}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                        {Language.status.description}
+                                    {Language.status.description}
                                 </div>
                                 <div className="w-full">
                                     <Select
@@ -259,7 +258,7 @@ export default function EditJournalEntries({ auth, accounts, journals, journalen
                             <div className="sm:col-span-1">
                                 <label className="">{Language.date.name}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                        {Language.date.description}
+                                    {Language.date.description}
                                 </div>
                                 <Popover placement="bottom" trigger="click">
                                     <PopoverHandler>
@@ -270,9 +269,9 @@ export default function EditJournalEntries({ auth, accounts, journals, journalen
                                             value={
                                                 data.accounting_date
                                                     ? format(
-                                                          data.accounting_date,
-                                                          "dd-MM-yyyy"
-                                                      )
+                                                        data.accounting_date,
+                                                        "dd-MM-yyyy"
+                                                    )
                                                     : ""
                                             }
                                             onChange={(e) => {
@@ -368,7 +367,7 @@ export default function EditJournalEntries({ auth, accounts, journals, journalen
                             <div className="sm:col-span-2 w-full">
                                 <label className="">{Language.account.name}</label>
                                 <div className="w-full text-xs mb-2 text-gray-500">
-                                        {Language.account.description}
+                                    {Language.account.description}
                                 </div>
                                 <ReactSelect
                                     options={accountOptions}
