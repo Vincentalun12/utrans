@@ -97,6 +97,7 @@ class PurchaseOrder extends Model
             }
 
             if (!$isPurchaseOrderLineExist) {
+                // Purchase Journal Items
                 JournalItem::create([
                     'journal_entry_id' => $createReturnPurchaseJournalEntry->id,
                     'chart_of_account_id' => $setting->account_payable_id,
@@ -107,6 +108,17 @@ class PurchaseOrder extends Model
                 ]);
 
                 JournalItem::create([
+                    'journal_entry_id' => $createReturnPurchaseJournalEntry->id,
+                    'chart_of_account_id' => $setting->stock_interim_account_id,
+                    'label' => $product->name,
+                    'debit' => $purchaseOrderLine->total,
+                    'credit' => 0,
+                    'balance' => $purchaseOrderLine->total,
+                ]);
+                // End of Purchase Journal Items
+
+                // Stock Valuation Journal Items
+                JournalItem::create([
                     'journal_entry_id' => $createReturnStockValuationJournalEntry->id,
                     'chart_of_account_id' => $setting->inventory_account_id,
                     'label' => "Stock Valuation - $product->name",
@@ -114,6 +126,16 @@ class PurchaseOrder extends Model
                     'credit' => $purchaseOrderLine->total,
                     'balance' => -$purchaseOrderLine->total,
                 ]);
+
+                JournalItem::create([
+                    'journal_entry_id' => $createReturnStockValuationJournalEntry->id,
+                    'chart_of_account_id' => $setting->stock_interim_account_id,
+                    'label' => "Stock Valuation - $product->name",
+                    'debit' => $purchaseOrderLine->total,
+                    'credit' => 0,
+                    'balance' => $purchaseOrderLine->total,
+                ]);
+                // End of Stock Valuation Journal Items
 
                 Product::decreaseStock($purchaseOrderLine->product_id, $purchaseOrderLine->quantity);
                 $purchaseOrderLine->delete();
@@ -123,5 +145,6 @@ class PurchaseOrder extends Model
 
         ChartOfAccount::updateChartOfAccountBalance($setting->purchase_account_id);
         ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
+        ChartOfAccount::updateChartOfAccountBalance($setting->stock_interim_account_id);
     }
 }
