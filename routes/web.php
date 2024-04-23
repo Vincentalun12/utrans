@@ -17,6 +17,7 @@ use App\Http\Controllers\JournalItemsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\COAController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PosController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -137,6 +138,12 @@ Route::controller(SettingsController::class)->group(function () {
 Route::controller(InventorymenuController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/inventorymenu', 'index')->name('inventorymenu');
+    });
+});
+
+Route::controller(PosController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/pos', 'index')->name('pos');
     });
 });
 

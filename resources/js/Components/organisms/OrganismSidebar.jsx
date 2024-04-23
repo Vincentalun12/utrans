@@ -146,16 +146,14 @@ export function OrganismSidebar() {
                         {Language.Dashboard}
                     </ListItem>
                 </Linkactive>
-                {/* <Linkactive
-                    href={route("pos")}
-                >
+                    <Linkactive href={route("pos")}>
                     <ListItem className={`${route().current("pos") ? '!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white' : ''}`}>
                         <ListItemPrefix>
                             <ComputerDesktopIcon className="h-5 w-5" />
                         </ListItemPrefix>
                         Point of Sale
                     </ListItem>
-                </Linkactive> */}
+                </Linkactive>
                 <Accordion
                     open={open === 1}
                     icon={
