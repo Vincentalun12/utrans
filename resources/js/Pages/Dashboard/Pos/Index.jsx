@@ -4,40 +4,33 @@ import Chart from "react-apexcharts";
 import { React, useEffect, useState } from "react";
 import Linkactive from "@/Components/Linkactive";
 import {noimage} from "@/Assets";
-
 import {
-    Square3Stack3DIcon,
-    ShoppingBagIcon,
-    BanknotesIcon,
-    ArrowDownOnSquareStackIcon,
-    ArrowUpOnSquareStackIcon,
-    ArrowDownIcon,
-    ArrowUpIcon,
-    PencilIcon,
-    PencilSquareIcon,
+Square3Stack3DIcon,
+ShoppingBagIcon,
+BanknotesIcon,
+ArrowDownOnSquareStackIcon,
+ArrowUpOnSquareStackIcon,
+ArrowDownIcon,
+ArrowUpIcon,
+PencilIcon,
+PencilSquareIcon,
 } from "@heroicons/react/24/solid";
-
 import {
-    UserIcon,
-    BuildingOfficeIcon,
-    DocumentIcon,
-    DocumentTextIcon,
+UserIcon,
+BuildingOfficeIcon,
+DocumentIcon,
+DocumentTextIcon,
 } from "@heroicons/react/24/solid";
-
 import { twMerge } from "tailwind-merge";
-
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Avatar,
-  Tooltip,
-  Button,
-  Checkbox,
+Card,
+CardHeader,
+CardBody,
+CardFooter,
+Typography,
+Avatar,
+Tooltip,
 } from "@material-tailwind/react";
-
 export default function Dashboard({ auth }) {
 
     return (
