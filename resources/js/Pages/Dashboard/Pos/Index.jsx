@@ -30,6 +30,8 @@ CardFooter,
 Typography,
 Avatar,
 Tooltip,
+Button,
+Checkbox,
 } from "@material-tailwind/react";
 export default function Dashboard({ auth }) {
 
