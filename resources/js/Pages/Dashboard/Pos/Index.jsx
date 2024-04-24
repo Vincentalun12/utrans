@@ -34,6 +34,8 @@ import {
   Typography,
   Avatar,
   Tooltip,
+  Button,
+  Checkbox,
 } from "@material-tailwind/react";
 
 export default function Dashboard({ auth }) {
@@ -53,12 +55,28 @@ export default function Dashboard({ auth }) {
         </div>
 
         <div className="flex-1 p-10 m-2 text-2xl font-bold overflow-auto">
-            <div className="mb-4">
-                <input className="px-3 py-2 border border-gray-400" type="text" placeholder="Search" />
-            </div>
+			<div className="flex mb-4">
+				<div className="w-full px-3 gap-2 py-2 border shadow-sm rounded-md border-gray-200 bg-white">
+					<input className="mr-2 rounded-md" type="text" placeholder="Search" />
+					<input className="mr-2 rounded-md" type="text" placeholder="Search" />
+					<input className="mr-2 rounded-md" type="text" placeholder="Search" />
+					<Button className="mr-2" variant="gradient">Tes</Button>
+					<Button className="mr-2" variant="outlined">Tes</Button>
+					<Checkbox color="blue" defaultChecked />
+					<Checkbox color="red" defaultChecked />
+					<Checkbox color="green" defaultChecked />
+					<Checkbox color="amber" defaultChecked />
+					<Checkbox color="teal" defaultChecked />
+					<Checkbox color="indigo" defaultChecked />
+					<Checkbox color="purple" defaultChecked />
+					<Checkbox color="pink" defaultChecked />
+				</div>
+        </div>
+
+
             <div className="grid xl:grid-cols-3 2xl:grid-cols-6 gap-4">
                 <div class="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
-		<a href="#">
+				<a href="#">
         <img src={noimage} alt="Utrans logo" className="block ml-auto mr-auto"/>
         
         </a>
