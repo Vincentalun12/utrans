@@ -36,6 +36,9 @@ Checkbox,
 export default function Dashboard({ auth }) {
 const itemsPerPage = 10;
 const [currentPage, setCurrentPage] = useState(1);
+const [searchTerm, setSearchTerm] = useState("");
+
+
 const items = [
 {
 id: 1,
@@ -45,352 +48,45 @@ quantity: 30,
 image: noimage
 },
 {
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 1,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
-{
-id: 2,
-name: 'SANFORD 300 ML',
-price: 'Rp100.000',
-quantity: 30,
-image: noimage
-},
+  id: 1,
+  name: 'Wawo',
+  price: 'Rp100.000',
+  quantity: 30,
+  image: noimage
+  },
 ];
+
+useEffect(() => {
+  setCurrentPage(1);
+}, [searchTerm]);
+
+const filteredItems = items.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
 const pages = Math.ceil(items.length / itemsPerPage);
+
 const handlePageChange = (direction) => {
-if (direction === "next" && currentPage < pages) {
-setCurrentPage((prevPage) => prevPage + 1);
-} else if (direction === "prev" && currentPage > 1) {
-setCurrentPage((prevPage) => prevPage - 1);
-}
+  if (direction === "next" && currentPage < pages) {
+    setCurrentPage((prevPage) => prevPage + 1);
+  } else if (direction === "prev" && currentPage > 1) {
+    setCurrentPage((prevPage) => prevPage - 1);
+  }
 };
-const currentItems = items.slice(
-(currentPage - 1) * itemsPerPage,
-currentPage * itemsPerPage
+
+const currentItems = filteredItems.slice(
+  (currentPage - 1) * itemsPerPage,
+  currentPage * itemsPerPage
 );
+
 return (
 <div className="h-screen">
   <div className="px-3 gap-2 py-2 shadow-sm bg-white sticky top-0 2xl:pl-48">
     <div className="flex justify-between">
-      <input className="mr-2 rounded-md w-4/6" type="text" placeholder="Search" />
+        <input 
+      className="mr-2 rounded-md w-4/6" 
+      type="text" 
+      placeholder="Search" 
+      value={searchTerm}
+      onChange={e => setSearchTerm(e.target.value)}
+    />
     </div>
   </div>
   <div className="flex h-screen bg-gray-200 h-full">
