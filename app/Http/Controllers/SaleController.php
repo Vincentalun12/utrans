@@ -403,10 +403,10 @@ class SaleController extends Controller
                     $currentTotalPrice = $listProduct['quantity'] * $listProduct['price'] - $listProduct['discount'];
                     if ($currentTotalPrice < $oldTotalPrice) {
                         if ($oldQuantity > $listProduct['quantity']) {
-                            $quantityDifference = $oldQuantity - $listProduct['quantity'];
+                            $quantityDifference = $oldQuantity - $currentQuantity;
                             Product::increaseStock($saleOrderLine->product_id, $quantityDifference);
-                        } else if ($oldQuantity < $listProduct['quantity']) {
-                            $quantityDifference = $listProduct['quantity'] - $oldQuantity;
+                        } else if ($oldQuantity < $currentQuantity) {
+                            $quantityDifference = $currentQuantity - $oldQuantity;
                             Product::decreaseStock($saleOrderLine->product_id, $quantityDifference);
                         }
 
@@ -476,12 +476,13 @@ class SaleController extends Controller
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
                         ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
                         ChartOfAccount::updateChartOfAccountBalance($setting->stock_interim_account_id);
+                        ChartOfAccount::updateChartOfAccountBalance($setting->sales_account_id);
                     } else if ($currentTotalPrice > $oldTotalPrice) {
-                        if ($oldQuantity > $listProduct['quantity']) {
-                            $quantityDifference = $oldQuantity - $listProduct['quantity'];
+                        if ($oldQuantity < $currentQuantity) {
+                            $quantityDifference = $currentQuantity - $oldQuantity;
                             Product::decreaseStock($saleOrderLine->product_id, $quantityDifference);
-                        } else if ($oldQuantity < $listProduct['quantity']) {
-                            $quantityDifference = $listProduct['quantity'] - $oldQuantity;
+                        } else if ($oldQuantity > $currentQuantity) {
+                            $quantityDifference = $oldQuantity - $currentQuantity;
                             Product::increaseStock($saleOrderLine->product_id, $quantityDifference);
                         }
 
@@ -553,6 +554,7 @@ class SaleController extends Controller
                         ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
                         ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
                         ChartOfAccount::updateChartOfAccountBalance($setting->stock_interim_account_id);
+                        ChartOfAccount::updateChartOfAccountBalance($setting->sales_account_id);
                     } else if ($currentTotalPrice == $oldTotalPrice) {
                         $oldTotalProductStandardPrice = $product->standard_price * $oldQuantity;
                         $currentTotalProductStandardPrice = $product->standard_price * $currentQuantity;
@@ -637,6 +639,7 @@ class SaleController extends Controller
                     ChartOfAccount::updateChartOfAccountBalance($setting->account_receivable_id);
                     ChartOfAccount::updateChartOfAccountBalance($setting->inventory_account_id);
                     ChartOfAccount::updateChartOfAccountBalance($setting->stock_interim_account_id);
+                    ChartOfAccount::updateChartOfAccountBalance($setting->sales_account_id);
                 }
             }
 
