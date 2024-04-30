@@ -1,7 +1,8 @@
 import DashboardLayout from "@/Layouts/NavigationLayout";
 import { Head } from "@inertiajs/react";
 import Chart from "react-apexcharts";
-import { React, useEffect, useState } from "react";
+import React from 'react';
+import { useEffect, useState } from 'react';
 import Linkactive from "@/Components/Linkactive";
 import { noimage, utranslogoaja } from "@/Assets";
 import {
@@ -32,8 +33,16 @@ import {
   Button,
   Checkbox,
   IconButton,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  DialogActions,
+  Input,
+
 } from "@material-tailwind/react";
 export default function Dashboard({ auth }) {
+
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -82,7 +91,11 @@ export default function Dashboard({ auth }) {
     currentPage * itemsPerPage
   );
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(!open);
+
   return (
+    
     <div className="h-screen">
       <div className="px-3 gap-2 py-2 shadow-sm bg-white sticky top-0 z-50">
         <div className="flex justify-start">
@@ -148,6 +161,205 @@ export default function Dashboard({ auth }) {
             ))}
           </div>
         </div>
+        <Dialog open={open} handler={handleOpen}>
+        <div class="flex items-center mt-4 ml-4 font-sans text-2xl antialiased font-semibold leading-snug shrink-0 text-blue-gray-900">
+          Order Confirmation
+        </div>
+        <div class="flex items-center ml-4 mb-4 font-sans text-sm antialiased font-italic leading-snug shrink-0 text-blue-gray-900">
+          Please confirm your order before checkout
+        </div>
+        <div class="flex items-center ml-4 font-sans text-sm antialiased font-italic leading-snug shrink-0 text-blue-gray-900">
+          Invoice Number: TWPOS-KS-1714050380
+        </div>
+        <div class="flex items-center ml-4 font-sans text-sm antialiased font-italic leading-snug shrink-0 text-blue-gray-900">
+          Date: April 30 2024, 20.06
+        </div>
+        <div class="flex items-center ml-4 mb-4 font-sans text-sm antialiased font-italic leading-snug shrink-0 text-blue-gray-900">
+        <Typography
+        variant="small"
+        color="gray"
+        className="mt-2 flex items-center gap-1 font-normal"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="-mt-px h-4 w-4"
+        >
+          <path
+            fillRule="evenodd"
+            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+            clipRule="evenodd"
+          />
+        </svg>
+        Make sure your order is correct. Any changes after checkout are not allowed.
+      </Typography>
+        </div>
+        <DialogBody>
+        <div class="relative font-sans text-base antialiased font-semilight leading-relaxed border-t border-b border-t-blue-gray-100 border-b-blue-gray-100 text-blue-gray-500">
+          <div className="grid grid-cols-3 divide-x-2">
+              <div className="col-span-2 items-center justify-center">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr>
+                    <th className="py-1 w-1/12 text-center">#</th>
+                    <th className="py-1 text-left">Nama Barang</th>
+                    <th className="py-1 w-2/12 text-center">Jumlah</th>
+                    <th className="py-1 w-3/12 text-right">Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="py-2 text-center" x-text="index+1">
+                      1
+                    </td>
+                    <td class="py-2 text-left text-sm">
+                      <span x-text="item.name">Sanford 300 ML</span>
+                      <br />
+                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
+                    </td>
+                    <td class="py-2 text-center text-sm" x-text="item.qty">
+                      2
+                    </td>
+                    <td
+                      class="py-2 text-right text-sm"
+                      x-text="priceFormat(item.qty * item.price)"
+                    >
+                      Rp. 20.000
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 text-center text-sm" x-text="index+1">
+                      2
+                    </td>
+                    <td class="py-2 text-left text-sm">
+                      <span x-text="item.name">Sanford 300 ML</span>
+                      <br />
+                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
+                    </td>
+                    <td class="py-2 text-center text-sm" x-text="item.qty">
+                      4
+                    </td>
+                    <td
+                      class="py-2 text-right text-sm"
+                      x-text="priceFormat(item.qty * item.price)"
+                    >
+                      Rp. 20.000
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 text-center text-sm" x-text="index+1">
+                      3
+                    </td>
+                    <td class="py-2 text-left text-sm">
+                      <span x-text="item.name">Sanford 300 ML</span>
+                      <br />
+                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
+                    </td>
+                    <td class="py-2 text-center text-sm" x-text="item.qty">
+                      2
+                    </td>
+                    <td
+                      class="py-2 text-right text-sm"
+                      x-text="priceFormat(item.qty * item.price)"
+                    >
+                      Rp. 20.000
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 text-center text-sm" x-text="index+1">
+                      4
+                    </td>
+                    <td class="py-2 text-left text-sm">
+                      <span x-text="item.name">Sanford 300 ML</span>
+                      <br />
+                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
+                    </td>
+                    <td class="py-2 text-center text-sm" x-text="item.qty">
+                      4
+                    </td>
+                    <td
+                      class="py-2 text-right text-sm"
+                      x-text="priceFormat(item.qty * item.price)"
+                    >
+                      Rp. 20.000
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 text-center text-sm" x-text="index+1">
+                      5
+                    </td>
+                    <td class="py-2 text-left text-sm">
+                      <span x-text="item.name">Sanford 300 ML</span>
+                      <br />
+                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
+                    </td>
+                    <td class="py-2 text-center text-sm" x-text="item.qty">
+                      2
+                    </td>
+                    <td
+                      class="py-2 text-right text-sm"
+                    >
+                      Rp. 20.000
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+              <div className="ml-4">
+              <div class="py-4 rounded-md">
+              <div class="ml-3 px-4 flex justify-between ">
+                <span class="font-semibold text-md">Subtotal</span>
+                <span class="font-bold">Rp100.000</span>
+              </div>
+              <div class="ml-3 px-4 flex justify-between ">
+                <span class="font-semibold text-md">Diskon</span>
+                <div class="text-md">
+                  Rp
+                  <input type="text" class="text-right h-4 w-24 bg-white shadow rounded-lg focus:bg-white focus:shadow-lg px-2 focus:outline-none" wfd-id="id1"/>
+                  </div>
+              </div>
+              <div class="ml-3 px-4 flex justify-between ">
+                <span class="font-semibold text-md">PPN</span>
+                <span class="font-bold">11%</span>
+              </div>
+              <div class="border-t-2 ml-3 mt-3 py-2 px-4 flex items-center justify-between">
+                <span class="text-xl">Total</span>
+                <span class="font-bold text-xl">Rp100.000</span>
+              </div>
+              <div class="ml-3 px-4 flex justify-between ">
+                <span class="text-md">Paid</span>
+                <div class="text-md">
+                  Rp
+                  <input type="text" class="text-right h-4 w-24 bg-white shadow rounded-lg focus:bg-white focus:shadow-lg px-2 focus:outline-none" wfd-id="id1"/>
+                  </div>
+              </div>
+              <div class="border-t-2 ml-3 mt-3 py-2 px-4 flex items-center justify-between">
+                <span class="font-bold text-xl">Change</span>
+                <span class="font-bold text-xl">Rp5.000</span>
+              </div>
+            </div>
+              </div>
+          </div>  
+        </div>
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleOpen}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button className="mr-1" variant="gradient" color="blue" onClick={handleOpen}>
+            <span>Print</span>
+          </Button>
+          <Button variant="gradient" color="green" onClick={handleOpen}>
+            <span>Confirm</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
         <div className="w-full lg:w-[700px] bg-white p-3">
           <div class="flex flex-row items-center justify-stretch px-5 mt-5">
             <div class="font-bold text-xl">Current Order</div>
@@ -192,7 +404,7 @@ export default function Dashboard({ auth }) {
             </div>
           </div>
           <div class="px-5 mt-5">
-            <button class="px-4 py-4 rounded-md shadow-lg text-center bg-ungukita text-white font-semibold w-full">
+            <button onClick={handleOpen} class="px-4 py-4 rounded-md shadow-lg text-center bg-ungukita text-white font-semibold w-full">
               Checkout
             </button>
           </div>
