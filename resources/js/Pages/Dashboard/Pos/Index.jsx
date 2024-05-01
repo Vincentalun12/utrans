@@ -45,19 +45,6 @@ export default function Dashboard({ auth }) {
       price: "Rp100.000",
       image: noimage,
     },
-    {
-      id: 1,
-      name: "Wawo",
-      price: "Rp100.000",
-
-      image: noimage,
-    },
-    {
-      id: 1,
-      name: "SANFORD 300 ML",
-      price: "Rp100.000",
-      image: noimage,
-    },
   ];
 
   useEffect(() => {
