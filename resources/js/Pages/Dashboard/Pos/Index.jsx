@@ -16,7 +16,7 @@ import {
   PencilIcon,
   PencilSquareIcon,
   HomeIcon,
-  DocumentIcon,
+  ArrowPathIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/solid";
@@ -101,11 +101,11 @@ export default function Dashboard({ auth }) {
       <div className="flex flex-col lg:flex-row h-screen bg-gray-200 h-full">
         <div className="w-24 bg-white p-3 lg:flex hidden">
           <div className="flex-grow flex flex-col items-center justify-start">
-            <IconButton size="lg" className="bg-ungukita mb-4 rounded-full">
+            <IconButton size="lg" className="bg-ungukita mb-4 rounded-full" onClick={() => window.location.href='/home'}>
               <HomeIcon className="h-5 w-5 text-white" />
             </IconButton>
             <IconButton size="lg" className="bg-ungukita mb-4 rounded-full">
-              <DocumentIcon className="h-5 w-5 text-white" />
+              <ArrowPathIcon className="h-5 w-5 text-white" />
             </IconButton>
           </div>
         </div>
@@ -184,10 +184,10 @@ export default function Dashboard({ auth }) {
         </div>
         <DialogBody>
         <div class="relative font-sans text-base antialiased font-semilight leading-relaxed border-t border-b border-t-blue-gray-100 border-b-blue-gray-100 text-blue-gray-500">
-          <div className="grid grid-cols-3 divide-x-2">
-              <div className="col-span-2 items-center justify-center">
+          <div className="grid lg:grid-cols-3 grid-cols-1 divide-x-2">
+              <div className="col-span-2 items-center justify-center overflow-auto" style={{ maxHeight: '300px' }}>
               <table class="w-full text-sm">
-                <thead>
+                <thead class="sticky top-0 bg-white">
                   <tr>
                     <th className="py-1 w-1/12 text-center">#</th>
                     <th className="py-1 text-left">Nama Barang</th>
@@ -196,100 +196,20 @@ export default function Dashboard({ auth }) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="py-2 text-center" x-text="index+1">
-                      1
-                    </td>
-                    <td class="py-2 text-left text-sm">
-                      <span x-text="item.name">Sanford 300 ML</span>
-                      <br />
-                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
-                    </td>
-                    <td class="py-2 text-center text-sm" x-text="item.qty">
-                      2
-                    </td>
-                    <td
-                      class="py-2 text-right text-sm"
-                      x-text="priceFormat(item.qty * item.price)"
-                    >
-                      Rp. 20.000
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 text-center text-sm" x-text="index+1">
-                      2
-                    </td>
-                    <td class="py-2 text-left text-sm">
-                      <span x-text="item.name">Sanford 300 ML</span>
-                      <br />
-                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
-                    </td>
-                    <td class="py-2 text-center text-sm" x-text="item.qty">
-                      4
-                    </td>
-                    <td
-                      class="py-2 text-right text-sm"
-                      x-text="priceFormat(item.qty * item.price)"
-                    >
-                      Rp. 20.000
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 text-center text-sm" x-text="index+1">
-                      3
-                    </td>
-                    <td class="py-2 text-left text-sm">
-                      <span x-text="item.name">Sanford 300 ML</span>
-                      <br />
-                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
-                    </td>
-                    <td class="py-2 text-center text-sm" x-text="item.qty">
-                      2
-                    </td>
-                    <td
-                      class="py-2 text-right text-sm"
-                      x-text="priceFormat(item.qty * item.price)"
-                    >
-                      Rp. 20.000
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 text-center text-sm" x-text="index+1">
-                      4
-                    </td>
-                    <td class="py-2 text-left text-sm">
-                      <span x-text="item.name">Sanford 300 ML</span>
-                      <br />
-                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
-                    </td>
-                    <td class="py-2 text-center text-sm" x-text="item.qty">
-                      4
-                    </td>
-                    <td
-                      class="py-2 text-right text-sm"
-                      x-text="priceFormat(item.qty * item.price)"
-                    >
-                      Rp. 20.000
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 text-center text-sm" x-text="index+1">
-                      5
-                    </td>
-                    <td class="py-2 text-left text-sm">
-                      <span x-text="item.name">Sanford 300 ML</span>
-                      <br />
-                      <small x-text="priceFormat(item.price)">Rp. 10.000</small>
-                    </td>
-                    <td class="py-2 text-center text-sm" x-text="item.qty">
-                      2
-                    </td>
-                    <td
-                      class="py-2 text-right text-sm"
-                    >
-                      Rp. 20.000
-                    </td>
-                  </tr>
+                  {items.map((item, index) => (
+                    <tr key={index}>
+                      <td class="py-2 text-center">{index + 1}</td>
+                      <td class="py-2 text-left text-sm">
+                        <span>{item.name}</span>
+                        <br />
+                        <small>{item.price}</small>
+                      </td>
+                      <td class="py-2 text-center text-sm">{item.qty}</td>
+                      <td class="py-2 text-right text-sm">
+                        Rp. {item.qty * item.price}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
               </div>
@@ -313,17 +233,6 @@ export default function Dashboard({ auth }) {
               <div class="border-t-2 ml-3 mt-3 py-2 px-4 flex items-center justify-between">
                 <span class="text-xl">Total</span>
                 <span class="font-bold text-xl">Rp100.000</span>
-              </div>
-              <div class="ml-3 px-4 flex justify-between ">
-                <span class="text-md">Paid</span>
-                <div class="text-md">
-                  Rp
-                  <input type="text" class="text-right h-4 w-24 bg-white shadow rounded-lg focus:bg-white focus:shadow-lg px-2 focus:outline-none" wfd-id="id1"/>
-                  </div>
-              </div>
-              <div class="border-t-2 ml-3 mt-3 py-2 px-4 flex items-center justify-between">
-                <span class="font-bold text-xl">Change</span>
-                <span class="font-bold text-xl">Rp5.000</span>
               </div>
             </div>
               </div>

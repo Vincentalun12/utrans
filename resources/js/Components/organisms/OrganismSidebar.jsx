@@ -283,6 +283,23 @@ export function OrganismSidebar() {
                                     {Language.Sales}
                                 </ListItem>
                             </Linkactive>
+                            <Linkactive href={route("possales")}>
+                            <ListItem
+                                    className={`${
+                                        route().current("possales") || route().current("possales.edit") || route().current("possales.detail")
+                                            ? "!bg-ungukita hover:bg-ungukita active:bg-ungukita focus:bg-ungukita text-white hover:text-white active:text-white focus:text-white"
+                                            : ""
+                                    }`}
+                                >
+                                    <ListItemPrefix>
+                                        <ChevronRightIcon
+                                            strokeWidth={3}
+                                            className="h-3 w-5"
+                                        />
+                                    </ListItemPrefix>
+                                    Pos Sales
+                                </ListItem>
+                            </Linkactive>
                         </List>
                     </AccordionBody>
                 </Accordion>

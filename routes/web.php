@@ -15,6 +15,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\InventorymenuController;
 use App\Http\Controllers\JournalItemsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PosSalesController;
 use App\Http\Controllers\COAController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PosController;
@@ -114,6 +115,19 @@ Route::controller(SaleController::class)->group(function () {
         Route::get('/sales/edit/{id}', 'edit')->name('sales.edit');
         Route::patch('/sales/update/{id}', 'update')->name('sales.update');
         Route::delete('/sales/destroy/{id}', 'destroy')->name('sales.destroy');
+    });
+});
+
+Route::controller(PosSalesController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/possales', 'index')->name('possales');
+        Route::get('/possales/detail', 'detail')->name('possales.detail');
+        Route::get('/possales/create', 'create')->name('possales.create');
+        Route::post('/possales/store', 'store')->name('possales.store');
+        Route::get('/possales/edit/{id}', 'edit')->name('possales.edit');
+        Route::patch('/possales/update/{id}', 'update')->name('possales.update');
+        Route::delete('/possales/destroy/{id}', 'destroy')->name('possales.destroy');
+
     });
 });
 
